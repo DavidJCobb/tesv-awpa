@@ -16,6 +16,7 @@ utils.lua
 xml.lua
 awpa_env.lua
 awpa_actor.lua
+awpa_condition.lua
 awpa_constant.lua
 awpa_group.lua
 awpa_line.lua

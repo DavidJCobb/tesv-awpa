@@ -17,7 +17,27 @@ function process_xml(root)
             return
          end
          if node.node_name == "conditions" then
-            -- TODO
+            node:for_each_child_element(function(node)
+               if node.node_name == "condition-set" then
+                  -- TODO
+               elseif node.node_name == "or" then
+                  node:for_each_child_element(function(node)
+                     if node.node_name == "condition-set"
+                     or node.node_name == "or"
+                     then
+                        error("can't nest these in an OR")
+                     end
+                     local item = awpa.condition()
+                     item.is_or_linked = true
+                     group.conditions[#group.conditions + 1] = item
+                     item:from_xml(node)
+                  end)
+               else
+                  local item = awpa.condition()
+                  group.conditions[#group.conditions + 1] = item
+                  item:from_xml(node)
+               end
+            end)
             return
          end
          if node.node_name == "constant" then
@@ -40,7 +60,11 @@ function process_xml(root)
             return
          end
          if node.node_name == "shared-info" then
-            -- TODO: generate references to shared infos
+            local si = awpa.env.shared_infos_by_id[node.attributes["id"]]
+            if not si then
+               error("missing sharedinfo")
+            end
+            group.shared_infos[#group.shared_infos + 1] = si
             return
          end
       end)
@@ -108,7 +132,8 @@ end
 
 local file = dovah.package.load_file({
    --path = "payload-test-simple-quest.xml",
-   path = "payload-test-simple-shared-info.xml",
+   --path = "payload-test-simple-shared-info.xml",
+   path = "payload-test-simple-conditions.xml",
    type = "text"
 })
 local parser = xml.parser()

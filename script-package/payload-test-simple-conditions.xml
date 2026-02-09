@@ -12,6 +12,16 @@
          <actor editor-id="TalenJei" name="Talen-Jei" />
       </actors>
       <g name="upstairs">
+         <conditions>
+            <z of="subject" gte="64" />
+            <z of="player"  lt="320" />
+            <or>
+               <!-- player on lowest floor or subject on highest floor -->
+               <!-- if we had more than 3 floors, the logic here would be more complex -->
+               <z of="subject" gte="320" />
+               <z of="player"  lt="64" />
+            </or>
+         </conditions>
          <shared-info id="shared-upstairs" />
       </g>
       <g>

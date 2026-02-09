@@ -1,6 +1,5 @@
 
-local utils = {}
-
+utils = {}
 function utils.replace_info_responses(info, text)
    local size = #info.responses
    if size <= 0 then

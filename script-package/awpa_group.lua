@@ -78,6 +78,7 @@ do
          end
          
          local conditions = self:get_relevant_conditions()
+         local last_line =  nil
          
          local size = #self.lines
          for i = 1, size do
@@ -88,15 +89,13 @@ do
             if info_f then
                info_f.responses[1].edits = "[fem-of=" .. info_m:form_id_to_string() .. "]"
             end
-            if self.exclusive and i == size then
-               (info_f or info_m).is_random_end = true
-            end
             for j = 1, #conditions do
                conditions[j]:apply_to_info(info_m, self)
                if info_f then
                   conditions[j]:apply_to_info(info_f, self)
                end
             end
+            last_line = info_f or info_m
          end
          for i = 1, #self.shared_infos do
             local si = self.shared_infos[i]
@@ -105,26 +104,33 @@ do
                local gender  = nil
                do
                   local id = si_form.editor_id
-                  local c  = id:sub(#id - 1)
+                  local c  = id:sub(#id)
                   if c == "M" then
-                     gender = 0
+                     gender = "Male"
                   elseif c == "F" then
-                     gender = 1
+                     gender = "Female"
                   end
                end
                local info = dovah.create_form(form_types.topic_info, { parent = topic })
                info.use_shared_info = si_form
+               info.is_random       = true
                if gender then
                   local cnd = info.conditions:insert()
                   cnd.run_on              = alias
-                  cnd.function_name       = "GetSex"
+                  cnd.function_name       = "GetIsSex"
+                  cnd.parameters[1]       = gender
                   cnd.comparison.operator = "=="
-                  cnd.comparison.operand  = gender
+                  cnd.comparison.operand  = 1
                end
                for j = 1, #conditions do
                   conditions[j]:apply_to_info(info, self)
                end
+               last_line = info
             end
+         end
+         
+         if self.exclusive and last_line then
+            last_line.is_random_end = true
          end
       end
    end

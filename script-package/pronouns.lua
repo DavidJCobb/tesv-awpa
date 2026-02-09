@@ -12,7 +12,7 @@ do
    for k, v in pairs(MTF_PRONOUNS) do
       local pattern = k:sub(1, 1)
       pattern = "[" .. pattern:upper() .. pattern:lower() .. "]"
-      pattern = "[^%w]" .. pattern .. k:sub(2) .. "[^%w]"
+      pattern = "%f[%w_]" .. pattern .. k:sub(2) .. "%f[^%w_]"
       pronoun_test_patterns[i] = pattern
       i = i + 1
    end

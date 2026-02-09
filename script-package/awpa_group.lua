@@ -29,10 +29,13 @@ do
          if not awpa.group.is(self.parent) then
             return { table.unpack(self.conditions) }
          end
-         return table.concat(
-            self.parent:get_relevant_conditions(),
-            self.conditions
-         )
+         local out = self.parent:get_relevant_conditions()
+         local j   = #out + 1
+         for i = 1, #self.conditions do
+            out[j] = self.conditions[i]
+            j = j + 1
+         end
+         return out
       end
       function instance_members:get_unique_path(element)
          --

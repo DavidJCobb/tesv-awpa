@@ -133,7 +133,8 @@ end
 local file = dovah.package.load_file({
    --path = "payload-test-simple-quest.xml",
    --path = "payload-test-simple-shared-info.xml",
-   path = "payload-test-simple-conditions.xml",
+   --path = "payload-test-simple-conditions.xml",
+   path = "payload-test-nested-conditions.xml",
    type = "text"
 })
 local parser = xml.parser()

@@ -59,9 +59,10 @@ do
             do
                local cnd = info.conditions:insert()
                cnd.run_on        = target_alias
-               cnd.function_name = "GetSex"
+               cnd.function_name = "GetIsSex"
+               cnd.parameters[1] = "Male"
                cnd.comparison.operator = "=="
-               cnd.comparison.operand  = 0
+               cnd.comparison.operand  = 1
             end
             
             local fem_text = swap_masc_pronouns_to_fem(self.text)
@@ -75,7 +76,8 @@ do
             do
                local cnd = fem_info.conditions:insert()
                cnd.run_on        = target_alias
-               cnd.function_name = "GetSex"
+               cnd.function_name = "GetIsSex"
+               cnd.parameters[1] = "Female"
                cnd.comparison.operator = "=="
                cnd.comparison.operand  = 1
             end

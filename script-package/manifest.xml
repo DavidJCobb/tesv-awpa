@@ -12,6 +12,7 @@
    <files>
 classes.lua
 pronouns.lua
+utils.lua
 xml.lua
 awpa_env.lua
 awpa_actor.lua

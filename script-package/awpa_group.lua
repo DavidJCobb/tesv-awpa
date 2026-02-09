@@ -25,6 +25,13 @@ do
          end
       end
       function instance_members:get_unique_path(element)
+         --
+         -- PATH SYNTAX FOR A LINE:
+         --
+         --    #something-with-an-id
+         --    #something-with-an-id/something/with/a/name
+         --    #something-with-an-id/something/with/no/name/@line-index
+         --
          if self.id then
             return "#" .. self.id
          end

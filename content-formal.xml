@@ -1,74 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <payload>
    <shared-infos>
-      <shared-info id="shared-upstairs" editor-id-slushared-info="FloorUpstairs">
+      <shared-info id="shared-upstairs" editor-id-slug="FloorUpstairs">
          <line>He's upstairs.</line>
-         <line>Try checkinshared-info upstairs.</line>
-         <line>Try lookinshared-info upstairs.</line>
+         <line>Try checking upstairs.</line>
+         <line>Try looking upstairs.</line>
       </shared-info>
-      <shared-info id="shared-downstairs" editor-id-slushared-info="FloorDownstairs">
+      <shared-info id="shared-downstairs" editor-id-slug="FloorDownstairs">
          <line>He's downstairs.</line>
-         <line>Try checkinshared-info downstairs.</line>
-         <line>Try lookinshared-info downstairs.</line>
+         <line>Try checking downstairs.</line>
+         <line>Try looking downstairs.</line>
       </shared-info>
-      <shared-info id="shared-same-floor" editor-id-slushared-info="FloorSame">
-         <line>He should be somewhere on this floor of the buildinshared-info.</line>
+      <shared-info id="shared-same-floor" editor-id-slug="FloorSame">
+         <line>He should be somewhere on this floor of the building.</line>
       </shared-info>
-      <shared-info id="shared-same-room" editor-id-slushared-info="SameRoom">
+      <shared-info id="shared-same-room" editor-id-slug="SameRoom">
          <line>He's in this room.</line>
          <line>He's in the room with us.</line>
       </shared-info>
-      <shared-info id="shared-near-player" editor-id-slushared-info="NearPlayer">
-         <line>He's standinshared-info rishared-infoht next to you.</line>
-         <line>He's standinshared-info rishared-infoht here.</line>
+      <shared-info id="shared-near-player" editor-id-slug="NearPlayer">
+         <line>He's standing right next to you.</line>
+         <line>He's standing right here.</line>
       </shared-info>
       
-      <shared-info id="shared-exterior-near-blacksmith" editor-id-slushared-info="ExtNearBlacksmith">
-         <line>I think I saw him by the smithy not too lonshared-info ashared-infoo.</line>
+      <shared-info id="shared-exterior-near-blacksmith" editor-id-slug="ExtNearBlacksmith">
+         <line>I think I saw him by the smithy not too long ago.</line>
          <line>Pretty sure he's over by the blacksmith's shop.</line>
       </shared-info>
-      <shared-info id="shared-exterior-near-own-home" editor-id-slushared-info="ExtNearOwnHome">
-         <line>I saw him around his house not too lonshared-info ashared-infoo.</line>
-         <line>I think he's over by his house rishared-infoht now.</line>
+      <shared-info id="shared-exterior-near-own-home" editor-id-slug="ExtNearOwnHome">
+         <line>I saw him around his house not too long ago.</line>
+         <line>I think he's over by his house right now.</line>
       </shared-info>
-      <shared-info id="shared-exterior-market" editor-id-slushared-info="ExtMarket">
+      <shared-info id="shared-exterior-market" editor-id-slug="ExtMarket">
          <line>He's in the market.</line>
-         <line>I saw him headinshared-info toward the market.</line>
+         <line>I saw him heading toward the market.</line>
          <line>He should be at the market.</line>
       </shared-info>
-      <shared-info id="shared-exterior-market-with-us" editor-id-slushared-info="ExtMarketHere">
+      <shared-info id="shared-exterior-market-with-us" editor-id-slug="ExtMarketHere">
          <line>He's here in the market.</line>
       </shared-info>
       
-      <shared-info id="shared-alchemy-table" editor-id-slushared-info="AlchemyTable">
+      <shared-info id="shared-alchemy-table" editor-id-slug="AlchemyTable">
          <line>He's at the alchemy table.</line>
          <line>He's by the alchemy table.</line>
       </shared-info>
-      <shared-info id="shared-back-of-the-store" editor-id-slushared-info="StoreBack">
+      <shared-info id="shared-back-of-the-store" editor-id-slug="StoreBack">
          <line>He's in the back.</line>
          <line>He's back behind the shop proper.</line>
       </shared-info>
-      <shared-info id="shared-behind-the-counter" editor-id-slushared-info="BehindCounter">
+      <shared-info id="shared-behind-the-counter" editor-id-slug="BehindCounter">
          <line>He's behind the counter.</line>
       </shared-info>
-      <shared-info id="shared-dininshared-info-room" editor-id-slushared-info="RoomDininshared-info">
-         <line>He's in the dininshared-info room.</line>
+      <shared-info id="shared-dining-room" editor-id-slug="RoomDining">
+         <line>He's in the dining room.</line>
       </shared-info>
-      <shared-info id="shared-enchantinshared-info-table" editor-id-slushared-info="Enchantinshared-infoTable">
-         <line>He's at the enchantinshared-info table.</line>
-         <line>He's by the enchantinshared-info table.</line>
+      <shared-info id="shared-enchanting-table" editor-id-slug="EnchantingTable">
+         <line>He's at the enchanting table.</line>
+         <line>He's by the enchanting table.</line>
       </shared-info>
-      <shared-info id="shared-foyer" editor-id-slushared-info="RoomFoyer">
+      <shared-info id="shared-foyer" editor-id-slug="RoomFoyer">
          <line>He's in the foyer.</line>
       </shared-info>
-      <shared-info id="shared-front-of-buildinshared-info" editor-id-slushared-info="FrontOfBuildinshared-info">
+      <shared-info id="shared-front-of-building" editor-id-slug="FrontOfBuilding">
          <line>He's up front.</line>
-         <line>He's at the front of the buildinshared-info.</line>
+         <line>He's at the front of the building.</line>
       </shared-info>
-      <shared-info id="shared-in-own-room" editor-id-slushared-info="RoomOwn">
+      <shared-info id="shared-in-own-room" editor-id-slug="RoomOwn">
          <line>He's in his room.</line>
       </shared-info>
-      <shared-info id="shared-in-my-room" editor-id-slushared-info="RoomMy">
+      <shared-info id="shared-in-my-room" editor-id-slug="RoomMy">
          <line>He's in my room.</line>
       </shared-info>
    </shared-infos>

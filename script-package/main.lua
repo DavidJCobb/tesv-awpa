@@ -48,21 +48,20 @@ function process_xml(root)
 
    root:for_each_child_element(function(node)
       if node.node_name == "shared-infos" then
-         local item = awpa.shared_info_set()
-         item:from_xml(node)
          node:for_each_child_element(function(node)
-            if node.node_name == "line" then
-               local text = ""
-               for i = 1, #node.children do
-                  local child = node.children[i]
-                  if xml.text.is(child) then
-                     text = text .. child.data
+            if node.node_name ~= "shared-info" then
+               return
+            end
+            local item = awpa.shared_info_set()
+            item:from_xml(node)
+            node:for_each_child_element(function(node)
+               if node.node_name == "line" then
+                  local text = node:get_text_content()
+                  if text then
+                     item.lines[#item.lines + 1] = text
                   end
                end
-               if text then
-                  item.lines[#item.lines + 1] = text
-               end
-            end
+            end)
          end)
          return
       end
@@ -108,7 +107,8 @@ function process_xml(root)
 end
 
 local file = dovah.package.load_file({
-   path = "payload-test-simple-quest.xml",
+   --path = "payload-test-simple-quest.xml",
+   path = "payload-test-simple-shared-info.xml",
    type = "text"
 })
 local parser = xml.parser()

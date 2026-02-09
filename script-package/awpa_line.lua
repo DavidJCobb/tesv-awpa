@@ -37,14 +37,7 @@ do
             end
          end
          
-         local text = ""
-         for i = 1, #element.children do
-            local node = element.children[i]
-            if xml.text:is(node) then
-               text = text .. node.data
-            end
-         end
-         self.text = text
+         self.text = element:get_text_content()
       end
       function instance_members:generate_info(topic)
          local info = dovah.create_form(form_types.topic_info, { parent = topic })

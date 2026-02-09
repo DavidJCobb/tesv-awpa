@@ -34,34 +34,88 @@ do
          local found_indices = {}
          local j = 1
          for i = 1, #self.lines do
-            local text = self.lines[i]
-            if has_masc_pronouns(text) then
+            local text         = self.lines[i]
+            local has_pronouns = has_masc_pronouns(text)
+            
+            local editor_id_u = string.format("AWPASharedInfo%s%02d", self.slug, i)
+            local editor_id_m = editor_id_u .. "M"
+            local editor_id_f = editor_id_u .. "F"
+         
+            -- Find existing infos, if any exist.
+            local prior_u
+            local prior_m
+            local prior_f
+            for j = 1, #existing_infos do
+               local ei = existing_infos[j]
+               if ei.editor_id == editor_id_u then
+                  prior_u = ei
+                  break
+               elseif ei.editor_id == editor_id_m then
+                  prior_m = ei
+                  if prior_f then
+                     break
+                  end
+               elseif ei.editor_id == editor_id_f then
+                  prior_f = ei
+                  if prior_m then
+                     break
+                  end
+               end
+            end
+            
+            -- Recycle existing infos.
+            local after_u
+            local after_m
+            local after_f
+            if prior_u then
+               if has_pronouns then
+                  after_m = prior_u
+               else
+                  after_u = prior_u
+               end
+            end
+            if prior_m or prior_f then
+               if has_pronouns then
+                  after_m = prior_m
+                  after_f = prior_f
+               else
+                  after_u = prior_m or prior_f
+                  if prior_m and prior_f then
+                     prior_f:delete()
+                  end
+               end
+            end
+         
+            if has_pronouns then
                local text_m = text
                local text_f = swap_masc_pronouns_to_fem(text_m)
                
-               local info_m = dovah.create_form(form_types.topic_info, { parent = topic })
-               local info_f = dovah.create_form(form_types.topic_info, { parent = topic })
-               info_m.responses:insert({ text = text_m })
-               info_f.responses:insert({ text = text_f })
-               info_m.editor_id = string.format("AWPASharedInfo%s%02dM", self.slug, i)
-               info_f.editor_id = string.format("AWPASharedInfo%s%02dF", self.slug, i)
+               if not after_m then
+                  after_m = dovah.create_form(form_types.topic_info, { parent = topic })
+               end
+               if not after_f then
+                  after_f = dovah.create_form(form_types.topic_info, { parent = topic })
+               end
+               after_m.editor_id = editor_id_m
+               after_f.editor_id = editor_id_f
+               utils.replace_info_responses(after_m, text_m)
+               utils.replace_info_responses(after_f, text_f)
                
-               self.forms[j] = info_m
+               self.forms[j] = after_m
                j = j + 1
-               self.forms[j] = info_f
+               self.forms[j] = after_f
                j = j + 1
             else
-               local info = dovah.create_form(form_types.topic_info, { parent = topic })
-               local resp = info.responses:insert({
-                  text = self.text,
-               })
-               info.editor_id = string.format("AWPASharedInfo%s%02d", self.slug, i)
+               if not after_u then
+                  after_u = dovah.create_form(form_types.topic_info, { parent = topic })
+               end
+               after_u.editor_id = editor_id_u
+               utils.replace_info_responses(after_u, text)
                
-               self.forms[j] = info
+               self.forms[j] = after_u
                j = j + 1
             end
          end
-         
       end
    end
 end

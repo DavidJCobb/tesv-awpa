@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<payload>
+   <shared-infos>
+      <shared-info id="shared-upstairs" editor-id-slug="FloorUpstairs">
+         <line>He's upstairs.</line>
+         <line>Try checkinshared-info upstairs.</line>
+         <line>Try lookinshared-info upstairs.</line>
+      </shared-info>
+   </shared-infos>
+   <quest id="AWPATestQuest01">
+      <actors>
+         <actor editor-id="TalenJei" name="Talen-Jei" />
+      </actors>
+      <g name="upstairs">
+         <shared-info id="shared-upstairs" />
+      </g>
+      <g>
+         <line>Test Line 01</line>
+         <line>Test Line 02</line>
+      </g>
+   </quest>
+</payload>

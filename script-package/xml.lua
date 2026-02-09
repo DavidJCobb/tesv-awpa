@@ -125,6 +125,18 @@ do
             end
          end
       end
+      function instance_members:get_text_content()
+         local text = ""
+         for i = 1, #self.children do
+            local node = self.children[i]
+            if xml.text.is(node) then
+               text = text .. node.data
+            elseif xml.element.is(node) then
+               text = text .. node:get_text_content()
+            end
+         end
+         return text
+      end
    end
 end
 

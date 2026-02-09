@@ -1,0 +1,1132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<payload>
+   <shared-infos>
+      <shared-info id="shared-upstairs" editor-id-slushared-info="FloorUpstairs">
+         <line>He's upstairs.</line>
+         <line>Try checkinshared-info upstairs.</line>
+         <line>Try lookinshared-info upstairs.</line>
+      </shared-info>
+      <shared-info id="shared-downstairs" editor-id-slushared-info="FloorDownstairs">
+         <line>He's downstairs.</line>
+         <line>Try checkinshared-info downstairs.</line>
+         <line>Try lookinshared-info downstairs.</line>
+      </shared-info>
+      <shared-info id="shared-same-floor" editor-id-slushared-info="FloorSame">
+         <line>He should be somewhere on this floor of the buildinshared-info.</line>
+      </shared-info>
+      <shared-info id="shared-same-room" editor-id-slushared-info="SameRoom">
+         <line>He's in this room.</line>
+         <line>He's in the room with us.</line>
+      </shared-info>
+      <shared-info id="shared-near-player" editor-id-slushared-info="NearPlayer">
+         <line>He's standinshared-info rishared-infoht next to you.</line>
+         <line>He's standinshared-info rishared-infoht here.</line>
+      </shared-info>
+      
+      <shared-info id="shared-exterior-near-blacksmith" editor-id-slushared-info="ExtNearBlacksmith">
+         <line>I think I saw him by the smithy not too lonshared-info ashared-infoo.</line>
+         <line>Pretty sure he's over by the blacksmith's shop.</line>
+      </shared-info>
+      <shared-info id="shared-exterior-near-own-home" editor-id-slushared-info="ExtNearOwnHome">
+         <line>I saw him around his house not too lonshared-info ashared-infoo.</line>
+         <line>I think he's over by his house rishared-infoht now.</line>
+      </shared-info>
+      <shared-info id="shared-exterior-market" editor-id-slushared-info="ExtMarket">
+         <line>He's in the market.</line>
+         <line>I saw him headinshared-info toward the market.</line>
+         <line>He should be at the market.</line>
+      </shared-info>
+      <shared-info id="shared-exterior-market-with-us" editor-id-slushared-info="ExtMarketHere">
+         <line>He's here in the market.</line>
+      </shared-info>
+      
+      <shared-info id="shared-alchemy-table" editor-id-slushared-info="AlchemyTable">
+         <line>He's at the alchemy table.</line>
+         <line>He's by the alchemy table.</line>
+      </shared-info>
+      <shared-info id="shared-back-of-the-store" editor-id-slushared-info="StoreBack">
+         <line>He's in the back.</line>
+         <line>He's back behind the shop proper.</line>
+      </shared-info>
+      <shared-info id="shared-behind-the-counter" editor-id-slushared-info="BehindCounter">
+         <line>He's behind the counter.</line>
+      </shared-info>
+      <shared-info id="shared-dininshared-info-room" editor-id-slushared-info="RoomDininshared-info">
+         <line>He's in the dininshared-info room.</line>
+      </shared-info>
+      <shared-info id="shared-enchantinshared-info-table" editor-id-slushared-info="Enchantinshared-infoTable">
+         <line>He's at the enchantinshared-info table.</line>
+         <line>He's by the enchantinshared-info table.</line>
+      </shared-info>
+      <shared-info id="shared-foyer" editor-id-slushared-info="RoomFoyer">
+         <line>He's in the foyer.</line>
+      </shared-info>
+      <shared-info id="shared-front-of-buildinshared-info" editor-id-slushared-info="FrontOfBuildinshared-info">
+         <line>He's up front.</line>
+         <line>He's at the front of the buildinshared-info.</line>
+      </shared-info>
+      <shared-info id="shared-in-own-room" editor-id-slushared-info="RoomOwn">
+         <line>He's in his room.</line>
+      </shared-info>
+      <shared-info id="shared-in-my-room" editor-id-slushared-info="RoomMy">
+         <line>He's in my room.</line>
+      </shared-info>
+   </shared-infos>
+   
+   <quest id="AWPARiften">
+   
+      <condition-set name="grelod-murder-not-in-progress">
+         <!-- TODO -->
+      </condition-set>
+      <condition-set name="player-in-thieves-guild">
+         <!-- TODO -->
+      </condition-set>
+      <condition-set name="player-not-in-thieves-guild">
+         <!-- TODO -->
+      </condition-set>
+      <condition-set name="speaker-in-thieves-guild">
+         <!-- TODO -->
+      </condition-set>
+      <condition-set name="speaker-not-in-thieves-guild">
+         <!-- TODO -->
+      </condition-set>
+      <condition-set name="under-stormcloak-control">
+         <papyrus-quest-variable
+            for="CW"
+            var="::OwnerRift_var"
+            eq="[GLOB]CWSons"
+         />
+      </condition-set>
+      <condition-set name="under-imperial-control">
+         <papyrus-quest-variable
+            for="CW"
+            var="::OwnerRift_var"
+            neq="[GLOB]CWSons"
+         />
+      </condition-set>
+      <condition-set name="vald-is-spawned">
+         <quest-running quest="TG07" />
+      </condition-set>
+      <condition-set name="vald-is-spawned-and-alive">
+         <condition-set name="vald-is-spawned" />
+         <death-count for="Vald" lte="0" />
+      </condition-set>
+      
+      <!-- Use this for actors that are never seen on the city surface. -->
+      <macro name="tg-member-dfn-never-surface">
+         <begin-asking-about>
+            <conditions>
+               <condition-set name="player-in-thieves-guild" />
+               <condition-set name="speaker-in-thieves-guild" />
+            </conditions>
+         </begin-asking-about>
+      </macro>
+      <macro name="tg-member-dfn-when-player-banned">
+         <begin-asking-to>
+            <conditions>
+               <!-- player can't ask while expelled from the guild: -->
+               <global name="TGBanToggle" eq="1" />
+            </conditions>
+         </begin-asking-to>
+      </macro>
+      <macro name="tg-member-dfn-when-sus-of-karliah">
+         <begin-asking-to>
+            <conditions>
+               <!-- player can't ask while actor is suspicious of Karliah and the player: -->
+               <quest-stage for="TG07" lt="30" />
+            </conditions>
+         </begin-asking-to>
+      </macro>
+      
+      <actors>
+         <actor editor-id="Aerin" />
+         <actor editor-id="Alessandra" />
+         <actor editor-id="Anuriel">
+            <begin-asking-about>
+               <conditions>
+                  <!-- Anuriel is exiled with Laila if the city is taken by the Empire -->
+                  <condition-set name="riften-under-stormcloak-control" />
+               </conditions>
+            </begin-asking-about>
+         </actor>
+         <actor editor-id="Arnskar">
+            <invoke name="tg-member-dfn-never-surface" />
+            <begin-asking-about>
+               <conditions>
+                  <enable-state for="[REFR:000B4082]TGStatusStageThree" is="enabled" />
+               </conditions>
+            </begin-asking-about>
+            <invoke name="tg-member-dfn-when-player-banned" />
+         </actor>
+         <actor editor-id="Asbjorn" />
+         <actor editor-id="Asgeir" />
+         <actor editor-id="Balimund" />
+         <actor editor-id="BassianusAxius">
+            <begin-asking-about>
+               <conditions>
+                  <!--
+                     TODO: only after he moves to Riften
+                  -->
+               </conditions>
+            </begin-asking-about>
+         </actor>
+         <actor editor-id="Bersi">
+            <begin-asking-to>
+               <conditions>
+                  <!--
+                     TODO: don't allow asking this actor while harassing 
+                     their shop/business for the TG, nor in the immediate 
+                     aftermath of having done so
+                  -->
+               </conditions>
+            </begin-asking-to>
+         </actor>
+         <actor editor-id="Bolli" />
+         <actor editor-id="BrandShei">
+            <begin-asking-to>
+               <conditions>
+                  <!--
+                     TODO: don't allow asking this actor while the player 
+                     is busy framing him, or while he's in jail
+                  -->
+               </conditions>
+            </begin-asking-to>
+         </actor>
+         <actor editor-id="Briehl" />
+         <actor editor-id="Brynjolf">
+            <invoke name="tg-member-dfn-when-player-banned" />
+            <invoke name="tg-member-dfn-when-sus-of-karliah" />
+         </actor>
+         <actor editor-id="ConstanceMichel">
+            <begin-asking-to>
+               <conditions>
+                  <condition-set name="grelod-murder-not-in-progress" />
+               </conditions>
+            </begin-asking-to>
+         </actor>
+         <actor editor-id="CynricEndell">
+            <invoke name="tg-member-dfn-never-surface" />
+            <invoke name="tg-member-dfn-when-player-banned" />
+            <invoke name="tg-member-dfn-when-sus-of-karliah" />
+         </actor>
+         <actor editor-id="DelvinMallory" name="Delvin">
+            <invoke name="tg-member-dfn-never-surface" />
+            <invoke name="tg-member-dfn-when-player-banned" />
+            <invoke name="tg-member-dfn-when-sus-of-karliah" />
+         </actor>
+         <actor editor-id="Dinya" />
+         <actor editor-id="Edda" />
+         <actor editor-id="Elgrim" />
+         <actor editor-id="Esbern">
+            <begin-asking-to>
+               <conditions>
+                  <!--
+                     TODO: Only allow asking Esbern if encountering his locked 
+                     door in the Ratway Vaults prior to searching for him in 
+                     the main quest. Always have him refuse and shoo you away.
+                  -->
+               </conditions>
+            </begin-asking-to>
+         </actor>
+         <actor editor-id="EtienneRarnis">
+            <!--
+               Etienne is held prisoner in the Thalmor Embassy. If he survives 
+               the player's raid on the place, he relocates to Riften to join 
+               the Thieves Gild.
+            -->
+            <begin-asking-about>
+               <conditions>
+                  <condition-set name="player-in-thieves-guild" />
+                  <condition-set name="speaker-in-thieves-guild" />
+                  <!--
+                     Diplomatic Immunity is completed and he has relocated to  
+                     the Thieves Guild:
+                  -->
+                  <quest-stage for="MQ201" done="205" />
+                  <location is="RiftenLocation" />
+               </conditions>
+            </begin-asking-about>
+            <invoke name="tg-member-dfn-when-player-banned" />
+            <begin-asking-to>
+               <g>
+                  <!--
+                     If you left Eteinne to fend for himself in the Thalmor 
+                     Embassy's dungeon, he still makes it to the Guild, but he 
+                     resents the player until such time as they become the 
+                     guild master.
+                  -->
+                  <conditions>
+                     <condition-set name="player-in-thieves-guild" />
+                     <quest-stage for="MQ201" done="205" />
+                     <quest-stage for="MQ201" done="208" /> <!-- abandoned Etienne -->
+                     <location is="RiftenLocation" />
+                     <quest-stage for="TGLeadership" lt="40" /> <!-- player not yet guildmaster -->
+                  </conditions>
+                  <line>No.</line>
+                  <line>Find someone else.</line>
+               </g>
+            </begin-asking-to>
+         </actor>
+         <actor editor-id="Francois" />
+         <actor editor-id="FromDeepestFathoms" name="From-Deepest-Fathoms">
+            <begin-asking-about>
+               <!--
+                  From-Deepest-Fathoms only spawns when the player hits Level 14, 
+                  triggering the (invisible) start of MS04.
+               -->
+               <or>
+                  <quest-status for="MS04" is="running" />
+                  <quest-status for="MS04" is="complete" />
+               </or>
+            </begin-asking-about>
+         </actor>
+         <actor editor-id="Garthar">
+            <invoke name="tg-member-dfn-never-surface" />
+            <begin-asking-about>
+               <conditions>
+                  <enable-state for="[REFR:000B4082]TGStatusGuildStateThreeRef" is="enabled" />
+               </conditions>
+            </begin-asking-about>
+            <invoke name="tg-member-dfn-when-player-banned" />
+            <invoke name="tg-member-dfn-when-sus-of-karliah" />
+         </actor>
+         <actor editor-id="Grelka" />
+         <actor editor-id="Grelod">
+            <begin-asking-to>
+               <!--
+                  Grelod should never respond constructively to these inquiries.
+               -->
+               <g non-exclusive="true">
+                  <conditions>
+                     <offers-services of="speaker" />
+                  </conditions>
+                  <line>I sell weapons and armor, not directions.</line>
+                  <line>No. Buy something or move on.</line>
+               </g>
+               <line>I'm not your tour guide. Find somebody else to bother about it.</line>
+               <line>No. I'm too busy running my shop to keep track of everyone else.</line>
+               <line>Whoever it is, I'm not their keeper, I don't know where they're at, and I don't care.</line>
+            </begin-asking-to>
+         </actor>
+         <actor editor-id="Haelga">
+            <begin-asking-to>
+               <conditions>
+                  <!--
+                     TODO: don't allow asking this actor while harassing 
+                     their shop/business for the TG, nor in the immediate 
+                     aftermath of having done so
+                  -->
+               </conditions>
+            </begin-asking-to>
+         </actor>
+         <actor editor-id="Hafjorg" />
+         <actor editor-id="Harrald" />
+         <actor editor-id="Hemming" />
+         <actor editor-id="HerluinLothaire">
+            <invoke name="tg-member-dfn-never-surface" />
+            <begin-asking-about>
+               <conditions>
+                  <enable-state for="[REFR:000AC9D4]TGStatusStageTwo" is="enabled" />
+               </conditions>
+            </begin-asking-about>
+            <invoke name="tg-member-dfn-when-player-banned" />
+         </actor>
+         <actor editor-id="Hroar" />
+         <actor editor-id="Hofgrir" />
+         <actor editor-id="Indaryn">
+            <!--
+               TODO: examine Indaryn's lines and character; not sure he 
+               would be a helpful man
+            -->
+         </actor>
+         <actor editor-id="Ingun">
+            <begin-responding>
+               <!--
+                  Ingun should seem distracted and fail to provied a useful 
+                  answer unless you've done her favor quest.
+               -->
+               <conditions>
+                  <quest-not-completed name="FreeformRiften04" />
+                  <!-- She is attentive to her family members: -->
+                  <actor-base of="subject" is-not="Hemming" />
+                  <actor-base of="subject" is-not="Maven" />
+                  <actor-base of="subject" is-not="Sibbi" />
+                  <!-- ...And to the town alchemists: -->
+                  <actor-base of="subject" is-not="Hafjorg" />
+                  <actor-base of="subject" is-not="Elgrim" />
+               </conditions>
+               <g non-exclusive="true">
+                  <conditions>
+                     <global name="GameHour" gte="12" />
+                     <global name="GameHour" lt="18" />
+                  </conditions>
+                  <line>I'm afraid I don't know. I've been planning new alchemical experiments all day.</line>
+               </g>
+               <g non-exclusive="true">
+                  <conditions>
+                     <global name="GameHour" gte="18" />
+                     <global name="GameHour" lte="23" />
+                  </conditions>
+                  <line>I'm afraid I don't know. I've been planning new alchemical experiments all night.</line>
+               </g>
+               <line>I haven't noticed him around town. You'll have to ask someone else.</line>
+               <line>Hmm... I don't remember seeing him, but... I probably wouldn't have noticed him.</line>
+               <line>I've been too focused on my experiments to really notice him.</line>
+               <line hours-until-reset="48">I'm not sure. I've been thinking about my experiments... Would you happen to know a good place to gather Painted Troll Fat? Sorry, never mind.</line>
+            </begin-responding>
+         </actor>
+         <actor editor-id="HousecarlRiften" name="Iona">
+            <begin-asking-about>
+               <conditions>
+                  <!--
+                     Only allow asking about Iona while's physically in the 
+                     city, and after the player has gained access to her by 
+                     purchasing Honeyside.
+                  -->
+                  <location of="subject" is="RiftenLocation" />
+                  <papyrus-quest-variable
+                     for="HousePurchase"
+                     var="::RiftenHouseVar_var"
+                     eq="1"
+                  />
+               </conditions>
+            </begin-asking-about>
+         </actor>
+         <actor editor-id="Keerava">
+            <begin-asking-to>
+               <conditions>
+                  <!--
+                     TODO: don't allow asking this actor while harassing 
+                     their shop/business for the TG, nor in the immediate 
+                     aftermath of having done so
+                  -->
+               </conditions>
+            </begin-asking-to>
+         </actor>
+         <actor editor-id="LouisLetrush" />
+         <actor editor-id="Madesi" />
+         <actor editor-id="Maramal" />
+         <actor editor-id="Marcurio">
+            <begin-asking-about>
+               <conditions>
+                  <!--
+                     TODO: only while present in Riften (this character 
+                     is a potential player follower and only becomes 
+                     available after purchasing Honeyside).
+                  -->
+               </conditions>
+            </begin-asking-about>
+         </actor>
+         <actor editor-id="Marise" />
+         <actor editor-id="Maul">
+            <invoke name="tg-member-dfn-when-player-banned" />
+            <begin-asking-to>
+               <!--
+                  If you're not in the Thieves Guild and have never intimidated 
+                  Maul, then you'll need to bribe him.
+               -->
+               <bribe>
+                  <conditions>
+                     <condition-set name="player-not-in-thieves-guild" />
+                     <or>
+                        <!-- never bribed or intimidated Maul: -->
+                        <quest-stage for="[QUST:000649FC]DialogueRiftenMaul" not-done="30" />
+                        <!-- tried and failed to intimidate Maul: -->
+                        <quest-stage for="[QUST:000649FC]DialogueRiftenMaul" done="35" />
+                     </or>
+                  </conditions>
+                  <begin-lines>
+                     <line>If you want dirt, it'll cost you.</line>
+                     <line script-notes="Emphasis on the word &quot;might&quot;.">If you've got gold, I might have information.</line>
+                  </begin-lines>
+                  <accept-lines>
+                     <line>All right. Who are you looking for?</line>
+                     <line>Good. So who are you trying to find?</line>
+                     <line>Okay, let's talk. Who are you looking for?</line>
+                     <line vanilla="[INFO:0006D4A8]/#2">So what do you want to know?</line>
+                  </accept-lines>
+                  <refuse-lines>
+                     <line>Fine by me.</line>
+                     <line>Then quit wastin' my time.</line>
+                     <g>
+                        <conditions>
+                           <!-- Maul is at the docks. -->
+                           <quest-stage for="[QUST:000649FC]DialogueRiftenMaul" done="40" />
+                           <!-- TODO: Check if he's actually physically at the docks -->
+                        </conditions>
+                        <line>I'll be here when you change your mind.</line>
+                     </g>
+                     <g>
+                        <conditions>
+                           <!-- Maul is not at the docks. -->
+                           <quest-stage for="[QUST:000649FC]DialogueRiftenMaul" not-done="40" />
+                        </conditions>
+                        <line vanilla="[INFO:000649F5]/#2">I'll be at the docks if you change your mind.</line>
+                     </g>
+                     <line vanilla="[INFO:000649F5]/#1">Suit yourself.</line>
+                  </refuse-lines>
+                  <poor-lines>
+                     <line>Come back when you have somethin' to bargain with.</line>
+                     <line>Then you aren't worth my time.</line>
+                     <line vanilla="[INFO:000649E5]">You don't have enough to earn my loyalty.</line>
+                  </poor-lines>
+               </bribe>
+            </begin-asking-to>
+         </actor>
+         <actor editor-id="Maven">
+            <!--
+               TODO: Maven should never respond constructively to any 
+               inquiries. If you're in the TG or DB, you shouldn't be 
+               allowed to push it. If you're not affiliated, then you 
+               can ask her again, but she still won't answer, and you 
+               will later be attacked by hired thugs for the crime of 
+               having annoyed her.
+            -->
+            <begin-asking-to>
+               <line>No.</line>
+            </begin-asking-to>
+         </actor>
+         <actor editor-id="MercerFrey">
+            <invoke name="tg-member-dfn-never-surface" />
+            <invoke name="tg-member-dfn-when-player-banned" />
+         </actor>
+         <actor editor-id="Mjoll" />
+         <actor editor-id="Molgrom" />
+         <actor editor-id="Niluva" />
+         <actor editor-id="Niruin">
+            <invoke name="tg-member-dfn-never-surface" />
+            <invoke name="tg-member-dfn-when-player-banned" />
+            <invoke name="tg-member-dfn-when-sus-of-karliah" />
+         </actor>
+         <actor editor-id="Nivenor" />
+         <actor editor-id="Nura" />
+         <actor editor-id="RavynImyan" name="Ravyn">
+            <invoke name="tg-member-dfn-never-surface" />
+            <invoke name="tg-member-dfn-when-player-banned" />
+            <invoke name="tg-member-dfn-when-sus-of-karliah" />
+         </actor>
+         <actor editor-id="Romlyn" />
+         <actor editor-id="Runa" />
+         <actor editor-id="Rune">
+            <invoke name="tg-member-dfn-never-surface" />
+            <invoke name="tg-member-dfn-when-player-banned" />
+            <invoke name="tg-member-dfn-when-sus-of-karliah" />
+         </actor>
+         <actor editor-id="Saerlund">
+            <begin-asking-about>
+               <!--
+                  The Unofficial Patch moves him out of Riften when Laila is 
+                  exiled, even though the game's official strategy guide gives 
+                  a lore-based reason for him remaining in Riften. We have to 
+                  account for him being exiled or not being exiled; the easy 
+                  way is to just check whether he's anywhere in Riften.
+               -->
+               <conditions>
+                  <location of="subject" is="RiftenLocation" />
+               </conditions>
+            </begin-asking-about>
+         </actor>
+         <actor editor-id="Samuel" />
+         <actor editor-id="Sapphire">
+            <invoke name="tg-member-dfn-when-player-banned" />
+            <invoke name="tg-member-dfn-when-sus-of-karliah" />
+         </actor>
+         <actor editor-id="Shadr" />
+         <actor editor-id="Snilf" />
+         <actor editor-id="Svana" />
+         <actor editor-id="Syndus">
+            <invoke name="tg-member-dfn-never-surface" />
+            <begin-asking-about>
+               <conditions>
+                  <enable-state for="[REFR:000AC9D3]TGStatusStageOne" is="enabled" />
+               </conditions>
+            </begin-asking-about>
+            <invoke name="tg-member-dfn-when-player-banned" />
+         </actor>
+         <actor editor-id="TalenJei" name="Talen-Jei">
+            <begin-asking-to>
+               <conditions>
+                  <!--
+                     TODO: don't allow asking this actor while harassing 
+                     their shop/business for the TG, nor in the immediate 
+                     aftermath of having done so
+                     
+                     (same conditions as Keerava)
+                  -->
+               </conditions>
+            </begin-asking-to>
+         </actor>
+         <actor editor-id="Threki" />
+         <actor editor-id="Thrynn">
+            <invoke name="tg-member-dfn-never-surface" />
+            <invoke name="tg-member-dfn-when-player-banned" />
+            <invoke name="tg-member-dfn-when-sus-of-karliah" />
+         </actor>
+         <actor editor-id="Tonilia">
+            <invoke name="tg-member-dfn-never-surface" />
+            <invoke name="tg-member-dfn-when-player-banned" />
+         </actor>
+         <actor editor-id="Tythis" />
+         <actor editor-id="Ungrien" />
+         <actor editor-id="Vald">
+            <begin-asking-about>
+               <conditions>
+                  <condition-set name="vald-is-spawned" />
+               </conditions>
+            </begin-asking-about>
+         </actor>
+         <actor editor-id="Valindor" />
+         <actor editor-id="VanrythGatharian">
+            <invoke name="tg-member-dfn-never-surface" />
+            <begin-asking-about>
+               <conditions>
+                  <enable-state for="[REFR:000AC9D6]TGStatusStageFour" is="enabled" />
+               </conditions>
+            </begin-asking-about>
+            <invoke name="tg-member-dfn-when-player-banned" />
+         </actor>
+         <actor editor-id="Vekel">
+            <invoke name="tg-member-dfn-never-surface" />
+            <invoke name="tg-member-dfn-when-player-banned" />
+            <invoke name="tg-member-dfn-when-sus-of-karliah" />
+         </actor>
+         <actor editor-id="Vex">
+            <invoke name="tg-member-dfn-never-surface" />
+            <invoke name="tg-member-dfn-when-player-banned" />
+            <invoke name="tg-member-dfn-when-sus-of-karliah" />
+         </actor>
+         <actor editor-id="VipirtheFleet" name="Vipir">
+            <invoke name="tg-member-dfn-never-surface" />
+            <invoke name="tg-member-dfn-when-player-banned" />
+            <invoke name="tg-member-dfn-when-sus-of-karliah" />
+         </actor>
+         <actor editor-id="Vulwulf">
+            <!--
+               Vulwulf's daughter served the Stormcloaks and died in the war. He 
+               is actively racist against all Imperials, and spends his days and 
+               nights drinking himself to death at the Bee and Barb, interrupting 
+               his time at the bar only to eat dinner with his surviving family.
+            -->
+            <override-entry-point>
+               <conditions>
+                  <or>
+                     <race of="player" is="ImperialRace" />
+                     <race of="player" is="ImperialRaceVampire" />
+                  </or>
+               </conditions>
+               <lines>
+                  <line>No. Leave me be, you Imperial bastard.</line>
+                  <line>No. Leave me alone, you Imperial dog.</line>
+                  <line>No, Imperial.</line>
+                  <line>The carriage driver is just outside the north gate. He can take you back to Cyrodiil where you belong.</line>
+               </lines>
+            </override-entry-point>
+            <override-responses>
+               <g>
+                  <conditions>
+                     <global name="GameHour" gte="13" />
+                     <global name="GameHour" lte="18" />
+                     <parent-cell of="speaker" is="RiftenBeeandBarb" />
+                     <parent-cell of="subject" is-not="RiftenBeeandBarb" />
+                  </conditions>
+                  <lines>
+                     <line>I wouldn't know. I've been here since noon.</line>
+                     <line>If they're not in here, then I don't know where they are.</line>
+                     <line>They're not in here, that's for sure.</line>
+                  </lines>
+               </g>
+               <g>
+                  <conditions>
+                     <or>
+                        <global name="GameHour" lte="3" />
+                        <global name="GameHour" gte="20" />
+                     </or>
+                     <parent-cell of="speaker" is="RiftenBeeandBarb" />
+                     <parent-cell of="subject" is-not="RiftenBeeandBarb" />
+                  </conditions>
+                  <lines>
+                     <line>I wouldn't know. I've been here since dinner.</line>
+                     <line>If they're not in here, then I don't know where they are.</line>
+                     <line>They're not in here, that's for sure.</line>
+                  </lines>
+               </g>
+            </override-responses>
+         </actor>
+         <actor editor-id="Wujeeta" />
+         <actor editor-id="Wilhelm" />
+      </actors>
+      
+      <macro name="owned-room">
+         <parameter name="OWNER" />
+         <parameter name="OWNER-PRINTABLE" default-value="%OWNER%" />
+         <data>
+            <group>
+               <conditions>
+                  <actor-base of="subject" is="%OWNER%" />
+               </conditions>
+               <lines>
+                  <shared-infos id="shared-in-own-room" />
+               </lines>
+            </group>
+            <group>
+               <conditions>
+                  <actor-base of="speaker" is="%OWNER%" />
+               </conditions>
+               <lines>
+                  <shared-infos id="shared-in-my-room" />
+               </lines>
+            </group>
+            <line>He's in <substitution parameter="OWNER-PRINTABLE" />'s room.</line>
+         </data>
+      </macro>
+      
+      <!-- for code-folding: -->
+      <g id="riften-dialogue-all">
+         <g name="very-close-to-player">
+            <conditions>
+               <distance of="player" to="subject" lte="128" />
+            </conditions>
+            <shared-infos name="shared-near-player" />
+         </g>
+      
+         <!--
+            Lines for specific rooms within interiors. These come first 
+            so that they take precedence over generic upstairs/downstairs 
+            lines.
+         -->
+         <g name="interiors-specific-rooms">
+            <conditions>
+               <parent-cell of="speaker" same-as="subject" />
+            </conditions>
+            <g name="bee-and-barb">
+               <conditions>
+                  <parent-cell of="subject" is="RiftenBeeandBarb" />
+               </conditions>
+               <g name="bedrooms">
+                  <conditions>
+                     <z of="speaker" gte="320" />
+                     <z of="subject" gte="320" />
+                  </conditions>
+                  <g name="bedroom-talen-jei">
+                     <conditions>
+                        <x of="subject" gte="320" />
+                     </conditions>
+                     <invoke name="owned-room">
+                        <parameter name="OWNER" value="Talen-Jei" />
+                     </invoke>
+                  </g>
+                  <g name="bedroom-keerava">
+                     <conditions>
+                        <y of="subject" lte="-576" />
+                     </conditions>
+                     <invoke name="owned-room">
+                        <parameter name="OWNER" value="Keerava" />
+                     </invoke>
+                  </g>
+               </g>
+               <g name="counter">
+                  <conditions>
+                     <x of="subject" gte="640" />
+                     <y of="subject" lte="-128" />
+                  </conditions>
+                  <shared-infos name="shared-behind-the-counter" />
+               </g>
+            </g> <!-- /bee-and-barb -->
+            <g name="black-briar-manor">
+               <conditions>
+                  <parent-cell of="subject" is="RiftenBlackBriarManor" />
+               </conditions>
+               <g name="B1F">
+                  <conditions>
+                     <z of="subject" lt="64" />
+                     <z of="speaker" lt="64" />
+                  </conditions>
+                  <g name="bedroom-ingun">
+                     <conditions>
+                        <x of="subject" lte="-1984" />
+                     </conditions>
+                     <invoke name="owned-room">
+                        <parameter name="OWNER" value="Ingun" />
+                     </invoke>
+                  </g>
+                  <g name="bedroom-maul">
+                     <conditions>
+                        <x of="subject" gte="-1472" />
+                        <y of="subject" lte="-128" />
+                     </conditions>
+                     <invoke name="owned-room">
+                        <parameter name="OWNER" value="Maul" />
+                     </invoke>
+                  </g>
+               </g> <!-- /B1F -->
+               <g name="1F">
+                  <conditions>
+                     <z of="subject" gte="64" />
+                     <z of="speaker" gte="64" />
+                     <z of="subject" lt="320" />
+                     <z of="speaker" lt="320" />
+                  </conditions>
+                  <g name="dining-room">
+                     <conditions>
+                        <x of="subject" gte="-1472" />
+                        <y of="subject" gte="-1088" />
+                     </conditions>
+                     <shared-infos name="shared-dining-room" />
+                  </g>
+                  <g name="foyer">
+                     <conditions>
+                        <x of="subject" at="-1344" around="768" />
+                        <y of="subject" lte="128" />
+                     </conditions>
+                     <shared-infos name="shared-foyer" />
+                  </g>
+               </g> <!-- /1F -->
+               <g name="2F">
+                  <conditions>
+                     <z of="subject" gte="320" />
+                     <z of="speaker" gte="320" />
+                  </conditions>
+                  <g name="bedroom-hemming">
+                     <conditions>
+                        <x of="subject" at="-1472" around="480" />
+                        <y of="subject" gte="256" />
+                     </conditions>
+                     <invoke name="owned-room">
+                        <parameter name="OWNER" value="Hemming" />
+                     </invoke>
+                  </g>
+                  <g name="bedroom-maven">
+                     <conditions>
+                        <x of="subject" at="-1312" around="1184" />
+                        <y of="subject" lte="-48" />
+                     </conditions>
+                     <invoke name="owned-room">
+                        <parameter name="OWNER" value="Maven" />
+                     </invoke>
+                  </g>
+                  <g name="bedroom-sibbi">
+                     <conditions>
+                        <x of="subject" lte="-1200" />
+                        <y of="subject" gte="256" />
+                     </conditions>
+                     <invoke name="owned-room">
+                        <parameter name="OWNER" value="Sibbi" />
+                     </invoke>
+                  </g>
+               </g> <!-- /2F -->
+            </g> <!-- /black-briar-manor -->
+            <g name="black-briar-meadery">
+               <g>
+                  <conditions>
+                     <!--
+                        All rooms beyond this point have an open floor plan affording 
+                        a direct view into the bottom level.
+                     -->
+                     <x of="speaker" lte="1792" />
+                     <z of="subject" lt="64" />
+                     <or>
+                        <!--
+                           ...Except Indaryn's bedroom on the top floor.
+                        -->
+                        <x of="speaker" gte="768" />
+                        <z of="speaker" lt="320" />
+                     </or>
+                  </conditions>
+                  <line>He's on the bottom level.</line>
+                  <line>He's down on the bottom level.</line>
+                  <line>Head all the way downstairs to the bottom.</line>
+               </g>
+               <g name="bedroom-indaryn">
+                  <conditions>
+                     <z of="subject" gte="320" />
+                     <z of="speaker" gte="320" />
+                     <x of="subject" lte="768" />
+                     <y of="subject" lte="-4416" />
+                  </conditions>
+                  <invoke name="owned-room">
+                     <parameter name="OWNER" value="Indaryn" />
+                  </invoke>
+               </g>
+            </g> <!-- /black-briar-meadery -->
+            <g name="elgrims-elixirs">
+               <constant name="front-back-dividing-y-coordinate" value="32" />
+            
+               <condition-set name="speaker-is-up-front">
+                  <y of="speaker" lte="front-back-dividing-y-coordinate" />
+               </condition-set>
+               
+               <g name="back">
+                  <conditions>
+                     <y of="speaker" lte="front-back-dividing-y-coordinate" />
+                     <y of="subject" gte="front-back-dividing-y-coordinate" />
+                  </conditions>
+                  <shared-infos name="shared-back-of-the-store" />
+               </g>
+               <g name="alchemy-table">
+                  <conditions>
+                     <condition-set name="speaker-is-up-front" />
+                     <x of="subject" lte="-320" />
+                     <y of="subject" at="784" around="192" />
+                  </conditions>
+                  <shared-infos name="shared-behind-the-counter" />
+               </g>
+               <g name="counter">
+                  <conditions>
+                     <condition-set name="speaker-is-up-front" />
+                     <x of="subject" at="-64" around="320" />
+                     <y of="subject" at="784" around="192" />
+                  </conditions>
+                  <shared-infos name="shared-behind-the-counter" />
+               </g>
+               <g name="front">
+                  <conditions>
+                     <y of="speaker" gte="front-back-dividing-y-coordinate" />
+                     <y of="subject" lte="front-back-dividing-y-coordinate" />
+                  </conditions>
+                  <shared-infos name="shared-front-of-building" />
+               </g>
+            </g> <!-- /elgrims-elixirs -->
+            <g name="haelgas-bunkhouse">
+               <g name="bedroom-haelga">
+                  <conditions>
+                     <x of="subject" gte="-128" />
+                     <y of="subject" gte="192" />
+                     <z of="subject" gte="64" />
+                     <z of="subject" lt="320" />
+                  </conditions>
+                  <invoke name="owned-room">
+                     <parameter name="OWNER" value="Haelga" />
+                  </invoke>
+               </g>
+               <g name="bedroom-svana">
+                  <conditions>
+                     <x of="subject" gte="-128" />
+                     <y of="subject" lte="-448" />
+                     <z of="subject" gte="320" />
+                  </conditions>
+                  <invoke name="owned-room">
+                     <parameter name="OWNER" value="Svana" />
+                  </invoke>
+               </g>
+            </g> <!-- /haelgas-bunkhouse -->
+            <g name="house-clan-snow-shod">
+               <g name="1F">
+                  <conditions>
+                     <z of="speaker" gte="64" />
+                     <z of="speaker" lt="320" />
+                     <z of="subject" gte="64" />
+                     <z of="subject" lt="320" />
+                  </conditions>
+                  <g name="dining-room">
+                     <conditions>
+                        <x of="subject" lte="-448" />
+                        <y of="subject" gte="-64" />
+                     </conditions>
+                     <shared-infos name="shared-dining-room" />
+                  </g>
+               </g> <!-- /1F -->
+               <g name="2F">
+                  <conditions>
+                     <z of="speaker" gte="320" />
+                     <z of="subject" gte="320" />
+                  </conditions>
+                  <g name="bedroom-asgeir">
+                     <conditions>
+                        <x of="subject" lte="-448" />
+                        <y of="subject" gte="192" />
+                     </conditions>
+                     <invoke name="owned-room">
+                        <parameter name="OWNER" value="Asgeir" />
+                     </invoke>
+                  </g>
+                  <g name="bedroom-nura">
+                     <conditions>
+                        <x of="subject" gte="-448" />
+                        <y of="subject" gte="192" />
+                     </conditions>
+                     <invoke name="owned-room">
+                        <parameter name="OWNER" value="Nura" />
+                     </invoke>
+                  </g>
+                  <g name="bedroom-vulwulf">
+                     <conditions>
+                        <x of="subject" gte="-448" />
+                        <y of="subject" lte="-64" />
+                     </conditions>
+                     <invoke name="owned-room">
+                        <parameter name="OWNER" value="Vulwulf" />
+                     </invoke>
+                  </g>
+               </g> <!-- /2F -->
+            </g> <!-- /house-clan-snow-shod -->
+            <g name="house-mjoll">
+               <z of="speaker" gte="320" />
+               <z of="subject" gte="320" />
+               <g name="bedroom-aerin">
+                  <conditions>
+                     <x of="subject" lte="0" />
+                     <y of="subject" gte="-64" />
+                     <y of="subject" lte="192" />
+                  </conditions>
+                  <invoke name="owned-room">
+                     <parameter name="OWNER" value="Aerin" />
+                  </invoke>
+               </g>
+               <g name="bedroom-mjoll">
+                  <conditions>
+                     <y of="subject" lte="-64" />
+                  </conditions>
+                  <invoke name="owned-room">
+                     <parameter name="OWNER" value="Mjoll" />
+                  </invoke>
+               </g>
+            </g> <!-- /house-mjoll -->
+            <g name="mistveil-keep-main">
+               <g name="room-housecarl">
+                  <conditions>
+                     <x of="subject" lte="-1600" />
+                     <y of="subject" gte="1920" />
+                  </conditions>
+                  <g>
+                     <conditions>
+                        <!--
+                           TODO: more rigorous check: only treat this as Maul's room 
+                           if the Imperials have Riften
+                        -->
+                        <or>
+                           <actor-base of="subject" is="Unmid" />
+                           <actor-base of="subject" is="Maul" />
+                        </or>
+                     </conditions>
+                     <shared-infos name="shared-in-own-room" />
+                  </g>
+                  <line>He's in the housecarl's room.</line>
+                  <line>Check the housecarl's bedroom.</line>
+                  <line>I think I saw him over by the housecarl's room not too long ago.</line>
+               </g>
+               <g name="room-steward">
+                  <conditions>
+                     <x of="subject" gte="-980" />
+                     <y of="subject" gte="1664" />
+                  </conditions>
+                  <g>
+                     <conditions>
+                        <!--
+                           TODO: more rigorous check: only treat this as Hemming's room 
+                           if the Imperials have Riften
+                        -->
+                        <or>
+                           <actor-base of="subject" is="Anuriel" />
+                           <actor-base of="subject" is="Hemming" />
+                        </or>
+                     </conditions>
+                     <shared-infos name="shared-in-own-room" />
+                  </g>
+                  <line>He's in the steward's room.</line>
+                  <line>Check the steward's bedroom.</line>
+                  <line>I think I saw him over by the steward's chambers.</line>
+               </g>
+               <g name="room-wylandriah">
+                  <conditions>
+                     <x of="subject" lte="-1792" />
+                     <y of="subject" lte="640" />
+                  </conditions>
+                  <line>He's in the court mage's chambers.</line>
+                  <line>Check the court mage's chambers.</line>
+                  <line>The court mage has a little area near the front of the building. I believe I saw him<!-- i.e. the subject, not the court mage --> in there.</line>
+               </g>
+            </g> <!-- /mistveil-keep-main -->
+         </g> <!-- /interiors-specific-rooms -->
+         
+         <!--
+            Many of Riften's interiors have multiple floors, but the floors are 
+            placed at consistent heights. These generic upstairs/downstairs 
+            lines take advantage of that.
+         -->
+         <g name="common-interior-multiple-floors">
+            <constant name="height-coordinate-b1f" value="-192" />
+            <constant name="height-coordinate-1f" value="64" />
+            <constant name="height-coordinate-2f" value="320" />
+            <condition-set name="riften-common-interior">
+               <or>
+                  <parent-cell is="RiftenBeeandBarb" />
+                  <parent-cell is="RiftenBlackBriarManor" />
+                  <parent-cell is="RiftenBlackBriarMeadery" />
+                  <parent-cell is="RiftenBlacksmith" />
+                  <parent-cell is="RiftenBollisHouse" />
+                  <parent-cell is="RiftenHaelgasBunkhouse" />
+                  <parent-cell is="RiftenHoneyside" />
+                  <parent-cell is="RiftenHouseofClanSnowShod" />
+                  <parent-cell is="RiftenHouseofMjolltheLioness" />
+                  <parent-cell is="RiftenPawnedPrawn" />
+               </or>
+            </condition-set>
+            
+            <g name="upstairs">
+               <conditions>
+                  <parent-cell of="player" same-as="subject" />
+                  <!-- subject not on lowest floor; player not on highest floor -->
+                  <z of="subject" gte="height-coordinate-1f" />
+                  <z of="player"  lt="height-coordinate-2f" />
+                  <or>
+                     <!-- player on lowest floor or subject on highest floor -->
+                     <!-- if we had more than 3 floors, the logic here would be more complex -->
+                     <z of="subject" gte="height-coordinate-2f" />
+                     <z of="player"  lt="height-coordinate-1f" />
+                  </or>
+                  <condition-set of="subject" name="riften-common-interior" />
+               </conditions>
+               <shared-infos name="shared-upstairs" />
+            </g>
+            <g name="downstairs">
+               <conditions>
+                  <!--
+                     downstairs is opposite of upstairs; just switch around who we run each 
+                     coordinate check on
+                  -->
+                  <parent-cell of="player" same-as="subject" />
+                  <z of="player" gte="height-coordinate-1f" />
+                  <z of="subject"  lt="height-coordinate-2f" />
+                  <or>
+                     <z of="player" gte="height-coordinate-2f" />
+                     <z of="subject"  lt="height-coordinate-1f" />
+                  </or>
+                  <condition-set of="subject" name="riften-common-interior" />
+               </conditions>
+               <shared-infos name="shared-downstairs" />
+            </g>
+            <g name="same-floor">
+               <conditions>
+                  <parent-cell of="player" same-as="subject" />
+                  <or>
+                     <z of="subject" lt="height-coordinate-1f" />
+                     <z of="subject" lt="height-coordinate-2f" />
+                     <z of="player" gte="height-coordinate-2f" />
+                  </or>
+                  <or>
+                     <z of="subject" lt="height-coordinate-1f" />
+                     <z of="player" lt="height-coordinate-2f" />
+                     <z of="subject" gte="height-coordinate-2f" />
+                  </or>
+                  <or>
+                     <z of="player" lt="height-coordinate-1f" />
+                     <z of="subject" lt="height-coordinate-2f" />
+                     <z of="player" gte="height-coordinate-2f" />
+                  </or>
+                  <or>
+                     <z of="player" lt="height-coordinate-1f" />
+                     <z of="player" lt="height-coordinate-2f" />
+                     <z of="subject" gte="height-coordinate-2f" />
+                  </or>
+                  <condition-set of="subject" name="riften-common-interior" />
+               </conditions>
+               <shared-infos name="shared-same-floor" />
+            </g>
+         </g>
+         
+         <!-- TODO: Exterior areas -->
+         
+         <!-- TODO: Interior cells -->
+      </g>
+   </quest>
+</payload>

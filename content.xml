@@ -1,0 +1,1410 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+   <!--
+      This file is an off-the-top-of-my-head draft used to concept out 
+      what the XML format should look like, and what features it should 
+      have.
+   -->
+   
+   <shared-infos>
+      <group name="shared-upstairs">
+         <lines>
+            <line>He's upstairs.</line>
+            <line>Oh, he's just upstairs.</line>
+            <line>Try checking upstairs.</line>
+            <line>Try looking upstairs.</line>
+         </lines>
+      </group>
+      <group name="shared-downstairs">
+         <lines>
+            <line>He's downstairs.</line>
+            <line>Oh, he's just downstairs.</line>
+            <line>Try checking downstairs.</line>
+            <line>Try looking downstairs.</line>
+         </lines>
+      </group>
+      <group name="shared-same-floor">
+         <lines>
+            <line>He should be somewhere on this floor of the building.</line>
+         </lines>
+      </group>
+      <group name="shared-same-room">
+         <lines>
+            <line>He's in this room.</line>
+         </lines>
+      </group>
+      <group name="shared-near-player">
+         <lines>
+            <line>He's standing right next to you.</line>
+            <line>He's standing right here.</line>
+         </lines>
+      </group>
+      
+      <group name="shared-exterior-near-blacksmith">
+         <lines>
+            <line>I think I saw him by the smithy not too long ago.</line>
+            <line>Pretty sure he's over by the blacksmith's shop.</line>
+         </lines>
+      </group>
+      <group name="shared-exterior-near-own-home">
+         <lines>
+            <line>I saw him around his house not too long ago.</line>
+            <line>I think he's over by his house right now.</line>
+         </lines>
+      </group>
+      <group name="shared-exterior-market">
+         <lines>
+            <line>He's in the market.</line>
+            <line>I saw him heading toward the market.</line>
+            <line>He should be at the market.</line>
+         </lines>
+      </group>
+      <group name="shared-exterior-market-with-us">
+         <lines>
+            <line>He's here in the market.</line>
+         </lines>
+      </group>
+      
+      <group name="shared-alchemy-table">
+         <lines>
+            <line>He's at the alchemy table.</line>
+            <line>He's by the alchemy table.</line>
+         </lines>
+      </group>
+      <group name="shared-back-of-the-store">
+         <lines>
+            <line>He's in the back.</line>
+            <line>He's back behind the shop proper.</line>
+         </lines>
+      </group>
+      <group name="shared-behind-the-counter">
+         <lines>
+            <line>He's behind the counter.</line>
+         </lines>
+      </group>
+      <group name="shared-dining-room">
+         <lines>
+            <line>He's in the dining room.</line>
+         </lines>
+      </group>
+      <group name="shared-foyer">
+         <lines>
+            <line>He's in the foyer.</line>
+         </lines>
+      </group>
+      <group name="shared-front-of-building">
+         <lines>
+            <line>He's up front.</line>
+            <line>He's at the front of the building.</line>
+         </lines>
+      </group>
+      <group name="shared-in-own-room">
+         <lines>
+            <line>He's in his room.</line>
+         </lines>
+      </group>
+      <group name="shared-in-my-room">
+         <lines>
+            <line>He's in my room.</line>
+         </lines>
+      </group>
+   </shared-infos>
+   
+   <macros>
+      <macro name="dining-room">
+         <data>
+            <lines>
+               <shared-infos name="shared-dining-room" />
+            </lines>
+         </data>
+      </macro>
+      <macro name="owned-room">
+         <parameter name="OWNER" />
+         <parameter name="OWNER-PRINTABLE" default-value="%OWNER%" />
+         <data>
+            <group>
+               <conditions>
+                  <actor-base of="subject" is="%OWNER%" />
+               </conditions>
+               <lines>
+                  <shared-infos name="shared-in-own-room" />
+               </lines>
+            </group>
+            <group>
+               <conditions>
+                  <actor-base of="speaker" is="%OWNER%" />
+               </conditions>
+               <lines>
+                  <shared-infos name="shared-in-my-room" />
+               </lines>
+            </group>
+            <lines>
+               <line>He's in <substitution parameter="OWNER-PRINTABLE" />'s room.</line>
+            </lines>
+         </data>
+      </macro>
+   </macros>
+   
+   <quest name="AWPARiften">
+   
+      <condition-set name="grelod-murder-not-in-progress">
+         <!-- TODO -->
+      </condition-set>
+      <condition-set name="is-bunkhouse-tenant">
+         <or>
+            <actor-base is="BrandShei" />
+            <actor-base is="FromDeepestFathoms" />
+            <actor-base is="Grelka" />
+            <actor-base is="Niluva" />
+            <actor-base is="Tythis" />
+            <actor-base is="Ungrien" />
+            <actor-base is="Wujeeta" />
+         </or>
+      </condition-set>
+      <condition-set name="player-in-thieves-guild">
+         <!-- TODO -->
+      </condition-set>
+      <condition-set name="riften-under-stormcloak-control">
+         <papyrus-quest-variable
+            quest="CW"
+            variable="::OwnerRift_var"
+            eq="[GLOB]CWSons"
+         />
+      </condition-set>
+      <condition-set name="riften-under-imperial-control">
+         <papyrus-quest-variable
+            quest="CW"
+            variable="::OwnerRift_var"
+            neq="[GLOB]CWSons"
+         />
+      </condition-set>
+      <condition-set name="vald-is-spawned">
+         <quest-running quest="TG07" />
+      </condition-set>
+      <condition-set name="vald-is-spawned-and-alive">
+         <condition-set name="vald-is-spawned" />
+         <death-count for="Vald" lte="0" />
+      </condition-set>
+      
+      <actors>
+         <!-- TODO: this list is incomplete -->
+         <actor name="Aerin" />
+         <actor name="Alessandra" />
+         <actor name="Anuriel">
+            <conditions>
+               <!-- Anuriel is exiled with Laila if the city is taken by the Empire -->
+               <condition-set name="riften-under-stormcloak-control" />
+            </conditions>
+         </actor>
+         <actor name="Arnskar">
+            <conditions>
+               <condition-set name="player-in-thieves-guild" />
+            </conditions>
+         </actor>
+         <actor name="Asbjorn" />
+         <actor name="Asgeir" />
+         <actor name="Balimund" />
+         <actor name="BassianusAxius">
+            <conditions>
+               <!--
+                  TODO: only after he moves to Riften
+               -->
+            </conditions>
+         </actor>
+         <actor name="Bersi">
+            <conditions>
+               <!--
+                  TODO: don't allow asking this actor while harassing 
+                  their shop/business for the TG, nor in the immediate 
+                  aftermath of having done so
+               -->
+            </conditions>
+         </actor>
+         <actor name="Bolli" />
+         <actor name="BrandShei">
+            <entry-point-conditions>
+               <!--
+                  TODO: not while he's being framed or is imprisoned
+               -->
+            </entry-point-conditions>
+         </actor>
+         <actor name="ConstanceMichel">
+            <entry-point-conditions>
+               <condition-set name="grelod-murder-not-in-progress" />
+            </entry-point-conditions>
+         </actor>
+         <actor name="Dinya" />
+         <actor name="Edda" />
+         <actor name="Elgrim" />
+         <actor name="Esbern">
+            <!--
+               TODO: Only allow asking Esbern if encountering his locked 
+               door in the Ratway Vaults prior to searching for him in 
+               the main quest. Always have him refuse and shoo you away.
+            -->
+         </actor>
+         <actor name="Francois" />
+         <actor name="FromDeepestFathoms" />
+         <actor name="Grelka" />
+         <actor name="Grelod">
+            <!--
+               Grelod should never respond constructively to these inquiries.
+            -->
+            <override-entry-point exclusive="true">
+               <group non-exclusive="true">
+                  <conditions>
+                     <offers-services of="speaker" />
+                  </conditions>
+                  <lines>
+                     <line>I sell weapons and armor, not directions.</line>
+                     <line>No. Buy something or move on.</line>
+                  </lines>
+               </group>
+               <lines>
+                  <line>I'm not your tour guide. Find somebody else to bother about it.</line>
+                  <line>No. I'm too busy running my shop to keep track of everyone else.</line>
+                  <line>Whoever it is, I'm not their keeper, I don't know where they're at, and I don't care.</line>
+               </lines>
+            </override-entry-point>
+         </actor>
+         <actor name="Haelga">
+            <conditions>
+               <!--
+                  TODO: don't allow asking this actor while harassing 
+                  their shop/business for the TG, nor in the immediate 
+                  aftermath of having done so
+               -->
+            </conditions>
+         </actor>
+         <actor name="Hafjorg" />
+         <actor name="Harrald" />
+         <actor name="Hemming" />
+         <actor name="Hroar" />
+         <actor name="Hofgrir" />
+         <actor name="Indaryn">
+            <!--
+               TODO: examine Indaryn's lines and character; not sure he 
+               would be a helpful man
+            -->
+         </actor>
+         <actor name="Ingun">
+            <!--
+               Ingun should seem distracted and fail to provied a useful 
+               answer unless you've done her favor quest.
+            -->
+            <override-responses>
+               <conditions>
+                  <quest-not-completed name="FreeformRiften04" />
+                  <!-- She is attentive to her family members: -->
+                  <actor-base of="subject" is-not="Hemming" />
+                  <actor-base of="subject" is-not="Maven" />
+                  <actor-base of="subject" is-not="Sibbi" />
+                  <!-- ...And to the town alchemists: -->
+                  <actor-base of="subject" is-not="Hafjorg" />
+                  <actor-base of="subject" is-not="Elgrim" />
+               </conditions>
+               <lines>
+                  <line>I haven't noticed him around town. You'll have to ask someone else.</line>
+                  <line>Hmm... I don't remember seeing him, but... I probably wouldn't have noticed him.</line>
+                  <line>I've been too focused on my experiments to really notice him.</line>
+                  <line hours-until-reset="48">I'm not sure. I've been thinking about my experiments... Would you happen to know a good place to gather Painted Troll Fat? Sorry, never mind.</line>
+               </lines>
+               <group non-exclusive="true">
+                  <conditions>
+                     <global name="GameHour" gte="12" />
+                     <global name="GameHour" lt="18" />
+                  </conditions>
+                  <lines>
+                     <line>I'm afraid I don't know. I've been planning new alchemical experiments all day.</line>
+                  </lines>
+               </group>
+               <group non-exclusive="true">
+                  <conditions>
+                     <global name="GameHour" gte="18" />
+                     <global name="GameHour" lte="23" />
+                  </conditions>
+                  <lines>
+                     <line>I'm afraid I don't know. I've been planning new alchemical experiments all night.</line>
+                  </lines>
+               </group>
+            </override-responses>
+         </actor>
+         <actor name="Iona">
+            <conditions>
+               <!--
+                  TODO: only while present in Riften (this character 
+                  is a potential player follower)
+               -->
+            </conditions>
+         </actor>
+         <actor name="Keerava">
+            <conditions>
+               <!--
+                  TODO: don't allow asking this actor while harassing 
+                  their shop/business for the TG, nor in the immediate 
+                  aftermath of having done so
+               -->
+            </conditions>
+         </actor>
+         <actor name="LouisLetrush" />
+         <actor name="Madesi" />
+         <actor name="Maramal" />
+         <actor name="Marcurio">
+            <conditions>
+               <!--
+                  TODO: only while present in Riften (this character 
+                  is a potential player follower)
+               -->
+            </conditions>
+         </actor>
+         <actor name="Marise" />
+         <actor name="Maul">
+            <conditions>
+               <!--
+                  TODO: always allow asking, but only have him give 
+                  useful answers if you're in the Thieves Guild
+               -->
+            </conditions>
+         </actor>
+         <actor name="Maven">
+            <!--
+               TODO: Maven should never respond constructively to any 
+               inquiries. If you're in the TG or DB, you shouldn't be 
+               allowed to push it. If you're not affiliated, then you 
+               can ask her again, but she still won't answer, and you 
+               will later be attacked by hired thugs for the crime of 
+               having annoyed her.
+            -->
+            <override-entry-point exclusive="true">
+               <lines>
+                  <line>No.</line>
+               </lines>
+            </override-entry-point>
+         </actor>
+         <actor name="Mjoll" />
+         <actor name="Molgrom" />
+         <actor name="Niluva" />
+         <actor name="Nivenor" />
+         <actor name="Nura" />
+         <actor name="Romlyn" />
+         <actor name="Runa" />
+         <actor name="Rune">
+            <conditions>
+               <condition-set name="player-in-thieves-guild" />
+            </conditions>
+         </actor>
+         <actor name="Saerlund" />
+         <actor name="Samuel" />
+         <actor name="Shadr" />
+         <actor name="Svana" />
+         <actor name="TalenJei" />
+         <actor name="Threki" />
+         <actor name="Tythis" />
+         <actor name="Ungrien" />
+         <actor name="Vald">
+            <conditions>
+               <condition-set name="vald-is-spawned" />
+            </conditions>
+         </actor>
+         <actor name="Valindor" />
+         <actor name="Vulwulf">
+            <!--
+               Vulwulf's daughter served the Stormcloaks and died in the war. He 
+               is actively racist against all Imperials, and spends his days and 
+               nights drinking himself to death at the Bee and Barb, interrupting 
+               his time at the bar only to eat dinner with his surviving family.
+            -->
+            <override-entry-point>
+               <conditions>
+                  <or>
+                     <race of="player" is="ImperialRace" />
+                     <race of="player" is="ImperialRaceVampire" />
+                  </or>
+               </conditions>
+               <lines>
+                  <line>No. Leave me be, you Imperial bastard.</line>
+                  <line>No. Leave me alone, you Imperial dog.</line>
+                  <line>No, Imperial.</line>
+                  <line>The carriage driver is just outside the north gate. He can take you back to Cyrodiil where you belong.</line>
+               </lines>
+            </override-entry-point>
+            <override-responses>
+               <group>
+                  <conditions>
+                     <global name="GameHour" gte="13" />
+                     <global name="GameHour" lte="18" />
+                     <parent-cell of="speaker" is="RiftenBeeandBarb" />
+                     <parent-cell of="subject" is-not="RiftenBeeandBarb" />
+                  </conditions>
+                  <lines>
+                     <line>I wouldn't know. I've been here since noon.</line>
+                     <line>If they're not in here, then I don't know where they are.</line>
+                     <line>They're not in here, that's for sure.</line>
+                  </lines>
+               </group>
+               <group>
+                  <conditions>
+                     <or>
+                        <global name="GameHour" lte="3" />
+                        <global name="GameHour" gte="20" />
+                     </or>
+                     <parent-cell of="speaker" is="RiftenBeeandBarb" />
+                     <parent-cell of="subject" is-not="RiftenBeeandBarb" />
+                  </conditions>
+                  <lines>
+                     <line>I wouldn't know. I've been here since dinner.</line>
+                     <line>If they're not in here, then I don't know where they are.</line>
+                     <line>They're not in here, that's for sure.</line>
+                  </lines>
+               </group>
+            </override-responses>
+         </actor>
+         <actor name="Wujeeta" />
+         <actor name="Wilhelm" />
+      </actors>
+      <lines>
+         <group name="very-close-to-player">
+            <conditions>
+               <distance of="player" to="subject" lte="128" />
+            </conditions>
+            <lines>
+               <shared-infos name="shared-near-player" />
+            </lines>
+         </group>
+      
+         <!--
+            Lines for specific rooms within interiors. These come first 
+            so that they take precedence over generic upstairs/downstairs 
+            lines.
+         -->
+         <group name="interiors-specific-rooms">
+            <conditions>
+               <parent-cell of="speaker" same-as="subject" />
+            </conditions>
+            <group name="bee-and-barb">
+               <conditions>
+                  <parent-cell of="subject" is="RiftenBeeandBarb" />
+               </conditions>
+               <group name="bedrooms">
+                  <conditions>
+                     <z of="speaker" gte="320" />
+                     <z of="subject" gte="320" />
+                  </conditions>
+                  <group name="bedroom-talen-jei">
+                     <conditions>
+                        <x of="subject" gte="320" />
+                     </conditions>
+                     <macro name="owned-room">
+                        <parameter name="OWNER" value="TalenJei" />
+                        <parameter name="OWNER-PRINTABLE" value="Talen-Jei" />
+                     </macro>
+                  </group>
+                  <group name="bedroom-keerava">
+                     <conditions>
+                        <y of="subject" lte="-576" />
+                     </conditions>
+                     <macro name="owned-room">
+                        <parameter name="OWNER" value="Keerava" />
+                     </macro>
+                  </group>
+               </group>
+               <group name="counter">
+                  <conditions>
+                     <x of="subject" gte="640" />
+                     <y of="subject" lte="-128" />
+                  </conditions>
+                  <lines>
+                     <shared-infos name="shared-behind-the-counter" />
+                  </lines>
+               </group>
+            </group> <!-- /bee-and-barb -->
+            <group name="black-briar-manor">
+               <conditions>
+                  <parent-cell of="subject" is="RiftenBlackBriarManor" />
+               </conditions>
+               <group name="B1F">
+                  <conditions>
+                     <z of="subject" lt="64" />
+                     <z of="speaker" lt="64" />
+                  </conditions>
+                  <group name="bedroom-ingun">
+                     <conditions>
+                        <x of="subject" lte="-1984" />
+                     </conditions>
+                     <macro name="owned-room">
+                        <parameter name="OWNER" value="Ingun" />
+                     </macro>
+                  </group>
+                  <group name="bedroom-maul">
+                     <conditions>
+                        <x of="subject" gte="-1472" />
+                        <y of="subject" lte="-128" />
+                     </conditions>
+                     <macro name="owned-room">
+                        <parameter name="OWNER" value="Maul" />
+                     </macro>
+                  </group>
+               </group> <!-- /B1F -->
+               <group name="1F">
+                  <conditions>
+                     <z of="subject" gte="64" />
+                     <z of="speaker" gte="64" />
+                     <z of="subject" lt="320" />
+                     <z of="speaker" lt="320" />
+                  </conditions>
+                  <group name="dining-room">
+                     <conditions>
+                        <x of="subject" gte="-1472" />
+                        <y of="subject" gte="-1088" />
+                     </conditions>
+                     <macro name="dining-room" />
+                  </group>
+                  <group name="foyer">
+                     <conditions>
+                        <x of="subject" at="-1344" around="768" />
+                        <y of="subject" lte="128" />
+                     </conditions>
+                     <lines>
+                        <shared-infos name="shared-foyer" />
+                     </lines>
+                  </group>
+               </group> <!-- /1F -->
+               <group name="2F">
+                  <conditions>
+                     <z of="subject" gte="320" />
+                     <z of="speaker" gte="320" />
+                  </conditions>
+                  <group name="bedroom-hemming">
+                     <conditions>
+                        <x of="subject" at="-1472" around="480" />
+                        <y of="subject" gte="256" />
+                     </conditions>
+                     <macro name="owned-room">
+                        <parameter name="OWNER" value="Hemming" />
+                     </macro>
+                  </group>
+                  <group name="bedroom-maven">
+                     <conditions>
+                        <x of="subject" at="-1312" around="1184" />
+                        <y of="subject" lte="-48" />
+                     </conditions>
+                     <macro name="owned-room">
+                        <parameter name="OWNER" value="Maven" />
+                     </macro>
+                  </group>
+                  <group name="bedroom-sibbi">
+                     <conditions>
+                        <x of="subject" lte="-1200" />
+                        <y of="subject" gte="256" />
+                     </conditions>
+                     <macro name="owned-room">
+                        <parameter name="OWNER" value="Sibbi" />
+                     </macro>
+                  </group>
+               </group> <!-- /2F -->
+            </group> <!-- /black-briar-manor -->
+            <group name="black-briar-meadery">
+               <group>
+                  <conditions>
+                     <!--
+                        All rooms beyond this point have an open floor plan affording 
+                        a direct view into the bottom level.
+                     -->
+                     <x of="speaker" lte="1792" />
+                     <z of="subject" lt="64" />
+                     <or>
+                        <!--
+                           ...Except Indaryn's bedroom on the top floor.
+                        -->
+                        <x of="speaker" gte="768" />
+                        <z of="speaker" lt="320" />
+                     </or>
+                  </conditions>
+                  <lines>
+                     <line>He's on the bottom level.</line>
+                     <line>He's down on the bottom level.</line>
+                     <line>Head all the way downstairs to the bottom.</line>
+                  </lines>
+               </group>
+               <group name="bedroom-indaryn">
+                  <conditions>
+                     <z of="subject" gte="320" />
+                     <z of="speaker" gte="320" />
+                     <x of="subject" lte="768" />
+                     <y of="subject" lte="-4416" />
+                  </conditions>
+                  <macro name="owned-room">
+                     <parameter name="OWNER" value="Indaryn" />
+                  </macro>
+               </group>
+            </group> <!-- /black-briar-meadery -->
+            <group name="elgrims-elixirs">
+               <constant name="front-back-dividing-y-coordinate" value="32" />
+            
+               <condition-set name="speaker-is-up-front">
+                  <y of="speaker" lte="front-back-dividing-y-coordinate" />
+               </condition-set>
+               
+               <group name="back">
+                  <conditions>
+                     <y of="speaker" lte="front-back-dividing-y-coordinate" />
+                     <y of="subject" gte="front-back-dividing-y-coordinate" />
+                  </conditions>
+                  <lines>
+                     <shared-infos name="shared-back-of-the-store" />
+                  </lines>
+               </group>
+               <group name="alchemy-table">
+                  <conditions>
+                     <condition-set name="speaker-is-up-front" />
+                     <x of="subject" lte="-320" />
+                     <y of="subject" at="784" around="192" />
+                  </conditions>
+                  <lines>
+                     <shared-infos name="shared-behind-the-counter" />
+                  </lines>
+               </group>
+               <group name="counter">
+                  <conditions>
+                     <condition-set name="speaker-is-up-front" />
+                     <x of="subject" at="-64" around="320" />
+                     <y of="subject" at="784" around="192" />
+                  </conditions>
+                  <lines>
+                     <shared-infos name="shared-behind-the-counter" />
+                  </lines>
+               </group>
+               <group name="front">
+                  <conditions>
+                     <y of="speaker" gte="front-back-dividing-y-coordinate" />
+                     <y of="subject" lte="front-back-dividing-y-coordinate" />
+                  </conditions>
+                  <lines>
+                     <shared-infos name="shared-front-of-building" />
+                  </lines>
+               </group>
+            </group> <!-- /elgrims-elixirs -->
+            <group name="haelgas-bunkhouse">
+               <group name="bedroom-haelga">
+                  <conditions>
+                     <x of="subject" gte="-128" />
+                     <y of="subject" gte="192" />
+                     <z of="subject" gte="64" />
+                     <z of="subject" lt="320" />
+                  </conditions>
+                  <macro name="owned-room">
+                     <parameter name="OWNER" value="Haelga" />
+                  </macro>
+               </group>
+               <group name="bedroom-svana">
+                  <conditions>
+                     <x of="subject" gte="-128" />
+                     <y of="subject" lte="-448" />
+                     <z of="subject" gte="320" />
+                  </conditions>
+                  <macro name="owned-room">
+                     <parameter name="OWNER" value="Svana" />
+                  </macro>
+               </group>
+            </group> <!-- /haelgas-bunkhouse -->
+            <group name="house-clan-snow-shod">
+               <group name="1F">
+                  <conditions>
+                     <z of="speaker" gte="64" />
+                     <z of="speaker" lt="320" />
+                     <z of="subject" gte="64" />
+                     <z of="subject" lt="320" />
+                  </conditions>
+                  <group name="dining-room">
+                     <conditions>
+                        <x of="subject" lte="-448" />
+                        <y of="subject" gte="-64" />
+                     </conditions>
+                     <macro name="dining-room" />
+                  </group>
+               </group> <!-- /1F -->
+               <group name="2F">
+                  <conditions>
+                     <z of="speaker" gte="320" />
+                     <z of="subject" gte="320" />
+                  </conditions>
+                  <group name="bedroom-asgeir">
+                     <conditions>
+                        <x of="subject" lte="-448" />
+                        <y of="subject" gte="192" />
+                     </conditions>
+                     <macro name="owned-room">
+                        <parameter name="OWNER" value="Asgeir" />
+                     </macro>
+                  </group>
+                  <group name="bedroom-nura">
+                     <conditions>
+                        <x of="subject" gte="-448" />
+                        <y of="subject" gte="192" />
+                     </conditions>
+                     <macro name="owned-room">
+                        <parameter name="OWNER" value="Nura" />
+                     </macro>
+                  </group>
+                  <group name="bedroom-vulwulf">
+                     <conditions>
+                        <x of="subject" gte="-448" />
+                        <y of="subject" lte="-64" />
+                     </conditions>
+                     <macro name="owned-room">
+                        <parameter name="OWNER" value="Vulwulf" />
+                     </macro>
+                  </group>
+               </group> <!-- /2F -->
+            </group> <!-- /house-clan-snow-shod -->
+            <group name="house-mjoll">
+               <z of="speaker" gte="320" />
+               <z of="subject" gte="320" />
+               <group name="bedroom-aerin">
+                  <conditions>
+                     <x of="subject" lte="0" />
+                     <y of="subject" gte="-64" />
+                     <y of="subject" lte="192" />
+                  </conditions>
+                  <macro name="owned-room">
+                     <parameter name="OWNER" value="Aerin" />
+                  </macro>
+               </group>
+               <group name="bedroom-mjoll">
+                  <conditions>
+                     <y of="subject" lte="-64" />
+                  </conditions>
+                  <macro name="owned-room">
+                     <parameter name="OWNER" value="Mjoll" />
+                  </macro>
+               </group>
+            </group> <!-- /house-mjoll -->
+            <group name="mistveil-keep-main">
+               <group name="room-housecarl">
+                  <conditions>
+                     <x of="subject" lte="-1600" />
+                     <y of="subject" gte="1920" />
+                  </conditions>
+                  <group>
+                     <conditions>
+                        <!--
+                           TODO: more rigorous check: only treat this as Maul's room 
+                           if the Imperials have Riften
+                        -->
+                        <or>
+                           <actor-base of="subject" is="Unmid" />
+                           <actor-base of="subject" is="Maul" />
+                        </or>
+                     </conditions>
+                     <lines>
+                        <shared-infos name="shared-in-own-room" />
+                     </lines>
+                  </group>
+                  <lines>
+                     <line>He's in the housecarl's room.</line>
+                     <line>Check the housecarl's bedroom.</line>
+                     <line>I think I saw him over by the housecarl's room not too long ago.</line>
+                  </lines>
+               </group>
+               <group name="room-steward">
+                  <conditions>
+                     <x of="subject" gte="-980" />
+                     <y of="subject" gte="1664" />
+                  </conditions>
+                  <group>
+                     <conditions>
+                        <!--
+                           TODO: more rigorous check: only treat this as Hemming's room 
+                           if the Imperials have Riften
+                        -->
+                        <or>
+                           <actor-base of="subject" is="Anuriel" />
+                           <actor-base of="subject" is="Hemming" />
+                        </or>
+                     </conditions>
+                     <lines>
+                        <shared-infos name="shared-in-own-room" />
+                     </lines>
+                  </group>
+                  <lines>
+                     <line>He's in the steward's room.</line>
+                     <line>Check the steward's bedroom.</line>
+                     <line>I think I saw him over by the steward's chambers.</line>
+                  </lines>
+               </group>
+               <group name="room-wylandriah">
+                  <conditions>
+                     <x of="subject" lte="-1792" />
+                     <y of="subject" lte="640" />
+                  </conditions>
+                  <lines>
+                     <line>He's in the court mage's chambers.</line>
+                     <line>Check the court mage's chambers.</line>
+                     <line>The court mage has a little area near the front of the building. I believe I saw him<!-- i.e. the subject, not the court mage --> in there.</line>
+                  </lines>
+               </group>
+            </group> <!-- /mistveil-keep-main -->
+         </group> <!-- /interiors-specific-rooms -->
+         
+         <!--
+            Many of Riften's interiors have multiple floors, but the floors are 
+            placed at consistent heights. These generic upstairs/downstairs 
+            lines take advantage of that.
+         -->
+         <group name="common-interior-multiple-floors">
+            <constant name="height-coordinate-b1f" value="-192" />
+            <constant name="height-coordinate-1f" value="64" />
+            <constant name="height-coordinate-2f" value="320" />
+            <condition-set name="riften-common-interior">
+               <or>
+                  <parent-cell is="RiftenBeeandBarb" />
+                  <parent-cell is="RiftenBlackBriarManor" />
+                  <parent-cell is="RiftenBlackBriarMeadery" />
+                  <parent-cell is="RiftenBlacksmith" />
+                  <parent-cell is="RiftenBollisHouse" />
+                  <parent-cell is="RiftenHaelgasBunkhouse" />
+                  <parent-cell is="RiftenHoneyside" />
+                  <parent-cell is="RiftenHouseofClanSnowShod" />
+                  <parent-cell is="RiftenHouseofMjolltheLioness" />
+                  <parent-cell is="RiftenPawnedPrawn" />
+               </or>
+            </condition-set>
+            
+            <group name="upstairs">
+               <conditions>
+                  <parent-cell of="player" same-as="subject" />
+                  <!-- subject not on lowest floor; player not on highest floor -->
+                  <z of="subject" gte="height-coordinate-1f" />
+                  <z of="player"  lt="height-coordinate-2f" />
+                  <or>
+                     <!-- player on lowest floor or subject on highest floor -->
+                     <!-- if we had more than 3 floors, the logic here would be more complex -->
+                     <z of="subject" gte="height-coordinate-2f" />
+                     <z of="player"  lt="height-coordinate-1f" />
+                  </or>
+                  <condition-set of="subject" name="riften-common-interior" />
+               </conditions>
+               <lines>
+                  <shared-infos name="shared-upstairs" />
+               </lines>
+            </group>
+            <group name="downstairs">
+               <conditions>
+                  <!--
+                     downstairs is opposite of upstairs; just switch around who we run each 
+                     coordinate check on
+                  -->
+                  <parent-cell of="player" same-as="subject" />
+                  <z of="player" gte="height-coordinate-1f" />
+                  <z of="subject"  lt="height-coordinate-2f" />
+                  <or>
+                     <z of="player" gte="height-coordinate-2f" />
+                     <z of="subject"  lt="height-coordinate-1f" />
+                  </or>
+                  <condition-set of="subject" name="riften-common-interior" />
+               </conditions>
+               <lines>
+                  <shared-infos name="shared-downstairs" />
+               </lines>
+            </group>
+            <group name="same-floor">
+               <conditions>
+                  <parent-cell of="player" same-as="subject" />
+                  <or>
+                     <z of="subject" lt="height-coordinate-1f" />
+                     <z of="subject" lt="height-coordinate-2f" />
+                     <z of="player" gte="height-coordinate-2f" />
+                  </or>
+                  <or>
+                     <z of="subject" lt="height-coordinate-1f" />
+                     <z of="player" lt="height-coordinate-2f" />
+                     <z of="subject" gte="height-coordinate-2f" />
+                  </or>
+                  <or>
+                     <z of="player" lt="height-coordinate-1f" />
+                     <z of="subject" lt="height-coordinate-2f" />
+                     <z of="player" gte="height-coordinate-2f" />
+                  </or>
+                  <or>
+                     <z of="player" lt="height-coordinate-1f" />
+                     <z of="player" lt="height-coordinate-2f" />
+                     <z of="subject" gte="height-coordinate-2f" />
+                  </or>
+                  <condition-set of="subject" name="riften-common-interior" />
+               </conditions>
+               <lines>
+                  <shared-infos name="shared-same-floor" />
+               </lines>
+            </group>
+         </group>
+         
+         <!--
+            All exterior locations.
+         -->
+         <group name="exteriors" unordered="true">
+            <conditions>
+               <parent-world is="RiftenWorld" />
+            </conditions>
+            
+            <constant name="height-coordinate-ground" value="11040" />
+            <constant name="north-south-dividing-y-coordinate" value="-96960" />
+            
+            <group name="canal-north" priority="200">
+               <conditions>
+                  <y of="subject" gte="north-south-dividing-y-coordinate" />
+                  <z of="subject" lt="height-coordinate-ground" />
+               </conditions>
+               <lines>
+                  <line>I think I saw him down in the canal, on the north side of the city.</line>
+                  <line>He might be in the canal's northern walkways.</line>
+                  <line>I saw him down in the north side of the canal not too long ago.</line>
+               </lines>
+            </group>
+            <group name="canal-south" priority="200">
+               <conditions>
+                  <y of="subject" lt="north-south-dividing-y-coordinate" />
+                  <z of="subject" lt="height-coordinate-ground" />
+               </conditions>
+               <lines>
+                  <line>I think I saw him down in the canal, on the south side of the city.</line>
+                  <line>He might be in the canal's southern walkways.</line>
+                  <line>I saw him down in the south side of the canal not too long ago.</line>
+               </lines>
+            </group>
+            
+            <group name="bee-and-barb" priority="-25">
+               <conditions>
+                  <x of="subject" lt="174272" />
+                  <y of="subject" at="-95488" around="1408" />
+               </conditions>
+               <lines>
+                  <line>I believe I saw him over by the Bee and Barb.</line>
+                  <line>Pretty sure he's near the Bee and Barb right now.</line>
+                  <line>Try looking around the Bee and Barb.</line>
+                  <line>Check near the Bee and Barb.</line>
+                  <group non-exclusive="true">
+                     <conditions>
+                        <y of="subject" gte="north-south-dividing-y-coordinate" />
+                     </conditions>
+                     <lines>
+                        <line>I think I saw him walking around by the Bee and Barb -- the north entrance.</line>
+                     </lines>
+                  </group>
+                  <group non-exclusive="true">
+                     <conditions>
+                        <y of="subject" lt="north-south-dividing-y-coordinate" />
+                     </conditions>
+                     <lines>
+                        <line>I think I saw him walking around by the Bee and Barb -- the south entrance.</line>
+                     </lines>
+                  </group>
+               </lines>
+            </group>
+            <group name="blacksmith" priority="-50">
+               <conditions>
+                  <x of="subject" lt="172992" />
+                  <y of="subject" at="-96832" around="2368" />
+               </conditions>
+               <group>
+                  <conditions>
+                     <!--
+                        is Balimund || (is Asbjorn && Balimund is dead)
+                        ==
+                        (Balimund || Asbjorn) && (Balimund || Balimund Dead)
+                     -->
+                     <or>
+                        <actor-base of="subject" is="Balimund" />
+                        <actor-base of="subject" is="Asbjorn" />
+                     </or>
+                     <or>
+                        <actor-base of="subject" is="Balimund" />
+                        <death-count for="Balimund" gt="0" />
+                     </or>
+                  </conditions>
+                  <lines>
+                     <line>The blacksmith? He's by his shop, the Scorched Hammer.</line>
+                     <line>He's hanging around his shop, the Scorched Hammer.</line>
+                     <line>He runs the Scorched Hammer down by the market. He should be around there now.</line>
+                  </lines>
+               </group>
+               <group>
+                  <conditions>
+                     <actor-base of="subject" is="Asbjorn" />
+                     <death-count for="Balimund" lte="0" />
+                  </conditions>
+                  <lines>
+                     <line>Balimund's apprentice? He's by the Scorched Hammer.</line>
+                     <line>The blacksmith's apprentice. He's down by the Scorched Hammer right now.</line>
+                     <line>He works at the Scorched Hammer by the market. He should be around there now.</line>
+                  </lines>
+               </group>
+               <lines>
+                  <line>Might be near the Scorched Hammer, maybe.</line>
+                  <line>I remember seeing him around the Scorched Hammer a little while ago.</line>
+                  <shared-infos name="shared-exterior-near-blacksmith" />
+               </lines>
+            </group>
+            <group name="gate-north">
+               <conditions>
+                  <x of="subject" at="173664" around="1728" />
+                  <y of="subject" gte="-93376" />
+               </conditions>
+               <lines>
+                  <line>I think I saw him by the north gate.</line>
+                  <line>Pretty sure he's over by the north gate right now.</line>
+                  <line>Try checking by the north gate.</line>
+                  <line>He's near the north gate.</line>
+               </lines>
+            </group>
+            <group name="haelga-bunkhouse">
+               <conditions>
+                  <x of="subject" at="173664" around="1728" />
+                  <y of="subject" at="-94080" around="1408" />
+                  <z of="subject" gt="height-coordinate-ground" />
+               </conditions>
+               <lines>
+                  <line>I'm pretty sure I saw him by the Bunkhouse not too long ago.</line>
+                  <line>Try looking around the Bunkhouse.</line>
+               </lines>
+               <group non-exclusive="true">
+                  <conditions>
+                     <condition-set name="is-bunkhouse-tenant" of="subject" />
+                  </conditions>
+                  <lines>
+                     <line>He's one of the tenants at the Bunkhouse. Think I saw him around there a little while ago.</line>
+                     <line>He's probably hanging around the Bunkhouse, where he lives.</line>
+                  </lines>
+               </group>
+               <group non-exclusive="true">
+                  <conditions>
+                     <actor-base of="speaker" is-not="Haelga" />
+                     <actor-base of="subject" is-not="Haelga" />
+                  </conditions>
+                  <lines>
+                     <line>I think I saw him walking around Haelga's Bunkhouse.</line>
+                     <line>Hmm... Try checking over by Haelga's Bunkhouse.</line>
+                  </lines>
+               </group>
+            </group>
+            <group name="honeyside">
+               <!--
+                  Northwest corner of the city.
+               -->
+               <conditions>
+                  <x of="subject" lte="172768" />
+                  <y of="subject" gte="-94208" />
+               </conditions>
+               <lines>
+                  <line>Try looking around Honeyside, in the northwest part of the city.</line>
+                  <line>I think I saw him walking past Honeyside not too long ago.</line>
+                  <line>Hm... He might be over by Honeyside.</line>
+               </lines>
+            </group>
+            <group name="honorhall-orphanage">
+               <conditions>
+                  <x of="subject" lte="173152" />
+                  <x of="subject" at="-99264" around="2496" />
+                  <z of="subject" gt="height-coordinate-ground" />
+               </conditions>
+               <lines>
+                  <line>I think I saw him passing by Honorhall, the orphanage to the southwest.</line>
+                  <line>Pretty sure I saw him over near Honorhall Orphanage.</line>
+                  <line>Look around Honorhall Orphanage. I remember seeing him over there.</line>
+               </lines>
+            </group>
+            <group name="market-priority-hi">
+               <conditions>
+                  <distance of="subject" to="[REFR:000FF215]RiftenTGCacheEnablerRef" lte="184" />
+               </conditions>
+               <group name="speaker-and-subject-both-in-market">
+                  <conditions>
+                     <distance of="speaker" to="[REFR:000FF215]RiftenTGCacheEnablerRef" lte="184" />
+                  </conditions>
+                  <lines>
+                     <shared-infos name="shared-exterior-market-with-us" />
+                  </lines>
+               </group>
+               <lines>
+                  <shared-infos name="shared-exterior-market" />
+               </lines>
+            </group>
+            <group name="market-priority-lo" priority="-100">
+               <conditions>
+                  <x of="subject" at="173632" around="2688" />
+                  <y of="subject" at="-96896" around="2240" />
+               </conditions>
+               <lines>
+                  <shared-infos name="shared-exterior-market" />
+               </lines>
+            </group>
+            <group name="mistveil-in-front-of" priority="-100">
+               <conditions>
+                  <x of="subject" at="173568" around="1024" />
+                  <y of="subject" at="-98688" around="1280" />
+               </conditions>
+               <lines>
+                  <line>I'm pretty sure he's over by Mistveil Keep.</line>
+                  <line>I saw him walking past Mistveil Keep not too long ago.</line>
+                  <line>Try checking in front of Mistveil Keep.</line>
+               </lines>
+            </group>
+            <group name="mistveil-courtyard" priority="100">
+               <conditions>
+                  <x of="subject" gte="173192" />
+                  <y of="subject" lte="-100256" />
+               </conditions>
+               <lines>
+                  <line>He could be in Mistveil Keep's courtyard.</line>
+                  <line>I think you might find him in Mistveil Keep's courtyard.</line>
+                  <line>At Mistveil Keep, maybe. Try checking the courtyard.</line>
+               </lines>
+            </group>
+            <group name="mistveil-keep">
+               <conditions>
+                  <or>
+                     <!--
+                        The map marker covers the front steps inside the wall. The second 
+                        ref is a wall-lean marker at the edge of the courtyard; applying 
+                        a radius of 1100 to it covers the area within the awkwardly-angled 
+                        the wall to east of the steps.
+                        
+                        The X-span is meant to cover the entrance to the Riften Jail, as 
+                        well as some odds-and-ends on the walls near the courtyard just 
+                        in case the player manages to parkour around.
+                        
+                        The relationship here is `A || B || (C && D)`, which, given the 
+                        boolean operator predecence, is `(A || B || C) && (A || B || D)`.
+                     -->
+                     <or>
+                        <distance of="subject" to="[REFR:000C44B1]MistveilKeepMapMarker" lte="1024" />
+                        <distance of="subject" to="[REFR:0010CEE1]" lte="1100" />
+                        <x of="subject" lte="173192" />
+                     </or>
+                     <or>
+                        <distance of="subject" to="[REFR:000C44B1]MistveilKeepMapMarker" lte="1024" />
+                        <distance of="subject" to="[REFR:0010CEE1]" lte="1100" />
+                        <x of="subject" gte="172576" />
+                     </or>
+                  </or>
+               </conditions>
+               <lines>
+                  <line>I'm pretty sure he's at Mistveil Keep.</line>
+                  <line>I saw him walking around Mistveil Keep not too long ago.</line>
+                  <line>Try checking Mistveil Keep.</line>
+               </lines>
+            </group>
+            <group name="pawned-prawn">
+               <!--
+                  In the alleyway west of the Bee and Barb.
+               -->
+               <conditions>
+                  <x of="subject" at="172160" around="1280" />
+                  <y of="subject" at="-94944" around="1472" />
+                  <z of="subject" gt="height-coordinate-ground" />
+               </conditions>
+               <!-- TODO -->
+            </group>
+            <group name="residence-black-briar" priority="-25">
+               <conditions>
+                  <x of="subject" at="175008" around="2112" />
+                  <y of="subject" at="-99072" around="2624" />
+               </conditions>
+               <!-- TODO -->
+            </group>
+            <group name="residence-bolli">
+               <conditions>
+                  <x of="subject" gte="174528" />
+                  <y of="subject" at="-93728" around="704" />
+               </conditions>
+               <group name="is-resident">
+                  <conditions>
+                     <or>
+                        <actor-base of="subject" is="Bolli" />
+                        <actor-base of="subject" is="Nivenor" />
+                     </or>
+                  </conditions>
+                  <lines>
+                     <line>He's over by his house, near the city's north gate.</line>
+                     <line>Have you checked around his home, near the north gate?</line>
+                     <shared-infos name="shared-exterior-near-own-home" />
+                  </lines>
+               </group>
+               <lines>
+                  <line>He's over by Bolli's house.</line>
+                  <line>I saw him walking by Bolli's house not too long ago.</line>
+                  <line>Hmm... Try checking around Bolli's house, by the north gate.</line>
+               </lines>
+            </group>
+            <group name="residence-mjoll">
+               <conditions>
+                  <x of="subject" gte="174528" />
+                  <y of="subject" gte="-93376" />
+               </conditions>
+               <group name="is-resident">
+                  <conditions>
+                     <actor-base of="subject" is="Mjoll" />
+                  </conditions>
+                  <lines>
+                     <line>He's over by his house, near the city's north gate.</line>
+                     <line>Have you checked around his home, near the north gate?</line>
+                     <shared-infos name="shared-exterior-near-own-home" />
+                  </lines>
+               </group>
+               <lines>
+                  <line>He's over by Mjoll's house.</line>
+                  <line>I saw him walking past Mjoll's house not too long ago.</line>
+                  <line>Hmm... Try checking around Mjoll's house and the north gate.</line>
+               </lines>
+            </group>
+            <group name="residence-snow-shod" priority="-25">
+               <conditions>
+                  <x of="subject" gte="174272" />
+                  <y of="subject" at="-94624" around="1472" />
+               </conditions>
+            </group>
+            <group name="riftweald-manor">
+               <conditions>
+                  <x of="subject" at="174720" around="896" />
+                  <y of="subject" at="-95840" around="1152" />
+               </conditions>
+               <lines>
+                  <line>I think I saw him walking past Riftweald Manor a little while ago.</line>
+                  <line>Try looking around Riftweald Manor.</line>
+                  <line>Pretty sure I saw him near Riftweald Manor.</line>
+                  <line>I saw him by Riftweald Manor not too long ago.</line>
+                  <line>Hmm... I might've seen him by the manor across the canal from the market.</line>
+                  <line>Check near Riftweald Manor, east of the market. Don't bother knocking on the door, though; no one ever answers.</line>
+               </lines>
+            </group>
+            <group name="riftweald-manor-backyard">
+               <conditions>
+                  <x of="subject" gte="175168" />
+                  <y of="subject" at="-95840" around="1152" />
+               </conditions>
+               <lines>
+                  <line>I think I saw him walking around behind Riftweald Manor.</line>
+                  <line>Try looking around the manor just north of the temple.</line>
+                  <line>Pretty sure he's hanging around behind Riftweald Manor.</line>
+               </lines>
+               <group non-exclusive="true">
+                  <conditions>
+                     <condition-set name="vald-is-spawned-and-alive" />
+                  </conditions>
+                  <lines>
+                     <line>He might be near Riftweald Manor's backyard. If you go looking around there, mind the brute guarding the place.</line>
+                     <line>I saw him back behind Riftweald Manor, getting hassled by the manor's guard for the crime of glancing at the place while walking past it.</line>
+                     <line>He was walking past Riftweald Manor earlier. Thought I heard him and the manor's guard arguing.</line>
+                  </lines>
+               </group>
+            </group>
+            <group name="talos-shrine">
+               <!--
+                  Southeast corner of the city.
+               -->
+               <conditions>
+                  <x of="subject" gte="176064" />
+                  <x of="subject" lte="-98976" />
+               </conditions>
+               <group>
+                  <conditions>
+                     <actor-base of="subject" is="Nura" />
+                     <condition-set name="riften-under-stormcloak-control" />
+                  </conditions>
+                  <lines>
+                     <line>The priestess of Talos? She tends to the Shrine of Talos near the south wall of the city.</line>
+                     <line>She's probably at the statue of Talos right now. You'll find it out behind the Temple of Mara.</line>
+                     <line>She's most likely hanging around the Talos statue, out back behind the temple.</line>
+                  </lines>
+               </group>
+               <lines>
+                  <line>I think I saw him walking past the Shrine of Talos, south of the Temple of Mara.</line>
+                  <line>I think I saw him around the shrine by the city's southeast wall.</line>
+                  <line>Try checking behind the Temple of Mara and the nearby graveyard.</line>
+                  <line>I'm pretty sure I saw him near the Talos statue by the temple.</line>
+               </lines>
+            </group>
+            <group name="temple-of-mara" priority="-50">
+               <conditions>
+                  <x of="subject" at="176512" around="3456" />
+                  <y of="subject" at="-97632" around="2688" />
+               </conditions>
+               <lines>
+                  <line>I saw him over by the Temple of Mara not too long ago.</line>
+                  <line>He's at the Temple of Mara.</line>
+                  <line>I remember seeing him near the Temple of Mara a little while ago.</line>
+                  <line>Try looking around the Temple of Mara.</line>
+               </lines>
+            </group>
+         </group>
+         
+         <!--
+            All interior locations that aren't specific rooms.
+         -->
+         <group name="interiors" unordered="true">
+            <group name="bee-and-barb">
+               <conditions>
+                  <parent-cell of="subject" is="RiftenBeeandBarb" />
+               </conditions>
+               <lines>
+                  <!--
+                     Keerava, specifically, owns the Bee and Barb; it is her 
+                     that owes the business's debt to the Thieves Guild. Our 
+                     lines will refer to her as the primary owner and to 
+                     Talen-Jei as a co-owner.
+                  -->
+                  <group name="keerava">
+                     <conditions>
+                        <actor-base of="subject" is="Keerava" />
+                     </conditions>
+                     <group>
+                        <conditions>
+                           <offers-services of="subject" />
+                        </conditions>
+                        <lines>
+                           <line>At this time of day, he should be working at the Bee and Barb.</line>
+                           <line>He's at work, at the Bee and Barb.</line>
+                           <line>Check his workplace, the Bee and Barb.</line>
+                        </lines>
+                     </group>
+                     <lines>
+                        <line>He should be at the Bee and Barb. He runs the place, and he lives out of there, too.</line>
+                        <line>I think he's at home right now. He runs the Bee and Barb, and lives above the tavern.</line>
+                     </lines>
+                  </group>
+                  <group name="talen-jei">
+                     <conditions>
+                        <actor-base of="subject" is="TalenJei" />
+                     </conditions>
+                     <group>
+                        <conditions>
+                           <offers-services of="subject" />
+                        </conditions>
+                        <lines>
+                           <line>At this time of day, he should be working at the Bee and Barb.</line>
+                           <line>He's at work, at the Bee and Barb.</line>
+                           <line>Check his workplace, the Bee and Barb.</line>
+                        </lines>
+                     </group>
+                     <lines>
+                        <line>He should be at the Bee and Barb. He helps run the place, and he lives out of there, too.</line>
+                        <line>I think he's at home right now. He helps run the Bee and Barb, and lives above the tavern.</line>
+                     </lines>
+                  </group>
+                  <line>I think I saw him walk into the Bee and Barb a little while ago.</line>
+                  <line>Pretty sure he's at the Bee and Barb right now.</line>
+               </lines>
+            </group>
+            <group name="residence-bolli">
+               <condition-set name="subject-is-resident">
+                  <or>
+                     <actor-base of="subject" is="Bolli" />
+                     <actor-base of="subject" is="Nivenor" />
+                  </or>
+               </condition-set>
+               <!-- TODO -->
+            </group>
+         </group> <!-- /residences -->
+      
+      </lines>
+   </quest>
+</data>

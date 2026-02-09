@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<payload>
+   <quest id="AWPATestQuest01">
+      <actors>
+         <actor editor-id="TalenJei" name="Talen-Jei" />
+      </actors>
+      <g>
+         <line>Test Line 01</line>
+         <line>Test Line 02</line>
+      </g>
+   </quest>
+</payload>

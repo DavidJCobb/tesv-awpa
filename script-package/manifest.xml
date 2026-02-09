@@ -1,0 +1,26 @@
+<package>
+   <metadata>
+      <name>Ask Where People Are - Generator</name>
+      <author name="DavidJCobb">
+         <link name="NexusMods" url="https://www.nexusmods.com/users/9663214?tab=user+files" />
+      </author>
+      <description>
+         Load XML files defining all of our dialogue and conditions, and then translate 
+         that into game data e.g. Topics and Infos.
+      </description>
+   </metadata>
+   <files>
+classes.lua
+pronouns.lua
+xml.lua
+awpa_env.lua
+awpa_actor.lua
+awpa_constant.lua
+awpa_group.lua
+awpa_line.lua
+awpa_quest.lua
+awpa_scope.lua
+awpa_shared_info_set.lua
+main.lua
+   </files>
+</package>

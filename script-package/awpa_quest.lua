@@ -19,6 +19,15 @@ do
       instance_members = instance_members,
    })
    do -- member functions
+      function instance_members:actor_by_name(name)
+         for i = 1, #self.actors do
+            local actor = self.actors[i]
+            if actor.name == name then
+               return actor
+            end
+         end
+      end
+   
       function instance_members:from_xml(element)
          awpa.env:set_object_id(self, element.attributes["id"])
       end

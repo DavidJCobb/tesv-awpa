@@ -2,7 +2,21 @@
 -- TODO
 
 function process_xml(root)
-   function process_constant(scope, element)
+   local CONDITION_ELEMENT_NAMES_TO_CONSTRUCTORS = {
+      ["actor-base"]   = awpa.conditions.actor_base,
+      ["death-count"]  = awpa.conditions.death_count,
+      ["enable-state"] = awpa.conditions.enable_state,
+      ["global"]       = awpa.conditions.global,
+      ["location"]     = awpa.conditions.location,
+      ["papyrus-quest-variable"] = awpa.conditions.papyrus_quest_variable,
+      ["parent-cell"]  = awpa.conditions.parent_cell,
+      ["quest-stage"]  = awpa.conditions.quest_stage,
+      ["x"]            = awpa.conditions.position,
+      ["y"]            = awpa.conditions.position,
+      ["z"]            = awpa.conditions.position,
+   }
+
+   local function process_constant(scope, element)
       local item = awpa.constant()
       local list = scope.constants
       list[#list + 1] = item
@@ -10,7 +24,7 @@ function process_xml(root)
       return
    end
 
-   function process_group(group, element)
+   local function process_group(group, element)
       element:for_each_child_element(function(node)
          if node.node_name == "condition-set" then
             -- TODO
@@ -18,6 +32,17 @@ function process_xml(root)
          end
          if node.node_name == "conditions" then
             node:for_each_child_element(function(node)
+               local function _make_condition(node)
+                  local cls = CONDITION_ELEMENT_NAMES_TO_CONSTRUCTORS[node.node_name]
+                  if not cls then
+                     error("unrecognized tag in condition list: " .. node.node_name)
+                  end
+                  local item = cls()
+                  group.conditions[#group.conditions + 1] = item
+                  item:from_xml(node)
+                  return item
+               end
+            
                if node.node_name == "condition-set" then
                   -- TODO
                elseif node.node_name == "or" then
@@ -27,15 +52,10 @@ function process_xml(root)
                      then
                         error("can't nest these in an OR")
                      end
-                     local item = awpa.condition()
-                     item.is_or_linked = true
-                     group.conditions[#group.conditions + 1] = item
-                     item:from_xml(node)
+                     _make_condition(node).is_or_linked = true
                   end)
                else
-                  local item = awpa.condition()
-                  group.conditions[#group.conditions + 1] = item
-                  item:from_xml(node)
+                  _make_condition(node)
                end
             end)
             return

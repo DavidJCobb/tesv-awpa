@@ -45,6 +45,25 @@
          </g>
          <shared-info id="shared-upstairs" />
       </g>
+      <g name="tons-of-conditions">
+         <conditions>
+            <actor-base of="subject" is="Talen-Jei" />
+            <death-count for="Vald" lte="0" />
+            <enable-state for="[REFR:000B4082]TGStatusGuildStageThreeRef" is="enabled" />
+            <global name="TGBanToggle" eq="1" />
+            <papyrus-quest-variable
+               for="CW"
+               var="::OwnerRift_var"
+               neq="[GLOB]CWSons"
+            />
+            <parent-cell is="RiftenBeeandBarb" />
+            <parent-cell is-not="RiftenBeeandBarb" />
+            <parent-cell same-as="player" />
+            <quest-stage for="TG07" lt="30" />
+            <x of="subject" at="-99264" around="2496" />
+         </conditions>
+         <line>Oh hey, you mean Talen-Jei?</line>
+      </g>
       <g>
          <line>Test Line 01</line>
          <line>Test Line 02</line>

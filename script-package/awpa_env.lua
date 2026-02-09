@@ -37,6 +37,29 @@ function awpa.env:set_object_id(object, id)
    end
 end
 
+function awpa.env:lookup_actor(needle)
+   local list = self.quests
+   local size = #list
+   if object_is_form(needle) then
+      if needle.form_type ~= form_types.quest then
+         return nil
+      end
+      for i = 1, size do
+         local item = list[i]
+         if item.form == needle then
+            return item
+         end
+      end
+      return nil
+   end
+   for i = 1, size do
+      local item = list[i]
+      if item.id == needle then
+         return item
+      end
+   end
+end
+
 function awpa.env:generate_content()
    if not self.shared_info_quest then
       local quest = dovah.get_form_by_editor_id("AWPASharedInfos", form_types.quest)

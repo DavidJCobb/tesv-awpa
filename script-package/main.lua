@@ -168,4 +168,4 @@ process_xml(parser.root)
 dovah.dump(awpa.env)
 
 awpa.env:generate_content()
-dovah.dump(awpa.env)
+print("Done!")

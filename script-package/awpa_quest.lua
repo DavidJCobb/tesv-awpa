@@ -97,9 +97,23 @@ do
             
             local info = dovah.create_form(form_types.topic_info, { parent = topic })
             info.use_shared_info = awpa.env.built_in_shared_infos["ActorSelected"][0]
-            --
-            -- TODO: Papyrus OnStart fragment setup!
-            --
+            do -- papyrus
+               local papyrus = info.papyrus
+               do
+                  local script = papyrus.scripts:insert("AWPASelectActorScript")
+                  local prop   = script.properties:insert("pkActor")
+                  prop.value = actor.form
+               end
+               local frag = papyrus.fragments.on_begin
+               frag.script_name   = "AWPASelectActorScript"
+               frag.function_name = "SetActor"
+               --
+               -- TODO: This won't actually work. What we'll need to do is have 
+               -- the quest pre-fill with one alias per unique actor in the 
+               -- town/city, and then have the script force one of those aliases' 
+               -- refs into the "ActorToFind" alias.
+               --
+            end
             info.link_to:insert(result_topic)
          end
          

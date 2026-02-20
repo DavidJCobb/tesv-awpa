@@ -17,7 +17,7 @@ do
    
    do -- member functions
       function instance_members:copy(element)
-         local out = awpa.conditions()
+         local out = awpa.conditions.location()
          out.is_or_linked = self.is_or_linked
          out.form   = self.form
          out.equals = self.equals

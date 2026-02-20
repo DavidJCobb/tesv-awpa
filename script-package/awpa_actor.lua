@@ -1,8 +1,4 @@
 
-if not awpa then
-   awpa = {}
-end
-
 do
    local instance_members = {}
    awpa.actor = make_class({

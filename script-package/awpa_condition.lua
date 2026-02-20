@@ -1,12 +1,9 @@
 
-if not awpa then
-   awpa = {}
-end
-
 do
    local instance_members = {}
    awpa.condition = make_class({
       constructor = function(self)
+         self.owning_group = nil
          self.is_or_linked = false
       end,
       instance_members = instance_members,
@@ -26,6 +23,20 @@ do
          end
          return "subject"
       end
+      
+      function instance_members:_resolve_constant(name)
+         if not self.owning_group then
+            error("orphaned condition cannot resolve constants")
+         end
+         local c = self.owning_group:resolve_constant(name)
+         if not c then
+            error("could not resolve value: " .. tostring(name))
+         end
+         if not c.value then
+            error("constant has no value: " .. tostring(name))
+         end
+         return c.value
+      end
    
       function instance_members:_extract_numeric_comparison(element)
          local MAPPING = {
@@ -42,7 +53,12 @@ do
                self.comparison.operator = v
                self.comparison.operand  = tonumber(operand) or operand
                if not tonumber(operand) then
-                  self.comparison.operand = utils.resolve_form_reference(self.comparison.operand)
+                  local form = utils.resolve_form_reference(self.comparison.operand)
+                  if form then
+                     self.comparison.operand = form
+                  else
+                     self.comparison.operand = self:_resolve_constant(operand)
+                  end
                end
                return
             end

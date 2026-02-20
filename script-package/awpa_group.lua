@@ -24,6 +24,8 @@ do
          if v == "true" then
             self.exclusive = false
          end
+         
+         self.path = self:get_unique_path()
       end
       function instance_members:get_relevant_conditions()
          if not awpa.group.is(self.parent) then
@@ -37,7 +39,7 @@ do
          end
          return out
       end
-      function instance_members:get_unique_path(element)
+      function instance_members:get_unique_path()
          --
          -- PATH SYNTAX FOR A LINE:
          --

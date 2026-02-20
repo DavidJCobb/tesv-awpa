@@ -20,7 +20,7 @@ do
    
    do -- member functions
       function instance_members:copy(element)
-         local out = awpa.conditions()
+         local out = awpa.conditions.papyrus_quest_variable()
          out.form     = self.form
          out.variable = self.variable
          out.comparison.operator = self.comparison.operator

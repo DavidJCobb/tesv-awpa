@@ -1,4 +1,8 @@
 
+if (not awpa) or (not awpa.scope) then
+   error("incorrect file order")
+end
+
 do
    local instance_members = {}
    awpa.quest = make_class({
@@ -10,7 +14,8 @@ do
          local list = awpa.env.quests
          list[#list + 1] = self
          
-         self.form = nil
+         self.recycled = false
+         self.form     = nil
          self.branches = {
             main   = nil,
             result = nil,
@@ -37,7 +42,8 @@ do
          end
          local quest = dovah.get_form_by_editor_id(self.id, form_types.quest)
          if quest then
-            self.form = quest
+            self.form     = quest
+            self.recycled = true
             return quest
          end
          quest = dovah.create_form(form_types.quest)
@@ -64,36 +70,69 @@ do
          return topic
       end
       function instance_members:_generate_main_branch()
-         local topic = nil
-         do
-            local topics = self.branches.main:get_all_topics()
-            topic = topics[1]
-            if not topic then
-               topic = dovah.create_form(form_types.topic, { parent = self.branches.main })
+         local main_branch_topics = self.branches.main:get_all_topics()
+         local function find_preexisting_topic(editor_id)
+            local size = #main_branch_topics
+            for i = 1, size do
+               local t = main_branch_topics[i]
+               if t.editor_id == editor_id then
+                  return t
+               end
             end
-            topic.text = "Can you help me find someone?"
          end
-         self.branches.main.starting_topic = topic
          
+         local begin_topic = self.branches.main.starting_topic
+         if not begin_topic then
+            begin_topic = dovah.create_form(form_types.topic, { parent = self.branches.main })
+            begin_topic.text = "Can you help me find someone?"
+            self.branches.main.starting_topic = begin_topic
+         end
          local result_topic = self:get_or_create_result_topic()
          
-         local actor_topics = {}
-         do
-            local topic = dovah.create_form(form_types.topic, { parent = self.branches.main })
-            topic.text = "Actually, never mind."
-            actor_topics[#actor_topics + 1] = topic
-            
-            local shared = awpa.env.built_in_shared_infos["CancelActorSelection"]
+         local function replace_infos_with_builtin_shared(topic, key, configure)
+            local shared     = awpa.env.built_in_shared_infos[key]
+            local prior_list = topic.infos
+            local prior_size = #prior_list
             for i = 1, #shared do
-               local info = dovah.create_form(form_types.topic_info, { parent = topic })
+               local info
+               if i <= prior_size then
+                  info = prior_list[i]
+               else
+                  info = dovah.create_form(form_types.topic_info, { parent = topic })
+               end
                info.use_shared_info = shared[i]
+               if configure then
+                  configure(info)
+               end
             end
          end
-         for i = 1, #self.actors do
-            local actor = self.actors[i]
+         
+         local function get_or_create_cancel_topic()
+            local editor_id = self.form.editor_id .. "TopicCancelActorSelection"
+            local topic     = find_preexisting_topic(editor_id)
+            if topic then
+               return topic
+            end
+            topic = dovah.create_form(form_types.topic, { parent = self.branches.main })
+            topic.editor_id = editor_id
+            topic.text      = "Actually, never mind."
+            replace_infos_with_builtin_shared(topic, "CancelActorSelection")
+            return topic
+         end
+         local function get_or_create_actor_topic(actor_info)
+            local editor_id = self.form.editor_id .. "TopicSelectActor" .. actor_info.form.editor_id
+            do
+               local size = #main_branch_topics
+               for i = 1, size do
+                  local t = main_branch_topics[i]
+                  if t.editor_id == editor_id then
+                     return t
+                  end
+               end
+            end
             local topic = dovah.create_form(form_types.topic, { parent = self.branches.main })
-            topic.text = actor.name
-            actor_topics[#actor_topics + 1] = topic
+            topic.editor_id = editor_id
+            topic.text      = actor_info.name
             
             local info = dovah.create_form(form_types.topic_info, { parent = topic })
             info.use_shared_info = awpa.env.built_in_shared_infos["ActorSelected"][0]
@@ -101,30 +140,47 @@ do
                local papyrus = info.papyrus
                do
                   local script = papyrus.scripts:insert("AWPASelectActorScript")
-                  local prop   = script.properties:insert("pkActor")
-                  prop.value = actor.form
+                  do
+                     local prop = script.properties:insert("pkSrcAlias")
+                     prop.value = self.form.aliases[actor_info.form.editor_id]
+                  end
+                  do
+                     local prop = script.properties:insert("pkDstAlias")
+                     prop.value = self.form.aliases["ActorToFind"]
+                  end
                end
                local frag = papyrus.fragments.on_begin
                frag.script_name   = "AWPASelectActorScript"
                frag.function_name = "SetActor"
-               --
-               -- TODO: This won't actually work. What we'll need to do is have 
-               -- the quest pre-fill with one alias per unique actor in the 
-               -- town/city, and then have the script force one of those aliases' 
-               -- refs into the "ActorToFind" alias.
-               --
             end
             info.link_to:insert(result_topic)
+            
+            return topic
          end
          
-         local shared = awpa.env.built_in_shared_infos["BeginActorSelection"]
-         for i = 1, #shared do
-            local info = dovah.create_form(form_types.topic_info, { parent = topic })
-            info.use_shared_info = shared[i]
-            for j = 1, #actor_topics do
-               info.link_to:insert(actor_topics[j])
-            end
+         local actor_topics = {}
+         actor_topics[#actor_topics + 1] = get_or_create_cancel_topic()
+         for i = 1, #self.actors do
+            actor_topics[#actor_topics + 1] = get_or_create_actor_topic(self.actors[i])
          end
+         
+         replace_infos_with_builtin_shared(
+            begin_topic,
+            "BeginActorSelection",
+            function(info)
+               local list = info.link_to
+               local size = #list
+               if size > 0 then
+                  for i = size, 1 do
+                     list:remove(i)
+                  end
+               end
+               size = #actor_topics
+               for i = 1, size do
+                  list:insert(actor_topics[i])
+               end
+            end
+         )
       end
       function instance_members:_generate_results()
          local topic = self:get_or_create_result_topic()
@@ -132,39 +188,70 @@ do
             local group = self.groups[i]
             group:generate_lines(topic)
          end
-         --[[--
-            -- TODO: Do this in the XML content instead; easier that way
-         --
-         -- If there aren't any unconditional lines, then generate fallbacks.
-         --
-         local needs_fallback = true
-         do
-            local infos = topic.infos
-            if #infos > 0 then
-               local last = infos[#infos]
-               if #last.conditions == 0 then
-                  needs_fallback = false
-               end
-            end
-         end
-         if needs_fallback then
-            local info_texts = {
-               "Hm... Sorry. I don't know where he is.",
-               "I'm afraid I haven't seen him around.",
-               "No clue, sorry.",
-            }
-            for i = 1, #info_texts do
-               local info = dovah.create_form(form_types.topic_info, { parent = topic })
-               local resp = info.responses:insert({
-                  text = info_texts[i]
-               })
-            end
-         end
-         ]]--
       end
       
       function instance_members:generate_dialogue()
-         local quest         = self:get_or_create_form()
+         local quest = self:get_or_create_form()
+         
+         do -- Set up aliases
+            local aliases_by_actor = {}
+            local alias_ids_in_use = {}
+            local max_alias_id     = 1
+         
+            local list = quest.aliases
+            local size = #list
+            for i = 1, size do
+               local alias    = list[i]
+               local alias_id = alias.id
+               
+               local keep = false
+               local fill = alias.fill
+               if fill and fill.form_type == form_types.actor_base then
+                  for i = 1, #self.actors do
+                     if fill == self.actors[i].form then
+                        keep = true
+                        aliases_by_actor[fill] = alias
+                        break
+                     end
+                  end
+               end
+               alias_ids_in_use[alias_id] = true
+               if alias_id > max_alias_id then
+                  max_alias_id = alias_id
+               end
+            end
+            
+            local min_alias_id = 1
+            local function _get_next_id()
+               for i = min_alias_id, max_alias_id do
+                  if not alias_ids_in_use[i] then
+                     return i
+                  end
+               end
+            end
+            
+            for i = 1, #self.actors do
+               local actor_info = self.actors[i]
+               local actor_form = actor_info.form
+               if not aliases_by_actor[actor_form] then
+                  local alias_id = _get_next_id()
+                  local alias    = quest:create_ref_alias()
+                  alias.id              = alias_id
+                  alias.name            = actor_form.editor_id
+                  alias.allow_dead      = true
+                  alias.allow_destroyed = true
+                  alias.allow_disabled  = true
+                  alias.allow_reserved  = true
+                  alias.allow_reuse     = true
+                  alias.fill            = actor_form
+                  
+                  aliases_by_actor[actor_form] = alias
+                  alias_ids_in_use[alias_id]   = true
+                  min_alias_id = alias_id + 1
+               end
+            end
+         end
+         
          local branch_main   = nil
          local branch_result = nil
          do

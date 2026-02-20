@@ -12,9 +12,11 @@
    <files>
 classes.lua
 pronouns.lua
+string_builder.lua
 utils.lua
 xml.lua
 awpa_env.lua
+awpa_scope.lua
 awpa_actor.lua
 awpa_condition.lua
 awpa_condition_actor_base.lua
@@ -26,11 +28,11 @@ awpa_condition_papyrus_quest_variable.lua
 awpa_condition_parent_cell.lua
 awpa_condition_position.lua
 awpa_condition_quest_stage.lua
+awpa_condition_set.lua
 awpa_constant.lua
 awpa_group.lua
 awpa_line.lua
 awpa_quest.lua
-awpa_scope.lua
 awpa_shared_info_set.lua
 main.lua
    </files>

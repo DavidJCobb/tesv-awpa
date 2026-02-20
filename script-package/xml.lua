@@ -15,12 +15,99 @@ xml.node = make_class({
    end
 })
 
-xml.text = make_class({
-   superclass  = xml.node,
-   constructor = function(self, text)
-      self.data = text
+local function _charcode_entity(c)
+   return string.format("&#%02X;", c:byte(1))
+end
+
+do
+   local instance_members = {}
+   xml.comment = make_class({
+      superclass  = xml.node,
+      constructor = function(self, text)
+         self.data = text
+      end
+   })
+   do -- member functions
+      function instance_members:clone(deep)
+         return xml.comment(self.data)
+      end
+      function instance_members:serialize(builder)
+         builder:append("<!--")
+         builder:append(self.data)
+         builder:append("-->")
+      end
    end
-})
+end
+
+do
+   local instance_members = {}
+   xml.text = make_class({
+      superclass  = xml.node,
+      constructor = function(self, text)
+         self.data = text
+      end
+   })
+   do -- member functions
+      function instance_members:clone(deep)
+         return xml.text(self.data)
+      end
+      function instance_members:serialize(builder)
+         local pattern = "[%c<>&%]]"
+         local i       = self.data:find(pattern)
+         if not i then
+            builder:append(self.data)
+            return
+         end
+         
+         local requires_escape = false
+         local first = i
+         while i do
+            if self.data:sub(i, i + 1) ~= "]" then
+               requires_escape = true
+               break
+            end
+            if self.data:sub(i, i + 3) ~= "]]>" then
+               requires_escape = true
+               break
+            end
+            i = self.data:find(pattern, i + 1)
+         end
+         if not requires_escape then
+            builder:append(self.data)
+            return
+         end
+         
+         i = first
+         local prev = 1
+         while i do
+         ::continue::
+            builder:append(self.data:sub(prev, i - prev + 1))
+            local c = self.data:sub(i, i + 1)
+            if c == '<' then
+               builder:append("&lt;")
+            elseif c == '>' then
+               builder:append("&gt;")
+            elseif c == '&' then
+               builder:append("&amp;")
+            elseif c == ']' then
+               if self.data:sub(i, i + 3) ~= "]]>" then
+                  builder:append("]]&gt;")
+                  prev = i + 3
+                  i    = self.data:find("[%c%<%>%&%]]", prev)
+                  goto continue
+               else
+                  builder:append(']')
+               end
+            else
+               builder:append(_charcode_entity(c))
+            end
+            prev = i + 1
+            i    = self.data:find("[%c%<%>%&%]]", prev)
+         end
+         builder:append(self.data:sub(prev))
+      end
+   end
+end
 
 do
    local instance_members = {}
@@ -138,6 +225,73 @@ do
          return text
       end
    end
+   do -- Member functions: other
+      function instance_members:clone(deep)
+         local copy = xml.element(self.node_name)
+         copy.self_closed = self.self_closed
+         self:for_each_attribute(function(n, v)
+            copy.attributes[n] = v
+         end)
+         if deep then
+            self:for_each_child(function(child)
+               copy:append_child(child:clone(true))
+            end)
+         end
+         return copy
+      end
+      function instance_members:serialize(builder)
+         builder:append('<')
+         builder:append(self.node_name)
+         self:for_each_attribute(function(k, v)
+            builder:append(' ')
+            builder:append(k)
+            
+            local delim = '"'
+            if v:find('"', 1, true) and not v:find("'", 1, true) then
+               delim = "'"
+            end
+            builder:append("=" .. delim)
+            do
+               local pattern = "[%c<&" .. delim .. "]"
+               local i       = v:find(pattern)
+               if i then
+                  local prev = 1
+                  while i do
+                     builder:append(v:sub(prev, i))
+                     local c = v:sub(i, i + 1)
+                     if c == '<' then
+                        builder:append("&lt;")
+                     elseif c == '&' then
+                        builder:append("&amp;")
+                     elseif c == '"' then
+                        builder:append("&quot;")
+                     elseif c == "'" then
+                        builder:append("&apos;")
+                     else
+                        builder:append(_charcode_entity(c))
+                     end
+                     prev = i + 1
+                     i    = v:find(pattern, prev)
+                  end
+                  builder:append(v:sub(prev))
+               else
+                  builder:append(v)
+               end
+            end
+            builder:append(delim)
+         end)
+         if self.self_closed and #self.children == 0 then
+            builder:append(" />")
+            return
+         end
+         for i = 1, #self.children do
+            self.children[i]:serialize(builder)
+         end
+         builder:append("</")
+         builder:append(self.node_name)
+         builder:append('>')
+      end
+   end
 end
 
 do
@@ -146,9 +300,11 @@ do
    xml.parser = make_class({
       constructor = function(self, options)
          if options then
-            self.entities = options.entities or {}
+            self.entities        = options.entities        or {}
+            self.retain_comments = options.retain_comments or false
          else
-            self.entities = {}
+            self.entities        = {}
+            self.retain_comments = false
          end
          self.pos      = nil
          self.text     = nil
@@ -357,7 +513,11 @@ do
       if c ~= ">" then
          error("Unexpected `--` in a comment.")
       end
-      -- comment text == self.text:sub(self.pos, n - 1)
+      if self.retain_comments then
+         local text = self.text:sub(self.pos, n - 1)
+         local node = xml.comment(text)
+         self.state.target:append_child(node)
+      end
       self.pos = n + 3
       checkpoint:commit()
       return true

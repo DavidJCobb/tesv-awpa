@@ -24,7 +24,7 @@ do
    
    do -- member functions
       function instance_members:copy(element)
-         local out = awpa.conditions()
+         local out = awpa.conditions.position()
          out.run_on = self.run_on
          out.axis   = self.axis
          out.range  = {
@@ -48,9 +48,10 @@ do
          
          local v = element.attributes["at"]
          if v then
-            v = tonumber(v)
-            if not v then
-               error("`at` must be a number")
+            if tonumber(v) then
+               v = tonumber(v)
+            else
+               v = self:_resolve_constant(v)
             end
             self.range.origin = v
             
@@ -62,9 +63,10 @@ do
                end
                v = tonumber(v) / 2
             end
-            v = tonumber(v)
-            if not v then
-               error("`within` or `around` must be a number")
+            if tonumber(v) then
+               v = tonumber(v)
+            else
+               v = self:_resolve_constant(v)
             end
             self.range.half_extent = v
          else

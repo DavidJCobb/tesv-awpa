@@ -18,7 +18,7 @@ do
    
    do -- member functions
       function instance_members:copy(element)
-         local out = awpa.conditions()
+         local out = awpa.conditions.parent_cell()
          out.is_or_linked = self.is_or_linked
          for _, v in ipairs({
             "run_on",

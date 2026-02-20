@@ -60,6 +60,63 @@ function awpa.env:lookup_actor(needle)
    end
 end
 
+function awpa.env:lookup_object_by_path(path)
+   local path_size = #path
+   local item
+   local i
+   do
+      if path:sub(1, 2) ~= '#' then
+         return nil
+      end
+      local id
+      local k  = path:find("/")
+      if k then
+         id = path:sub(2, k)
+         i  = k + 1
+      else
+         id = path:sub(2)
+         i  = path_size
+      end
+      item = self.elements_by_id[id]
+   end
+   while item and i < path_size do
+      local segm
+      local k = path:find("/", i)
+      if k then
+         segm = path:sub(i, k)
+         i    = k + 1
+      else
+         segm = path:sub(i)
+         i    = path_size
+      end
+      if not segm then
+         return nil
+      end
+      
+      if segm:sub(1, 2) == '@' then
+         segm = tonumber(segm:sub(2))
+         if not segm then
+            return nil
+         end
+         item = item.groups[segm]
+      else
+         local found
+         for k = 1, #item.groups do
+            if item.groups[k].name == segm then
+               found = item.groups[k]
+               break
+            end
+         end
+         if found then
+            item = found
+         else
+            return nil
+         end
+      end
+   end
+   return item
+end
+
 function awpa.env:generate_content()
    if not self.shared_info_quest then
       local quest = dovah.get_form_by_editor_id("AWPASharedInfos", form_types.quest)

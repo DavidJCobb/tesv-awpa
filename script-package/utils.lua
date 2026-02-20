@@ -1,5 +1,28 @@
 
 utils = {}
+
+function utils.clear_info_responses(info)
+   local list = info.responses
+   local size = #list
+   for i = size, 1 do
+      list:remove(i)
+   end
+end
+
+function utils.replace_info_link_to_list(info, topics)
+   local list = info.link_to
+   local size = #list
+   if size > 0 then
+      for i = size, 1 do
+         list:remove(i)
+      end
+   end
+   size = #topics
+   for i = 1, size do
+      list:insert(topics[i])
+   end
+end
+
 function utils.replace_info_responses(info, text)
    local size = #info.responses
    if size <= 0 then

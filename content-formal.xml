@@ -403,6 +403,14 @@
                </conditions>
             </begin-asking-to>
          </actor>
+         <actor editor-id="Laila">
+            <begin-asking-about>
+               <conditions>
+                  <!-- Laila is exiled if the city is taken by the Empire -->
+                  <condition-set name="riften-under-stormcloak-control" />
+               </conditions>
+            </begin-asking-about>
+         </actor>
          <actor editor-id="LouisLetrush" />
          <actor editor-id="Madesi" />
          <actor editor-id="Maramal" />

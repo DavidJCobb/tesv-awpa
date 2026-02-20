@@ -57,6 +57,70 @@ do
          return quest
       end
       
+      function instance_members:ensure_actor_selection_aliases()
+         local quest = self:get_or_create_form()
+         
+         local aliases_by_actor = {}
+         local alias_ids_in_use = {}
+         local max_alias_id     = 1
+      
+         local list = quest.aliases
+         local size = #list
+         for i = 1, size do
+            local alias    = list[i]
+            local alias_id = alias.id
+            
+            local keep = false
+            local fill = alias.fill
+            if fill and fill.form_type == form_types.actor_base then
+               for i = 1, #self.actors do
+                  if fill == self.actors[i].form then
+                     keep = true
+                     aliases_by_actor[fill] = alias
+                     break
+                  end
+               end
+            end
+            alias_ids_in_use[alias_id] = true
+            if alias_id > max_alias_id then
+               max_alias_id = alias_id
+            end
+         end
+         
+         local min_alias_id = 1
+         local function _get_next_id()
+            for i = min_alias_id, max_alias_id do
+               if not alias_ids_in_use[i] then
+                  return i
+               end
+            end
+            max_alias_id = max_alias_id + 1
+            min_alias_id = max_alias_id
+            return max_alias_id
+         end
+         
+         for i = 1, #self.actors do
+            local actor_info = self.actors[i]
+            local actor_form = actor_info.form
+            if not aliases_by_actor[actor_form] then
+               local alias_id = _get_next_id()
+               local alias    = quest:create_ref_alias()
+               alias.id              = alias_id
+               alias.name            = actor_form.editor_id
+               alias.allow_dead      = true
+               alias.allow_destroyed = true
+               alias.allow_disabled  = true
+               alias.allow_reserved  = true
+               alias.allow_reuse     = true
+               alias.fill            = actor_form
+               
+               aliases_by_actor[actor_form] = alias
+               alias_ids_in_use[alias_id]   = true
+               min_alias_id = alias_id + 1
+            end
+         end
+      end
+      
       function instance_members:get_or_create_result_topic()
          local topic = nil
          do
@@ -93,16 +157,23 @@ do
             local shared     = awpa.env.built_in_shared_infos[key]
             local prior_list = topic.infos
             local prior_size = #prior_list
-            for i = 1, #shared do
+            local after_size = #shared
+            for i = 1, after_size do
                local info
                if i <= prior_size then
                   info = prior_list[i]
+                  utils.clear_info_responses(info)
                else
                   info = dovah.create_form(form_types.topic_info, { parent = topic })
                end
                info.use_shared_info = shared[i]
                if configure then
                   configure(info)
+               end
+            end
+            if prior_size > after_size then
+               for i = prior_size + 1, after_size do
+                  dovah.delete_form(prior_list[i])
                end
             end
          end
@@ -155,6 +226,11 @@ do
             end
             info.link_to:insert(result_topic)
             
+            local cnd_list = actor_info.overrides.begin_asking_about.conditions
+            for i = 1, #cnd_list do
+               cnd_list[i]:apply_to_info(info)
+            end
+            
             return topic
          end
          
@@ -168,17 +244,7 @@ do
             begin_topic,
             "BeginActorSelection",
             function(info)
-               local list = info.link_to
-               local size = #list
-               if size > 0 then
-                  for i = size, 1 do
-                     list:remove(i)
-                  end
-               end
-               size = #actor_topics
-               for i = 1, size do
-                  list:insert(actor_topics[i])
-               end
+               utils.replace_info_link_to_list(info, actor_topics)
             end
          )
       end
@@ -193,64 +259,7 @@ do
       function instance_members:generate_dialogue()
          local quest = self:get_or_create_form()
          
-         do -- Set up aliases
-            local aliases_by_actor = {}
-            local alias_ids_in_use = {}
-            local max_alias_id     = 1
-         
-            local list = quest.aliases
-            local size = #list
-            for i = 1, size do
-               local alias    = list[i]
-               local alias_id = alias.id
-               
-               local keep = false
-               local fill = alias.fill
-               if fill and fill.form_type == form_types.actor_base then
-                  for i = 1, #self.actors do
-                     if fill == self.actors[i].form then
-                        keep = true
-                        aliases_by_actor[fill] = alias
-                        break
-                     end
-                  end
-               end
-               alias_ids_in_use[alias_id] = true
-               if alias_id > max_alias_id then
-                  max_alias_id = alias_id
-               end
-            end
-            
-            local min_alias_id = 1
-            local function _get_next_id()
-               for i = min_alias_id, max_alias_id do
-                  if not alias_ids_in_use[i] then
-                     return i
-                  end
-               end
-            end
-            
-            for i = 1, #self.actors do
-               local actor_info = self.actors[i]
-               local actor_form = actor_info.form
-               if not aliases_by_actor[actor_form] then
-                  local alias_id = _get_next_id()
-                  local alias    = quest:create_ref_alias()
-                  alias.id              = alias_id
-                  alias.name            = actor_form.editor_id
-                  alias.allow_dead      = true
-                  alias.allow_destroyed = true
-                  alias.allow_disabled  = true
-                  alias.allow_reserved  = true
-                  alias.allow_reuse     = true
-                  alias.fill            = actor_form
-                  
-                  aliases_by_actor[actor_form] = alias
-                  alias_ids_in_use[alias_id]   = true
-                  min_alias_id = alias_id + 1
-               end
-            end
-         end
+         self:ensure_actor_selection_aliases()
          
          local branch_main   = nil
          local branch_result = nil

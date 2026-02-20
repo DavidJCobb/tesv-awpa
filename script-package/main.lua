@@ -15,13 +15,9 @@ function process_xml(root)
       ["y"]            = awpa.conditions.position,
       ["z"]            = awpa.conditions.position,
    }
-
-   local function process_condition_set(scope, element)
-      local cset = awpa.condition_set()
-      local list = scope.condition_sets
-      list[#list + 1] = cset
-      cset:from_xml(element)
-      cset.owning_scope = scope
+   
+   local function process_condition_list(owner, scope, element)
+      local dst_is_cset = awpa.condition_set.is(owner)
       
       local last_or_linked = nil
       element:for_each_child_element(function(node)
@@ -31,11 +27,12 @@ function process_xml(root)
                error("unrecognized tag in condition list: " .. node.node_name)
             end
             local item = cls()
-            cset.items[#cset.items + 1] = item
-            item.owning_group = cset.owning_scope
+            owner.conditions[#owner.conditions + 1] = item
+            item.owning_scope = scope
             item:from_xml(node)
             return item
          end
+      
          if node.node_name == "or" then
             node:for_each_child_element(function(node)
                if node.node_name == "condition-set"
@@ -51,9 +48,38 @@ function process_xml(root)
                last_or_linked.is_or_linked = false
                last_or_linked = nil
             end
-            _make_condition(node)
+            if node.node_name == "condition-set" then
+               if dst_is_cset then
+                  error("condition sets cannot reference each other")
+               end
+               local name = node.attributes["name"]
+               if not name then
+                  error("condition set reference with no name (is this a misplaced definition?)")
+               end
+               name = tostring(name)
+               local cs = scope:resolve_condition_set(name)
+               if not cs then
+                  error("condition set `" .. name .. "` not found")
+               end
+               cs:apply_to(owner, node)
+            else
+               _make_condition(node)
+            end
          end
       end)
+      if last_or_linked then
+         last_or_linked.is_or_linked = false
+      end
+   end
+
+   local function process_condition_set(scope, element)
+      local cset = awpa.condition_set()
+      local list = scope.condition_sets
+      list[#list + 1] = cset
+      cset:from_xml(element)
+      cset.owning_scope = scope
+      
+      process_condition_list(cset, scope, element)
       
       return
    end
@@ -74,51 +100,7 @@ function process_xml(root)
             return
          end
          if node.node_name == "conditions" then
-            local last_or_linked = nil
-            node:for_each_child_element(function(node)
-               local function _make_condition(node)
-                  local cls = CONDITION_ELEMENT_NAMES_TO_CONSTRUCTORS[node.node_name]
-                  if not cls then
-                     error("unrecognized tag in condition list: " .. node.node_name)
-                  end
-                  local item = cls()
-                  group.conditions[#group.conditions + 1] = item
-                  item.owning_group = group
-                  item:from_xml(node)
-                  return item
-               end
-            
-               if node.node_name == "or" then
-                  node:for_each_child_element(function(node)
-                     if node.node_name == "condition-set"
-                     or node.node_name == "or"
-                     then
-                        error("can't nest these in an OR")
-                     end
-                     last_or_linked = _make_condition(node)
-                     last_or_linked.is_or_linked = true
-                  end)
-               else
-                  if last_or_linked then
-                     last_or_linked.is_or_linked = false
-                     last_or_linked = nil
-                  end
-                  if node.node_name == "condition-set" then
-                     local name = node.attributes["name"]
-                     if not name then
-                        error("condition set reference with no name (is this a misplaced definition?)")
-                     end
-                     name = tostring(name)
-                     local cs = group:resolve_condition_set(name)
-                     if not cs then
-                        error("condition set `" .. name .. "` not found")
-                     end
-                     cs:apply_to(group, node)
-                  else
-                     _make_condition(node)
-                  end
-               end
-            end)
+            process_condition_list(group, group, node)
             return
          end
          if node.node_name == "constant" then
@@ -182,6 +164,26 @@ function process_xml(root)
                   local actor = awpa.actor()
                   quest.actors[#quest.actors + 1] = actor
                   actor:from_xml(node)
+                  
+                  node:for_each_child_element(function(node)
+                     if node.node_name == "begin-asking-about" then
+                        node:for_each_child_element(function(node)
+                           if node.node_name == "conditions" then
+                              local over = actor.overrides.begin_asking_about
+                              process_condition_list(over, quest, node)
+                              for i = 1, #over.conditions do
+                                 over.conditions[i].is_override = actor
+                              end
+                              return
+                           end
+                        end)
+                     elseif node.node_name == "begin-asking-to" then
+                        -- TODO
+                     elseif node.node_name == "begin-responding" then
+                        -- TODO
+                     end
+                  end)
+                  
                end)
                return
             end
@@ -216,7 +218,8 @@ local file = dovah.package.load_file({
    --path = "payload-test-simple-shared-info.xml",
    --path = "payload-test-simple-conditions.xml",
    --path = "payload-test-nested-conditions.xml",
-   path = "payload-test-condition-sets.xml",
+   --path = "payload-test-condition-sets.xml",
+   path = "payload-test-actor-overrides-begin-asking-about.xml",
    type = "text"
 })
 local parser = xml.parser()

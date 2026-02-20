@@ -3,8 +3,9 @@ do
    local instance_members = {}
    awpa.condition = make_class({
       constructor = function(self)
-         self.owning_group = nil
+         self.owning_scope = nil
          self.is_or_linked = false
+         self.is_override  = nil -- optional<awpa.actor>
       end,
       instance_members = instance_members,
    })
@@ -25,10 +26,10 @@ do
       end
       
       function instance_members:_resolve_constant(name)
-         if not self.owning_group then
+         if not self.owning_scope then
             error("orphaned condition cannot resolve constants")
          end
-         local c = self.owning_group:resolve_constant(name)
+         local c = self.owning_scope:resolve_constant(name)
          if not c then
             error("could not resolve value: " .. tostring(name))
          end
@@ -79,7 +80,11 @@ do
          then
             cnd.run_on = self.run_on
          elseif self.run_on == "ActorToFind" then
-            cnd.run_on = info.parent_quest.aliases["ActorToFind"]
+            if self.is_override then
+               cnd.run_on = info.parent_quest.aliases[self.is_override.form.editor_id]
+            else
+               cnd.run_on = info.parent_quest.aliases["ActorToFind"]
+            end
          else
             error("invalid run-on")
          end

@@ -18,6 +18,7 @@ xml.lua
 awpa_env.lua
 awpa_scope.lua
 awpa_actor.lua
+awpa_actor_override_bribe.lua
 awpa_condition.lua
 awpa_condition_actor_base.lua
 awpa_condition_death_count.lua

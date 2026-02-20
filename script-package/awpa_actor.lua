@@ -6,6 +6,29 @@ do
          self.editor_id = nil
          self.name      = nil
          self.form      = nil
+         self.overrides = {
+            begin_asking_about = {
+               --
+               -- Override whether other actors can be asked about this actor.
+               --
+               conditions = {},
+            },
+            begin_asking_to = {
+               --
+               -- Override this actor's responses to "Can you help me find someone?"
+               --
+               conditions = {},
+               bribe      = nil, -- optional<awpa.actor_override_bribe>
+               results    = {},  -- vector<variant<awpa.group, awpa.line>>
+            },
+            begin_responding = {
+               --
+               -- Override this actor's responses to inquiries about any other actor.
+               --
+               conditions = {},
+               results    = {}, -- vector<variant<awpa.group, awpa.line>>
+            },
+         }
       end,
       instance_members = instance_members,
    })

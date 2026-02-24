@@ -15,7 +15,7 @@ do
          list[#list + 1] = self
          
          self.recycled = false
-         self.form     = nil
+         self.form     = nil -- fex.quest
          self.branches = {
             main   = nil,
             result = nil,
@@ -42,17 +42,23 @@ do
          end
          local quest = dovah.get_form_by_editor_id(self.id, form_types.quest)
          if quest then
-            self.form     = quest
+            self.form     = fex.quest.wrap(quest)
             self.recycled = true
             return quest
          end
-         quest = dovah.create_form(form_types.quest)
+         quest = fex.quest.wrap(dovah.create_form(form_types.quest))
          self.form = quest
          quest.editor_id = self.id
          quest.object_window_category = "Ask Where People Are"
          do
             local alias = quest:create_ref_alias()
-            alias.name = "ActorToFind"
+            alias.name            = "ActorToFind"
+            alias.allow_dead      = true
+            alias.allow_destroyed = true
+            alias.allow_disabled  = true
+            alias.allow_reserved  = true
+            alias.allow_reuse     = true
+            alias.optional        = true
          end
          return quest
       end
@@ -112,6 +118,7 @@ do
                alias.allow_disabled  = true
                alias.allow_reserved  = true
                alias.allow_reuse     = true
+               alias.optional        = true
                alias.fill            = actor_form
                
                aliases_by_actor[actor_form] = alias
@@ -124,10 +131,10 @@ do
       function instance_members:get_or_create_result_topic()
          local topic = nil
          do
-            local topics = self.branches.result:get_all_topics()
-            topic = topics[1]
+            topic = self.branches.result.starting_topic
             if not topic then
-               topic = dovah.create_form(form_types.topic, { parent = self.branches.result })
+               topic = self.branches.result:append_topic()
+               self.branches.result.starting_topic = topic
             end
             topic.text = "<Results>"
          end
@@ -138,7 +145,7 @@ do
          
          local begin_topic = self.branches.main.starting_topic
          if not begin_topic then
-            begin_topic = dovah.create_form(form_types.topic, { parent = self.branches.main })
+            begin_topic = self.branches.main:append_topic()
             self.branches.main.starting_topic = begin_topic
          end
          begin_topic.text = "Can you help me find someone?"
@@ -171,24 +178,22 @@ do
          end
          
          local function get_or_create_cancel_topic()
-            local topic = utils.get_or_create_topic(
-               self.branches.main,
+            local topic = self.branches.main:get_or_create_topic(
                self.form.editor_id .. "TopicCancelActorSelection",
-               main_branch_topics
+               {
+                  text = "Actually, never mind."
+               }
             )
-            topic.text = "Actually, never mind."
             replace_infos_with_builtin_shared(topic, "CancelActorSelection")
             return topic
          end
          local function get_or_create_actor_topic(actor_info)
-            local topic = utils.get_or_create_topic(
-               self.branches.main,
-               string.format("%sTopicSelectActor%s", self.form.editor_id, actor_info.form.editor_id),
-               main_branch_topics
+            local topic = self.branches.main:get_or_create_topic(
+               string.format("%sTopicSelectActor%s", self.form.editor_id, actor_info.form.editor_id)
             )
             topic.text = actor_info.name
             
-            local info = dovah.create_form(form_types.topic_info, { parent = topic })
+            local info = topic:append_info()
             info.use_shared_info = awpa.env.built_in_shared_infos["ActorSelected"][0]
             do -- papyrus
                local papyrus = info.papyrus
@@ -216,16 +221,13 @@ do
                frag.script_name   = "AWPASelectActorScript"
                frag.function_name = "SetActor"
             end
-            info.link_to:insert(result_topic)
-            
-            utils.replace_condition_list(info, {
-               {
-                  run_on        = self.form.aliases[actor_info.form.editor_id],
-                  function_name = "GetDead",
-                  comparison    = { operator = "==", operand = 0 }
-               }
+            info.link_to:insert(result_topic._form)
+            info:replace_conditions({
+               run_on        = self.form.aliases[actor_info.form.editor_id],
+               function_name = "GetDead",
+               comparison    = { operator = "==", operand = 0 }
             })
-            utils.append_condition_list(info, actor_info.overrides.begin_asking_about.conditions)
+            info:append_conditions(actor_info.overrides.begin_asking_about.conditions)
             
             return topic
          end
@@ -236,23 +238,20 @@ do
             actor_topics[#actor_topics + 1] = get_or_create_actor_topic(self.actors[i])
          end
          
-         local desired_infos = {}
          for i = 1, #self.actors do
             local over = self.actors[i].overrides.begin_asking_to.bribe
             if over then
                over:generate_content(self, self.actors[i], begin_topic, result_topic)
-               desired_infos[#desired_infos + 1] = over.forms.link_to_branch
             end
             -- TODO: other begin-asking-to override content (i.e. groups and lines)
          end
          do
             local shared = awpa.env.built_in_shared_infos["BeginActorSelection"]
             for i = 1, #shared do
-               local info = dovah.create_form(form_types.topic_info, { parent = begin_topic })
+               local info = begin_topic:append_info()
                utils.clear_info_responses(info)
                info.use_shared_info = shared[i]
                utils.replace_info_link_to_list(info, actor_topics)
-               desired_infos[#desired_infos + 1] = info
             end
          end
       end
@@ -269,21 +268,12 @@ do
          
          self:ensure_actor_selection_aliases()
          
-         local branch_main   = nil
-         local branch_result = nil
          do
             local editor_id_main   = self.id .. "BranchMain"
             local editor_id_result = self.id .. "BranchResult"
-            
-            local branches = quest:get_all_dialogue_branches()
-            branch_main   = utils.get_or_create_branch(quest, editor_id_main, branches)
-            branch_result = utils.get_or_create_branch(quest, editor_id_result, branches)
-            
-            branch_main.type   = "top-level"
-            branch_result.type = "normal"
+            self.branches.main   = quest:get_or_create_branch(editor_id_main,   "top-level")
+            self.branches.result = quest:get_or_create_branch(editor_id_result, "normal")
          end
-         self.branches.main   = branch_main
-         self.branches.result = branch_result
          self:_generate_main_branch()
          self:_generate_results()
       end

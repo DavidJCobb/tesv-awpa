@@ -36,12 +36,11 @@ do
          -- Get or create our branch.
          --
          if not self.forms.branch then
-            local editor_id = string.format(
+            self.forms.branch = quest:get_or_create_branch(string.format(
                "%sBranch%sBribe",
                quest_info.form.editor_id,
                actor_info.form.editor_id
-            )
-            self.forms.branch = utils.get_or_create_branch(quest, editor_id)
+            ))
          end
          local branch = self.forms.branch
          
@@ -59,14 +58,12 @@ do
             for k, v in pairs(editor_id_slugs) do
                local topic = self.forms[k]
                if not topic then
-                  local editor_id = string.format(
+                  self.forms[k] = branch:get_or_create_topic(string.format(
                      "%sTopic%s%s",
                      quest_info.form.editor_id,
                      actor_info.form.editor_id,
                      v
-                  )
-                  topic, prior_topics = utils.get_or_create_topic(branch, editor_id, prior_topics)
-                  self.forms[k] = topic
+                  ))
                end
             end
          end
@@ -82,8 +79,7 @@ do
          self.forms.poor_topic.text   = "I don't have enough gold."
          
          do
-            local info = utils.make_invisible_info(
-               ask_begin_topic,
+            local info = ask_begin_topic:make_invisible_info(
                string.format(
                   "%sLinkInfo%sBribeStart",
                   quest_info.form.editor_id,
@@ -93,16 +89,13 @@ do
             )
             self.forms.link_to_branch = info
             
-            utils.replace_condition_list(info, {
+            info:replace_conditions({
                run_on        = "subject",
                function_name = "GetIsId",
                parameters    = { actor_info.form },
-               comparison    = {
-                  operator = "==",
-                  operand  = 1,
-               }
+               comparison    = { operator = "==", operand = 1 }
             })
-            utils.append_condition_list(info, self.conditions)
+            info:append_conditions(self.conditions)
          end
          
          local function _generate_infos(source, topic, postprocess)
@@ -119,8 +112,7 @@ do
             if postprocess then
                local infos = topic.infos
                for i = 1, #infos do
-                  local info = infos[i]
-                  postprocess(info)
+                  postprocess(infos[i])
                end
             end
          end
@@ -130,11 +122,11 @@ do
             self.content.begin,
             self.forms.begin_topic,
             function(info)
-               utils.replace_info_link_to_list(info, {
+               info.link_to = {
                   self.forms.accept_topic,
                   self.forms.poor_topic,
                   self.forms.refuse_topic
-               })
+               }
                info.walk_away_topic = self.forms.refuse_topic
             end
          )
@@ -144,15 +136,13 @@ do
             self.content.accept,
             self.forms.accept_topic,
             function(info)
-               do -- Subject.GetBribeSuccess == 1
-                  local cnd = info.conditions:insert()
-                  cnd.run_on        = "subject"
-                  cnd.function_name = "GetBribeSuccess"
-                  cnd.comparison.operator = "=="
-                  cnd.comparison.operand  = 1
-               end
+               info:append_condition({ -- Subject.GetBribeSuccess == 1
+                  run_on        = "subject",
+                  function_name = "GetBribeSuccess",
+                  comparison    = { operator = "==", operand = 1 }
+               })
                -- TODO: Set up script to pay the bribe
-               utils.replace_info_link_to_list(info, { results_topic })
+               info.link_to = { results_topic }
             end
          )
          
@@ -161,13 +151,11 @@ do
             self.content.poor,
             self.forms.poor_topic,
             function(info)
-               do -- Subject.GetBribeSuccess != 1
-                  local cnd = info.conditions:insert()
-                  cnd.run_on        = "subject"
-                  cnd.function_name = "GetBribeSuccess"
-                  cnd.comparison.operator = "!="
-                  cnd.comparison.operand  = 1
-               end
+               info:append_condition({ -- Subject.GetBribeSuccess != 1
+                  run_on        = "subject",
+                  function_name = "GetBribeSuccess",
+                  comparison    = { operator = "!=", operand = 1 }
+               })
             end
          )
          

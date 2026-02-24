@@ -183,7 +183,7 @@ function awpa.env:generate_content()
                forms[i] = info
             end
          end
-         self.built_in_shared_infos[k] = fex.topic_info(forms)
+         self.built_in_shared_infos[k] = forms
       end
    end
    for i = 1, #self.shared_infos do

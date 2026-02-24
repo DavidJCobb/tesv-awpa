@@ -15,11 +15,6 @@ pronouns.lua
 string_builder.lua
 utils.lua
 xml.lua
-fex_form.lua
-fex_quest.lua
-fex_branch.lua
-fex_topic.lua
-fex_topic_info.lua
 awpa_env.lua
 awpa_scope.lua
 awpa_actor.lua

@@ -226,28 +226,18 @@ do
       end
    end
    do -- Member functions: other
-      function instance_members:clone(deep, map)
+      function instance_members:clone(deep)
          local copy = xml.element(self.node_name)
          copy.self_closed = self.self_closed
          self:for_each_attribute(function(n, v)
             copy.attributes[n] = v
          end)
-         local src_to_dst_map
          if deep then
-            if map then
-               if type(map) == "table" then
-                  src_to_dst_map = map
-               else
-                  src_to_dst_map = {}
-               end
-               src_to_dst_map[self] = copy
-            end
             self:for_each_child(function(child)
-               local child_copy = child:clone(true, src_to_dst_map)
-               copy:append_child(child_copy)
+               copy:append_child(child:clone(true))
             end)
          end
-         return copy, src_to_dst_map
+         return copy
       end
       function instance_members:serialize(builder)
          builder:append('<')

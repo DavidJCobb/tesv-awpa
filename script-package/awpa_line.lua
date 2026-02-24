@@ -7,17 +7,15 @@ do
    local instance_members = {}
    awpa.line = make_class({
       constructor = function(self)
-         self.hours_until_reset  = 0
-         self.script_notes       = ""
-         self.text               = ""
-         self.vanilla            = nil
-         self.source_xml_element = nil
+         self.hours_until_reset = 0
+         self.script_notes      = ""
+         self.text              = ""
+         self.vanilla           = nil
       end,
       instance_members = instance_members,
    })
    do -- member functions
       function instance_members:from_xml(element)
-         self.source_xml_element = element
          local hours = tonumber(element.attributes["hours-until-reset"])
          if hours then
             self.hours_until_reset = hours
@@ -42,45 +40,47 @@ do
          self.text = element:get_text_content()
       end
       function instance_members:generate_info(topic)
-         local info = topic:append_info({
-            hours_until_reset = self.hours_until_reset,
-            is_random = true,
-            responses = {
-               {
-                  script_notes = self.script_notes,
-                  text         = self.text,
-               }
-            }
+         local info = dovah.create_form(form_types.topic_info, { parent = topic })
+         local resp = info.responses:insert({
+            script_notes = self.script_notes,
+            text         = self.text,
          })
+         info.hours_until_reset = self.hours_until_reset
+         info.is_random = true
          
          local fem_info
          if has_masc_pronouns(self.text) then
-            local target_alias = topic.parent_quest.aliases["ActorToFind"]
-            info:append_condition({
-               run_on        = target_alias,
-               function_name = "GetIsSex",
-               parameters    = { "Male" },
-               comparison    = { operator = "==", operand = 1 }
-            })
+            local target_alias = nil
+            do
+               local quest = topic.parent_quest
+               target_alias = quest.aliases["ActorToFind"]
+            end
+         
+            do
+               local cnd = info.conditions:insert()
+               cnd.run_on        = target_alias
+               cnd.function_name = "GetIsSex"
+               cnd.parameters[1] = "Male"
+               cnd.comparison.operator = "=="
+               cnd.comparison.operand  = 1
+            end
             
-            fem_info = topic:append_info({
-               conditions = {
-                  {
-                     run_on        = target_alias,
-                     function_name = "GetIsSex",
-                     parameters    = { "Female" },
-                     comparison    = { operator = "==", operand = 1 }
-                  }
-               },
-               hours_until_reset = self.hours_until_reset,
-               is_random = true,
-               responses = {
-                  {
-                     script_notes = self.script_notes,
-                     text         = swap_masc_pronouns_to_fem(self.text),
-                  }
-               },
+            local fem_text = swap_masc_pronouns_to_fem(self.text)
+            fem_info = dovah.create_form(form_types.topic_info, { parent = topic })
+            local fem_resp = fem_info.responses:insert({
+               script_notes = self.script_notes,
+               text         = fem_text,
             })
+            fem_info.hours_until_reset = self.hours_until_reset
+            fem_info.is_random = true
+            do
+               local cnd = fem_info.conditions:insert()
+               cnd.run_on        = target_alias
+               cnd.function_name = "GetIsSex"
+               cnd.parameters[1] = "Female"
+               cnd.comparison.operator = "=="
+               cnd.comparison.operand  = 1
+            end
          end
          
          return info, fem_info

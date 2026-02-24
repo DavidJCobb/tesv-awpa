@@ -90,42 +90,12 @@ do
          end
          for k, v in pairs(clas_meta.__instance_getters) do
             if k == key then
-               return v(inst, key)
+               return v(inst)
             end
          end
          class     = clas_meta.__superclass
          clas_meta = getmetatable(class)
       until not class
-   end
-   
-   local function instance_meta_newindex(inst, key, value)
-      if rawget(inst, key) then
-         rawset(inst, key, value)
-         return
-      end
-      local inst_meta = getmetatable(inst)
-      local class     = inst_meta.__class
-      local clas_meta = getmetatable(class)
-      local has_get   = false
-      repeat
-         for k, v in pairs(clas_meta.__instance_getters) do
-            if k == key then
-               has_get = true
-            end
-         end
-         for k, v in pairs(clas_meta.__instance_setters) do
-            if k == key then
-               v(inst, key, value)
-               return
-            end
-         end
-         class     = clas_meta.__superclass
-         clas_meta = getmetatable(class)
-      until not class
-      if has_get then
-         error("property `" .. tostring(key) .. "` is read-only")
-      end
-      rawset(inst, key, value)
    end
    
    -- Function used to invoke class constructors on an instance, once its 
@@ -343,7 +313,6 @@ do
       local static_members   = {}
       local instance_members = {}
       local instance_getters = {}
-      local instance_setters = {}
       local metamethods
       local superclass
       local calls_super = false
@@ -351,7 +320,6 @@ do
          constructor      = options.constructor      or nil
          instance_members = options.instance_members or {}
          instance_getters = options.getters          or {}
-         instance_setters = options.setters          or {}
          static_members   = options.static_members   or {}
          metamethods      = options.instance_metamethods or nil
          superclass       = options.superclass       or nil
@@ -367,8 +335,7 @@ do
       end
       
       local instance_metatable = {
-         __index    = instance_meta_index,
-         __newindex = instance_meta_newindex
+         __index = instance_meta_index
       }
       if type(options) == "table" then
          local v = options.__tostring
@@ -390,7 +357,6 @@ do
          __constructor_calls_super = calls_super,
          __instance_members        = instance_members,
          __instance_getters        = instance_getters,
-         __instance_setters        = instance_setters,
          __instance_metatable      = instance_metatable,
          __superclass              = superclass,
       }

@@ -1,11 +1,99 @@
 
 utils = {}
 
+function utils.get_or_create_branch(quest, editor_id, prior_branches)
+   if not prior_branches then
+      prior_branches = quest:get_all_dialogue_branches()
+   end
+   for i = 1, #branches do
+      local branch = branches[i]
+      if branch.editor_id == editor_id then
+         return branch, prior_branches
+      end
+   end
+   local branch = dovah.create_form(form_types.dialogue_branch, { parent = quest })
+   branch.editor_id = editor_id
+   branch.type      = "normal"
+   return branch, prior_branches
+end
+
+function utils.get_or_create_topic(branch, editor_id, prior_topics)
+   if not prior_topics then
+      prior_topics = branch:get_all_topics()
+   end
+   for i = 1, #prior_topics do
+      local topic = prior_topics[i]
+      if topic.editor_id == editor_id then
+         return topic, prior_topics
+      end
+   end
+   local topic = dovah.create_form(form_types.topic, { parent = branch })
+   topic.editor_id = editor_id
+   return topic, prior_topics
+end
+
+--
+
 function utils.clear_info_responses(info)
    local list = info.responses
    local size = #list
    for i = size, 1 do
       list:remove(i)
+   end
+end
+
+function utils.make_invisible_info(topic, editor_id, destination)
+   local infos = topic.infos
+   local info
+   for i = 1, #infos do
+      local item = infos[i]
+      if item.editor_id == editor_id then
+         info = item
+         break
+      end
+   end
+   if not info then
+      info = dovah.create_form(form_types.topic_info, { parent = topic })
+      info.editor_id = editor_id
+   end
+   
+   info.use_shared_info = awpa.env.built_in_shared_infos["InvisibleInfo"][1]
+   
+   if type(destination) == "userdata" then
+      destination = { destination }
+   end
+   utils.replace_info_link_to_list(info, destination)
+   
+   return info
+end
+
+function utils.replace_condition_list(info, conditions)
+   local list = info.conditions
+   for i = #list, 1 do
+      list:remove(i)
+   end
+   utils.append_condition_list(info, conditions)
+end
+function utils.append_condition_list(info, conditions)
+   local list = info.conditions
+   if conditions[1] and conditions[1].function_name then
+      conditions = { conditions }
+   end
+   for i = 1, #conditions do
+      ::continue::
+      local src = conditions[i]
+      if awpa.condition.is(src) then
+         src:apply_to_info(info)
+         goto continue
+      end
+      local cnd = list:insert()
+      cnd.run_on        = src.run_on
+      cnd.function_name = src.function_name
+      for j = 1, 2 do
+         cnd.parameters[j] = src.parameters[j]
+      end
+      cnd.comparison.operator = src.comparison.operator
+      cnd.comparison.operand  = src.comparison.operand
    end
 end
 
@@ -38,8 +126,23 @@ end
 function utils.resolve_form_reference(text)
    local SIGS = {
       ACHR = form_types.actor,
+      ACTI = form_types.activator,
+      ALCH = form_types.potion,
+      AMMO = form_types.ammo,
+      ARMO = form_types.armor,
+      BOOK = form_types.book,
+      FURN = form_types.furniture,
       GLOB = form_types.global,
+      KEYM = form_types.key,
+      MISC = form_types.misc_item,
+      MSTT = form_types.movable_static,
+      NPC_ = form_types.actor_base,
+      QUST = form_types.quest,
       REFR = form_types.reference,
+      SCRL = form_types.scroll,
+      SLGM = form_types.soul_gem,
+      STAT = form_types.static,
+      WEAP = form_types.weapon,
    }
    
    local sig, form_id, editor_id = text:match("^%[(....):(%x%x%x%x%x%x%x%x)%](.*)$")

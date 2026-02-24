@@ -40,9 +40,12 @@ do
          if not v then
             error("needs `for` attribute")
          end
-         self.form = dovah.get_form_by_editor_id(v, form_types.quest)
+         self.form = utils.resolve_form_reference(v)
          if not self.form then
-            error("QUST not found: " .. v)
+            self.form = dovah.get_form_by_editor_id(v, form_types.quest)
+            if not self.form then
+               error("QUST not found: " .. v)
+            end
          end
          
          v = element.attributes["done"]

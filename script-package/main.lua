@@ -178,7 +178,59 @@ function process_xml(root)
                            end
                         end)
                      elseif node.node_name == "begin-asking-to" then
-                        -- TODO
+                        local over = actor.overrides.begin_asking_to
+                        node:for_each_child_element(function(node)
+                           if node.node_name == "bribe" then
+                              local bribe = over.bribe
+                              if not bribe then
+                                 over.bribe = awpa.actor_override_bribe()
+                                 bribe = over.bribe
+                              end
+                              node:for_each_child_element(function(node)
+                                 if node.node_name == "conditions" then
+                                    process_condition_list(bribe, quest, node)
+                                 else
+                                    local function _read_line_set(key, node)
+                                       node:for_each_child_element(function(node)
+                                          local list = bribe.content[key]
+                                          if node.node_name == "line" then
+                                             local item = awpa.line()
+                                             list[#list + 1] = item
+                                             item:from_xml(node)
+                                          elseif node.node_name == "g" then
+                                             local child = awpa.group()
+                                             list[#list + 1] = child
+                                             child.parent = nil
+                                             child:from_xml(node)
+                                             process_group(child, node)
+                                          end
+                                       end)
+                                    end
+                                    if node.node_name == "begin-lines" then
+                                       _read_line_set("begin", node)
+                                    elseif node.node_name == "accept-lines" then
+                                       _read_line_set("accept", node)
+                                    elseif node.node_name == "refuse-lines" then
+                                       _read_line_set("refuse", node)
+                                    elseif node.node_name == "poor-lines" then
+                                       _read_line_set("poor", node)
+                                    end
+                                 end
+                              end)
+                           elseif node.node_name == "line" then
+                              local list = over.results
+                              local item = awpa.line()
+                              list[#list + 1] = item
+                              item:from_xml(node)
+                           elseif node.node_name == "g" then
+                              local list  = over.results
+                              local child = awpa.group()
+                              list[#list + 1] = child
+                              child.parent = nil
+                              child:from_xml(node)
+                              process_group(child, node)
+                           end
+                        end)
                      elseif node.node_name == "begin-responding" then
                         -- TODO
                      end
@@ -219,7 +271,8 @@ local file = dovah.package.load_file({
    --path = "payload-test-simple-conditions.xml",
    --path = "payload-test-nested-conditions.xml",
    --path = "payload-test-condition-sets.xml",
-   path = "payload-test-actor-overrides-begin-asking-about.xml",
+   --path = "payload-test-actor-overrides-begin-asking-about.xml",
+   path = "payload-test-actor-overrides-bribe.xml",
    type = "text"
 })
 local parser = xml.parser()

@@ -135,22 +135,14 @@ do
       end
       function instance_members:_generate_main_branch()
          local main_branch_topics = self.branches.main:get_all_topics()
-         local function find_preexisting_topic(editor_id)
-            local size = #main_branch_topics
-            for i = 1, size do
-               local t = main_branch_topics[i]
-               if t.editor_id == editor_id then
-                  return t
-               end
-            end
-         end
          
          local begin_topic = self.branches.main.starting_topic
          if not begin_topic then
             begin_topic = dovah.create_form(form_types.topic, { parent = self.branches.main })
-            begin_topic.text = "Can you help me find someone?"
             self.branches.main.starting_topic = begin_topic
          end
+         begin_topic.text = "Can you help me find someone?"
+         
          local result_topic = self:get_or_create_result_topic()
          
          local function replace_infos_with_builtin_shared(topic, key, configure)
@@ -179,44 +171,44 @@ do
          end
          
          local function get_or_create_cancel_topic()
-            local editor_id = self.form.editor_id .. "TopicCancelActorSelection"
-            local topic     = find_preexisting_topic(editor_id)
-            if topic then
-               return topic
-            end
-            topic = dovah.create_form(form_types.topic, { parent = self.branches.main })
-            topic.editor_id = editor_id
-            topic.text      = "Actually, never mind."
+            local topic = utils.get_or_create_topic(
+               self.branches.main,
+               self.form.editor_id .. "TopicCancelActorSelection",
+               main_branch_topics
+            )
+            topic.text = "Actually, never mind."
             replace_infos_with_builtin_shared(topic, "CancelActorSelection")
             return topic
          end
          local function get_or_create_actor_topic(actor_info)
-            local editor_id = self.form.editor_id .. "TopicSelectActor" .. actor_info.form.editor_id
-            do
-               local size = #main_branch_topics
-               for i = 1, size do
-                  local t = main_branch_topics[i]
-                  if t.editor_id == editor_id then
-                     return t
-                  end
-               end
-            end
-            local topic = dovah.create_form(form_types.topic, { parent = self.branches.main })
-            topic.editor_id = editor_id
-            topic.text      = actor_info.name
+            local topic = utils.get_or_create_topic(
+               self.branches.main,
+               string.format("%sTopicSelectActor%s", self.form.editor_id, actor_info.form.editor_id),
+               main_branch_topics
+            )
+            topic.text = actor_info.name
             
             local info = dovah.create_form(form_types.topic_info, { parent = topic })
             info.use_shared_info = awpa.env.built_in_shared_infos["ActorSelected"][0]
             do -- papyrus
                local papyrus = info.papyrus
                do
-                  local script = papyrus.scripts:insert("AWPASelectActorScript")
+                  local script = papyrus.scripts["AWPASelectActorScript"]
+                  if not script then
+                     script = papyrus.scripts:insert("AWPASelectActorScript")
+                  end
                   do
-                     local prop = script.properties:insert("pkSrcAlias")
+                     local prop = script.properties["pkSrcAlias"]
+                     if not prop then
+                        prop = script.properties:insert("pkSrcAlias")
+                     end
                      prop.value = self.form.aliases[actor_info.form.editor_id]
                   end
                   do
-                     local prop = script.properties:insert("pkDstAlias")
+                     local prop = script.properties["pkDstAlias"]
+                     if not prop then
+                        prop = script.properties:insert("pkDstAlias")
+                     end
                      prop.value = self.form.aliases["ActorToFind"]
                   end
                end
@@ -226,10 +218,14 @@ do
             end
             info.link_to:insert(result_topic)
             
-            local cnd_list = actor_info.overrides.begin_asking_about.conditions
-            for i = 1, #cnd_list do
-               cnd_list[i]:apply_to_info(info)
-            end
+            utils.replace_condition_list(info, {
+               {
+                  run_on        = self.form.aliases[actor_info.form.editor_id],
+                  function_name = "GetDead",
+                  comparison    = { operator = "==", operand = 0 }
+               }
+            })
+            utils.append_condition_list(info, actor_info.overrides.begin_asking_about.conditions)
             
             return topic
          end
@@ -240,13 +236,25 @@ do
             actor_topics[#actor_topics + 1] = get_or_create_actor_topic(self.actors[i])
          end
          
-         replace_infos_with_builtin_shared(
-            begin_topic,
-            "BeginActorSelection",
-            function(info)
-               utils.replace_info_link_to_list(info, actor_topics)
+         local desired_infos = {}
+         for i = 1, #self.actors do
+            local over = self.actors[i].overrides.begin_asking_to.bribe
+            if over then
+               over:generate_content(self, self.actors[i], begin_topic, result_topic)
+               desired_infos[#desired_infos + 1] = over.forms.link_to_branch
             end
-         )
+            -- TODO: other begin-asking-to override content (i.e. groups and lines)
+         end
+         do
+            local shared = awpa.env.built_in_shared_infos["BeginActorSelection"]
+            for i = 1, #shared do
+               local info = dovah.create_form(form_types.topic_info, { parent = begin_topic })
+               utils.clear_info_responses(info)
+               info.use_shared_info = shared[i]
+               utils.replace_info_link_to_list(info, actor_topics)
+               desired_infos[#desired_infos + 1] = info
+            end
+         end
       end
       function instance_members:_generate_results()
          local topic = self:get_or_create_result_topic()
@@ -266,33 +274,13 @@ do
          do
             local editor_id_main   = self.id .. "BranchMain"
             local editor_id_result = self.id .. "BranchResult"
-            do
-               local branches  = quest:get_all_dialogue_branches()
-               for i = 1, #branches do
-                  local b = branches[i]
-                  if b.editor_id == editor_id_main then
-                     branch_main = b
-                     if branch_result then
-                        break
-                     end
-                  elseif b.editor_id == editor_id_result then
-                     branch_result = b
-                     if branch_main then
-                        break
-                     end
-                  end
-               end
-            end
-            if not branch_main then
-               branch_main = dovah.create_form(form_types.dialogue_branch, { parent = quest })
-               branch_main.editor_id = editor_id_main
-               branch_main.type      = "top-level"
-            end
-            if not branch_result then
-               branch_result = dovah.create_form(form_types.dialogue_branch, { parent = quest })
-               branch_result.editor_id = editor_id_result
-               branch_result.type      = "normal"
-            end
+            
+            local branches = quest:get_all_dialogue_branches()
+            branch_main   = utils.get_or_create_branch(quest, editor_id_main, branches)
+            branch_result = utils.get_or_create_branch(quest, editor_id_result, branches)
+            
+            branch_main.type   = "top-level"
+            branch_result.type = "normal"
          end
          self.branches.main   = branch_main
          self.branches.result = branch_result

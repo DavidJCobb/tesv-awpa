@@ -17,9 +17,8 @@ do
                --
                -- Override this actor's responses to "Can you help me find someone?"
                --
-               conditions = {},
-               bribe      = nil, -- optional<awpa.actor_override_bribe>
-               results    = {},  -- vector<variant<awpa.group, awpa.line>>
+               bribe   = nil, -- optional<awpa.actor_override_bribe>
+               results = {},  -- vector<variant<awpa.group, awpa.line>>
             },
             begin_responding = {
                --

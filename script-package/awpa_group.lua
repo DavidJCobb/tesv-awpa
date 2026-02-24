@@ -12,6 +12,7 @@ do
          self.groups       = {}
          self.lines        = {}
          self.shared_infos = {} -- references to shared_info_set instances used by this group
+         self.path         = "~"
       end,
       instance_members = instance_members,
    })
@@ -25,7 +26,9 @@ do
             self.exclusive = false
          end
          
-         self.path = self:get_unique_path()
+         pcall(function()
+            self.path = self:get_unique_path()
+         end)
       end
       function instance_members:get_relevant_conditions()
          if not awpa.group.is(self.parent) then

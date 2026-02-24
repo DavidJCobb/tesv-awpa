@@ -146,6 +146,7 @@ function awpa.env:generate_content()
    
    do
       local INFOS = {
+         ["InvisibleInfo"] = { "" },
          ["BeginActorSelection"] = {
             "Who are you looking for?",
             "Who is it? I might have seen them around.",

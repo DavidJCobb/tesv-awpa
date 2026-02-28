@@ -80,7 +80,6 @@ do
          i = first
          local prev = 1
          while i do
-         ::continue::
             builder:append(self.data:sub(prev, i - prev + 1))
             local c = self.data:sub(i, i + 1)
             if c == '<' then
@@ -103,6 +102,7 @@ do
             end
             prev = i + 1
             i    = self.data:find("[%c%<%>%&%]]", prev)
+         ::continue::
          end
          builder:append(self.data:sub(prev))
       end

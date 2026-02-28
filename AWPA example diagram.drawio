@@ -1,0 +1,262 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:147.0) Gecko/20100101 Firefox/147.0" version="29.6.0">
+  <diagram name="Page-1" id="3ZVvFNFL5yAO0Bmypp5V">
+    <mxGraphModel dx="1114" dy="795" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=center;fontStyle=1;fontSize=20;fillColor=#e1d5e7;strokeColor=#9673a6;" value="AWPARiftenQuest" vertex="1">
+          <mxGeometry height="1140" width="1090" x="40" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#d5e8d4;strokeColor=#82b366;" value="AWPARiftenMainBranch" vertex="1">
+          <mxGeometry height="1050" width="610" x="80" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#fff2cc;strokeColor=#d6b656;" value="AWPARiftenBeginTopic&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&quot;Can you help me find someone?&quot;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="190" width="200" x="95" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#d5e8d4;strokeColor=#82b366;" value="AWPARiftenMaulBribeBranch" vertex="1">
+          <mxGeometry height="510" width="340" x="750" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-7" connectable="0" parent="1" style="group;fillColor=none;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="80" width="200" x="760" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-5" parent="PuXn6zqc-xqxDhx_wsCg-7" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#fff2cc;strokeColor=#d6b656;" value="AWPARiftenMaulBribeBeginTopic" vertex="1">
+          <mxGeometry height="80" width="200" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-6" parent="PuXn6zqc-xqxDhx_wsCg-7" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;i&gt;Info&lt;br&gt;&lt;/i&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&quot;Sure... but it&#39;ll cost you.&quot;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="40" width="170" x="15" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-10" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="110" width="200" x="880" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-8" parent="PuXn6zqc-xqxDhx_wsCg-10" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#fff2cc;strokeColor=#d6b656;" value="AWPARiftenMaulBribeAcceptTopic&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&quot;I can pay. (Bribe)&quot;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="100" width="200" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-9" parent="PuXn6zqc-xqxDhx_wsCg-10" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;i&gt;Info&lt;br&gt;&lt;/i&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&quot;All right. Who are you looking for?&quot;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="40" width="170" x="15" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-11" edge="1" parent="1" source="PuXn6zqc-xqxDhx_wsCg-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="PuXn6zqc-xqxDhx_wsCg-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-14" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="110" width="200" x="880" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-12" parent="PuXn6zqc-xqxDhx_wsCg-14" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#fff2cc;strokeColor=#d6b656;" value="AWPARiftenMaulBribeRefuseTopic&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&quot;Never mind.&quot;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="100" width="200" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-13" parent="PuXn6zqc-xqxDhx_wsCg-14" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;i&gt;Info&lt;br&gt;&lt;/i&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&quot;Suit yourself.&quot;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="40" width="170" x="15" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-15" edge="1" parent="1" source="PuXn6zqc-xqxDhx_wsCg-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="PuXn6zqc-xqxDhx_wsCg-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-19" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="110.00000000000001" width="200" x="880" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-17" parent="PuXn6zqc-xqxDhx_wsCg-19" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#fff2cc;strokeColor=#d6b656;" value="AWPARiftenMaulBribePoorTopic&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&quot;I don&#39;t have enough gold.&quot;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="110.00000000000001" width="200" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-18" parent="PuXn6zqc-xqxDhx_wsCg-19" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;i&gt;Info&lt;br&gt;&lt;/i&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&quot;Then stop wasting my time.&quot;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="46.25" width="170" x="15" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-20" edge="1" parent="1" source="PuXn6zqc-xqxDhx_wsCg-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="PuXn6zqc-xqxDhx_wsCg-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-25" edge="1" parent="1" source="PuXn6zqc-xqxDhx_wsCg-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="PuXn6zqc-xqxDhx_wsCg-5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="720" y="185" />
+              <mxPoint x="720" y="160" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-21" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;i&gt;Invisible-Continue Info&lt;/i&gt;" vertex="1">
+          <mxGeometry height="30" width="170" x="110" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-26" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;verticalAlign=top;" value="&lt;div&gt;AWPARiftenGrelkaOverrideBranch&lt;/div&gt;" vertex="1">
+          <mxGeometry height="200" width="340" x="750" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-27" connectable="0" parent="1" style="group;fillColor=none;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="160" width="200" x="820" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-28" parent="PuXn6zqc-xqxDhx_wsCg-27" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#fff2cc;strokeColor=#d6b656;" value="AWPAGrelkaOverrideTopic" vertex="1">
+          <mxGeometry height="160" width="200" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-29" parent="PuXn6zqc-xqxDhx_wsCg-27" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;i&gt;Info&lt;br&gt;&lt;/i&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&quot;No.&quot;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="40" width="170" x="15" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-30" parent="PuXn6zqc-xqxDhx_wsCg-27" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;i&gt;Info&lt;br&gt;&lt;/i&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&quot;Whoever it is, I&#39;m not their keeper, I don&#39;t know where they&#39;re at, and I don&#39;t care.&quot;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="170" x="15" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-32" edge="1" parent="1" source="PuXn6zqc-xqxDhx_wsCg-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="PuXn6zqc-xqxDhx_wsCg-28">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="720" y="225" />
+              <mxPoint x="720" y="730" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-31" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;i&gt;Invisible-Continue Info&lt;/i&gt;" vertex="1">
+          <mxGeometry height="30" width="170" x="110" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-40" edge="1" parent="1" source="PuXn6zqc-xqxDhx_wsCg-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="PuXn6zqc-xqxDhx_wsCg-34">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="195" y="330" />
+              <mxPoint x="100" y="330" />
+              <mxPoint x="100" y="443" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-33" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;i&gt;Info&lt;br&gt;&lt;/i&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&quot;Who are you looking for?&quot;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="40" width="170" x="110" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-36" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="85" width="240" x="120" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-34" parent="PuXn6zqc-xqxDhx_wsCg-36" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#fff2cc;strokeColor=#d6b656;" value="AWPARiftenActorSelectTopicTalenJei&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&quot;Talen-Jei.&quot;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="85" width="240" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-35" parent="PuXn6zqc-xqxDhx_wsCg-36" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;i&gt;Invisible-Continue Info&lt;/i&gt;" vertex="1">
+          <mxGeometry height="30" width="170" x="35" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-37" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="85" width="240" x="120" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-38" parent="PuXn6zqc-xqxDhx_wsCg-37" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#fff2cc;strokeColor=#d6b656;" value="AWPARiftenActorSelectTopicKeerava&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&quot;Keerava.&quot;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="85" width="240" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-52" edge="1" parent="PuXn6zqc-xqxDhx_wsCg-37" source="PuXn6zqc-xqxDhx_wsCg-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="280" y="60" />
+              <mxPoint x="280" y="120" />
+              <mxPoint x="120" y="120" />
+            </Array>
+            <mxPoint x="120" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-39" parent="PuXn6zqc-xqxDhx_wsCg-37" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;i&gt;Invisible-Continue Info&lt;/i&gt;" vertex="1">
+          <mxGeometry height="30" width="170" x="35" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-41" edge="1" parent="1" source="PuXn6zqc-xqxDhx_wsCg-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.004;entryY=0.588;entryDx=0;entryDy=0;entryPerimeter=0;" target="PuXn6zqc-xqxDhx_wsCg-38">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="195" y="330" />
+              <mxPoint x="100" y="330" />
+              <mxPoint x="100" y="550" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-42" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="360" width="240" x="120" y="660" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-43" parent="PuXn6zqc-xqxDhx_wsCg-42" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#fff2cc;strokeColor=#d6b656;" value="AWPARiftenResultsRootTopic" vertex="1">
+          <mxGeometry height="360" width="240" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-44" parent="PuXn6zqc-xqxDhx_wsCg-42" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;i&gt;Invisible-Continue Info&lt;br&gt;&lt;/i&gt;&lt;font face=&quot;Courier New&quot; style=&quot;font-size: 10px;&quot;&gt;[Ingun: begin-responding]&lt;/font&gt;" vertex="1">
+          <mxGeometry height="42.5" width="170" x="35" y="27.5" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-63" parent="PuXn6zqc-xqxDhx_wsCg-42" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;i&gt;Invisible-Continue Info&lt;/i&gt;" vertex="1">
+          <mxGeometry height="30" width="170" x="35" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-64" parent="PuXn6zqc-xqxDhx_wsCg-42" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;i&gt;Invisible-Continue Info&lt;/i&gt;" vertex="1">
+          <mxGeometry height="30" width="170" x="35" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-67" parent="PuXn6zqc-xqxDhx_wsCg-42" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;i&gt;Info&lt;br&gt;&lt;/i&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&quot;I&#39;m afraid I haven&#39;t seen him around lately.&quot;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="170" x="35" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-68" parent="PuXn6zqc-xqxDhx_wsCg-42" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;i&gt;Infos with no assigned top-level group&lt;/i&gt;" vertex="1">
+          <mxGeometry height="50" width="170" x="35" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-45" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="180" width="240" x="410" y="660" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-46" parent="PuXn6zqc-xqxDhx_wsCg-45" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#fff2cc;strokeColor=#d6b656;" value="AWPARiftenResultsOverrideTopicIngun" vertex="1">
+          <mxGeometry height="180" width="240" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-48" parent="PuXn6zqc-xqxDhx_wsCg-45" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;i&gt;Info&lt;br&gt;&lt;/i&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&quot;I&#39;ve been too focused on my experiments to really notice him.&quot;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="170" x="35" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-49" parent="PuXn6zqc-xqxDhx_wsCg-45" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;i&gt;Info&lt;br&gt;&lt;/i&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&quot;I&#39;m not sure. I&#39;ve been thinking about my experiments... Would you happen to know a good place to gather Painted Troll Fat? Sorry, never mind.&quot;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="170" x="35" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-50" edge="1" parent="1" source="PuXn6zqc-xqxDhx_wsCg-44" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="PuXn6zqc-xqxDhx_wsCg-46">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="380" y="703" />
+              <mxPoint x="380" y="750" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-51" edge="1" parent="1" source="PuXn6zqc-xqxDhx_wsCg-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="PuXn6zqc-xqxDhx_wsCg-43">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="400" y="460" />
+              <mxPoint x="400" y="620" />
+              <mxPoint x="240" y="620" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-53" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="340" width="240" x="410" y="870" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-54" parent="PuXn6zqc-xqxDhx_wsCg-53" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#fff2cc;strokeColor=#d6b656;" value="AWPARiftenResultsTopicSameInterior" vertex="1">
+          <mxGeometry height="130" width="240" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-55" parent="PuXn6zqc-xqxDhx_wsCg-53" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;i&gt;Info&lt;br&gt;&lt;/i&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&quot;He&#39;s upstairs.&quot;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="40" width="170" x="35" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-56" parent="PuXn6zqc-xqxDhx_wsCg-53" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;i&gt;Info&lt;br&gt;&lt;/i&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&quot;He&#39;s downstairs.&quot;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="40" width="170" x="35" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-57" connectable="0" parent="PuXn6zqc-xqxDhx_wsCg-53" style="group" value="" vertex="1">
+          <mxGeometry height="180" width="240" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-58" parent="PuXn6zqc-xqxDhx_wsCg-57" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#fff2cc;strokeColor=#d6b656;" value="AWPARiftenResultsTopicInteriors" vertex="1">
+          <mxGeometry height="90" width="240" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-59" parent="PuXn6zqc-xqxDhx_wsCg-57" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;i&gt;Info&lt;br&gt;&lt;/i&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&quot;I believe I saw him by the Bee and Barb a little while ago.&quot;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="170" x="35" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-61" edge="1" parent="1" source="PuXn6zqc-xqxDhx_wsCg-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="PuXn6zqc-xqxDhx_wsCg-34">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1085" y="280" />
+              <mxPoint x="1085" y="330" />
+              <mxPoint x="100" y="330" />
+              <mxPoint x="100" y="443" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-62" edge="1" parent="1" source="PuXn6zqc-xqxDhx_wsCg-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.603;entryDx=0;entryDy=0;entryPerimeter=0;" target="PuXn6zqc-xqxDhx_wsCg-38">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1085" y="280" />
+              <mxPoint x="1085" y="330" />
+              <mxPoint x="100" y="330" />
+              <mxPoint x="100" y="551" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-65" edge="1" parent="1" source="PuXn6zqc-xqxDhx_wsCg-63" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="PuXn6zqc-xqxDhx_wsCg-54">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-66" edge="1" parent="1" source="PuXn6zqc-xqxDhx_wsCg-64" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="PuXn6zqc-xqxDhx_wsCg-58">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-69" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;textDirection=ltr;" value="These two topics are user-defined &quot;top-level groups.&quot;&lt;br&gt;We want the ability to divide potential responses&amp;nbsp;&lt;br&gt;up this way so that the game doesn&#39;t have to check&amp;nbsp;&lt;br&gt;conditions on (as many) hundreds of infos. For&amp;nbsp;&lt;br&gt;example, we may gate all &quot;exterior&quot; lines behind a&amp;nbsp;&lt;br&gt;single invisible-continue info that checks the parent&amp;nbsp;&lt;br&gt;worldspace of the actor the player is asking about,&lt;br&gt;so that all of those lines can be immediately skipped&lt;br&gt;if that actor is in an interior." vertex="1">
+          <mxGeometry height="140" width="300" x="660" y="945" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-70" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;textDirection=ltr;" value="&lt;div&gt;If we aren&#39;t redirected to a different branch&lt;br&gt;for the actor we&#39;re asking, then we end up&amp;nbsp;&lt;br&gt;at the actor-selection topics. These use&amp;nbsp;&lt;br&gt;an invisible-continue info with a Papyrus&amp;nbsp;&lt;/div&gt;&lt;div&gt;fragment to push the actor we&#39;re asking&amp;nbsp;&lt;br&gt;about into a quest alias, so that all of the&lt;br&gt;infos in the results topics can run their&lt;br&gt;conditions against just that one alias.&lt;/div&gt;" vertex="1">
+          <mxGeometry height="130" width="250" x="415" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-71" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;textDirection=ltr;" value="Bribing the speaker routes back to the normal actor-selection process." vertex="1">
+          <mxGeometry height="30" width="400" x="1140" y="255" as="geometry" />
+        </mxCell>
+        <mxCell id="PuXn6zqc-xqxDhx_wsCg-73" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" value="&lt;div&gt;Any &lt;font face=&quot;Courier New&quot;&gt;begin-asking-to&lt;/font&gt; overrides on the speaker&lt;/div&gt;&lt;div&gt;will lead to alternate branches, via invisible-continue&amp;nbsp;&lt;/div&gt;&lt;div&gt;infos with the appropriate conditions.&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="300" x="355" y="130" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

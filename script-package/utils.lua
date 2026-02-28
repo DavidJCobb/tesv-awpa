@@ -80,7 +80,6 @@ function utils.append_condition_list(info, conditions)
       conditions = { conditions }
    end
    for i = 1, #conditions do
-      ::continue::
       local src = conditions[i]
       if awpa.condition.is(src) then
          src:apply_to_info(info)
@@ -94,6 +93,7 @@ function utils.append_condition_list(info, conditions)
       end
       cnd.comparison.operator = src.comparison.operator
       cnd.comparison.operand  = src.comparison.operand
+      ::continue::
    end
 end
 

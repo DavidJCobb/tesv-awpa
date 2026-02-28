@@ -615,7 +615,7 @@
                nights drinking himself to death at the Bee and Barb, interrupting 
                his time at the bar only to eat dinner with his surviving family.
             -->
-            <override-entry-point>
+            <begin-asking-to>
                <conditions>
                   <or>
                      <race of="player" is="ImperialRace" />
@@ -628,8 +628,8 @@
                   <line>No, Imperial.</line>
                   <line>The carriage driver is just outside the north gate. He can take you back to Cyrodiil where you belong.</line>
                </lines>
-            </override-entry-point>
-            <override-responses>
+            </begin-asking-to>
+            <begin-responding>
                <g>
                   <conditions>
                      <global name="GameHour" gte="13" />
@@ -658,7 +658,7 @@
                      <line>They're not in here, that's for sure.</line>
                   </lines>
                </g>
-            </override-responses>
+            </begin-responding>
          </actor>
          <actor editor-id="Wujeeta" />
          <actor editor-id="Wilhelm" />

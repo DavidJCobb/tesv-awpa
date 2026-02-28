@@ -35,6 +35,7 @@ awpa_group.lua
 awpa_line.lua
 awpa_quest.lua
 awpa_shared_info_set.lua
+awpa_actor_selection_topic_list.lua
 main.lua
    </files>
 </package>

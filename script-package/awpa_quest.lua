@@ -20,6 +20,8 @@ do
             main   = nil,
             result = nil,
          }
+         self.results_root_topic   = nil -- TODO
+         self.selection_topic_list = awpa.actor_selection_topic_list(self)
       end,
       instance_members = instance_members,
    })
@@ -122,6 +124,11 @@ do
       end
       
       function instance_members:get_or_create_result_topic()
+         --
+         -- TODO: Don't have a separate branch for results
+         --
+         -- TODO: Store/recycle `self.results_root_topic` as editor ID `%sResultsRootTopic`
+         --
          local topic = nil
          do
             local topics = self.branches.result:get_all_topics()
@@ -145,96 +152,7 @@ do
          
          local result_topic = self:get_or_create_result_topic()
          
-         local function replace_infos_with_builtin_shared(topic, key, configure)
-            local shared     = awpa.env.built_in_shared_infos[key]
-            local prior_list = topic.infos
-            local prior_size = #prior_list
-            local after_size = #shared
-            for i = 1, after_size do
-               local info
-               if i <= prior_size then
-                  info = prior_list[i]
-                  utils.clear_info_responses(info)
-               else
-                  info = dovah.create_form(form_types.topic_info, { parent = topic })
-               end
-               info.use_shared_info = shared[i]
-               if configure then
-                  configure(info)
-               end
-            end
-            if prior_size > after_size then
-               for i = prior_size + 1, after_size do
-                  dovah.delete_form(prior_list[i])
-               end
-            end
-         end
-         
-         local function get_or_create_cancel_topic()
-            local topic = utils.get_or_create_topic(
-               self.branches.main,
-               self.form.editor_id .. "TopicCancelActorSelection",
-               main_branch_topics
-            )
-            topic.text = "Actually, never mind."
-            replace_infos_with_builtin_shared(topic, "CancelActorSelection")
-            return topic
-         end
-         local function get_or_create_actor_topic(actor_info)
-            local topic = utils.get_or_create_topic(
-               self.branches.main,
-               string.format("%sTopicSelectActor%s", self.form.editor_id, actor_info.form.editor_id),
-               main_branch_topics
-            )
-            topic.text = actor_info.name
-            
-            local info = dovah.create_form(form_types.topic_info, { parent = topic })
-            info.use_shared_info = awpa.env.built_in_shared_infos["ActorSelected"][0]
-            do -- papyrus
-               local papyrus = info.papyrus
-               do
-                  local script = papyrus.scripts["AWPASelectActorScript"]
-                  if not script then
-                     script = papyrus.scripts:insert("AWPASelectActorScript")
-                  end
-                  do
-                     local prop = script.properties["pkSrcAlias"]
-                     if not prop then
-                        prop = script.properties:insert("pkSrcAlias")
-                     end
-                     prop.value = self.form.aliases[actor_info.form.editor_id]
-                  end
-                  do
-                     local prop = script.properties["pkDstAlias"]
-                     if not prop then
-                        prop = script.properties:insert("pkDstAlias")
-                     end
-                     prop.value = self.form.aliases["ActorToFind"]
-                  end
-               end
-               local frag = papyrus.fragments.on_begin
-               frag.script_name   = "AWPASelectActorScript"
-               frag.function_name = "SetActor"
-            end
-            info.link_to:insert(result_topic)
-            
-            utils.replace_condition_list(info, {
-               {
-                  run_on        = self.form.aliases[actor_info.form.editor_id],
-                  function_name = "GetDead",
-                  comparison    = { operator = "==", operand = 0 }
-               }
-            })
-            utils.append_condition_list(info, actor_info.overrides.begin_asking_about.conditions)
-            
-            return topic
-         end
-         
-         local actor_topics = {}
-         actor_topics[#actor_topics + 1] = get_or_create_cancel_topic()
-         for i = 1, #self.actors do
-            actor_topics[#actor_topics + 1] = get_or_create_actor_topic(self.actors[i])
-         end
+         self.selection_topic_list:generate_all_forms()
          
          local desired_infos = {}
          for i = 1, #self.actors do
@@ -251,7 +169,7 @@ do
                local info = dovah.create_form(form_types.topic_info, { parent = begin_topic })
                utils.clear_info_responses(info)
                info.use_shared_info = shared[i]
-               utils.replace_info_link_to_list(info, actor_topics)
+               utils.replace_info_link_to_list(info, self.selection_topic_list.topics)
                desired_infos[#desired_infos + 1] = info
             end
          end

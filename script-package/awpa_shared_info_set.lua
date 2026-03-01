@@ -29,6 +29,16 @@ do
          if not self.slug then
             error("Shared infos must have an editor ID slug")
          end
+         
+         element:for_each_child_element(function(node)
+            if node.node_name == "line" then
+               local text = node:get_text_content()
+               if text then
+                  self.lines[#self.lines + 1] = text
+               end
+            end
+            error("node name is not allowed here: " .. node.node_name)
+         end)
       end
       function instance_members:find_or_create_forms(topic, existing_infos)
          local found_indices = {}

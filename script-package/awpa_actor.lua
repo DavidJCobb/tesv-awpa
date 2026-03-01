@@ -2,11 +2,12 @@
 do
    local instance_members = {}
    awpa.actor = make_class({
-      constructor = function(self)
-         self.editor_id = nil
-         self.name      = nil
-         self.form      = nil
-         self.overrides = {
+      constructor = function(self, quest_info)
+         self.quest_info = quest_info
+         self.editor_id  = nil
+         self.name       = nil
+         self.form       = nil
+         self.overrides  = {
             begin_asking_about = {
                --
                -- Override whether other actors can be asked about this actor.
@@ -42,6 +43,51 @@ do
             error("Actor is missing an editor ID")
          end
          self.form = dovah.get_form_by_editor_id(self.editor_id, form_types.actor_base)
+         
+         element:for_each_child_element(function(node)
+            if node.node_name == "begin-asking-about" then
+               local over = self.overrides.begin_asking_about
+               node:for_each_child_element(function(node)
+                  if node.node_name == "conditions" then
+                     awpa.condition.construct_list_from_xml(over, self.quest_info, node)
+                     for i = 1, #over.conditions do
+                        over.conditions[i].is_override = self
+                     end
+                  else
+                     error("unexpected element: " .. node.node_name)
+                  end
+               end)
+            elseif node.node_name == "begin-asking-to" then
+               local over = self.overrides.begin_asking_to
+               node:for_each_child_element(function(node)
+                  if node.node_name == "bribe" then
+                     local bribe = over.bribe
+                     if not bribe then
+                        over.bribe = awpa.actor_override_bribe(self.quest_info, self)
+                        bribe = over.bribe
+                     end
+                     bribe:from_xml(node)
+                  elseif node.node_name == "line" then
+                     local list = over.results
+                     local item = awpa.line()
+                     list[#list + 1] = item
+                     item:from_xml(node)
+                  elseif node.node_name == "g" then
+                     local list  = over.results
+                     local child = awpa.group()
+                     list[#list + 1] = child
+                     child.parent = nil
+                     child:from_xml(node)
+                  else
+                     error("unexpected element: " .. node.node_name)
+                  end
+               end)
+            elseif node.node_name == "begin-responding" then
+               -- TODO
+            else
+               error("unexpected element: " .. node.node_name)
+            end
+         end)
       end
    end
 end

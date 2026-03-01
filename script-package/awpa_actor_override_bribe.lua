@@ -2,8 +2,10 @@
 do
    local instance_members = {}
    awpa.actor_override_bribe = make_class({
-      constructor = function(self)
+      constructor = function(self, quest_info, actor_info)
          self.conditions = {}
+         self.quest_info = quest_info
+         self.actor_info = actor_info
          self.content = {
             begin  = {}, -- awpa.group or awpa.line instances
             accept = {}, -- awpa.group or awpa.line instances
@@ -23,6 +25,46 @@ do
       instance_members = instance_members,
    })
    do -- member functions
+      function instance_members:from_xml(element)
+         if element.node_name ~= "bribe" then
+            error("invalid node")
+         end
+         element:for_each_child_element(function(node)
+            if node.node_name == "conditions" then
+               awpa.condition.construct_list_from_xml(self, self.quest_info, node)
+               return
+            end
+            local function _read_line_set(key, node)
+               node:for_each_child_element(function(node)
+                  local list = self.content[key]
+                  if node.node_name == "line" then
+                     local item = awpa.line()
+                     list[#list + 1] = item
+                     item:from_xml(node)
+                  elseif node.node_name == "g" then
+                     local child = awpa.group()
+                     list[#list + 1] = child
+                     child.parent = nil
+                     child:from_xml(node)
+                  elseif node.node_name == "top-g" then
+                     error("top-level groups cannot appear here")
+                  end
+               end)
+            end
+            if node.node_name == "begin-lines" then
+               _read_line_set("begin", node)
+            elseif node.node_name == "accept-lines" then
+               _read_line_set("accept", node)
+            elseif node.node_name == "refuse-lines" then
+               _read_line_set("refuse", node)
+            elseif node.node_name == "poor-lines" then
+               _read_line_set("poor", node)
+            else
+               error("unexpected element: " .. node.node_name)
+            end
+         end)
+      end
+   
       function instance_members:generate_content(quest_info, actor_info, ask_begin_topic, results_topic)
          for _, v in ipairs({ "begin", "accept", "refuse", "poor" }) do
             if #self.content[v] == 0 then

@@ -26,6 +26,44 @@ do
          if not self.editor_id_slug then
             error("attribute `slug` is required")
          end
+         
+         element:for_each_child_element(function(node)
+            if self:_consume_xml_child_as_scope(node) then
+               return
+            end
+            if node.node_name == "conditions" then
+               awpa.condition.construct_list_from_xml(self, self, node)
+               return
+            end
+            if node.node_name == "g" then
+               local item = awpa.group()
+               local list = self.children
+               list[#list + 1] = item
+               item.parent = self
+               item:from_xml(node)
+               return
+            end
+            if node.node_name == "line" then
+               local item = awpa.line()
+               local list = self.children
+               list[#list + 1] = item
+               item:from_xml(node)
+               return
+            end
+            if node.node_name == "shared-info" then
+               local si = awpa.env.shared_infos_by_id[node.attributes["id"]]
+               if not si then
+                  error("missing sharedinfo")
+               end
+               local item = awpa.shared_info_reference()
+               local list = self.children
+               list[#list + 1] = item
+               item.source = si
+               item:from_xml(node)
+               return
+            end
+            error("invalid child of a `g`: " .. node.node_name)
+         end)
       end
       
       function instance_members:get_or_create_topic()

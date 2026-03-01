@@ -1,6 +1,7 @@
 
 do
    local instance_members = {}
+   local static_members   = {}
    awpa.condition = make_class({
       constructor = function(self)
          self.owning_scope = nil
@@ -8,6 +9,7 @@ do
          self.is_override  = nil -- optional<awpa.actor>
       end,
       instance_members = instance_members,
+      static_members   = static_members,
    })
    do -- member functions
       function instance_members:copy()
@@ -96,6 +98,82 @@ do
       
       function instance_members:apply_to_info(info, scope)
          error("pure virtual function call")
+      end
+   end
+   do -- static members
+      local TAGNAMES_TO_CONSTRUCTOR_NAMES = {
+         ["actor-base"]   = "actor_base",
+         ["death-count"]  = "death_count",
+         ["enable-state"] = "enable_state",
+         ["global"]       = "global",
+         ["location"]     = "location",
+         ["papyrus-quest-variable"] = "papyrus_quest_variable",
+         ["parent-cell"]  = "parent_cell",
+         ["quest-stage"]  = "quest_stage",
+         ["x"]            = "position",
+         ["y"]            = "position",
+         ["z"]            = "position",
+      }
+      
+      function static_members.construct_from_xml(scope, node)
+         local clsname = TAGNAMES_TO_CONSTRUCTOR_NAMES[node.node_name]
+         if not clsname then
+            error("unrecognized tag in condition list: " .. node.node_name)
+         end
+         local cls  = awpa.conditions[clsname]
+         if not cls then
+            error("internal error when loading condition with tag name: " .. node.node_name)
+         end
+         local item = awpa.conditions[clsname]()
+         item.owning_scope = scope
+         item:from_xml(node)
+         return item
+      end
+      function static_members.construct_list_from_xml(owner, scope, node)
+         local is_condition_set = awpa.condition_set.is(owner)
+         local list             = owner.conditions
+         
+         local last_or_linked = nil
+         element:for_each_child_element(function(node)
+            if node.node_name == "or" then
+               node:for_each_child_element(function(node)
+                  if node.node_name == "condition-set"
+                  or node.node_name == "or"
+                  then
+                     error("can't nest these in an OR")
+                  end
+                  last_or_linked = awpa.condition.construct_from_xml(scope, node)
+                  list[#list + 1] = last_or_linked
+                  last_or_linked.is_or_linked = true
+               end)
+            else
+               if last_or_linked then
+                  last_or_linked.is_or_linked = false
+                  last_or_linked = nil
+               end
+               if node.node_name == "condition-set" then
+                  if is_condition_set then
+                     error("condition sets cannot reference each other")
+                  end
+                  local name = node.attributes["name"]
+                  if not name then
+                     error("condition set reference with no name (is this a misplaced definition?)")
+                  end
+                  name = tostring(name)
+                  local cs = scope:resolve_condition_set(name)
+                  if not cs then
+                     error("condition set `" .. name .. "` not found")
+                  end
+                  cs:apply_to(owner, node)
+               else
+                  local cnd = awpa.condition.construct_from_xml(scope, node)
+                  list[#list + 1] = cnd
+               end
+            end
+         end)
+         if last_or_linked then
+            last_or_linked.is_or_linked = false
+         end
       end
    end
 end

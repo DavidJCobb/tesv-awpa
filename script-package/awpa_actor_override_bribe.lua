@@ -12,7 +12,7 @@ do
          }
          
          self.forms = {
-            link_to_branch = nil,
+            link_to_branch = nil, -- invisible-info
             branch         = nil,
             begin_topic    = nil,
             accept_topic   = nil,

@@ -147,9 +147,15 @@ do
             frag.function_name = "SetActor"
          end
          utils.replace_condition_list(info, {
-            {
+            {  -- Cannot ask about dead actors.
                run_on        = self.quest_info.form.aliases[actor_info.form.editor_id],
                function_name = "GetDead",
+               comparison    = { operator = "==", operand = 0 }
+            },
+            {  -- Cannot ask an actor about themselves.
+               run_on        = "subject",
+               function_name = "GetIsID",
+               parameters    = { actor_info.form },
                comparison    = { operator = "==", operand = 0 }
             }
          })

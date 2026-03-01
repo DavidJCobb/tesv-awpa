@@ -15,11 +15,8 @@ do
          list[#list + 1] = self
          
          self.recycled = false
-         self.form     = nil
-         self.branches = {
-            main   = nil,
-            result = nil,
-         }
+         self.form     = nil -- quest
+         self.branch   = nil -- dialogue_branch
          self.ask_root_topic       = awpa.ask_root_topic(self)
          self.selection_topic_list = awpa.actor_selection_topic_list(self)
          self.results_root_topic   = awpa.results_root_topic(self)
@@ -127,15 +124,20 @@ do
       function instance_members:get_or_create_result_topic()
          return self.results_root_topic:get_or_create_topic()
       end
-      function instance_members:_generate_main_branch()
-         local main_branch_topics = self.branches.main:get_all_topics()
+      function instance_members:generate_dialogue()
+         local quest = self:get_or_create_form()
          
-         local begin_topic = self.branches.main.starting_topic
-         if not begin_topic then
-            begin_topic = dovah.create_form(form_types.topic, { parent = self.branches.main })
-            self.branches.main.starting_topic = begin_topic
+         self:ensure_actor_selection_aliases()
+         
+         local branch_main = nil
+         do
+            local editor_id_main = self.id .. "BranchMain"
+            
+            local branches = quest:get_all_dialogue_branches()
+            branch_main = utils.get_or_create_branch(quest, editor_id_main, branches)
+            branch_main.type = "top-level"
          end
-         begin_topic.text = "Can you help me find someone?"
+         self.branch = branch_main
          
          local result_topic = self:get_or_create_result_topic()
          
@@ -151,40 +153,8 @@ do
             end
             -- TODO: other begin-asking-to override content (i.e. groups and lines)
          end
-      end
-      function instance_members:_generate_results()
-         local topic = self:get_or_create_result_topic()
-         for i = 1, #self.groups do
-            local group = self.groups[i]
-            group:generate_lines(topic)
-         end
-      end
-      
-      function instance_members:generate_dialogue()
-         local quest = self:get_or_create_form()
          
-         self:ensure_actor_selection_aliases()
-         
-         --
-         -- TODO: Don't have a separate branch for results
-         --
-         local branch_main   = nil
-         local branch_result = nil
-         do
-            local editor_id_main   = self.id .. "BranchMain"
-            local editor_id_result = self.id .. "BranchResult"
-            
-            local branches = quest:get_all_dialogue_branches()
-            branch_main   = utils.get_or_create_branch(quest, editor_id_main, branches)
-            branch_result = utils.get_or_create_branch(quest, editor_id_result, branches)
-            
-            branch_main.type   = "top-level"
-            branch_result.type = "normal"
-         end
-         self.branches.main   = branch_main
-         self.branches.result = branch_result
-         self:_generate_main_branch()
-         self:_generate_results()
+         self.results_root_topic:generate_all_forms()
       end
    end
 end

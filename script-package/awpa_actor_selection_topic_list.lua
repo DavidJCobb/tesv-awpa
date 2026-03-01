@@ -32,7 +32,7 @@ do
          if t and t.editor_id == editor_id then
             return t
          end
-         local branch = self.quest_info.branches.main
+         local branch = self.quest_info.branch
          do
             local topics = branch:get_all_topics()
             for i = 1, #topics do
@@ -67,7 +67,7 @@ do
                return t
             end
          end
-         local branch = self.quest_info.branches.main
+         local branch = self.quest_info.branch
          do
             local topics = branch:get_all_topics()
             for i = 1, #topics do

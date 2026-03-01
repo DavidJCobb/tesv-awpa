@@ -34,7 +34,7 @@ do
          if self.forms.topic then
             return self.forms.topic
          end
-         local branch    = self.quest_info.branches.main
+         local branch    = self.quest_info.branch
          local editor_id = string.format("%sBeginTopic", self.quest_info.form.editor_id)
          do
             local topics = branch:get_all_topics()
@@ -45,10 +45,25 @@ do
                   return t
                end
             end
+            if #topics == 1 then
+               local t = topics[1]
+               if t == branch.starting_topic then -- should always be true
+                  --
+                  -- If the branch is newly-created, it may have been created with 
+                  -- a blank starting topic.
+                  --
+                  if #t.infos == 0 and t.editor_id == "" and t.text == "" then
+                     t.editor_id = editor_id
+                     self.forms.topic = t
+                     return t
+                  end
+               end
+            end
          end
          local topic = dovah.create_form(form_types.topic, { parent = branch })
          topic.editor_id = editor_id
          self.forms.topic = topic
+         branch.starting_topic = topic
          return topic
       end
       

@@ -72,6 +72,7 @@ do
          end
          
          branch.starting_topic = self.forms.begin_topic
+         branch.type = "normal"
          
          --
          -- Set topic text.

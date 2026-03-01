@@ -301,5 +301,9 @@ function awpa.env:generate_content()
    for i = 1, #self.quests do
       local quest = self.quests[i]
       quest:generate_dialogue()
+      --
+      -- TODO: Walk all `topic_helper` instances in this quest and call `finalize_infos` 
+      --       on each of them.
+      --
    end
 end

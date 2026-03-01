@@ -34,10 +34,13 @@ awpa_constant.lua
 awpa_group.lua
 awpa_line.lua
 awpa_quest.lua
+awpa_shared_info_reference.lua
 awpa_shared_info_set.lua
+awpa_top_level_group.lua
 awpa_ask_root_topic.lua
 awpa_actor_selection_topic_list.lua
 awpa_results_root_topic.lua
+awpa_topic_helper.lua
 main.lua
    </files>
 </package>

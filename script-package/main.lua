@@ -107,17 +107,21 @@ function process_xml(root)
             process_constant(group, node)
             return
          end
+         if node.node_name == "top-g" then
+            error("top-level groups cannot be nested")
+         end
          if node.node_name == "g" then
-            local child = awpa.group()
-            group.groups[#group.groups + 1] = child
-            child.parent = group
-            child:from_xml(node)
-            process_group(child, node)
+            local item = awpa.group()
+            local list  = group.children
+            list[#list + 1] = item
+            item.parent = group
+            item:from_xml(node)
+            process_group(item, node)
             return
          end
          if node.node_name == "line" then
             local item = awpa.line()
-            local list = group.lines
+            local list = group.children
             list[#list + 1] = item
             item:from_xml(node)
             return
@@ -127,7 +131,11 @@ function process_xml(root)
             if not si then
                error("missing sharedinfo")
             end
-            group.shared_infos[#group.shared_infos + 1] = si
+            local item = awpa.shared_info_reference()
+            local list = group.children
+            list[#list + 1] = item
+            item.source = si
+            item:from_xml(node)
             return
          end
       end)
@@ -203,6 +211,8 @@ function process_xml(root)
                                              child.parent = nil
                                              child:from_xml(node)
                                              process_group(child, node)
+                                          elseif node.node_name == "top-g" then
+                                             error("top-level groups cannot appear here")
                                           end
                                        end)
                                     end
@@ -229,6 +239,8 @@ function process_xml(root)
                               child.parent = nil
                               child:from_xml(node)
                               process_group(child, node)
+                           elseif node.node_name == "top-g" then
+                              error("top-level groups cannot appear here")
                            end
                         end)
                      elseif node.node_name == "begin-responding" then
@@ -247,9 +259,19 @@ function process_xml(root)
                process_constant(quest, node)
                return
             end
+            if node.node_name == "top-g" then
+               local group = awpa.top_level_group()
+               local list  = quest.results_root_topic.children
+               list[#list + 1] = group
+               group.parent = quest
+               group:from_xml(node)
+               process_group(group, node)
+               return
+            end
             if node.node_name == "g" then
                local group = awpa.group()
-               quest.groups[#quest.groups + 1] = group
+               local list  = quest.results_root_topic.children
+               list[#list + 1] = group
                group.parent = quest
                group:from_xml(node)
                process_group(group, node)

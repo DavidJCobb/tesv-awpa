@@ -13,6 +13,9 @@ do
          self.lines        = {}
          self.shared_infos = {} -- references to shared_info_set instances used by this group
          self.path         = "~"
+         
+         self.is_top_level   = false
+         self.top_level_slug = nil
       end,
       instance_members = instance_members,
    })
@@ -26,11 +29,22 @@ do
             self.exclusive = false
          end
          
+         self.is_top_level = element.node_name == "top-g"
+         if self.is_top_level then
+            self.top_level_slug = element.attributes["editor-id-slug"]
+            if not self.top_level_slug then
+               error("attribute `editor-id-slug` required on a `top-g`")
+            end
+         end
+         
          pcall(function()
             self.path = self:get_unique_path()
          end)
       end
       function instance_members:get_relevant_conditions()
+         if self.is_top_level then
+            return {}
+         end
          if not awpa.group.is(self.parent) then
             return { table.unpack(self.conditions) }
          end

@@ -20,8 +20,9 @@ do
             main   = nil,
             result = nil,
          }
-         self.results_root_topic   = nil -- TODO
+         self.ask_root_topic       = awpa.ask_root_topic(self)
          self.selection_topic_list = awpa.actor_selection_topic_list(self)
+         self.results_root_topic   = awpa.results_root_topic(self)
       end,
       instance_members = instance_members,
    })
@@ -124,21 +125,7 @@ do
       end
       
       function instance_members:get_or_create_result_topic()
-         --
-         -- TODO: Don't have a separate branch for results
-         --
-         -- TODO: Store/recycle `self.results_root_topic` as editor ID `%sResultsRootTopic`
-         --
-         local topic = nil
-         do
-            local topics = self.branches.result:get_all_topics()
-            topic = topics[1]
-            if not topic then
-               topic = dovah.create_form(form_types.topic, { parent = self.branches.result })
-            end
-            topic.text = "<Results>"
-         end
-         return topic
+         return self.results_root_topic:get_or_create_topic()
       end
       function instance_members:_generate_main_branch()
          local main_branch_topics = self.branches.main:get_all_topics()
@@ -153,25 +140,16 @@ do
          local result_topic = self:get_or_create_result_topic()
          
          self.selection_topic_list:generate_all_forms()
+         self.ask_root_topic:generate_all_forms()
          
          local desired_infos = {}
          for i = 1, #self.actors do
             local over = self.actors[i].overrides.begin_asking_to.bribe
             if over then
-               over:generate_content(self, self.actors[i], begin_topic, result_topic)
+               over:generate_content(self, self.actors[i], self.ask_root_topic:get_or_create_topic(), result_topic)
                desired_infos[#desired_infos + 1] = over.forms.link_to_branch
             end
             -- TODO: other begin-asking-to override content (i.e. groups and lines)
-         end
-         do
-            local shared = awpa.env.built_in_shared_infos["BeginActorSelection"]
-            for i = 1, #shared do
-               local info = dovah.create_form(form_types.topic_info, { parent = begin_topic })
-               utils.clear_info_responses(info)
-               info.use_shared_info = shared[i]
-               utils.replace_info_link_to_list(info, self.selection_topic_list.topics)
-               desired_infos[#desired_infos + 1] = info
-            end
          end
       end
       function instance_members:_generate_results()
@@ -187,6 +165,9 @@ do
          
          self:ensure_actor_selection_aliases()
          
+         --
+         -- TODO: Don't have a separate branch for results
+         --
          local branch_main   = nil
          local branch_result = nil
          do

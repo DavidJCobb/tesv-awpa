@@ -8,8 +8,9 @@ do
    awpa.quest = make_class({
       superclass  = awpa.scope,
       constructor = function(self)
+         self.source_xml_node = nil
+         
          self.actors = {}
-         self.groups = {}
          
          local list = awpa.env.quests
          list[#list + 1] = self
@@ -40,8 +41,13 @@ do
       end
    
       function instance_members:from_xml(element)
+         self.source_xml_node = element
          awpa.env:set_object_id(self, element.attributes["id"])
       end
+      function instance_members:to_xml(element)
+         element.attributes["id"] = self.id
+      end
+      
       function instance_members:get_or_create_form()
          if self.form then
             return self.form

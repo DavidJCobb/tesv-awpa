@@ -9,11 +9,20 @@ xml.builtin_entities = {
    quot = '"',
 }
 
-xml.node = make_class({
-   constructor = function(self)
-      self.parent = nil
+do
+   local instance_members = {}
+   xml.node = make_class({
+      constructor = function(self)
+         self.parent = nil
+      end,
+      instance_members = instance_members
+   })
+   do -- member functions
+      function instance_members:clone(deep)
+         error("purecall")
+      end
    end
-})
+end
 
 local function _charcode_entity(c)
    return string.format("&#%02X;", c:byte(1))
@@ -25,7 +34,8 @@ do
       superclass  = xml.node,
       constructor = function(self, text)
          self.data = text
-      end
+      end,
+      instance_members = instance_members
    })
    do -- member functions
       function instance_members:clone(deep)
@@ -45,14 +55,15 @@ do
       superclass  = xml.node,
       constructor = function(self, text)
          self.data = text
-      end
+      end,
+      instance_members = instance_members
    })
    do -- member functions
       function instance_members:clone(deep)
          return xml.text(self.data)
       end
       function instance_members:serialize(builder)
-         local pattern = "[%c<>&%]]"
+         local pattern = "[\x00-\x08\x0B\x0C\x0E-\x1F\x7F-\xA0\xAD<>&%]]"
          local i       = self.data:find(pattern)
          if not i then
             builder:append(self.data)
@@ -92,7 +103,7 @@ do
                if self.data:sub(i, i + 3) ~= "]]>" then
                   builder:append("]]&gt;")
                   prev = i + 3
-                  i    = self.data:find("[%c%<%>%&%]]", prev)
+                  i    = self.data:find(pattern, prev)
                   goto continue
                else
                   builder:append(']')
@@ -101,7 +112,7 @@ do
                builder:append(_charcode_entity(c))
             end
             prev = i + 1
-            i    = self.data:find("[%c%<%>%&%]]", prev)
+            i    = self.data:find(pattern, prev)
          ::continue::
          end
          builder:append(self.data:sub(prev))
@@ -141,8 +152,12 @@ do
             if not xml.node.is(node) then
                error("Invalid argument type.")
             end
-            if node.parent then
-               node.parent:remove_child(node)
+            local prior_parent = node.parent
+            if prior_parent then
+               prior_parent:remove_child(node)
+               if prior_parent == self then
+                  size = #self.children
+               end
             end
          end
          self.children[size + 1] = node
@@ -245,6 +260,10 @@ do
             self:for_each_child(function(child)
                local child_copy = child:clone(true, src_to_dst_map)
                copy:append_child(child_copy)
+               if src_to_dst_map then
+                  src_to_dst_map[child] = child_copy
+               end
+               return true
             end)
          end
          return copy, src_to_dst_map
@@ -294,6 +313,7 @@ do
             builder:append(" />")
             return
          end
+         builder:append(">")
          for i = 1, #self.children do
             self.children[i]:serialize(builder)
          end

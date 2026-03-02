@@ -4,6 +4,8 @@ do
    awpa.group = make_class({
       superclass  = awpa.scope,
       constructor = function(self)
+         self.source_xml_node = nil
+         
          self.id           = nil
          self.name         = nil
          self.parent       = nil -- variant<awpa.group, awpa.top_level_group, awpa.quest>
@@ -15,6 +17,8 @@ do
    })
    do -- member functions
       function instance_members:from_xml(element)
+         self.source_xml_node = element
+         
          self.name = element.attributes["name"]
          awpa.env:set_object_id(self, element.attributes["id"])
          
@@ -61,6 +65,9 @@ do
             error("invalid child of a `g`: " .. node.node_name)
          end)
       end
+      function instance_members:to_xml(node)
+      end
+      
       function instance_members:get_relevant_conditions()
          if not awpa.group.is(self.parent) then
             return { table.unpack(self.conditions) }

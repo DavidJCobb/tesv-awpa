@@ -86,6 +86,7 @@ local file = dovah.package.load_file({
    type = "text"
 })
 local parser = xml.parser()
+parser.retain_comments = true
 parser:parse(file)
 if not parser.root then
    error("No root element")
@@ -93,7 +94,76 @@ end
 
 process_xml(parser.root)
 
---dovah.dump(awpa.env)
-
 awpa.env:generate_content()
-print("Done!")
+print("Done generating game data!")
+
+print("Cloning XML for output...")
+local clone_root, xml_to_clone_map = parser.root:clone(true, true)
+print("Amending clone for output...")
+do
+   local function shallow_update(item)
+      local src_node = item.source_xml_node
+      local dst_node = xml_to_clone_map[src_node]
+      item:to_xml(dst_node)
+   end
+   
+   local function child_list_update(item)
+      local src_node = item.source_xml_node
+      local dst_node = xml_to_clone_map[src_node]
+      item:to_xml(dst_node)
+      
+      if awpa.group.is(item)
+      or awpa.top_level_group.is(item)
+      then
+         for i = 1, #item.children do
+            child_list_update(item.children[i])
+         end
+      end
+   end
+   
+   for i = 1, #awpa.env.quests do
+      local item = awpa.env.quests[i]
+      shallow_update(item)
+      
+      for j = 1, #item.actors do
+         local actor_info = item.actors[j]
+         shallow_update(actor_info)
+         do -- bribe override
+            local over = actor_info.overrides.begin_asking_to.bribe
+            if over then
+               for _, v in ipairs({ "begin", "accept", "refuse", "poor" }) do
+                  local t = over.contents[v]
+                  for i = 1, #t.children do
+                     child_list_update(t.children[i])
+                  end
+               end
+            end
+         end
+         -- TODO: other actor overrides
+      end
+      
+      do
+         local list = item.results_root_topic.children
+         for i = 1, #list do
+            child_list_update(list[i])
+         end
+      end
+   end
+end
+
+do
+   win = ui.window.new()
+   btn = ui.file_save_button.new()
+   win:set_layout("down")
+   win:add_child(btn)
+   win:show()
+   
+   local builder = string_builder()
+   clone_root:serialize(builder)
+   btn.data = builder:to_string()
+end
+
+print("Re-processing based on clone...")
+awpa.env:reset()
+process_xml(clone_root)
+print("Done generating game data from clone!")

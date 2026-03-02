@@ -8,6 +8,8 @@ do
    awpa.shared_info_reference = make_class({
       superclass  = awpa.scope,
       constructor = function(self)
+         self.source_xml_node = nil
+         
          self.source   = nil -- awpa.shared_info_set
          self.form_ids = {} -- vector<int>
          self.forms    = {} -- vector<topic_info>
@@ -16,6 +18,8 @@ do
    })
    do -- member functions
       function instance_members:from_xml(element)
+         self.source_xml_node = element
+         
          local id_list = element.attributes["form-ids"]
          if id_list then
             local i = 1
@@ -25,6 +29,13 @@ do
                i = i + 1
             end
          end
+      end
+      function instance_members:to_xml(node)
+         local id_list = {}
+         for i = 1, #self.forms do
+            id_list[i] = self.forms[i]:form_id_to_string()
+         end
+         node.attributes["form-ids"] = table.concat(id_list, ',')
       end
       
       function instance_members:generate_infos(topic)

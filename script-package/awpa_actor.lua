@@ -3,6 +3,8 @@ do
    local instance_members = {}
    awpa.actor = make_class({
       constructor = function(self, quest_info)
+         self.source_xml_node = nil
+         
          self.quest_info = quest_info
          self.editor_id  = nil
          self.name       = nil
@@ -41,6 +43,8 @@ do
       end
    
       function instance_members:from_xml(element)
+         self.source_xml_node = element
+         
          self.editor_id = element.attributes["editor-id"]
          self.name      = element.attributes["name"]
          if not self.name then
@@ -99,5 +103,14 @@ do
             end
          end)
       end
+      function instance_members:to_xml(node)
+         node.attributes["editor-id"] = self.editor_id
+         if self.name == self.editor_id then
+            node.attributes["name"] = nil
+         else
+            node.attributes["name"] = self.name
+         end
+      end
+      
    end
 end

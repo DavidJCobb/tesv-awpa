@@ -15,6 +15,18 @@ awpa.env = {
    built_in_shared_infos = {},
 }
 
+function awpa.env:reset()
+   self.elements_by_id     = {}
+   self.quests             = {}
+   self.shared_infos       = {}
+   self.shared_infos_by_id = {}
+   
+   self.shared_info_quest = nil
+   self.shared_info_topic = nil
+   
+   self.built_in_shared_infos = {}
+end
+
 function awpa.env:set_object_id(object, id)
    local is_shared_info = awpa.shared_info_set.is(object)
    if object.id then

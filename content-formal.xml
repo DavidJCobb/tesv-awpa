@@ -456,7 +456,7 @@
                   <refuse-lines>
                      <line>Fine by me.</line>
                      <line>Then quit wastin' my time.</line>
-                     <g>
+                     <g non-exclusive="true">
                         <conditions>
                            <!-- Maul is at the docks. -->
                            <quest-stage for="[QUST:000649FC]DialogueRiftenMaul" done="40" />
@@ -464,7 +464,7 @@
                         </conditions>
                         <line>I'll be here when you change your mind.</line>
                      </g>
-                     <g>
+                     <g non-exclusive="true">
                         <conditions>
                            <!-- Maul is not at the docks. -->
                            <quest-stage for="[QUST:000649FC]DialogueRiftenMaul" not-done="40" />

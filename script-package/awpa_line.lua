@@ -7,6 +7,8 @@ do
    local instance_members = {}
    awpa.line = make_class({
       constructor = function(self)
+         self.source_xml_node = nil
+         
          self.hours_until_reset = 0
          self.script_notes      = ""
          self.text              = ""
@@ -27,6 +29,8 @@ do
    })
    do -- member functions
       function instance_members:from_xml(element)
+         self.source_xml_node = element
+         
          local hours = tonumber(element.attributes["hours-until-reset"])
          if hours then
             self.hours_until_reset = hours
@@ -70,6 +74,37 @@ do
                id = tonumber(id, 16)
                self.form_ids.unisex = id
             end
+         end
+      end
+      function instance_members:to_xml(node)
+         if (self.hours_until_reset or 0) > 0 then
+            node.attributes["hours-until-reset"] = self.hours_until_reset
+         else
+            node.attributes["hours-until-reset"] = nil
+         end
+         if self.script_notes and self.script_notes ~= "" then
+            node.attributes["script-notes"] = self.script_notes
+         else
+            node.attributes["script-notes"] = nil
+         end
+         
+         -- TODO: `vanilla`
+         -- TODO: `vanilla-fragment`
+         
+         if self.form_ids.male then
+            node.attributes["form-id-m"] = string.format("%08X", self.form_ids.male)
+         else
+            node.attributes["form-id-m"] = nil
+         end
+         if self.form_ids.female then
+            node.attributes["form-id-f"] = string.format("%08X", self.form_ids.female)
+         else
+            node.attributes["form-id-f"] = nil
+         end
+         if self.form_ids.unisex then
+            node.attributes["form-id-u"] = string.format("%08X", self.form_ids.unisex)
+         else
+            node.attributes["form-id-u"] = nil
          end
       end
       

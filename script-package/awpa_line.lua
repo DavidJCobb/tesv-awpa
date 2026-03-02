@@ -85,6 +85,7 @@ do
             if id then
                local info = dovah.get_form_by_id(id)
                if info and info.form_type == form_types.topic_info then
+                  utils.replace_condition_list(info, {}) -- let group conditions be rebuilt from scratch
                   return info
                end
             end
@@ -96,10 +97,7 @@ do
             info.is_random = true
             
             if gendered then
-               local cnd = info.conditions[1]
-               if not cnd or cnd.function_name ~= "GetIsSex" then
-                  cnd = info.conditions:insert()
-               end
+               local cnd = info.conditions:insert()
                cnd.run_on        = target_alias
                cnd.function_name = "GetIsSex"
                if fem then
@@ -141,53 +139,6 @@ do
             _configure(info_u, false)
             return info_u
          end
-      end
-      
-      function instance_members:generate_info(topic)
-         local info = dovah.create_form(form_types.topic_info, { parent = topic })
-         local resp = info.responses:insert({
-            script_notes = self.script_notes,
-            text         = self.text,
-         })
-         info.hours_until_reset = self.hours_until_reset
-         info.is_random = true
-         
-         local fem_info
-         if has_masc_pronouns(self.text) then
-            local target_alias = nil
-            do
-               local quest = topic.parent_quest
-               target_alias = quest.aliases["ActorToFind"]
-            end
-         
-            do
-               local cnd = info.conditions:insert()
-               cnd.run_on        = target_alias
-               cnd.function_name = "GetIsSex"
-               cnd.parameters[1] = "Male"
-               cnd.comparison.operator = "=="
-               cnd.comparison.operand  = 1
-            end
-            
-            local fem_text = swap_masc_pronouns_to_fem(self.text)
-            fem_info = dovah.create_form(form_types.topic_info, { parent = topic })
-            local fem_resp = fem_info.responses:insert({
-               script_notes = self.script_notes,
-               text         = fem_text,
-            })
-            fem_info.hours_until_reset = self.hours_until_reset
-            fem_info.is_random = true
-            do
-               local cnd = fem_info.conditions:insert()
-               cnd.run_on        = target_alias
-               cnd.function_name = "GetIsSex"
-               cnd.parameters[1] = "Female"
-               cnd.comparison.operator = "=="
-               cnd.comparison.operand  = 1
-            end
-         end
-         
-         return info, fem_info
       end
    end
 end

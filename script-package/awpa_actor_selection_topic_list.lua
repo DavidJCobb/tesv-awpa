@@ -132,14 +132,14 @@ do
                   if not prop then
                      prop = script.properties:insert("pkSrcAlias")
                   end
-                  prop.value = self.form.aliases[actor_info.form.editor_id]
+                  prop.value = self.quest_info.form.aliases[actor_info.form.editor_id]
                end
                do
                   local prop = script.properties["pkDstAlias"]
                   if not prop then
                      prop = script.properties:insert("pkDstAlias")
                   end
-                  prop.value = self.form.aliases["ActorToFind"]
+                  prop.value = self.quest_info.form.aliases["ActorToFind"]
                end
             end
             local frag = papyrus.fragments.on_begin

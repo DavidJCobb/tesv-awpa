@@ -50,6 +50,9 @@ do
             error("Actor is missing an editor ID")
          end
          self.form = dovah.get_form_by_editor_id(self.editor_id, form_types.actor_base)
+         if not self.form then
+            error("Actor failed to find its form: " .. self.editor_id)
+         end
          
          element:for_each_child_element(function(node)
             if node.node_name == "begin-asking-about" then

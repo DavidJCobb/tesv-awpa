@@ -7,6 +7,8 @@ do
    local instance_members = {}
    awpa.condition_set = make_class({
       constructor = function(self)
+         self.source_xml_node = nil
+         
          self.name         = nil
          self.conditions   = {}
          self.owning_scope = nil
@@ -15,6 +17,8 @@ do
    })
    do -- member functions
       function instance_members:from_xml(element)
+         self.source_xml_node = element
+      
          local n = element.attributes["name"]
          if n then
             self.name = n

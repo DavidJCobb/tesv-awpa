@@ -6,6 +6,8 @@ do
    local instance_members = {}
    bribe_topic = make_class({
       constructor = function(self, override, name)
+         self.source_xml_node = nil
+         
          self.owner = override -- awpa.actor_override_bribe
          self.name  = name
          
@@ -18,6 +20,8 @@ do
    })
    do -- member functions
       function instance_members:from_xml(node)
+         self.source_xml_node = node
+      
          local list = self.children
          node:for_each_child_element(function(node)
             if node.node_name == "line" then
@@ -34,6 +38,12 @@ do
             end
          end)
       end
+      function instance_members:amend_xml_clone(nodemap)
+         for i = 1, #self.children do
+            self.children[i]:amend_xml_clone(nodemap)
+         end
+      end
+      
       function instance_members:get_or_create_topic(branch, branch_topics)
          if self.topic then
             return self.topic
@@ -131,6 +141,11 @@ do
             end
             error("unexpected element: " .. node.node_name)
          end)
+      end
+      function instance_members:amend_xml_clone(nodemap)
+         for _, v in ipairs(BRIBE_TOPIC_NAMES) do
+            self.contents[v]:amend_xml_clone(nodemap)
+         end
       end
    
       function instance_members:generate_content(quest_info, actor_info, ask_begin_topic, results_topic)

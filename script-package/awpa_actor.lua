@@ -103,12 +103,22 @@ do
             end
          end)
       end
-      function instance_members:to_xml(node)
-         node.attributes["editor-id"] = self.editor_id
-         if self.name == self.editor_id then
-            node.attributes["name"] = nil
-         else
-            node.attributes["name"] = self.name
+      function instance_members:amend_xml_clone(nodemap)
+         do
+            local node <const> = nodemap[self.source_xml_element]
+            node.attributes["editor-id"] = self.editor_id
+            if self.name == self.editor_id then
+               node.attributes["name"] = nil
+            else
+               node.attributes["name"] = self.name
+            end
+         end
+         -- sub-objects:
+         do
+            local item = self.overrides.begin_asking_to.bribe
+            if item then
+               item:amend_xml_clone(nodemap)
+            end
          end
       end
       

@@ -43,9 +43,53 @@ do
       function instance_members:from_xml(element)
          self.source_xml_node = element
          awpa.env:set_object_id(self, element.attributes["id"])
+         
+         element:for_each_child_element(function(node)
+            if quest:_consume_xml_child_as_scope(node) then
+               return
+            end
+            if node.node_name == "actors" then
+               node:for_each_child_element(function(node)
+                  if node.node_name ~= "actor" then
+                     error("unexpected element: " .. node.node_name)
+                  end
+                  local actor = awpa.actor(quest)
+                  quest.actors[#quest.actors + 1] = actor
+                  actor:from_xml(node)
+               end)
+               return
+            end
+            if node.node_name == "top-g" then
+               local group = awpa.top_level_group()
+               local list  = quest.results_root_topic.children
+               list[#list + 1] = group
+               group.parent = quest
+               group:from_xml(node)
+               return
+            end
+            if node.node_name == "g" then
+               local group = awpa.group()
+               local list  = quest.results_root_topic.children
+               list[#list + 1] = group
+               group.parent = quest
+               group:from_xml(node)
+               return
+            end
+            if node.node_name == "macro" then
+               -- TODO
+               return
+            end
+         end)
       end
-      function instance_members:to_xml(element)
-         element.attributes["id"] = self.id
+      function instance_members:amend_xml_clone(nodemap)
+         do
+            local node <const> = nodemap[self.source_xml_element]
+            node.attributes["id"] = self.id
+         end
+         for i = 1, #self.actors do
+            self.actors[i]:amend_xml_clone(nodemap)
+         end
+         self.results_root_topic:amend_xml_clone(nodemap)
       end
       
       function instance_members:get_or_create_form()

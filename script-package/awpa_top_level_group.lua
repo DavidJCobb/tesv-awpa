@@ -69,7 +69,10 @@ do
             error("unexpected element: " .. node.node_name)
          end)
       end
-      function instance_members:to_xml(node)
+      function instance_members:amend_xml_clone(nodemap)
+         for i =  1, #self.children do
+            self.children[i]:amend_xml_clone(nodemap)
+         end
       end
       
       function instance_members:get_or_create_topic()

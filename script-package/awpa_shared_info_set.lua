@@ -41,6 +41,7 @@ do
             error("node name is not allowed here: " .. node.node_name)
          end)
       end
+      
       function instance_members:find_or_create_forms(topic, existing_infos)
          local found_indices = {}
          local j = 1

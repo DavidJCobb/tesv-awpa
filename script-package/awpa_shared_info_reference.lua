@@ -30,7 +30,9 @@ do
             end
          end
       end
-      function instance_members:to_xml(node)
+      function instance_members:amend_xml_clone(nodemap)
+         local node = nodemap[self.source_xml_node]
+         
          local id_list = {}
          for i = 1, #self.forms do
             id_list[i] = self.forms[i]:form_id_to_string()

@@ -36,6 +36,11 @@ do
       instance_members = instance_members,
    })
    do -- member functions
+      function instance_members:amend_xml_clone(nodemap)
+         for i = 1, #self.children do
+            self.children[i]:amend_xml_clone(nodemap)
+         end
+      end
       function instance_members:visit_topic_helpers(visitor)
          if self.topic_helper then
             visitor(self.topic_helper)

@@ -5,8 +5,8 @@ function utils.get_or_create_branch(quest, editor_id, prior_branches)
    if not prior_branches then
       prior_branches = quest:get_all_dialogue_branches()
    end
-   for i = 1, #branches do
-      local branch = branches[i]
+   for i = 1, #prior_branches do
+      local branch = prior_branches[i]
       if branch.editor_id == editor_id then
          return branch, prior_branches
       end

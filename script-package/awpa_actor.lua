@@ -33,6 +33,13 @@ do
       instance_members = instance_members,
    })
    do -- member functions
+      function instance_members:visit_topic_helpers(visitor)
+         if self.overrides.begin_asking_to.bribe then
+            self.overrides.begin_asking_to.bribe:visit_topic_helpers(visitor)
+         end
+         -- TODO
+      end
+   
       function instance_members:from_xml(element)
          self.editor_id = element.attributes["editor-id"]
          self.name      = element.attributes["name"]

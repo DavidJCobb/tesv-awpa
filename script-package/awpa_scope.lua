@@ -15,7 +15,7 @@ do
          local cset = awpa.condition_set()
          local list = self.condition_sets
          list[#list + 1] = cset
-         cset:from_xml(element)
+         cset:from_xml(node)
          cset.owning_scope = scope
          awpa.condition.construct_list_from_xml(cset, self, node)
          return true

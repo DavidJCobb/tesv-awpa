@@ -36,6 +36,7 @@ do
                if text then
                   self.lines[#self.lines + 1] = text
                end
+               return
             end
             error("node name is not allowed here: " .. node.node_name)
          end)

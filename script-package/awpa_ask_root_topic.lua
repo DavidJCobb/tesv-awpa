@@ -79,7 +79,7 @@ do
          for i = 1, #self.quest_info.actors do
             local actor_info = self.quest_info.actors[i]
             do
-               local over = self.actors[i].overrides.begin_asking_to.bribe
+               local over = actor_info.overrides.begin_asking_to.bribe
                if over then
                   local form = over.forms.link_to_branch
                   if not form then

@@ -32,6 +32,12 @@ do
             end
          end
       end
+      function instance_members:visit_topic_helpers(visitor)
+         for i = 1, #self.actors do
+            self.actors[i]:visit_topic_helpers(visitor)
+         end
+         self.results_root_topic:visit_topic_helpers(visitor)
+      end
    
       function instance_members:from_xml(element)
          awpa.env:set_object_id(self, element.attributes["id"])
@@ -134,7 +140,7 @@ do
             local editor_id_main = self.id .. "BranchMain"
             
             local branches = quest:get_all_dialogue_branches()
-            branch_main = utils.get_or_create_branch(quest, editor_id_main, branches)
+            branch_main = utils.get_or_create_branch(quest, editor_id_main)
             branch_main.type = "top-level"
          end
          self.branch = branch_main

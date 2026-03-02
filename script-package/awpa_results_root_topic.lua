@@ -36,6 +36,18 @@ do
       instance_members = instance_members,
    })
    do -- member functions
+      function instance_members:visit_topic_helpers(visitor)
+         if self.topic_helper then
+            visitor(self.topic_helper)
+         end
+         for i = 1, #self.top_level_groups do
+            local tlg = self.top_level_groups[i]
+            if tlg.topic_helper then
+               visitor(tlg.topic_helper)
+            end
+         end
+      end
+   
       function instance_members:get_or_create_topic()
          if self.forms.topic then
             if not self.topic_helper then

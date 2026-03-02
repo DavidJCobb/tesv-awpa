@@ -62,7 +62,7 @@ do
                item:from_xml(node)
                return
             end
-            error("invalid child of a `g`: " .. node.node_name)
+            error("unexpected element: " .. node.node_name)
          end)
       end
       

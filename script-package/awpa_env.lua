@@ -301,9 +301,17 @@ function awpa.env:generate_content()
    for i = 1, #self.quests do
       local quest = self.quests[i]
       quest:generate_dialogue()
+      
+      quest:visit_topic_helpers(function(topic_helper)
+         topic_helper:finalize_info_order()
+      end)
       --
-      -- TODO: Walk all `topic_helper` instances in this quest and call `finalize_infos` 
-      --       on each of them.
+      -- These are separate steps to account for the case of a pre-existing info 
+      -- being moved across topics, such that it is unused in an earlier-processed 
+      -- topic but gets used in a later-processed topic.
       --
+      quest:visit_topic_helpers(function(topic_helper)
+         topic_helper:finalize_leftover_info_deletion()
+      end)
    end
 end

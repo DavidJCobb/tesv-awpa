@@ -134,7 +134,7 @@ do
          local list             = owner.conditions
          
          local last_or_linked = nil
-         element:for_each_child_element(function(node)
+         node:for_each_child_element(function(node)
             if node.node_name == "or" then
                node:for_each_child_element(function(node)
                   if node.node_name == "condition-set"

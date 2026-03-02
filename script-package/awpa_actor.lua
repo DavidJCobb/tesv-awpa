@@ -105,7 +105,7 @@ do
       end
       function instance_members:amend_xml_clone(nodemap)
          do
-            local node <const> = nodemap[self.source_xml_element]
+            local node <const> = nodemap[self.source_xml_node]
             node.attributes["editor-id"] = self.editor_id
             if self.name == self.editor_id then
                node.attributes["name"] = nil

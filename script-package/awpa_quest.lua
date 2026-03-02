@@ -45,7 +45,7 @@ do
          awpa.env:set_object_id(self, element.attributes["id"])
          
          element:for_each_child_element(function(node)
-            if quest:_consume_xml_child_as_scope(node) then
+            if self:_consume_xml_child_as_scope(node) then
                return
             end
             if node.node_name == "actors" then
@@ -53,25 +53,25 @@ do
                   if node.node_name ~= "actor" then
                      error("unexpected element: " .. node.node_name)
                   end
-                  local actor = awpa.actor(quest)
-                  quest.actors[#quest.actors + 1] = actor
+                  local actor = awpa.actor(self)
+                  self.actors[#self.actors + 1] = actor
                   actor:from_xml(node)
                end)
                return
             end
             if node.node_name == "top-g" then
                local group = awpa.top_level_group()
-               local list  = quest.results_root_topic.children
+               local list  = self.results_root_topic.children
                list[#list + 1] = group
-               group.parent = quest
+               group.parent = self
                group:from_xml(node)
                return
             end
             if node.node_name == "g" then
                local group = awpa.group()
-               local list  = quest.results_root_topic.children
+               local list  = self.results_root_topic.children
                list[#list + 1] = group
-               group.parent = quest
+               group.parent = self
                group:from_xml(node)
                return
             end
@@ -83,7 +83,7 @@ do
       end
       function instance_members:amend_xml_clone(nodemap)
          do
-            local node <const> = nodemap[self.source_xml_element]
+            local node <const> = nodemap[self.source_xml_node]
             node.attributes["id"] = self.id
          end
          for i = 1, #self.actors do

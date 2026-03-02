@@ -77,7 +77,7 @@ do
          end
       end
       function instance_members:amend_xml_clone(nodemap)
-         local node = nodemap[self.source_xml_element]
+         local node = nodemap[self.source_xml_node]
          if (self.hours_until_reset or 0) > 0 then
             node.attributes["hours-until-reset"] = self.hours_until_reset
          else

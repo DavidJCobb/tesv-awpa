@@ -104,6 +104,10 @@ do
          if not topic then
             topic = self:get_selection_topic_for(actor_info)
          end
+         local actor_alias <const> = self.quest_info.form.aliases[actor_info.form.editor_id]
+         if not actor_alias then
+            error("Missing alias: " .. actor_info.form.editor_id)
+         end
          
          local info
          do
@@ -132,7 +136,7 @@ do
                   if not prop then
                      prop = script.properties:insert("pkSrcAlias")
                   end
-                  prop.value = self.quest_info.form.aliases[actor_info.form.editor_id]
+                  prop.value = actor_alias
                end
                do
                   local prop = script.properties["pkDstAlias"]
@@ -148,7 +152,7 @@ do
          end
          utils.replace_condition_list(info, {
             {  -- Cannot ask about dead actors.
-               run_on        = self.quest_info.form.aliases[actor_info.form.editor_id],
+               run_on        = actor_alias,
                function_name = "GetDead",
                comparison    = { operator = "==", operand = 0 }
             },

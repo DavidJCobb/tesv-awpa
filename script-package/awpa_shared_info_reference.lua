@@ -33,7 +33,7 @@ do
             local si     = self.source.forms[i]
             local gender = nil
             do
-               local id = si_form.editor_id
+               local id = si.editor_id
                local c  = id:sub(#id)
                if c == "M" then
                   gender = "Male"

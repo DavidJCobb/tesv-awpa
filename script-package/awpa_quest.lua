@@ -147,9 +147,6 @@ do
          
          local result_topic = self:get_or_create_result_topic()
          
-         self.selection_topic_list:generate_all_forms()
-         self.ask_root_topic:generate_all_forms()
-         
          local desired_infos = {}
          for i = 1, #self.actors do
             local over = self.actors[i].overrides.begin_asking_to.bribe
@@ -160,6 +157,8 @@ do
             -- TODO: other begin-asking-to override content (i.e. groups and lines)
          end
          
+         self.selection_topic_list:generate_all_forms()
+         self.ask_root_topic:generate_all_forms()
          self.results_root_topic:generate_all_forms()
       end
    end

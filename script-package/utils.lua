@@ -76,7 +76,7 @@ function utils.replace_condition_list(info, conditions)
 end
 function utils.append_condition_list(info, conditions)
    local list = info.conditions
-   if conditions[1] and conditions[1].function_name then
+   if conditions and conditions.function_name then
       conditions = { conditions }
    end
    for i = 1, #conditions do
@@ -88,8 +88,14 @@ function utils.append_condition_list(info, conditions)
       local cnd = list:insert()
       cnd.run_on        = src.run_on
       cnd.function_name = src.function_name
-      for j = 1, 2 do
-         cnd.parameters[j] = src.parameters[j]
+      if src.parameters then
+         for j = 1, 2 do
+            cnd.parameters[j] = src.parameters[j]
+         end
+      else
+         for j = 1, 2 do
+            cnd.parameters[j] = nil
+         end
       end
       cnd.comparison.operator = src.comparison.operator
       cnd.comparison.operand  = src.comparison.operand

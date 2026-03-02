@@ -66,7 +66,8 @@ do
             return
          end
          for i = count_to_keep + 1, count_of_all do
-            if self.infos.desired_set[infos[i]] then
+            local info = infos[i]
+            if self.infos.desired_set[info] then
                error("failed to enforce info order; a desired info is near the end")
             end
             infos[i]:delete()

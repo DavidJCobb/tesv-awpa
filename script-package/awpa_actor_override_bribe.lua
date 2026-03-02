@@ -62,9 +62,9 @@ do
          for i = 1, #self.children do
             local item = self.children[i]
             if awpa.group.is(item) then
-               item:generate_lines(topic, self.topic_helper)
+               item:generate_infos(topic, self.topic_helper)
             elseif awpa.line.is(item) then
-               local a, b = item:generate_info(topic)
+               local a, b = item:generate_infos(topic)
                self.topic_helper:append_desired_info(a)
                if b then
                   self.topic_helper:append_desired_info(b)

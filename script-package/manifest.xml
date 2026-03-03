@@ -41,6 +41,7 @@ awpa_ask_root_topic.lua
 awpa_actor_selection_topic_list.lua
 awpa_results_root_topic.lua
 awpa_topic_helper.lua
+macros.lua
 main.lua
    </files>
 </package>

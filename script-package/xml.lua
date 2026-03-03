@@ -9,17 +9,70 @@ xml.builtin_entities = {
    quot = '"',
 }
 
-do
+do -- xml.node
    local instance_members = {}
    xml.node = make_class({
       constructor = function(self)
-         self.parent = nil
+         self.parent = nil -- xml.element
       end,
       instance_members = instance_members
    })
    do -- member functions
       function instance_members:clone(deep)
          error("purecall")
+      end
+      function instance_members:place_after(target)
+         if not xml.node.is(target) then
+            error("invalid argument")
+         end
+         local dst = target.parent
+         if not dst then
+            error("cannot place after an orphan")
+         end
+         local i = dst:index_of_child(target)
+         assert(not not i)
+         dst:insert_child_at(self, i + 1)
+      end
+      function instance_members:place_before(target)
+         if not xml.node.is(target) then
+            error("invalid argument")
+         end
+         local dst = target.parent
+         if not dst then
+            error("cannot place before an orphan")
+         end
+         local i = dst:index_of_child(target)
+         assert(not not i)
+         dst:insert_child_at(self, i)
+      end
+      function instance_members:replace_with(...)
+         if not self.parent then
+            error("cannot replace an orphan")
+         end
+         local args = {...}
+         for i = 1, #args do
+            local arg = args[i]
+            if xml.node.is(arg) then
+               if arg ~= self and xml.element.is(arg) and arg:contains(self) then
+                  error("a node cannot replace itself with its own ancestor")
+               end
+            else
+               local t = type(arg)
+               if t == "boolean" or t == "number" then
+                  args[i] = tostring(arg)
+               elseif t ~= "string" then
+                  error("invalid argument")
+               end
+            end
+         end
+         
+         local dst = self.parent
+         local i   = dst:index_of_child(self)
+         dst:remove_child(self)
+         for j = 1, #args do
+            dst:insert_child_at(args[j], i)
+            i = i + 1
+         end
       end
    end
 end
@@ -28,7 +81,7 @@ local function _charcode_entity(c)
    return string.format("&#%02X;", c:byte(1))
 end
 
-do
+do -- xml.comment
    local instance_members = {}
    xml.comment = make_class({
       superclass  = xml.node,
@@ -49,7 +102,7 @@ do
    end
 end
 
-do
+do -- xml.text
    local instance_members = {}
    xml.text = make_class({
       superclass  = xml.node,
@@ -120,7 +173,7 @@ do
    end
 end
 
-do
+do -- xml.element
    local instance_members = {}
    xml.element = make_class({
       superclass  = xml.node,
@@ -152,6 +205,12 @@ do
             if not xml.node.is(node) then
                error("Invalid argument type.")
             end
+            if node == self then
+               error("a node cannot be its own child")
+            end
+            if xml.element.is(node) and node:contains(self) then
+               error("cannot adopt our own ancestor as a child")
+            end
             local prior_parent = node.parent
             if prior_parent then
                prior_parent:remove_child(node)
@@ -161,6 +220,69 @@ do
             end
          end
          self.children[size + 1] = node
+         node.parent = self
+      end
+      function instance_members:insert_child_at(node, i)
+         local size = #self.children
+         if i < 1 or i > size + 1 then
+            error("destination index out of bounds")
+         end
+         if node == self then
+            error("a node cannot be its own child")
+         end
+         if xml.element.is(node) and node:contains(self) then
+            error("cannot adopt our own ancestor as a child")
+         end
+         
+         if not xml.node.is(node) then
+            local t = type(node)
+            if t == "boolean" or t == "number" then
+               node = tostring(node)
+            end
+            if type(node) ~= "string" then
+               error("argument to insert is not a node, string, or string-convertible primitive")
+            end
+            if i == 1 then
+               local sibling = self.children[1]
+               if xml.text.is(sibling) then
+                  sibling.data = node .. sibling.data
+                  return
+               end
+            else
+               local sib_p = self.children[i - 1]
+               local sib_n = self.children[i]
+               
+               local is_p  = xml.text.is(sib_p)
+               local is_n  = xml.text.is(sib_n)
+               if (is_p or is_n) and not (is_p and is_n) then
+                  if is_p then
+                     sib_p.data = sib_p.data .. node
+                  else
+                     sib_n.data = node .. sib_n.data
+                  end
+                  return
+               end
+            end
+            node = xml.text(node)
+            -- and fall through.
+         end
+         
+         if node.parent == self then
+            local prior = self:index_of_child(node)
+            if prior == i then
+               return
+            end
+            if prior < i then
+               i = i - 1
+            end
+            table.remove(self.children, prior)
+            table.insert(self.children, i, node)
+            return
+         end
+         if node.parent then
+            node.parent:remove_child(node)
+         end
+         table.insert(self.children, i, node)
          node.parent = self
       end
       function instance_members:remove_child(node)
@@ -175,15 +297,50 @@ do
             end
          end
          assert(i, "A node must be present in its parent's child list.")
-         local size = #self.children
-         for j = i, size do
-            self.children[j] = self.children[j + 1]
-         end
+         table.remove(self.children, i)
          node.parent = nil
       end
       function instance_members:remove()
          if self.parent then
             self.parent:remove_child(self)
+         end
+      end
+      function instance_members:replace_children(...)
+         local args      = {...}
+         local all_nodes = true
+         for i = 1, #args do
+            local arg = args[i]
+            if xml.node.is(arg) then
+               if arg ~= self and xml.element.is(arg) and arg:contains(self) then
+                  error("a node cannot replace itself with its own ancestor")
+               end
+            else
+               all_nodes = false
+               local t = type(arg)
+               if t == "boolean" or t == "number" then
+                  args[i] = tostring(arg)
+               elseif t ~= "string" then
+                  error("invalid argument")
+               end
+            end
+         end
+         
+         for i = 1, #self.children do
+            local node = self.children[i]
+            node.parent = nil
+         end
+         self.children = {}
+         for i = 1, #args do
+            local node = args[i]
+            if xml.node.is(node) then
+               if node.parent then
+                  node.parent:remove_child(node)
+               end
+               self.children[#self.children + 1] = node
+               node.parent = self
+            else
+               self:append_child(node)
+            end
          end
       end
    end
@@ -199,6 +356,22 @@ do
             end
          end
          return list
+      end
+      function instance_members:contains(node)
+         if node == self or not xml.node.is(node) then
+            return false
+         end
+         if #self.children == 0 then -- shortcut
+            return false
+         end
+         node = node.parent
+         while node do
+            if node == self then
+               return true
+            end
+            node = node.parent
+         end
+         return false
       end
       function instance_members:for_each_attribute(functor)
          for k, v in pairs(self.attributes) do
@@ -238,6 +411,14 @@ do
             end
          end
          return text
+      end
+      function instance_members:index_of_child(node)
+         for i = 1, #self.children do
+            if self.children[i] == node then
+               return i
+            end
+         end
+         return nil
       end
    end
    do -- Member functions: other

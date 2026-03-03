@@ -44,7 +44,8 @@ local file = dovah.package.load_file({
    --path = "payload-test-nested-conditions.xml",
    --path = "payload-test-condition-sets.xml",
    --path = "payload-test-actor-overrides-begin-asking-about.xml",
-   path = "payload-test-actor-overrides-bribe.xml",
+   --path = "payload-test-actor-overrides-bribe.xml",
+   path = "payload-test-macros.xml",
    type = "text"
 })
 local parser = xml.parser()
@@ -53,6 +54,7 @@ parser:parse(file)
 if not parser.root then
    error("No root element")
 end
+macros.transform(parser.root)
 
 do
    local quest_count = 0
@@ -67,6 +69,7 @@ do
 end
 
 process_xml(parser.root)
+macros.revert(parser.root)
 
 progressbar:reset()
 progressbar.format = "Generating data..."

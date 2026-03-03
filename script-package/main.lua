@@ -45,7 +45,8 @@ local file = dovah.package.load_file({
    --path = "payload-test-condition-sets.xml",
    --path = "payload-test-actor-overrides-begin-asking-about.xml",
    --path = "payload-test-actor-overrides-bribe.xml",
-   path = "payload-test-macros.xml",
+   --path = "payload-test-macros.xml",
+   path = "payload-test-kitchen-sink.xml",
    type = "text"
 })
 local parser = xml.parser()

@@ -107,6 +107,7 @@ do
          ["enable-state"] = "enable_state",
          ["global"]       = "global",
          ["location"]     = "location",
+         ["offers-services"] = "offers_services",
          ["papyrus-quest-variable"] = "papyrus_quest_variable",
          ["parent-cell"]  = "parent_cell",
          ["quest-stage"]  = "quest_stage",

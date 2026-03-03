@@ -290,11 +290,10 @@
             <invoke name="tg-member-dfn-when-player-banned" />
             <invoke name="tg-member-dfn-when-sus-of-karliah" />
          </actor>
-         <actor editor-id="Grelka" />
-         <actor editor-id="Grelod">
+         <actor editor-id="Grelka">
             <begin-asking-to>
                <!--
-                  Grelod should never respond constructively to these inquiries.
+                  Grelka should never respond constructively to these inquiries.
                -->
                <g non-exclusive="true">
                   <conditions>
@@ -307,6 +306,8 @@
                <line>No. I'm too busy running my shop to keep track of everyone else.</line>
                <line>Whoever it is, I'm not their keeper, I don't know where they're at, and I don't care.</line>
             </begin-asking-to>
+         </actor>
+         <actor editor-id="Grelod">
          </actor>
          <actor editor-id="Haelga">
             <begin-asking-to>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<payload>
+   <shared-infos>
+      <shared-info id="shared-upstairs" editor-id-slug="FloorUpstairs">
+         <line>He's upstairs.</line>
+         <line>Try checking upstairs.</line>
+         <line>Try looking upstairs.</line>
+      </shared-info>
+   </shared-infos>
+   <quest id="AWPATestQuest01">
+      <condition-set name="subject-upstairs-from-player">
+         <z of="subject" gte="64" />
+         <z of="player"  lt="320" />
+         <or>
+            <!-- player on lowest floor or subject on highest floor -->
+            <!-- if we had more than 3 floors, the logic here would be more complex -->
+            <z of="subject" gte="320" />
+            <z of="player"  lt="64" />
+         </or>
+      </condition-set>
+      
+      <macro name="test-macro">
+         <parameter name="ACTOR" />
+         <parameter name="ACTOR_NAME" default-value="%ACTOR%" />
+         <data>
+            <conditions>
+               <actor-base is="%ACTOR%" />
+            </conditions>
+            <line>Oh, you mean %ACTOR_NAME%?</line>
+         </data>
+      </macro>
+   
+      <actors>
+         <actor editor-id="Grelka">
+            <begin-asking-to>
+               <top-g>
+                  <g non-exclusive="true">
+                     <conditions>
+                        <offers-services of="speaker" />
+                     </conditions>
+                     <line>I sell weapons and armor, not directions.</line>
+                     <line>No. Buy something or move on.</line>
+                  </g>
+                  <line>I'm not your tour guide. Find somebody else to bother about it.</line>
+                  <line>No. I'm too busy running my shop to keep track of everyone else.</line>
+                  <line>Whoever it is, I'm not their keeper, I don't know where they're at, and I don't care.</line>
+               </top-g>
+            </begin-asking-to>
+         </actor>
+         <actor editor-id="Maul">
+            <begin-asking-to>
+               <!--
+                  If you're not in the Thieves Guild and have never intimidated 
+                  Maul, then you'll need to bribe him.
+               -->
+               <bribe>
+                  <conditions>
+                     <!--<condition-set name="player-not-in-thieves-guild" />-->
+                     <or>
+                        <!-- never bribed or intimidated Maul: -->
+                        <quest-stage for="[QUST:000649FC]DialogueRiftenMaul" not-done="30" />
+                        <!-- tried and failed to intimidate Maul: -->
+                        <quest-stage for="[QUST:000649FC]DialogueRiftenMaul" done="35" />
+                     </or>
+                  </conditions>
+                  <begin-lines>
+                     <line>If you want dirt, it'll cost you.</line>
+                     <line script-notes="Emphasis on the word &quot;might&quot;.">If you've got gold, I might have information.</line>
+                  </begin-lines>
+                  <accept-lines>
+                     <line>All right. Who are you looking for?</line>
+                     <line>Good. So who are you trying to find?</line>
+                     <line>Okay, let's talk. Who are you looking for?</line>
+                     <line vanilla="[INFO:0006D4A8]/#2">So what do you want to know?</line>
+                  </accept-lines>
+                  <refuse-lines>
+                     <line>Fine by me.</line>
+                     <line>Then quit wastin' my time.</line>
+                     <g>
+                        <conditions>
+                           <!-- Maul is at the docks. -->
+                           <quest-stage for="[QUST:000649FC]DialogueRiftenMaul" done="40" />
+                           <!-- TODO: Check if he's actually physically at the docks -->
+                        </conditions>
+                        <line>I'll be here when you change your mind.</line>
+                     </g>
+                     <g>
+                        <conditions>
+                           <!-- Maul is not at the docks. -->
+                           <quest-stage for="[QUST:000649FC]DialogueRiftenMaul" not-done="40" />
+                        </conditions>
+                        <line vanilla="[INFO:000649F5]/#2">I'll be at the docks if you change your mind.</line>
+                     </g>
+                     <line vanilla="[INFO:000649F5]/#1">Suit yourself.</line>
+                  </refuse-lines>
+                  <poor-lines>
+                     <line>Come back when you have somethin' to bargain with.</line>
+                     <line>Then you aren't worth my time.</line>
+                     <line vanilla="[INFO:000649E5]">You don't have enough to earn my loyalty.</line>
+                  </poor-lines>
+               </bribe>
+            </begin-asking-to>
+         </actor>
+         <actor editor-id="TalenJei" name="Talen-Jei" />
+      </actors>
+      <g name="upstairs">
+         <conditions>
+            <condition-set name="subject-upstairs-from-player" />
+         </conditions>
+         <shared-info id="shared-upstairs" />
+      </g>
+      <top-g slug="RecognizeTalenJei">
+         <invoke name="test-macro">
+            <parameter name="ACTOR" value="TalenJei" />
+            <parameter name="ACTOR_NAME" value="Talen-Jei" />
+         </invoke>
+      </top-g>
+      <top-g slug="RecognizeMaul">
+         <invoke name="test-macro">
+            <parameter name="ACTOR" value="Maul" />
+         </invoke>
+      </top-g>
+      <g name="fallbacks">
+         <line>I'm not sure where he is.</line>
+         <line>I don't know where he's at.</line>
+         <line>Haven't seen him around.</line>
+      </g>
+   </quest>
+</payload>

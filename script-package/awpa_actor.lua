@@ -20,19 +20,6 @@ do
                --
                conditions = {},
             },
-            begin_asking_to = {
-               --
-               -- Override this actor's responses to "Can you help me find someone?"
-               --
-               results = {},  -- vector<variant<awpa.group, awpa.line>>
-            },
-            begin_responding = {
-               --
-               -- Override this actor's responses to inquiries about any other actor.
-               --
-               conditions = {},
-               results    = {}, -- vector<variant<awpa.group, awpa.line>>
-            },
          }
       end,
       instance_members = instance_members,
@@ -63,6 +50,23 @@ do
          end
          
          element:for_each_child_element(function(node)
+            local function reject_multiple_nameless_redirect_topics(list, node)
+               local has_nameless = false
+               for i = 1, #list do
+                  if awpa.actor_redirect_topic.is(list[i]) then
+                     if list[i].slug == "" then
+                        has_nameless = true
+                        break
+                     end
+                  end
+               end
+               if has_nameless then
+                  if not node.attributes["slug"] or node.attributes["slug"] == "" then
+                     error("cannot have more than one unnamed redirect topic here; specify a `slug`")
+                  end
+               end
+            end
+         
             if node.node_name == "begin-asking-about" then
                local over = self.overrides.begin_asking_about
                node:for_each_child_element(function(node)
@@ -76,10 +80,9 @@ do
                   end
                end)
             elseif node.node_name == "begin-asking-to" then
-               local over = self.overrides.begin_asking_to
+               local list = self.redirects.begin_asking_to
                node:for_each_child_element(function(node)
                   if node.node_name == "bribe" then
-                     local list = self.redirects.begin_asking_to
                      for i = 1, #list do
                         if awpa.actor_redirect_bribe.is(list[i]) then
                            error("this actor has multiple bribe redirects")
@@ -90,21 +93,7 @@ do
                      --
                      bribe:from_xml(node)
                   elseif node.node_name == "topic" then
-                     local list         = self.redirects.begin_asking_to
-                     local has_nameless = false
-                     for i = 1, #list do
-                        if awpa.actor_redirect_topic.is(list[i]) then
-                           if list[i].slug == "" then
-                              has_nameless = true
-                              break
-                           end
-                        end
-                     end
-                     if has_nameless then
-                        if not node.attributes["slug"] or node.attributes["slug"] == "" then
-                           error("cannot have more than one unnamed redirect topic here; specify a `slug`")
-                        end
-                     end
+                     reject_multiple_nameless_redirect_topics(list, node)
                      local item = awpa.actor_redirect_topic(
                         self,
                         "%sTopic%sRedirectFromStart%s",
@@ -113,12 +102,29 @@ do
                      list[#list + 1] = item
                      --
                      item:from_xml(node)
+                     item.topic_text = string.format("<override start via: %s>", self.form.editor_id)
                   else
                      error("unexpected element: " .. node.node_name)
                   end
                end)
             elseif node.node_name == "begin-responding" then
-               -- TODO
+               local list = self.redirects.begin_responding
+               node:for_each_child_element(function(node)
+                  if node.node_name == "topic" then
+                     reject_multiple_nameless_redirect_topics(list, node)
+                     local item = awpa.actor_redirect_topic(
+                        self,
+                        "%sTopic%sRedirectAnswer%s",
+                        "%sLinkInfo%sRedirectAnswer%s"
+                     )
+                     list[#list + 1] = item
+                     --
+                     item:from_xml(node)
+                     item.topic_text = string.format("<override answer from: %s>", self.form.editor_id)
+                  else
+                     error("unexpected element: " .. node.node_name)
+                  end
+               end)
             else
                error("unexpected element: " .. node.node_name)
             end

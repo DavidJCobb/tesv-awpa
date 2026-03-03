@@ -195,13 +195,17 @@ do
          end
          self.branch = branch_main
          
-         local result_topic = self:get_or_create_result_topic()
-         
-         for i = 1, #self.actors do
-            local actor_info = self.actors[i]
-            for _, list in pairs(actor_info.redirects) do
-               for _, item in ipairs(list) do
-                  item:generate_content()
+         do
+            local ask_topic    = self.ask_root_topic:get_or_create_topic()
+            local result_topic = self:get_or_create_result_topic()
+            
+            for i = 1, #self.actors do
+               local actor_info = self.actors[i]
+               for _, item in ipairs(actor_info.redirects.begin_asking_to) do
+                  item:generate_content(ask_topic)
+               end
+               for _, item in ipairs(actor_info.redirects.begin_responding) do
+                  item:generate_content(result_topic)
                end
             end
          end

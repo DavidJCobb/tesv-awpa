@@ -31,6 +31,7 @@ awpa_condition_offers_services.lua
 awpa_condition_papyrus_quest_variable.lua
 awpa_condition_parent_cell.lua
 awpa_condition_position.lua
+awpa_condition_quest_completion.lua
 awpa_condition_quest_stage.lua
 awpa_condition_set.lua
 awpa_constant.lua

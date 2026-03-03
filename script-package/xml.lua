@@ -456,6 +456,8 @@ do -- xml.element
             builder:append(' ')
             builder:append(k)
             
+            v = tostring(v) -- in case it was set to a number
+            
             local delim = '"'
             if v:find('"', 1, true) and not v:find("'", 1, true) then
                delim = "'"

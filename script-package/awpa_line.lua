@@ -3,6 +3,17 @@ if not awpa then
    awpa = {}
 end
 
+local VALID_EMOTIONS = {
+   "anger",
+   "disgust",
+   "fear",
+   "happy",
+   "neutral",
+   "puzzled",
+   "sad",
+   "surprise",
+}
+
 do
    local instance_members = {}
    awpa.line = make_class({
@@ -13,6 +24,11 @@ do
          self.script_notes      = ""
          self.text              = ""
          self.vanilla           = nil
+         
+         self.emotion = {
+            type  = "neutral",
+            value = 50,
+         }
          
          self.form_ids = {
             unisex = nil,
@@ -49,6 +65,28 @@ do
             vanilla = element.attributes["vanilla-fragment"]
             if vanilla then
                -- TODO: parse form reference
+            end
+         end
+         
+         do
+            local raw = element.attributes["emotion"]
+            if raw then
+               local t, v = raw:match("^([^:]+):(%d+)$")
+               if t then
+                  v = tonumber(v)
+                  if v < 0 or v > 100 then
+                     error("emotion value out of range")
+                  end
+                  for _, allowed in ipairs(VALID_EMOTIONS) do
+                     if t == allowed then
+                        goto valid
+                     end
+                  end
+                  error(string.format("unrecognized emotion typename (`%s` in `%s`)", t, raw))
+                  ::valid::
+                  self.emotion.type  = t
+                  self.emotion.value = v
+               end
             end
          end
          
@@ -150,7 +188,9 @@ do
                info.responses:insert()
                resp = info.responses[1]
             end
-            resp.script_notes = self.script_notes
+            resp.script_notes  = self.script_notes
+            resp.emotion_type  = self.emotion.type
+            resp.emotion_value = self.emotion.value
             if fem then
                resp.text = swap_masc_pronouns_to_fem(self.text)
             else

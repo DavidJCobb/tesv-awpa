@@ -88,9 +88,14 @@ do
          -- Invisible-infos for linking to begin-responding overrides.
          for i = 1, #self.quest_info.actors do
             local actor_info = self.quest_info.actors[i]
-            --
-            -- TODO
-            --
+            for _, redirect in ipairs(actor_info.redirects.begin_responding) do
+               local form = redirect.forms.inbound_link
+               if not form then
+                  error("actor redirect wasn't generated")
+               end
+               self.forms.override_links[#self.forms.override_links + 1] = form
+               self.topic_helper:append_desired_info(form)
+            end
          end
          
          -- Top-level groups.

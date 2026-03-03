@@ -102,18 +102,20 @@ do
    end
    do -- static members
       local TAGNAMES_TO_CONSTRUCTOR_NAMES = {
-         ["actor-base"]   = "actor_base",
-         ["death-count"]  = "death_count",
-         ["enable-state"] = "enable_state",
-         ["global"]       = "global",
-         ["location"]     = "location",
-         ["offers-services"] = "offers_services",
+         ["actor-base"]             = "actor_base",
+         ["death-count"]            = "death_count",
+         ["enable-state"]           = "enable_state",
+         ["global"]                 = "global",
+         ["location"]               = "location",
+         ["offers-services"]        = "offers_services",
          ["papyrus-quest-variable"] = "papyrus_quest_variable",
-         ["parent-cell"]  = "parent_cell",
-         ["quest-stage"]  = "quest_stage",
-         ["x"]            = "position",
-         ["y"]            = "position",
-         ["z"]            = "position",
+         ["parent-cell"]            = "parent_cell",
+         ["quest-completed"]        = "quest_completion",
+         ["quest-not-completed"]    = "quest_completion",
+         ["quest-stage"]            = "quest_stage",
+         ["x"]                      = "position",
+         ["y"]                      = "position",
+         ["z"]                      = "position",
       }
       
       function static_members.construct_from_xml(scope, node)

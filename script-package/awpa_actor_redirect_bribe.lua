@@ -178,10 +178,10 @@ do
          --
          -- Set topic text.
          --
-         self.contents["begin"].text  = "<Bribe Root>"
-         self.contents["accept"].text = "I'll pay. (<BribeCost> gold)"
-         self.contents["refuse"].text = "Never mind."
-         self.contents["poor"].text   = "I don't have enough gold."
+         self.contents["begin"].topic.text  = "<Bribe Root>"
+         self.contents["accept"].topic.text = "I'll pay. (<BribeCost> gold)"
+         self.contents["refuse"].topic.text = "Never mind."
+         self.contents["poor"].topic.text   = "I don't have enough gold."
          
          do
             local info = utils.make_invisible_info(

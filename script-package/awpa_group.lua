@@ -73,9 +73,7 @@ do
       
       function instance_members:get_relevant_conditions()
          local out
-         if awpa.actor_redirect.is(self.parent) then
-            out = { table.unpack(self.parent.conditions) }
-         elseif not awpa.group.is(self.parent) then
+         if not awpa.group.is(self.parent) then
             return { table.unpack(self.conditions) }
          else
             out = self.parent:get_relevant_conditions()

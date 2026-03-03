@@ -33,10 +33,7 @@ do
          error("purecall")
       end
       
-      function instance_members:generate_common_conditions()
-         return {}
-      end
-      function instance_members:generate_content()
+      function instance_members:generate_content(redirect_from_topic)
          error("purecall")
       end
    end

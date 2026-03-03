@@ -28,6 +28,8 @@ do
          self.topic_editor_id_format = topic_editor_id_format
          
          self.link_info_editor_id_format = link_info_editor_id_format
+         
+         self.topic_text = "<Redirect>"
       end,
       instance_members = instance_members,
    })
@@ -109,17 +111,18 @@ do
          end
          topic = dovah.create_form(form_types.topic, { parent = branch })
          topic.editor_id = editor_id
-         topic.text      = "<Results Group>"
+         topic.text      = self.topic_text or "<Redirect>"
          self.forms.topic  = topic
          self.topic_helper = awpa.topic_helper(topic)
          return topic
       end
       
-      function instance_members:generate_content()
+      function instance_members:generate_content(redirect_from_topic)
          local topic = self:get_or_create_topic()
+         topic.text = self.topic_text or "<Redirect>"
          do
             local info = utils.make_invisible_info(
-               self.quest_info.ask_root_topic:get_or_create_topic(),
+               redirect_from_topic,
                string.format(
                   self.link_info_editor_id_format,
                   --

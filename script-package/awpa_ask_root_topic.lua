@@ -72,26 +72,23 @@ do
          topic.text = "Can you help me find someone?"
          
          --
-         -- Process begin-asking-to actor overrides; get-or-create their link infos.
+         -- Process begin-asking-to actor redirects; get-or-create their link infos.
          -- Store all such link infos in `self.forms.override_links`.
          --
          local links_to_actor_overrides = {} -- set, i.e. s[info] = true
          for i = 1, #self.quest_info.actors do
             local actor_info = self.quest_info.actors[i]
             do
-               local over = actor_info.overrides.begin_asking_to.bribe
-               if over then
-                  local form = over.forms.link_to_branch
+               local list = actor_info.redirects.begin_asking_to
+               for i = 1, #list do
+                  local form = list[i].forms.inbound_link
                   if not form then
-                     error("bribe override wasn't generated")
+                     error("actor redirect wasn't generated")
                   end
                   self.forms.override_links[#self.forms.override_links + 1] = form
                   links_to_actor_overrides[form] = true
                end
             end
-            --
-            -- TODO: begin-asking-to non-bribe overrides
-            --
          end
          
          -- cache to skip redundant lookups:

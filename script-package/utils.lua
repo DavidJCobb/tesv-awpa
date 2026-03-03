@@ -37,7 +37,7 @@ end
 function utils.clear_info_responses(info)
    local list = info.responses
    local size = #list
-   for i = size, 1 do
+   for i = size, 1, -1 do
       list:remove(i)
    end
 end
@@ -69,36 +69,36 @@ end
 
 function utils.replace_condition_list(info, conditions)
    local list = info.conditions
-   for i = #list, 1 do
+   for i = #list, 1, -1 do
       list:remove(i)
    end
    utils.append_condition_list(info, conditions)
 end
-function utils.append_condition_list(info, conditions)
-   local list = info.conditions
-   if conditions and conditions.function_name then
-      conditions = { conditions }
+function utils.append_condition_list(info, src_list)
+   local dst_list = info.conditions
+   if src_list and src_list.function_name then
+      src_list = { src_list }
    end
-   for i = 1, #conditions do
-      local src = conditions[i]
+   for i = 1, #src_list do
+      local src = src_list[i]
       if awpa.condition.is(src) then
          src:apply_to_info(info)
          goto continue
       end
-      local cnd = list:insert()
-      cnd.run_on        = src.run_on
-      cnd.function_name = src.function_name
+      local dst = dst_list:insert()
+      dst.run_on        = src.run_on
+      dst.function_name = src.function_name
       if src.parameters then
          for j = 1, 2 do
-            cnd.parameters[j] = src.parameters[j]
+            dst.parameters[j] = src.parameters[j]
          end
       else
          for j = 1, 2 do
-            cnd.parameters[j] = nil
+            dst.parameters[j] = nil
          end
       end
-      cnd.comparison.operator = src.comparison.operator
-      cnd.comparison.operand  = src.comparison.operand
+      dst.comparison.operator = src.comparison.operator
+      dst.comparison.operand  = src.comparison.operand
       ::continue::
    end
 end
@@ -107,7 +107,7 @@ function utils.replace_info_link_to_list(info, topics)
    local list = info.link_to
    local size = #list
    if size > 0 then
-      for i = size, 1 do
+      for i = size, 1, -1 do
          list:remove(i)
       end
    end

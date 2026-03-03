@@ -31,27 +31,42 @@ do
       return false
    end
    
-   function instance_members:resolve_condition_set(name)
-      for i = 1, #self.condition_sets do
-         local cs = self.condition_sets[i]
-         if cs.name == name then
-            return cs
+   function instance_members:_do_scoped_lookup(functor)
+      local result = functor(self)
+      if result then
+         return result
+      end
+      local scope = self.parent
+      while scope do
+         if awpa.scope.is(scope) then
+            result = functor(scope)
+            if result then
+               break
+            end
+            scope = scope.parent
+         elseif awpa.actor_redirect.is(scope) then -- HACK HACK HACK
+            scope = scope.quest_info
+         else
+            return
          end
       end
-      if awpa.scope.is(self.parent) then
-         return self.parent:resolve_condition_set(name)
-      end
-      return nil
+      return result
+   end
+   
+   function instance_members:resolve_condition_set(name)
+      return self:_do_scoped_lookup(function(scope)
+         for i = 1, #scope.condition_sets do
+            local cs = scope.condition_sets[i]
+            if cs.name == name then
+               return cs
+            end
+         end
+      end)
    end
    
    function instance_members:resolve_constant(name)
-      local v = self.constants_by_name[name]
-      if v then
-         return v
-      end
-      if awpa.scope.is(self.parent) then
-         return self.parent:resolve_constant(name)
-      end
-      return nil
+      return self:_do_scoped_lookup(function(scope)
+         return scope.constants_by_name[name]
+      end)
    end
 end

@@ -9,6 +9,10 @@ do
          self.editor_id  = nil
          self.name       = nil
          self.form       = nil
+         self.redirects  = {
+            begin_asking_to  = {}, -- vector<awpa.actor_redirect>
+            begin_responding = {}, -- vector<awpa.actor_redirect>
+         }
          self.overrides  = {
             begin_asking_about = {
                --
@@ -20,7 +24,6 @@ do
                --
                -- Override this actor's responses to "Can you help me find someone?"
                --
-               bribe   = nil, -- optional<awpa.actor_override_bribe>
                results = {},  -- vector<variant<awpa.group, awpa.line>>
             },
             begin_responding = {
@@ -36,10 +39,11 @@ do
    })
    do -- member functions
       function instance_members:visit_topic_helpers(visitor)
-         if self.overrides.begin_asking_to.bribe then
-            self.overrides.begin_asking_to.bribe:visit_topic_helpers(visitor)
+         for _, list in pairs(self.redirects) do
+            for _, item in ipairs(list) do
+               item:visit_topic_helpers(visitor)
+            end
          end
-         -- TODO
       end
    
       function instance_members:from_xml(element)
@@ -75,23 +79,40 @@ do
                local over = self.overrides.begin_asking_to
                node:for_each_child_element(function(node)
                   if node.node_name == "bribe" then
-                     local bribe = over.bribe
-                     if not bribe then
-                        over.bribe = awpa.actor_override_bribe(self.quest_info, self)
-                        bribe = over.bribe
+                     local list = self.redirects.begin_asking_to
+                     for i = 1, #list do
+                        if awpa.actor_redirect_bribe.is(list[i]) then
+                           error("this actor has multiple bribe redirects")
+                        end
                      end
+                     local bribe = awpa.actor_redirect_bribe(self)
+                     list[#list + 1] = bribe
+                     --
                      bribe:from_xml(node)
-                  elseif node.node_name == "line" then
-                     local list = over.results
-                     local item = awpa.line()
+                  elseif node.node_name == "topic" then
+                     local list         = self.redirects.begin_asking_to
+                     local has_nameless = false
+                     for i = 1, #list do
+                        if awpa.actor_redirect_topic.is(list[i]) then
+                           if list[i].slug == "" then
+                              has_nameless = true
+                              break
+                           end
+                        end
+                     end
+                     if has_nameless then
+                        if not node.attributes["slug"] or node.attributes["slug"] == "" then
+                           error("cannot have more than one unnamed redirect topic here; specify a `slug`")
+                        end
+                     end
+                     local item = awpa.actor_redirect_topic(
+                        self,
+                        "%sTopic%sRedirectFromStart%s",
+                        "%sLinkInfo%sRedirectFromStart%s"
+                     )
                      list[#list + 1] = item
+                     --
                      item:from_xml(node)
-                  elseif node.node_name == "g" then
-                     local list  = over.results
-                     local child = awpa.group()
-                     list[#list + 1] = child
-                     child.parent = nil
-                     child:from_xml(node)
                   else
                      error("unexpected element: " .. node.node_name)
                   end
@@ -114,9 +135,8 @@ do
             end
          end
          -- sub-objects:
-         do
-            local item = self.overrides.begin_asking_to.bribe
-            if item then
+         for _, list in pairs(self.redirects) do
+            for _, item in ipairs(list) do
                item:amend_xml_clone(nodemap)
             end
          end

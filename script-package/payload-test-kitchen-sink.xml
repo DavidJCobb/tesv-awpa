@@ -33,7 +33,7 @@
       <actors>
          <actor editor-id="Grelka">
             <begin-asking-to>
-               <top-g>
+               <topic>
                   <g non-exclusive="true">
                      <conditions>
                         <offers-services of="speaker" />
@@ -44,7 +44,7 @@
                   <line>I'm not your tour guide. Find somebody else to bother about it.</line>
                   <line>No. I'm too busy running my shop to keep track of everyone else.</line>
                   <line>Whoever it is, I'm not their keeper, I don't know where they're at, and I don't care.</line>
-               </top-g>
+               </topic>
             </begin-asking-to>
          </actor>
          <actor editor-id="Maul">

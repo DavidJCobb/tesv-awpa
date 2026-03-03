@@ -8,13 +8,13 @@ do
       constructor = function(self, override, name)
          self.source_xml_node = nil
          
-         self.owner = override -- awpa.actor_override_bribe
+         self.owner = override -- awpa.actor_redirect_bribe
          self.name  = name
          
          self.topic        = nil -- topic
          self.topic_helper = nil -- awpa.topic_helper
          
-         self.children = {} -- vector<variant<awpa.line, awpa.group>>
+         self.children = {} -- vector<variant<awpa.line, awpa.group, awpa.shared_info_reference>>
       end,
       instance_members = instance_members
    })
@@ -31,7 +31,7 @@ do
             elseif node.node_name == "g" then
                local item = awpa.group()
                list[#list + 1] = item
-               item.parent = self.owner.quest_info
+               item.parent = self.owner
                item:from_xml(node)
             else
                error("unexpected element: " .. node.node_name)
@@ -95,21 +95,15 @@ end
 
 do
    local instance_members = {}
-   awpa.actor_override_bribe = make_class({
-      constructor = function(self, quest_info, actor_info)
-         self.conditions = {}
-         self.quest_info = quest_info
-         self.actor_info = actor_info
-         
+   awpa.actor_redirect_bribe = make_class({
+      superclass  = awpa.actor_redirect,
+      constructor = function(self, actor_info)
          self.contents = {}
          for _, v in ipairs(BRIBE_TOPIC_NAMES) do
             self.contents[v] = bribe_topic(self, v)
          end
          
-         self.forms = {
-            link_to_branch = nil, -- invisible-info
-            branch         = nil,
-         }
+         self.forms.branch = nil
       end,
       instance_members = instance_members,
    })
@@ -148,7 +142,7 @@ do
          end
       end
    
-      function instance_members:generate_content(quest_info, actor_info, ask_begin_topic, results_topic)
+      function instance_members:generate_content()
          for _, v in ipairs(BRIBE_TOPIC_NAMES) do
             local data = self.contents[v]
             if #data.children == 0 then
@@ -156,7 +150,7 @@ do
             end
          end
          
-         local quest = quest_info.form
+         local quest = self.quest_info.form
       
          --
          -- Get or create our branch.
@@ -164,8 +158,8 @@ do
          if not self.forms.branch then
             local editor_id = string.format(
                "%sBranch%sBribe",
-               quest_info.form.editor_id,
-               actor_info.form.editor_id
+               self.quest_info.form.editor_id,
+               self.actor_info.form.editor_id
             )
             self.forms.branch = utils.get_or_create_branch(quest, editor_id)
          end
@@ -191,20 +185,20 @@ do
          
          do
             local info = utils.make_invisible_info(
-               ask_begin_topic,
+               self.quest_info.ask_root_topic:get_or_create_topic(),
                string.format(
                   "%sLinkInfo%sBribeStart",
-                  quest_info.form.editor_id,
-                  actor_info.form.editor_id
+                  self.quest_info.form.editor_id,
+                  self.actor_info.form.editor_id
                ),
                self.contents["begin"].topic
             )
-            self.forms.link_to_branch = info
+            self.forms.inbound_link = info
             
             utils.replace_condition_list(info, {
                run_on        = "subject",
                function_name = "GetIsId",
-               parameters    = { actor_info.form },
+               parameters    = { self.actor_info.form },
                comparison    = {
                   operator = "==",
                   operand  = 1,
@@ -236,6 +230,7 @@ do
          -- ACTOR: "If you want info, it'll cost you."
          self.contents["begin"]:generate_infos(
             function(info)
+               info.speaker = self.actor_info.form
                utils.replace_info_link_to_list(info, {
                   self.forms.accept_topic,
                   self.forms.poor_topic,
@@ -246,8 +241,10 @@ do
          )
          
          -- PLAYER: "I can pay. (Bribe)"
+         local result_topic = self.quest_info:get_or_create_result_topic()
          self.contents["accept"]:generate_infos(
             function(info)
+               info.speaker = self.actor_info.form
                do -- Subject.GetBribeSuccess == 1
                   local cnd = info.conditions:insert()
                   cnd.run_on        = "subject"
@@ -274,13 +271,14 @@ do
                   frag.script_name   = "AskWherePeopleAreFRAGMENTBribe"
                   frag.function_name = "Exec"
                end
-               utils.replace_info_link_to_list(info, { results_topic })
+               utils.replace_info_link_to_list(info, { result_topic })
             end
          )
          
          -- PLAYER: "I don't have enough gold."
          self.contents["poor"]:generate_infos(
             function(info)
+               info.speaker = self.actor_info.form
                do -- Subject.GetBribeSuccess != 1
                   local cnd = info.conditions:insert()
                   cnd.run_on        = "subject"
@@ -293,7 +291,9 @@ do
          
          -- PLAYER: "Never mind. I don't want to pay you."
          self.contents["refuse"]:generate_infos(
-            nil -- can't think of any post-processing we need rn
+            function(info)
+               info.speaker = self.actor_info.form
+            end
          )
       end
    end

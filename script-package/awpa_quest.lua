@@ -197,14 +197,13 @@ do
          
          local result_topic = self:get_or_create_result_topic()
          
-         local desired_infos = {}
          for i = 1, #self.actors do
-            local over = self.actors[i].overrides.begin_asking_to.bribe
-            if over then
-               over:generate_content(self, self.actors[i], self.ask_root_topic:get_or_create_topic(), result_topic)
-               desired_infos[#desired_infos + 1] = over.forms.link_to_branch
+            local actor_info = self.actors[i]
+            for _, list in pairs(actor_info.redirects) do
+               for _, item in ipairs(list) do
+                  item:generate_content()
+               end
             end
-            -- TODO: other begin-asking-to override content (i.e. groups and lines)
          end
          
          self.selection_topic_list:generate_all_forms()

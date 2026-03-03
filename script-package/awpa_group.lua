@@ -6,12 +6,12 @@ do
       constructor = function(self)
          self.source_xml_node = nil
          
-         self.id           = nil
-         self.name         = nil
-         self.parent       = nil -- variant<awpa.group, awpa.top_level_group, awpa.quest>
-         self.exclusive    = true
-         self.conditions   = {}
-         self.children     = {} -- vector<variant<awpa.group, awpa.line, awpa.shared_info_reference>>
+         self.id         = nil
+         self.name       = nil
+         self.parent     = nil -- variant<awpa.group, awpa.top_level_group, awpa.quest, awpa.actor_redirect>
+         self.exclusive  = true
+         self.conditions = {}
+         self.children   = {} -- vector<variant<awpa.group, awpa.line, awpa.shared_info_reference>>
       end,
       instance_members = instance_members,
    })
@@ -72,11 +72,15 @@ do
       end
       
       function instance_members:get_relevant_conditions()
-         if not awpa.group.is(self.parent) then
+         local out
+         if awpa.actor_redirect.is(self.parent) then
+            out = { table.unpack(self.parent.conditions) }
+         elseif not awpa.group.is(self.parent) then
             return { table.unpack(self.conditions) }
+         else
+            out = self.parent:get_relevant_conditions()
          end
-         local out = self.parent:get_relevant_conditions()
-         local j   = #out + 1
+         local j = #out + 1
          for i = 1, #self.conditions do
             out[j] = self.conditions[i]
             j = j + 1

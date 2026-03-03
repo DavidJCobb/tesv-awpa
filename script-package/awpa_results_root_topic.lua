@@ -85,21 +85,11 @@ do
          local topic = self:get_or_create_topic()
          local pre_existing_infos = topic.infos
          
-         -- Invisible-infos for linking to begin-asking-to overrides.
+         -- Invisible-infos for linking to begin-responding overrides.
          for i = 1, #self.quest_info.actors do
             local actor_info = self.quest_info.actors[i]
-            do
-               local over = actor_info.overrides.begin_asking_to.bribe
-               if over then
-                  local info = over.forms.link_to_branch
-                  if not info then
-                     error("bribe not generated")
-                  end
-                  self.topic_helper:prepend_desired_info(info)
-               end
-            end
             --
-            -- TODO: other overrides' links
+            -- TODO
             --
          end
          

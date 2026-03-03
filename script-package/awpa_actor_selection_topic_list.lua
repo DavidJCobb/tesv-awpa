@@ -127,9 +127,9 @@ do
          do -- papyrus
             local papyrus = info.papyrus
             do
-               local script = papyrus.scripts["AWPASelectActorScript"]
+               local script = papyrus.scripts["AskWherePeopleAreFRAGMENTSelectActor"]
                if not script then
-                  script = papyrus.scripts:insert("AWPASelectActorScript")
+                  script = papyrus.scripts:insert("AskWherePeopleAreFRAGMENTSelectActor")
                end
                do
                   local prop = script.properties["pkSrcAlias"]
@@ -147,8 +147,8 @@ do
                end
             end
             local frag = papyrus.fragments.on_begin
-            frag.script_name   = "AWPASelectActorScript"
-            frag.function_name = "SetActor"
+            frag.script_name   = "AskWherePeopleAreFRAGMENTSelectActor"
+            frag.function_name = "Exec"
          end
          utils.replace_condition_list(info, {
             {  -- Cannot ask about dead actors.

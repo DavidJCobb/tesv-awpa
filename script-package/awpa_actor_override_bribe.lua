@@ -185,7 +185,7 @@ do
          -- Set topic text.
          --
          self.contents["begin"].text  = "<Bribe Root>"
-         self.contents["accept"].text = "I can pay. (Bribe)"
+         self.contents["accept"].text = "I'll pay. (<BribeCost> gold)"
          self.contents["refuse"].text = "Never mind."
          self.contents["poor"].text   = "I don't have enough gold."
          
@@ -245,7 +245,7 @@ do
             end
          )
          
-         -- PLAYER: "I can pay."
+         -- PLAYER: "I can pay. (Bribe)"
          self.contents["accept"]:generate_infos(
             function(info)
                do -- Subject.GetBribeSuccess == 1
@@ -255,7 +255,25 @@ do
                   cnd.comparison.operator = "=="
                   cnd.comparison.operand  = 1
                end
-               -- TODO: Set up script to pay the bribe
+               do -- papyrus
+                  local papyrus = info.papyrus
+                  do
+                     local script = papyrus.scripts["AskWherePeopleAreFRAGMENTBribe"]
+                     if not script then
+                        script = papyrus.scripts:insert("AskWherePeopleAreFRAGMENTBribe")
+                     end
+                     do
+                        local prop = script.properties["pFDS"]
+                        if not prop then
+                           prop = script.properties:insert("pFDS")
+                        end
+                        prop.value = dovah.get_form_by_editor_id("DialogueFavorGeneric", form_types.quest)
+                     end
+                  end
+                  local frag = papyrus.fragments.on_begin
+                  frag.script_name   = "AskWherePeopleAreFRAGMENTBribe"
+                  frag.function_name = "Exec"
+               end
                utils.replace_info_link_to_list(info, { results_topic })
             end
          )

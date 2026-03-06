@@ -26,16 +26,16 @@ do
             error("condition set definition has no name")
          end
       end
-      function instance_members:apply_to(group, node)
+      function instance_members:apply_to(dst_list, node)
          local attr_of = node.attributes["of"]
       
-         local dst_i = #group.conditions + 1
+         local dst_i = #dst_list + 1
          for src_i = 1, #self.conditions do
             local cnd = self.conditions[src_i]:copy()
             if attr_of then
                cnd:_extract_run_on(node)
             end
-            group.conditions[dst_i] = cnd
+            dst_list[dst_i] = cnd
             dst_i = dst_i + 1
          end
       end

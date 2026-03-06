@@ -12,6 +12,11 @@ do
          
          self.actors = {}
          
+         -- Dialogue conditions for the quest.
+         -- TODO: Modify how conditions are loaded, so we can load conditions 
+         --       into arbitrary lists and not just `thing.conditions`
+         self.conditions = {}
+         
          local list = awpa.env.quests
          list[#list + 1] = self
          
@@ -46,6 +51,10 @@ do
          
          element:for_each_child_element(function(node)
             if self:_consume_xml_child_as_scope(node) then
+               return
+            end
+            if node.node_name == "dialogue-conditions" then
+               awpa.condition.construct_list_from_xml(self, self, node)
                return
             end
             if node.node_name == "actors" then

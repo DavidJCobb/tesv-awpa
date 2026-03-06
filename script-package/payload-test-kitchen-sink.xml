@@ -8,6 +8,11 @@
       </shared-info>
    </shared-infos>
    <quest id="AWPATestQuest01">
+      <dialogue-conditions>
+         <!-- TODO: speaker.IsInFaction [FACT:28186]TownRiftenFaction  == 1 && -->
+         <!-- TODO: speaker.IsInFaction [FACT:D27F2]GuardFactionRiften == 0 && -->
+      </dialogue-conditions>
+   
       <condition-set name="subject-upstairs-from-player">
          <z of="subject" gte="64" />
          <z of="player"  lt="320" />

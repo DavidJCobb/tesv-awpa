@@ -167,7 +167,7 @@ do
                   if not cs then
                      error("condition set `" .. name .. "` not found")
                   end
-                  cs:apply_to(owner, node)
+                  cs:apply_to(owner.conditions, node)
                else
                   local cnd = awpa.condition.construct_from_xml(scope, node)
                   list[#list + 1] = cnd

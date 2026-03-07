@@ -17,7 +17,7 @@ do
    do -- member functions
       function instance_members:copy(element)
          local out = awpa.conditions.faction_membership()
-         out.is_or_linked = self.is_or_linked
+         self:_copy_base(out)
          out.form   = self.form
          out.equals = self.equals
          return out
@@ -60,12 +60,12 @@ do
       function instance_members:overwrite_condition(cnd)
          self:_set_condition_common(cnd)
          self:_set_condition_run_on(cnd)
-         cnd.function_name = "IsInFaction"
+         cnd.function_name = "GetInFaction"
          cnd.parameters[1] = self.form
          if self.equals then
             cnd.comparison.operator = "=="
          else
-            cnd.comparison.operator = "~="
+            cnd.comparison.operator = "!="
          end
          cnd.comparison.operand  = 1
       end

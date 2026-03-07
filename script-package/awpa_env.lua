@@ -13,6 +13,8 @@ awpa.env = {
    shared_info_topic = nil,
    
    built_in_shared_infos = {},
+   
+   diagnose_topic_helper_deletions = false
 }
 
 function awpa.env:reset()
@@ -25,6 +27,8 @@ function awpa.env:reset()
    self.shared_info_topic = nil
    
    self.built_in_shared_infos = {}
+   
+   self.diagnose_topic_helper_deletions = false
 end
 
 function awpa.env:set_object_id(object, id)

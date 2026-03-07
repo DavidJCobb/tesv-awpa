@@ -25,6 +25,7 @@ do
    do -- member functions
       function instance_members:copy(element)
          local out = awpa.conditions.position()
+         self:_copy_base(out)
          out.run_on = self.run_on
          out.axis   = self.axis
          out.range  = {

@@ -7,6 +7,24 @@
 
 This is an open city in vanilla. We will need to define a perimeter of some sort (ideally something easily testable, e.g. an AABB) around the city, and have generic lines for actors anywhere in that perimeter.
 
+| Location | Exterior | Interior | Interior Rooms | Misc. To-Do Notes |
+| :- | :-: | :-: | :-: | :- |
+| Betild's House | ⬜ | ⬜ | ⬜ |
+| Brina's House | ⬜ | ⬜ | ⬜ |
+| Dawnstar Barracks | ⬜ | ⬜ | ⬜ |
+| Docks | ⬜ |   |   |
+| Irgnir's House | ⬜ | ⬜ | ⬜ |
+| Iron-Breaker Mine | ⬜ | ⬜ | ⬜ |
+| Leigelf's House | ⬜ | ⬜ | ⬜ |
+| Mortar and Pestle | ⬜ | ⬜ | ⬜ |
+| Quicksilver Mine | ⬜ | ⬜ | ⬜ |
+| Rustleif's House | ⬜ | ⬜ | ⬜ |
+| Sea Squall (boat) | ⬜ | ⬜ | ⬜ |
+| Silus Vesuius's House | ⬜ | ⬜ | ⬜ |
+| White Hall | ⬜ | ⬜ | ⬜ |
+| Windpeak Inn | ⬜ | ⬜ | ⬜ |
+| Outside the City | ⬜ |   |   |
+
 ### Falkreath
 
 This is an open city in vanilla. We will need to define a perimeter of some sort (ideally something easily testable, e.g. an AABB) around the city, and have generic lines for actors anywhere in that perimeter.
@@ -69,7 +87,60 @@ This is an open city in vanilla. We will need to define a perimeter of some sort
 
 ### Whiterun
 
+| Location | Exterior | Interior | Interior Rooms | Misc. To-Do Notes |
+| :- | :-: | :-: | :-: | :- |
+| Amren's House | ⬜ | ⬜ | ⬜ |
+| Arcadia's Cauldron | ⬜ | ⬜ | ⬜ |
+| Bannered Mare | ⬜ | ⬜ | ⬜ |
+| Belethor's General Goods | ⬜ | ⬜ | ⬜ |
+| Breezehome | ⬜ | ⬜ | ⬜ |
+| Carlotta Valentia's House | ⬜ | ⬜ | ⬜ |
+| Dragonsreach | ⬜ | ⬜ | ⬜ |
+| Dragonsreach Dungeon | ⬜ | ⬜ | ⬜ |
+| Dragonsreach (balcony) | ⬜ |   |   |
+| Dragonsreach Jarl's Quarters |   | ⬜ | ⬜ |
+| Drunken Huntsman | ⬜ | ⬜ | ⬜ |
+| Guard Barracks | ⬜ | ⬜ | ⬜ |
+| Hall of the Dead | ⬜ | ⬜ | ⬜ |
+| Heimskr's House | ⬜ | ⬜ | ⬜ |
+| House Gray-Mane | ⬜ | ⬜ | ⬜ |
+| House of Clan Battle-Born | ⬜ | ⬜ | ⬜ |
+| Jorrvaskr | ⬜ | ⬜ | ⬜ |
+| Jorrvaskr (backyard) | ⬜ |   |   |
+| Olava the Feeble's House | ⬜ | ⬜ | ⬜ |
+| Severio Pelagia's House | ⬜ | ⬜ | ⬜ |
+| Skyforge | ⬜ |   |   |
+| Temple of Kynareth | ⬜ | ⬜ | ⬜ |
+| Uthgerd's House | ⬜ | ⬜ | ⬜ |
+| Warmaiden's | ⬜ | ⬜ | ⬜ |
+| Ysolda's House | ⬜ | ⬜ | ⬜ |
+| Secret werewolf cave |   | ⬜ |   | Only Companions should know about this. |
+| General: Cloud District | ⬜ |   |   |
+| General: Plains District: South Wall | ⬜ |   |   |
+| General: Plains District | ⬜ |   |   |
+| General: Wind District: Statue of Talos | ⬜ |   |   |
+| General: Wind District: West Wall | ⬜ |   |   |
+| General: Wind District | ⬜ |   |   |
+| Outside the Walls: Whiterun Stables | ⬜ | ⬜ | ⬜ |
+
 ### Windhelm
+
+| Location | Exterior | Interior | Interior Rooms | Misc. To-Do Notes |
+| :- | :-: | :-: | :-: | :- |
+| Aretino Residence | ⬜ | ⬜ | ⬜ |
+| Atheron Residence | ⬜ | ⬜ | ⬜ |
+| Belyn Hlaalu's House | ⬜ | ⬜ | ⬜ |
+| Candlehearth Hall | ⬜ | ⬜ | ⬜ |
+| Hall of the Dead | ⬜ | ⬜ | ⬜ |
+| Hjerim | ⬜ | ⬜ | ⬜ |
+| House of Clan Cruel-Sea | ⬜ | ⬜ | ⬜ |
+| House of Clan Shatter-Shield | ⬜ | ⬜ | ⬜ |
+| New Gnisis Cornerclub | ⬜ | ⬜ | ⬜ |
+| Palace of the Kings | ⬜ | ⬜ | ⬜ |
+| Sadri's Used Wares | ⬜ | ⬜ | ⬜ |
+| Temple of Talos | ⬜ | ⬜ | ⬜ |
+| Viola Giordano's House | ⬜ | ⬜ | ⬜ |
+| Windhelm Barracks | ⬜ | ⬜ | ⬜ |
 
 ### Winterhold
 

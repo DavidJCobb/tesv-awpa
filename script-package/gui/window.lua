@@ -12,6 +12,7 @@ do
          self.window   = ui.window.new()
          self.tabbox   = ui.tabbox.new()
          self.progress = ui.progress_bar.new()
+         self.buttons  = {}
          
          self.window.title = "Ask Where People Are - Generator"
          self.window:set_layout("down")
@@ -26,6 +27,7 @@ do
                button:on("OnActivated", "", function()
                   self:add_tab()
                end)
+               self.buttons[#self.buttons + 1] = button
             end
             widget:add_spacer("h")
             do
@@ -38,6 +40,7 @@ do
                      table.remove(self.tabs, i)
                   end
                end)
+               self.buttons[#self.buttons + 1] = button
             end
          end
          self.window:add_child(self.tabbox)
@@ -52,6 +55,7 @@ do
                button:on("OnActivated", "", function()
                   self:generate(false)
                end)
+               self.buttons[#self.buttons + 1] = button
             end
             do
                local button = ui.button.new("Round-Trip Test")
@@ -59,6 +63,7 @@ do
                button:on("OnActivated", "", function()
                   self:generate(true)
                end)
+               self.buttons[#self.buttons + 1] = button
             end
             widget:add_child(self.progress)
          end
@@ -102,6 +107,9 @@ do
          for i = 1, #self.tabs do
             self.tabs[i]:set_allow_editing(false)
          end
+         for i = 1, #self.buttons do
+            self.buttons[i].enabled = false
+         end
       
          awpa.env:reset()
          
@@ -142,7 +150,7 @@ do
                local clone_root, xml_to_clone_map = payload.xml_root_src:clone(true, true)
                payload.xml_root_dst = clone_root
                
-               for k, v in xml_to_clone_map do
+               for k, v in pairs(xml_to_clone_map) do
                   all_clones_map[k] = v
                end
                self:progress_update(nil, i, nil)
@@ -179,13 +187,18 @@ do
             end
             self:progress_update_indeterminate("Generating content...")
             print("Performing round-trip test. If any infos are deleted by topic-helpers, then we failed to recycle infos properly.")
+            awpa.env.diagnose_topic_helper_deletions = true
             awpa.env:generate_content()
+            awpa.env.diagnose_topic_helper_deletions = false
             print("Round-trip test done.")
          end
          
          self:progress_reset()
          for i = 1, #self.tabs do
             self.tabs[i]:set_allow_editing(true)
+         end
+         for i = 1, #self.buttons do
+            self.buttons[i].enabled = true
          end
       end
       function instance_members:show()

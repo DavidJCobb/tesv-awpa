@@ -17,7 +17,7 @@ do
    do -- member functions
       function instance_members:copy(element)
          local out = awpa.conditions.offers_services()
-         out.is_or_linked = self.is_or_linked
+         self:_copy_base(out)
          out.equals = self.equals
          return out
       end

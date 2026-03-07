@@ -22,7 +22,7 @@ do
    do -- member functions
       function instance_members:copy(element)
          local out = awpa.conditions.quest_stage()
-         out.is_or_linked = self.is_or_linked
+         self:_copy_base(out)
          out.form  = self.form
          out.done  = self.done
          out.stage = self.stage

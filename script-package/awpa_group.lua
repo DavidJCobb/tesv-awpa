@@ -114,7 +114,11 @@ do
             elseif awpa.shared_info_reference.is(item) then
                item:generate_infos(topic)
                for i = 1, #item.forms do
-                  topic_helper:append_desired_info(item.forms[i])
+                  local info = item.forms[i]
+                  for j = 1, #conditions do
+                     conditions[j]:apply_to_info(info)
+                  end
+                  topic_helper:append_desired_info(info)
                end
             end
          end

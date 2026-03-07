@@ -67,15 +67,44 @@ do
          end
          print(string.format("attempting to delete %u unused infos from [DIAL:%08X]%s...",
             count_of_all - count_to_keep,
-            self.form:form_id_to_string(),
+            self.form.form_id,
             self.form.editor_id
          ))
-         for i = count_to_keep + 1, count_of_all do
-            local info = infos[i]
-            if self.infos.desired_set[info] then
-               error("failed to enforce info order; a desired info is near the end")
+         if awpa.env.diagnose_topic_helper_deletions then
+            for i = count_to_keep + 1, count_of_all do
+               local info = infos[i]
+               if self.infos.desired_set[info] then
+                  error("failed to enforce info order; a desired info is near the end")
+               end
+               local text
+               do
+                  local si = info.use_shared_info
+                  if si then
+                     text = string.format("shared from: [%08X]%s", si.form_id, si.editor_id)
+                  else
+                     local resp = info.responses[1]
+                     if resp then
+                        text = '"' .. resp.text .. '"'
+                     else
+                        text = "<<NO RESPONSE DATA>>"
+                     end
+                  end
+                  print(string.format(" - [INFO:%08X]%s: \"%s\"",
+                     info.form_id,
+                     info.editor_id,
+                     text
+                  ))
+               end
+               info:delete()
             end
-            infos[i]:delete()
+         else
+            for i = count_to_keep + 1, count_of_all do
+               local info = infos[i]
+               if self.infos.desired_set[info] then
+                  error("failed to enforce info order; a desired info is near the end")
+               end
+               info:delete()
+            end
          end
       end
    end

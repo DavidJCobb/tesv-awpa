@@ -19,7 +19,7 @@ do
    do -- member functions
       function instance_members:copy(element)
          local out = awpa.conditions.actor_base()
-         out.is_or_linked = self.is_or_linked
+         self:_copy_base(out)
          out.form   = self.form
          out.name   = self.name
          out.equals = self.equals

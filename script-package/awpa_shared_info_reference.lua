@@ -54,9 +54,12 @@ do
                end
             end
             local info
-            for i = 1, #self.form_ids do
+            for j = 1, #self.form_ids do
                local f = dovah.get_form_by_id(self.form_ids[i])
-               if f and f.form_type == form_types.topic_info then
+               if  f
+               and f.form_type == form_types.topic_info
+               and f.use_shared_info == si
+               then
                   info = f
                   break
                end

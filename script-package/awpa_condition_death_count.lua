@@ -20,7 +20,7 @@ do
    do -- member functions
       function instance_members:copy(element)
          local out = awpa.conditions.death_count()
-         out.is_or_linked = self.is_or_linked
+         self:_copy_base(out)
          out.form     = self.form
          out.comparison.operator = self.comparison.operator
          out.comparison.operand  = self.comparison.operand

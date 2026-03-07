@@ -17,7 +17,7 @@ do
    do -- member functions
       function instance_members:copy(element)
          local out = awpa.conditions.enable_state()
-         out.is_or_linked = self.is_or_linked
+         self:_copy_base(out)
          out.form    = self.form
          out.enabled = self.enabled
          return out

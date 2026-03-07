@@ -17,7 +17,7 @@ do
    do -- member functions
       function instance_members:copy(element)
          local out = awpa.conditions.quest_completion()
-         out.is_or_linked = self.is_or_linked
+         self:_copy_base(out)
          out.form = self.form
          out.done = self.done
          return out

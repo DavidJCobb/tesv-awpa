@@ -5,8 +5,12 @@ do
    awpa.condition = make_class({
       constructor = function(self)
          self.owning_scope = nil
+         self.quest_info   = nil
          self.is_or_linked = false
          self.is_override  = nil -- optional<awpa.actor>
+         
+         -- only for some condition functions:
+         self.run_on = nil
       end,
       instance_members = instance_members,
       static_members   = static_members,
@@ -14,6 +18,15 @@ do
    do -- member functions
       function instance_members:copy()
          error("pure virtual function call")
+      end
+      function instance_members:_copy_base(dst)
+         dst.owning_scope = self.owning_scope
+         dst.quest_info   = self.quest_info
+         dst.is_or_linked = self.is_or_linked
+         dst.is_override  = self.is_override
+         
+         -- only for some condition functions:
+         dst.run_on = self.run_on
       end
    
       local function _parse_run_on(s)
@@ -141,7 +154,7 @@ do
             error("missing required parameter(s)")
          end
          if not options.scope then
-            options.quest_info = options.scope
+            options.scope = options.quest_info
          end
          
          local clsname <const> = TAGNAMES_TO_CONSTRUCTOR_NAMES[node.node_name]
@@ -154,7 +167,7 @@ do
          end
          local item <const> = awpa.conditions[clsname]()
          item.owning_scope = options.scope
-         item.owning_quest = options.quest_info
+         item.quest_info   = options.quest_info
          item:from_xml(node)
          return item
       end
@@ -165,7 +178,7 @@ do
             error("missing required parameter(s)")
          end
          if not options.scope then
-            options.quest_info = options.scope
+            options.scope = options.quest_info
          end
          
          local allow_condition_set = true

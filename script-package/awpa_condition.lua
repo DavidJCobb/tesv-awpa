@@ -119,6 +119,7 @@ do
          ["actor-base"]             = "actor_base",
          ["death-count"]            = "death_count",
          ["enable-state"]           = "enable_state",
+         ["faction-membership"]     = "faction_membership",
          ["global"]                 = "global",
          ["location"]               = "location",
          ["offers-services"]        = "offers_services",

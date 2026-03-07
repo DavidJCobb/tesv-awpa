@@ -25,6 +25,7 @@ awpa_condition.lua
 awpa_condition_actor_base.lua
 awpa_condition_death_count.lua
 awpa_condition_enable_state.lua
+awpa_condition_faction_membership.lua
 awpa_condition_global.lua
 awpa_condition_location.lua
 awpa_condition_offers_services.lua

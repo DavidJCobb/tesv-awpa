@@ -9,8 +9,8 @@
    </shared-infos>
    <quest id="AWPATestQuest01">
       <dialogue-conditions>
-         <!-- TODO: speaker.IsInFaction [FACT:28186]TownRiftenFaction  == 1 && -->
-         <!-- TODO: speaker.IsInFaction [FACT:D27F2]GuardFactionRiften == 0 && -->
+         <faction-membership of="speaker" includes="TownRiftenFaction" />
+         <faction-membership of="speaker" excludes="GuardFactionRiften" />
       </dialogue-conditions>
    
       <condition-set name="subject-upstairs-from-player">

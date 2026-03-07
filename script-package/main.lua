@@ -1,4 +1,5 @@
 
+--[[--
 progresswin = ui.window.new()
 do
    progresswin:set_layout("down")
@@ -13,6 +14,7 @@ progressbar:reset()
 progressbar.format = "Loading XML..."
 
 local loaded_quest_count = 0
+--]]--
 
 function process_xml(root)
    root:for_each_child_element(function(node)
@@ -27,8 +29,10 @@ function process_xml(root)
          return
       end
       if node.node_name == "quest" then
+--[[--
          loaded_quest_count = loaded_quest_count + 1
          progressbar.value  = loaded_quest_count
+--]]--
          
          local quest = awpa.quest()
          quest:from_xml(node)
@@ -37,6 +41,10 @@ function process_xml(root)
    end)
 end
 
+WINDOW <const> = gui.window()
+WINDOW:show()
+
+--[[--
 local file = dovah.package.load_file({
    --path = "payload-test-simple-quest.xml",
    --path = "payload-test-simple-shared-info.xml",
@@ -112,3 +120,4 @@ print("Re-processing based on clone...")
 awpa.env:reset()
 process_xml(clone_root)
 print("Done generating game data from clone!")
+--]]--

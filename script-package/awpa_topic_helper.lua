@@ -65,6 +65,11 @@ do
          if count_of_all == count_to_keep then
             return
          end
+         print(string.format("attempting to delete %u unused infos from [DIAL:%08X]%s...",
+            count_of_all - count_to_keep,
+            self.form:form_id_to_string(),
+            self.form.editor_id
+         ))
          for i = count_to_keep + 1, count_of_all do
             local info = infos[i]
             if self.infos.desired_set[info] then

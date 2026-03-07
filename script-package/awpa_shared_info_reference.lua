@@ -6,7 +6,6 @@ end
 do
    local instance_members = {}
    awpa.shared_info_reference = make_class({
-      superclass  = awpa.scope,
       constructor = function(self)
          self.source_xml_node = nil
          

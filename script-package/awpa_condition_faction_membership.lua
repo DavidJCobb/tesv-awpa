@@ -23,7 +23,7 @@ do
          return out
       end
       function instance_members:from_xml(element)
-         if element.node_name ~= "death-count" then
+         if element.node_name ~= "faction-membership" then
             error("mismatched node name")
          end
          self:_extract_run_on(element)

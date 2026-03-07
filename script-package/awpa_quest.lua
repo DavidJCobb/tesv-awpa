@@ -7,10 +7,7 @@ do
    local instance_members = {}
    awpa.quest = make_class({
       superclass  = awpa.scope,
-      calls_super = true,
-      constructor = function(super)
-         local self = super(self) -- awpa.scope(self)
-         
+      constructor = function(self)
          self.source_xml_node = nil
          
          self.actors = {}

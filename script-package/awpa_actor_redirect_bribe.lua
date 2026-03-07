@@ -29,7 +29,7 @@ do
                list[#list + 1] = item
                item:from_xml(node)
             elseif node.node_name == "g" then
-               local item = awpa.group(self.quest_info)
+               local item = awpa.group(self.owner.quest_info)
                list[#list + 1] = item
                item.parent = self.owner
                item:from_xml(node)

@@ -18,6 +18,8 @@ do
          do
             local widget = ui.widget.new()
             widget:set_layout("ltr")
+            widget.layout_margins = 0
+            self.window:add_child(widget)
             do
                local button = ui.button.new("Add Tab")
                widget:add_child(button)
@@ -25,7 +27,7 @@ do
                   self:add_tab()
                end)
             end
-            widget:add_spacer()
+            widget:add_spacer("h")
             do
                local button = ui.button.new("Delete Current Tab")
                widget:add_child(button)
@@ -42,6 +44,8 @@ do
          do
             local widget = ui.widget.new()
             widget:set_layout("ltr")
+            widget.layout_margins = 0
+            self.window:add_child(widget)
             do
                local button = ui.button.new("Generate Data")
                widget:add_child(button)
@@ -57,7 +61,6 @@ do
                end)
             end
             widget:add_child(self.progress)
-            widget:add_spacer()
          end
          
          self:add_tab()

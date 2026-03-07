@@ -4,8 +4,13 @@ do
    awpa.scope = make_class({
       constructor = function(self, quest_info)
          self.quest_info = quest_info
-         if not awpa.quest.is(quest_info) then
-            error("no quest info")
+         if  not awpa.quest.is(quest_info)
+         and not awpa.quest.is(self) -- quest infos derive from scope, so exclude their construction
+         then
+            error("expected quest info; got something else")
+         end
+         if awpa.quest.is(self) then
+            self.quest_info = self
          end
       
          self.condition_sets    = {}

@@ -41,7 +41,7 @@ function process_xml(root)
    end)
 end
 
-WINDOW <const> = gui.window()
+WINDOW = gui.window()
 WINDOW:show()
 
 --[[--

@@ -71,7 +71,10 @@ do
                local over = self.overrides.begin_asking_about
                node:for_each_child_element(function(node)
                   if node.node_name == "conditions" then
-                     awpa.condition.construct_list_from_xml(over, self.quest_info, node)
+                     awpa.condition.construct_list_from_xml(node, over.conditions, {
+                        scope      = self.quest_info,
+                        quest_info = self.quest_info,
+                     })
                      for i = 1, #over.conditions do
                         over.conditions[i].is_override = self
                      end

@@ -2,7 +2,12 @@
 do
    local instance_members = {}
    awpa.scope = make_class({
-      constructor = function(self)
+      constructor = function(self, quest_info)
+         self.quest_info = quest_info
+         if not awpa.quest.is(quest_info) then
+            error("no quest info")
+         end
+      
          self.condition_sets    = {}
          self.constants         = {}
          self.constants_by_name = {}
@@ -17,7 +22,11 @@ do
          list[#list + 1] = cset
          cset:from_xml(node)
          cset.owning_scope = scope
-         awpa.condition.construct_list_from_xml(cset, self, node)
+         awpa.condition.construct_list_from_xml(node, cset.conditions, {
+            allow_condition_set = false,
+            scope               = self,
+            quest_info          = self.quest_info,
+         })
          return true
       end
       if node.node_name == "constant" then

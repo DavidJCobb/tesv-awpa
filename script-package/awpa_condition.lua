@@ -118,24 +118,47 @@ do
          ["z"]                      = "position",
       }
       
-      function static_members.construct_from_xml(scope, node)
-         local clsname = TAGNAMES_TO_CONSTRUCTOR_NAMES[node.node_name]
+      function static_members.construct_from_xml(node, options)
+         if not options
+         or not options.quest_info
+         or not options.scope
+         then
+            error("missing required parameter(s)")
+         end
+         if not options.scope then
+            options.quest_info = options.scope
+         end
+         
+         local clsname <const> = TAGNAMES_TO_CONSTRUCTOR_NAMES[node.node_name]
          if not clsname then
             error("unrecognized tag in condition list: " .. node.node_name)
          end
-         local cls  = awpa.conditions[clsname]
+         local cls <const> = awpa.conditions[clsname]
          if not cls then
             error("internal error when loading condition with tag name: " .. node.node_name)
          end
-         local item = awpa.conditions[clsname]()
-         item.owning_scope = scope
+         local item <const> = awpa.conditions[clsname]()
+         item.owning_scope = options.scope
+         item.owning_quest = options.quest_info
          item:from_xml(node)
          return item
       end
-      function static_members.construct_list_from_xml(owner, scope, node)
-         local is_condition_set = awpa.condition_set.is(owner)
-         local list             = owner.conditions
+      function static_members.construct_list_from_xml(node, dst_list, options)
+         if not options
+         or not options.quest_info
+         then
+            error("missing required parameter(s)")
+         end
+         if not options.scope then
+            options.quest_info = options.scope
+         end
          
+         local allow_condition_set = true
+         if options.allow_condition_set ~= nil then
+            allow_condition_set = options.allow_condition_set
+         end
+         local scope <const> = options.scope or options.quest_info
+      
          local last_or_linked = nil
          node:for_each_child_element(function(node)
             if node.node_name == "or" then
@@ -145,8 +168,8 @@ do
                   then
                      error("can't nest these in an OR")
                   end
-                  last_or_linked = awpa.condition.construct_from_xml(scope, node)
-                  list[#list + 1] = last_or_linked
+                  last_or_linked = awpa.condition.construct_from_xml(node, options)
+                  dst_list[#dst_list + 1] = last_or_linked
                   last_or_linked.is_or_linked = true
                end)
             else
@@ -155,8 +178,8 @@ do
                   last_or_linked = nil
                end
                if node.node_name == "condition-set" then
-                  if is_condition_set then
-                     error("condition sets cannot reference each other")
+                  if not allow_condition_set then
+                     error("condition sets cannot be referenced here")
                   end
                   local name = node.attributes["name"]
                   if not name then
@@ -167,10 +190,10 @@ do
                   if not cs then
                      error("condition set `" .. name .. "` not found")
                   end
-                  cs:apply_to(owner.conditions, node)
+                  cs:apply_to(dst_list, node)
                else
-                  local cnd = awpa.condition.construct_from_xml(scope, node)
-                  list[#list + 1] = cnd
+                  local cnd = awpa.condition.construct_from_xml(node, options)
+                  dst_list[#dst_list + 1] = cnd
                end
             end
          end)

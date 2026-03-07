@@ -7,7 +7,10 @@ do
    local instance_members = {}
    awpa.quest = make_class({
       superclass  = awpa.scope,
-      constructor = function(self)
+      calls_super = true,
+      constructor = function(super)
+         local self = super(self) -- awpa.scope(self)
+         
          self.source_xml_node = nil
          
          self.actors = {}
@@ -15,7 +18,7 @@ do
          -- Dialogue conditions for the quest.
          -- TODO: Modify how conditions are loaded, so we can load conditions 
          --       into arbitrary lists and not just `thing.conditions`
-         self.conditions = {}
+         self.dialogue_conditions = {}
          
          local list = awpa.env.quests
          list[#list + 1] = self
@@ -54,7 +57,10 @@ do
                return
             end
             if node.node_name == "dialogue-conditions" then
-               awpa.condition.construct_list_from_xml(self, self, node)
+               awpa.condition.construct_list_from_xml(node, self.dialogue_conditions, {
+                  scope      = self,
+                  quest_info = self,
+               })
                return
             end
             if node.node_name == "actors" then
@@ -69,7 +75,7 @@ do
                return
             end
             if node.node_name == "top-g" then
-               local group = awpa.top_level_group()
+               local group = awpa.top_level_group(self)
                local list  = self.results_root_topic.children
                list[#list + 1] = group
                group.parent = self
@@ -77,7 +83,7 @@ do
                return
             end
             if node.node_name == "g" then
-               local group = awpa.group()
+               local group = awpa.group(self)
                local list  = self.results_root_topic.children
                list[#list + 1] = group
                group.parent = self

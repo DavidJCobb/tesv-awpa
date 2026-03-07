@@ -29,7 +29,7 @@ do
                list[#list + 1] = item
                item:from_xml(node)
             elseif node.node_name == "g" then
-               local item = awpa.group()
+               local item = awpa.group(self.quest_info)
                list[#list + 1] = item
                item.parent = self.owner
                item:from_xml(node)
@@ -123,7 +123,10 @@ do
          end
          element:for_each_child_element(function(node)
             if node.node_name == "conditions" then
-               awpa.condition.construct_list_from_xml(self, self.quest_info, node)
+               awpa.condition.construct_list_from_xml(node, self.conditions, {
+                  scope      = self.quest_info,
+                  quest_info = self.quest_info,
+               })
                return
             end
             

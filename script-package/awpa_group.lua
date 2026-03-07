@@ -3,7 +3,7 @@ do
    local instance_members = {}
    awpa.group = make_class({
       superclass  = awpa.scope,
-      constructor = function(self)
+      constructor = function(self, quest_info)
          self.source_xml_node = nil
          
          self.id         = nil
@@ -32,11 +32,14 @@ do
                return
             end
             if node.node_name == "conditions" then
-               awpa.condition.construct_list_from_xml(self, self, node)
+               awpa.condition.construct_list_from_xml(node, self.conditions, {
+                  scope      = self,
+                  quest_info = self.quest_info,
+               })
                return
             end
             if node.node_name == "g" then
-               local item = awpa.group()
+               local item = awpa.group(self.quest_info)
                local list = self.children
                list[#list + 1] = item
                item.parent = self

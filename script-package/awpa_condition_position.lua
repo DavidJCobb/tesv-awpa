@@ -73,16 +73,17 @@ do
             self:_extract_numeric_comparison(element)
          end
       end
-      function instance_members:apply_to_info(info, scope)
-         local cnd = info.conditions:insert()
+      function instance_members:assert_valid()
+         if self.range.origin and self.is_or_linked then
+            error("position range conditions cannot be OR-linked")
+         end
+      end
+      function instance_members:overwrite_condition(cnd)
          self:_set_condition_common(cnd)
          self:_set_condition_run_on(cnd)
          cnd.function_name = "GetPos"
          cnd.parameters[1] = self.axis
          if self.range.origin then
-            if self.is_or_linked then
-               error("position range conditions cannot be OR-linked")
-            end
             cnd.comparison.operator = ">="
             cnd.comparison.operand  = self.range.origin - self.range.half_extent
             

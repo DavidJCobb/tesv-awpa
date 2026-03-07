@@ -98,9 +98,9 @@ do
                local a, b = item:generate_infos(topic)
                for j = 1, #conditions do
                   local c = conditions[j]
-                  c:apply_to_info(a, self)
+                  c:apply_to_info(a)
                   if b then
-                     c:apply_to_info(b, self)
+                     c:apply_to_info(b)
                   end
                end
                topic_helper:append_desired_info(a)

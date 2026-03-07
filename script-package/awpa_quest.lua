@@ -200,6 +200,22 @@ do
          
          self:ensure_actor_selection_aliases()
          
+         do -- dialogue conditions
+            local dst_list = quest.dialogue_conditions
+            for i = #dst_list, 1, -1 do
+               dst_list:remove(i)
+            end
+            local src_list = self.dialogue_conditions
+            for i = 1, #src_list do
+               local src = src_list[i]
+               src:assert_valid()
+               if not src:is_no_op() then
+                  local dst = dst_list:insert()
+                  src:overwrite_condition(dst)
+               end
+            end
+         end
+         
          local branch_main = nil
          do
             local editor_id_main = self.id .. "BranchMain"

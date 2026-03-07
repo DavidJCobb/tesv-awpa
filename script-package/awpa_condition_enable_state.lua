@@ -58,12 +58,12 @@ do
          end
          self.enabled = v
       end
-      function instance_members:apply_to_info(info, scope)
+      function instance_members:assert_valid()
          if not self.form then
             error("no ref")
          end
-         
-         local cnd = info.conditions:insert()
+      end
+      function instance_members:overwrite_condition(cnd)
          self:_set_condition_common(cnd)
          cnd.run_on = self.form
          cnd.function_name = "GetDisabled"

@@ -97,8 +97,21 @@ do
          cnd.is_or_linked = self.is_or_linked or false
       end
       
-      function instance_members:apply_to_info(info, scope)
+      function instance_members:assert_valid()
+      end
+      function instance_members:is_no_op()
+         return false
+      end
+      function instance_members:overwrite_condition(cnd)
          error("pure virtual function call")
+      end
+      function instance_members:apply_to_info(info)
+         self:assert_valid()
+         if self:is_no_op() then
+            return
+         end
+         local cnd = info.conditions:insert()
+         self:overwrite_condition(cnd)
       end
    end
    do -- static members

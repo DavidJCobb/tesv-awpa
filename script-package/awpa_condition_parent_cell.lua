@@ -74,14 +74,16 @@ do
             end
          end
       end
-      function instance_members:apply_to_info(info, scope)
+      function instance_members:is_no_op()
+         self:assert_valid()
          if self.actor then
             if self.run_on == self.actor then
-               return
+               return true
             end
          end
-      
-         local cnd = info.conditions:insert()
+         return false
+      end
+      function instance_members:overwrite_condition(cnd)
          self:_set_condition_common(cnd)
          self:_set_condition_run_on(cnd)
          

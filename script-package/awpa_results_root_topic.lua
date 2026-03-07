@@ -119,7 +119,7 @@ do
             self.forms.top_level_links[i] = link
             utils.replace_condition_list(link, {})
             for i = 1, #tlg.conditions do
-               tlg.conditions[i]:apply_to_info(link, tlg)
+               tlg.conditions[i]:apply_to_info(link)
             end
             
             tlg:generate_children()

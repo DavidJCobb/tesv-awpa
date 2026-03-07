@@ -69,11 +69,12 @@ do
             self:_extract_numeric_comparison(element)
          end
       end
-      function instance_members:apply_to_info(info, scope)
+      function instance_members:assert_valid()
          if not self.form then
             error("no quest")
          end
-         local cnd = info.conditions:insert()
+      end
+      function instance_members:overwrite_condition(cnd)
          self:_set_condition_common(cnd)
          if type(self.done) == "nil" then
             cnd.function_name = "GetStage"

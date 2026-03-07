@@ -43,11 +43,12 @@ do
             error("LCTN not found: " .. v)
          end
       end
-      function instance_members:apply_to_info(info, scope)
+      function instance_members:assert_valid()
          if not self.form then
             error("no location")
          end
-         local cnd = info.conditions:insert()
+      end
+      function instance_members:overwrite_condition(cnd)
          self:_set_condition_common(cnd)
          self:_set_condition_run_on(cnd)
          cnd.function_name = "GetInCurrentLoc"

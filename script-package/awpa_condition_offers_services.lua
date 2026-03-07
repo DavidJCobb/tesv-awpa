@@ -32,10 +32,7 @@ do
             self.equals = (v ~= "false")
          end
       end
-      function instance_members:apply_to_info(info, scope)
-         local quest_form = info.parent_quest
-         
-         local cnd = info.conditions:insert()
+      function instance_members:overwrite_condition(cnd)
          self:_set_condition_common(cnd)
          self:_set_condition_run_on(cnd)
          cnd.function_name = "GetOffersServicesNow"

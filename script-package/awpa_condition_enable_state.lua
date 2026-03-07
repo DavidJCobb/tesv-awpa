@@ -64,7 +64,7 @@ do
          end
          
          local cnd = info.conditions:insert()
-         self:_set_condition_common(info, cnd)
+         self:_set_condition_common(cnd)
          cnd.run_on = self.form
          cnd.function_name = "GetDisabled"
          if self.enabled then

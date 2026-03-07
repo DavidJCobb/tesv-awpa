@@ -82,8 +82,8 @@ do
          end
       
          local cnd = info.conditions:insert()
-         self:_set_condition_common(info, cnd)
-         self:_set_condition_run_on(info, cnd)
+         self:_set_condition_common(cnd)
+         self:_set_condition_run_on(cnd)
          
          if self.actor then
             cnd.function_name = "GetInSameCell"

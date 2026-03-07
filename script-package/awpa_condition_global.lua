@@ -48,7 +48,7 @@ do
             error("no global")
          end
          local cnd = info.conditions:insert()
-         self:_set_condition_common(info, cnd)
+         self:_set_condition_common(cnd)
          cnd.function_name = "GetGlobalValue"
          cnd.parameters[1] = self.form
          cnd.comparison.operator = self.comparison.operator

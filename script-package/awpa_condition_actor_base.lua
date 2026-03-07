@@ -45,16 +45,14 @@ do
          -- self.form can be None, in which case we'll look it up at apply time
       end
       function instance_members:apply_to_info(info, scope)
-         local quest_form = info.parent_quest
          if not self.form then
             if not self.name then
                error("no actor base")
             end
-            local quest_info = awpa.env:lookup_actor(quest_form)
-            if not quest_info then
+            if not self.quest_info then
                error("unable to locate quest definition")
             end
-            local actor_info = quest_info:actor_by_name(self.name)
+            local actor_info = self.quest_info:actor_by_name(self.name)
             if actor_info then
                self.form = actor_info.form
             end
@@ -64,8 +62,8 @@ do
          end
          
          local cnd = info.conditions:insert()
-         self:_set_condition_common(info, cnd)
-         self:_set_condition_run_on(info, cnd)
+         self:_set_condition_common(cnd)
+         self:_set_condition_run_on(cnd)
          cnd.function_name = "GetIsID"
          cnd.parameters[1] = self.form
          if self.equals then

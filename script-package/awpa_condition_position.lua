@@ -75,8 +75,8 @@ do
       end
       function instance_members:apply_to_info(info, scope)
          local cnd = info.conditions:insert()
-         self:_set_condition_common(info, cnd)
-         self:_set_condition_run_on(info, cnd)
+         self:_set_condition_common(cnd)
+         self:_set_condition_run_on(cnd)
          cnd.function_name = "GetPos"
          cnd.parameters[1] = self.axis
          if self.range.origin then
@@ -87,8 +87,8 @@ do
             cnd.comparison.operand  = self.range.origin - self.range.half_extent
             
             cnd = info.conditions:insert()
-            self:_set_condition_common(info, cnd)
-            self:_set_condition_run_on(info, cnd)
+            self:_set_condition_common(cnd)
+            self:_set_condition_run_on(cnd)
             cnd.function_name = "GetPos"
             cnd.parameters[1] = self.axis
             cnd.comparison.operator = "<="

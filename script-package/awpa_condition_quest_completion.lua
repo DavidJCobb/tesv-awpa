@@ -49,7 +49,7 @@ do
             error("no quest")
          end
          local cnd = info.conditions:insert()
-         self:_set_condition_common(info, cnd)
+         self:_set_condition_common(cnd)
          cnd.function_name = "GetQuestCompleted"
          cnd.parameters[1] = self.form
          if self.done then

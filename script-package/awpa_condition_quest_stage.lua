@@ -74,7 +74,7 @@ do
             error("no quest")
          end
          local cnd = info.conditions:insert()
-         self:_set_condition_common(info, cnd)
+         self:_set_condition_common(cnd)
          if type(self.done) == "nil" then
             cnd.function_name = "GetStage"
             cnd.comparison.operator = self.comparison.operator

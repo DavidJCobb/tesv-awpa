@@ -36,8 +36,8 @@ do
          local quest_form = info.parent_quest
          
          local cnd = info.conditions:insert()
-         self:_set_condition_common(info, cnd)
-         self:_set_condition_run_on(info, cnd)
+         self:_set_condition_common(cnd)
+         self:_set_condition_run_on(cnd)
          cnd.function_name = "GetOffersServicesNow"
          if self.equals then
             cnd.comparison.operator = "=="

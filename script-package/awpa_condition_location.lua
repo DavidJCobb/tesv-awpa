@@ -48,8 +48,8 @@ do
             error("no location")
          end
          local cnd = info.conditions:insert()
-         self:_set_condition_common(info, cnd)
-         self:_set_condition_run_on(info, cnd)
+         self:_set_condition_common(cnd)
+         self:_set_condition_run_on(cnd)
          cnd.function_name = "GetInCurrentLoc"
          cnd.parameters[1] = self.form
          if self.equals then

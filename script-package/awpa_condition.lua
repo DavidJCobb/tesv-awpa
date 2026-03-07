@@ -75,24 +75,25 @@ do
          error("pure virtual function call")
       end
       
-      function instance_members:_set_condition_run_on(info, cnd)
+      function instance_members:_set_condition_run_on(cnd)
          if self.run_on == "subject"
          or self.run_on == "player"
          or not self.run_on
          then
             cnd.run_on = self.run_on
          elseif self.run_on == "ActorToFind" then
+            local aliases = self.quest_info.form.aliases
             if self.is_override then
-               cnd.run_on = info.parent_quest.aliases[self.is_override.form.editor_id]
+               cnd.run_on = aliases[self.is_override.form.editor_id]
             else
-               cnd.run_on = info.parent_quest.aliases["ActorToFind"]
+               cnd.run_on = aliases["ActorToFind"]
             end
          else
             error("invalid run-on")
          end
       end
       
-      function instance_members:_set_condition_common(info, cnd)
+      function instance_members:_set_condition_common(cnd)
          cnd.is_or_linked = self.is_or_linked or false
       end
       

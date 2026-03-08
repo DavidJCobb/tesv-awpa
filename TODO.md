@@ -115,13 +115,13 @@ I have a lot of content already set up for Riften, but it needs to be adapted to
 
 | NPC | Notes |
 | :- | :- |
-| Grelka | Should always rudely refuse the player. |
-| Ingun Black-Briar | Should always be willing to help, but if her favor quest is incomplete, should fail to provide useful answers about anyone except her immediate family and the local alchemists. Consider making it so that when asked about beggars, she *always* fails to give a useful answer, and perhaps doesn't even recognize them at all. |
-| Maven Black-Briar | If asked "Can you help me find someone?" while not in TG, should flatly refuse; repeated inquiries should lead to her sending Hired Thugs after the player. If asked while in TG, deflect with an annoyed reply e.g. "Perhaps these questions would be a better use of Brynjolf's time," with slight emphasis on his name. |
-| Maul | If not in TG, should require a bribe. |
-| Mercer Frey | Ensure TG members cannot be asked about him once he is revealed to be a traitor, *or* have them treat it like a stupid question. |
-| Vald | Should not be possible to ask him (enforce via quest dialogue conditions). Should not be possible to ask about him except when he is active per the TG questline. |
-| Vulwulf Snow-Shod | If the player is an Imperial and doesn't have a high relationship rank, should refuse the player with a racist remark. |
+| ✅ Grelka | Should always rudely refuse the player. |
+| ✅ Ingun Black-Briar | Should always be willing to help, but if her favor quest is incomplete, should fail to provide useful answers about anyone except her immediate family and the local alchemists. Consider making it so that when asked about beggars, she *always* fails to give a useful answer, and perhaps doesn't even recognize them at all. |
+| ⬜ Maven Black-Briar | If asked "Can you help me find someone?" while not in TG, should flatly refuse; repeated inquiries should ⬜ lead to her sending Hired Thugs after the player. ✅ If asked while in TG, deflect with an annoyed reply e.g. "Perhaps these questions would be a better use of Brynjolf's time," with slight emphasis on his name. |
+| ✅ Maul | If not in TG, should require a bribe. |
+| ⬜ Mercer Frey | Ensure TG members cannot be asked about him once he is revealed to be a traitor, *or* have them treat it like a stupid question. |
+| ⬜ Vald | Should not be possible to ask him (enforce via quest dialogue conditions). Should not be possible to ask about him except when he is active per the TG questline. |
+| ⬜ Vulwulf Snow-Shod | If the player ✅ is an Imperial and ⬜ doesn't have a high relationship rank, should refuse the player with a racist remark. |
 
 ### Solitude
 

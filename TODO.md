@@ -74,30 +74,37 @@ I have a lot of content already set up for Riften, but it needs to be adapted to
 
 | Location | Exterior | Interior | Interior Rooms | Misc. To-Do Notes |
 | :- | :-: | :-: | :-: | :- |
-| Aerin/Mjoll's House | ⬜ | ⬜ | ⬜ |
-| Bee and Barb | ⬜ | ⬜ | ⬜ |
-| Beggar's Row | ⬜ | ⬜ | ⬜ |
-| Black-Briar Manor | ⬜ | ⬜ | ⬜ | If you ask a Black-Briar for someone's location, while the B.B. is outside and the target is in the manor, they should say "our manor," "the family manor," et cetera. |
-| Black-Briar Meadery | ⬜ | ⬜ | ⬜ |
-| Bolli's House | ⬜ | ⬜ | ⬜ |
-| Elgrim's Elixirs | ⬜ | ⬜ | ⬜ |
-| Haelga's Bunkhouse | ⬜ | ⬜ | ⬜ |
+| Aerin/Mjoll's House | ✅ | ⬜ | ✅ |
+| Bee and Barb | ✅ | ✅ | ✅ |
+| Beggar's Row |   | ⬜ |   | Entrance is in the north canal, so no exterior lines are needed. |
+| Black-Briar Manor | ✅ | ⬜ | ✅ | If you ask a Black-Briar for someone's location, while the B.B. is outside and the target is in the manor, they should say "our manor," "the family manor," et cetera. |
+| Black-Briar Meadery | ⬜ | ⬜ | ✅ |
+| Bolli's House | ✅ | ⬜ |   |
+| Elgrim's Elixirs |   | ⬜ | ✅ | Entrance is in the north canal, so no exterior lines are needed. |
+| Haelga's Bunkhouse | ✅ | ⬜ | ✅ |
 | Hall of the Dead |   | ⬜ | ⬜ |
-| Honeyside | ⬜ | ⬜ | ⬜ |
-| Marise Aravel's House | ⬜ | ⬜ | ⬜ |
-| Mistveil Keep | ⬜ | ⬜ | ⬜ |
-| Mistveil Keep Courtyard | ⬜ |   |   |
+| Honeyside | ✅ | ⬜ | ⬜ |
+| Honorhall Orphanage | ✅ | ⬜ | ⬜ |
+| Marise Aravel's House |   | ⬜ |   | Entrance is in the south(ish) canal, so no exterior lines are needed. |
+| Mistveil Keep | ✅ | ⬜ | 🟨 | Refine conditions on Steward and Housecarl rooms. |
+| Mistveil Keep Courtyard | ✅ |   |   |
 | Mistveil Keep Jail | ⬜ | ⬜ | ⬜ |
-| Pawned Prawn | ⬜ | ⬜ | ⬜ |
+| Pawned Prawn | ✅ | ⬜ | ⬜ |
 | Ragged Flagon |   | ⬜ | ⬜ |
 | Ragged Flagon (Cistern) |   | ⬜ | ⬜ |
-| Ratway | ⬜ | ⬜ | ⬜ |
-| Romlyn Dreth's House | ⬜ | ⬜ | ⬜ |
-| Scorched Hammer | ⬜ | ⬜ | ⬜ |
-| Snow-Shod Manor | ⬜ | ⬜ | ⬜ |
-| Temple of Mara | ⬜ | ⬜ | ⬜ |
-| Valindor's House | ⬜ | ⬜ | ⬜ |
-| Riften Grand Plaza (market) | ⬜ |   |   |
+| Ratway |   | ⬜ | ⬜ | Entrance is in the south canal, so no exterior lines are needed. |
+| Riftweald Manor | ✅ | ⬜ |   |
+| Riftweald Manor (Backyard) | ✅ |   |   |
+| Romlyn Dreth's House |   | ⬜ |   | Entrance is in the south canal, so no exterior lines are needed. |
+| Scorched Hammer | ✅ | ⬜ |   |
+| Snow-Shod Manor | ✅ | ⬜ | ✅ |
+| Talos Shrine | ✅ |   |   |
+| Temple of Mara | ✅ | ⬜ | ⬜ |
+| Valindor's House |   | ⬜ |   | Entrance is in the south(ish) canal, so no exterior lines are needed. |
+| Riften Grand Plaza (market) | ✅ |   |   |
+| General: Canal, North | ✅ |   |   |
+| General: Canal, South | ✅ |   |   |
+| General: Gate, North | ✅ |   |   |
 | Outside the Walls: General | ⬜ | ⬜ | ⬜ |
 | Outside the Walls: Docks | ⬜ |   |   |
 | Outside the Walls: Riften Fishery | ⬜ | ⬜ | ⬜ |

@@ -140,6 +140,8 @@ do
          ["parent-cell"]            = "parent_cell",
          ["quest-completed"]        = "quest_completion",
          ["quest-not-completed"]    = "quest_completion",
+         ["quest-running"]          = "quest_running_state",
+         ["quest-not-running"]      = "quest_running_state",
          ["quest-stage"]            = "quest_stage",
          ["x"]                      = "position",
          ["y"]                      = "position",

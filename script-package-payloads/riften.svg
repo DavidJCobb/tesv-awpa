@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="176000 88500 2000 15000">
+   <view id="riften" viewBox="176000 88500 2000 15000" />
+   <defs>
+      <style>
+path {
+   fill-rule: nonzero;
+}
+      </style>
+      
+      <!--
+      
+         The overall process is as follows:
+         
+          - Use the CK to read the coordinates of a given piece of architecture 
+            (e.g. a building or city wall). Add a `g` element whose transform 
+            is `translate(X Y) rotate(-YAW)`.
+            
+          - Open that piece of architecture's mesh in NifSkope. Right-click on 
+            every block of interest and go to Transform -> Apply.
+            
+             - Axis conventions differ between the game and the web; we can 
+               adjust for this on a single transform by negating the yaw angle 
+               per-shape, and negating the Y-axis for the entire canvas; but 
+               once cumulative transforms come into the picture, this breaks 
+               down. Applying transforms in NifSkope ensures that the only 
+               transforms we need to work with are those of the ref.
+            
+          - Select vertices of interest in NifSkope and use these to create a 
+            <path />. We do not need to exactly match an object's shape; we 
+            only need to come close enough that the city's overall layout is 
+            recognizable on the map.
+      
+      -->
+      
+      <g id="RTNorthGate01">
+         <path d="
+            M -300 199
+            L -332 246
+            L -332 294
+            L -269 358
+            L -268 486
+            L -204 551
+            L  436 551
+            L  500 486
+            L  500 357
+            L  565 294
+            L  564 246
+            L  532 199
+            Z
+            M  532 -124
+            L  564 -170
+            L  564 -218
+            L  500 -282
+            L  500 -411
+            L  436 -475
+            L -204 -475
+            L -269 -411
+            L -269 -282
+            L -333 -218
+            L -332 -170
+            L -300 -124
+            L  365 -124
+            L  364 -194
+            L  492 -194
+            L  490 -124
+            Z
+         " />
+      </g>
+      <g id="RTWall01Inner">
+         <path d="
+            M 797 -960
+            L 231 -960
+            L 231 -890
+            L 797 -890
+            Z
+         " />
+         <path d="
+            M 309 -1031
+            L  41 -1069
+            L  19  -831
+            L 296  -816
+            Z
+         " />
+         <path d="
+            M   54 -819
+            L   20 -411
+            L    2 -311
+            L  -64   96
+            L -115  602
+            L -112  923
+            L   81  923
+            L   63  776
+            L   88  568
+            L  138   74
+            L  175  -73
+            L  246 -591
+            L  259 -808
+            Z
+         "/>
+      </g>
+   </defs>
+   <g id="skyrim" transform="scale(1 -1)">
+   
+   <g id="riften-content">
+      <use href="#RTNorthGate01" transform="translate(174272 -92160) rotate(-90)" />
+      <use href="#RTWall01Inner" transform="translate(172928 -92416) rotate(-90)" />
+      <g name="HaelgasBunkhouse" transform="translate(173440 -93440) rotate(-90)">
+      </g>
+      <g name="MjollAndBolliHouse" transform="translate(175234.0625 -93439.7031) rotate(-90)">
+      </g>
+      <g name="SnowShodHouse" transform="translate(174978.0625 -94563.7031) rotate(-90)">
+      </g>
+      <g name="SnowShodDeck" transform="translate(174978.0625 -94563.7031) rotate(-90)">
+      </g>
+      <g name="Honeyside" transform="translate(172165.0938 -93699.4609) rotate(-90)">
+      </g>
+      <g name="HoneysideDeck" transform="translate(172165.0938 -93699.4609) rotate(-90)">
+      </g>
+      <g name="RTCanalsL01" transform="translate(172672 -94528) rotate(-90)">
+      </g>
+      <g name="RTCanalsL02" transform="translate(173952 -94784) rotate(-90)">
+      </g>
+      <g name="RTCanalsPlazaL01" transform="translate(174208 -95808) rotate(-90)">
+      </g>
+      <g name="RTCanalsBridge01" transform="translate(173952 -94656) rotate(-135)">
+      </g>
+      <g name="RiftwealdManor" transform="translate(175232 -95744) rotate(-90)">
+      </g>
+      <g name="RiftwealdManorDeckFront" transform="translate(174720 -96000) rotate(-60)">
+      </g>
+      <g name="BeeAndBarb" transform="translate(172928 -95488) rotate(-90)">
+      </g>
+      <g name="PawnedPrawn" transform="translate(172032 -95252) rotate(-90)">
+      </g>
+      <g name="BlackBriarMeadery" transform="translate(171776 -96046) rotate(-90)">
+      </g>
+      <g name="BlackBriarMeaderyBack" transform="translate(170752 -96046) rotate(-90)">
+      </g>
+      <g name="RTWalltoDocks01Inner" transform="translate(171656 -96624) rotate(-90)">
+      </g>
+      <g name="ScorchedHammer" transform="translate(171784 -97408) rotate(-90)">
+      </g>
+      <g name="HonorhallOrphanage" transform="translate(171472 -98928) rotate(-90)">
+      </g>
+      <g name="RTOrphanageWall01" transform="translate(171904 -99520) rotate(-90)">
+      </g>
+      <g name="RTSouthGate01" transform="translate(171904 -100352) rotate(-90)">
+      </g>
+      <g name="TempleOfMara" transform="translate(176768 -97024) rotate(-90)">
+      </g>
+      <g name="RTMausoleum01" transform="translate(176844 -97856) rotate(-90)">
+      </g>
+      <g name="RTBlackBriarManor01" transform="translate(175232 -98560) rotate(-90)">
+      </g>
+      <g name="RTKeep01" transform="translate(173184 -101120) rotate(-90)">
+      </g>
+      <g name="RTKeepL01" transform="translate(174208 -100480) rotate(-90)">
+      </g>
+      <g name="RTWall02Inner" transform="translate(175488 -92672) rotate(-90)">
+         <path d="
+            M -228 -736
+            L -208 -378
+            L -137   80
+            L  -93  448
+            L  -97  605
+            L   71  610
+            L  593  702
+            L  543  889
+            L   54  803
+            L -153  814
+            L -164  850
+            L -322  835
+            L -331  680
+            L -294  669
+            L -319  254
+            L -394 -206
+            L -434 -739
+            Z
+         " />
+      </g>
+      <g name="RTWall03Inner" transform="translate(176512 -94208) rotate(-90)">
+         <path d="
+            M  792  796
+            L  219  435
+            L  -69  257
+            L -521   19
+            L -993 -135
+            L -943 -322
+            L -440 -158
+            L  476  345
+            L  906  647
+            Z
+         " />
+      </g>
+      <g name="RTWall04Inner" transform="translate(177536 -96256) rotate(-90)">
+         <path d="
+            M -1142  -377
+            L  -897  -190
+            L  -408    75
+            L   -84   200
+            L   389   235
+            L   893   220
+            L  1208   227
+            L  1208   432
+            L   354   432
+            L    -1   425
+            L  -553   211
+            L  -992    -6
+            L -1256  -228
+            Z
+         " />
+      </g>
+      <g name="RTWall05Inner" transform="translate(177536 -98304) rotate(-90)">
+      </g>
+      <g name="RTWall06Inner" transform="translate(176512 -99840) rotate(-90)">
+      </g>
+      <g name="RTWall07Inner" transform="translate(174464 -99584) rotate(-90)">
+      </g>
+      <g name="RTWall08Inner" transform="translate(172672 -99584) rotate(-90)">
+      </g>
+      <g name="RTWall09Inner" transform="translate(174976 -101632) rotate(-90)">
+         <path d="
+            M -1158  319
+            L  -447  331
+            L    54  257
+            L   535  220
+            L   552 -451
+            L   747 -448
+            L   744  276
+            L   781  287
+            L   765  445
+            L   610  454
+            L   600  417
+            L    86  453
+            L  -307  520
+            L  -843  558
+            L -1151  551
+            Z
+         " />
+      </g>
+      <g name="RTWall10Inner" transform="translate(172928 -101632) rotate(-90)">
+      </g>
+      <g name="RTPlazaWell01" transform="translate(173440 -97024) rotate(-90)">
+         <circle r="201" cx="-3" cy="-45" />
+      </g>
+      
+      <!-- outside the walls: -->
+      <g name="RTFishery01" transform="translate(168713 -96499) rotate(-90)">
+      </g>
+      <g name="RTWarehouse01" transform="translate(169610 -98730) rotate(-90)">
+      </g>
+      
+      <g name="RTStables01" transform="translate(173068 -91864) rotate(-13.1784)">
+      </g>
+      <g name="RTFarmhouse01" transform="translate(172204 -91196) rotate(-68.7553)">
+      </g>
+      
+      <g name="riften-khajiit-caravan-campsite">
+         <g name="NorTentLarge" transform="translate(172437.2813 -89793.5547) rotate(-47.2528)">
+         </g>
+         <circle name="campfire" cx="171936" cy="-90016" r="184" />
+      </g>
+   </g>
+   
+   </g>
+</svg>

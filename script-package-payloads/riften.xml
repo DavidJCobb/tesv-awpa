@@ -1195,7 +1195,7 @@
          <g name="honorhall-orphanage">
             <conditions>
                <x of="subject" lte="173152" />
-               <x of="subject" at="-99264" around="2496" />
+               <y of="subject" at="-99264" around="2496" />
                <z of="subject" gt="height-coordinate-ground" />
             </conditions>
             <g name="speaker-inside-subject-outside">
@@ -1381,7 +1381,7 @@
             -->
             <conditions>
                <x of="subject" gte="176064" />
-               <x of="subject" lte="-98976" />
+               <y of="subject" lte="-98976" />
             </conditions>
             <g name="shrine-tender">
                <conditions>

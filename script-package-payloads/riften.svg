@@ -1,12 +1,242 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="176000 88500 2000 15000">
+<svg xmlns="http://www.w3.org/2000/svg">
+   <view id="all" viewBox="-200000 -200000 400000 400000" 
+preserveAspectRatio="xMinYMin meet" />
+   <view id="dawnstar" viewBox="28000 -112500 17000 15000" />
+   <view id="falkreath" viewBox="-40000 80000 30000 15000" />
+   <view id="morthal" viewBox="-43000 -72000 17000 14000" />
    <view id="riften" viewBox="176000 88500 2000 15000" />
+   <view id="riverwood" viewBox="15000 38000 2000 11000" 
+preserveAspectRatio="xMinYMin meet" />
+   <view id="winterhold" viewBox="105000 -116000 30000 18000" 
+preserveAspectRatio="xMinYMin meet" />
    <defs>
-      <style>
+      <style><![CDATA[
 path {
    fill-rule: nonzero;
 }
-      </style>
+
+.obnd {
+   fill:   rgba(255, 0, 0, 0.2);
+   stroke: red;
+   stroke-width:  1px;
+   vector-effect: non-scaling-stroke;
+   
+   x:      calc(1px * var(--x1));
+   y:      calc(1px * var(--y1));
+   width:  calc(1px * (var(--x2) - var(--x1)));
+   height: calc(1px * (var(--y2) - var(--y1)));
+   
+   &:hover {
+      fill: rgba(255, 0, 0, 0.4);
+   }
+}
+
+.loc {
+   transform:
+      translate(
+         calc(1px * var(--x)),
+         calc(1px * var(--y))
+      )
+      rotate(calc(-1deg * var(--yaw,0)))
+   ;
+   
+   &>.label {
+      --invert-parent: rotate(calc(1deg * var(--yaw,0)));
+   }
+}
+
+.label {
+   display: none;
+   
+   fill:           #000;
+   stroke:         #FFF;
+   stroke-width:   50px;
+   font:           150px sans-serif;
+   paint-order:    stroke fill;
+   pointer-events: none;
+   text-anchor:    middle;
+   vertical-align: middle;
+   
+   transform: var(--invert-parent,) scale(1, -1.0);
+}
+g:has(.obnd:hover)>.label,
+.loc:has(use[href^="#obnd-"]:hover)>.label,
+.label.remote-hover {
+   display: initial;
+}
+
+g:has(path)>.obnd {
+   /*
+      If we've created a more specific shape, then hide the OBND.
+   */
+   display: none !important;
+}
+
+.getpos {
+   --extent-cross: 10000;
+   --extent-main:   5000;
+   
+   --stroke-width: 1px;
+   
+   rect {
+      fill: rgba(255, 224, 0, 0.5);
+   }
+   g.line {
+      transform: translate(calc(1px * var(--x)), calc(1px * var(--y)));
+      line {
+         stroke:        rgba(128, 64, 0, 1.0);
+         stroke-width:  var(--stroke-width);
+         vector-effect: non-scaling-stroke;
+         clip-path:     stroke-box circle(calc(1px * var(--extent-cross)) at center center);
+      }
+   }
+   
+   &.x {
+      rect {
+         y:      calc(1px * (var(--y) - var(--extent-cross)));
+         width:  calc(1px * var(--extent-main));
+         height: calc(2px * var(--extent-cross));
+      }
+      &.lt rect {
+         fill: url(#getpos-grad-x-lt);
+         x:    calc(1px * (var(--x) - var(--extent-main)));
+      }
+      &.gt rect {
+         fill: url(#getpos-grad-x-gt);
+         x:    calc(1px * var(--x));
+      }
+   }
+   &.y {
+      rect {
+         x:      calc(1px * (var(--x) - var(--extent-cross)));
+         width:  calc(2px * var(--extent-cross));
+         height: calc(1px * var(--extent-main));
+      }
+      &.lt rect {
+         fill: url(#getpos-grad-y-lt);
+         y:    calc(1px * (var(--y) - var(--extent-main)));
+      }
+      &.gt rect {
+         fill: url(#getpos-grad-y-gt);
+         y:    calc(1px * var(--y));
+      }
+   }
+   
+   &.box {
+      rect {
+         x:      calc(1px * (var(--x) - var(--x-around)));
+         y:      calc(1px * (var(--y) - var(--y-around)));
+         width:  calc(1px * var(--x-around));
+         height: calc(1px * var(--y-around));
+         
+         stroke:        rgba(128, 64, 0, 1.0);
+         stroke-width:  var(--stroke-width);
+         vector-effect: non-scaling-stroke;
+      }
+   }
+   
+   &.corner {
+      rect {
+         x:      calc(1px * var(--x) + (1px * ((var(--x-mag) - 1) / 2) * var(--extent-main)));
+         y:      calc(1px * var(--y) + (1px * ((var(--y-mag) - 1) / 2) * var(--extent-main)));
+         width:  calc(1px * var(--extent-main));
+         height: calc(1px * var(--extent-main));
+      }
+      .line {
+         clip-path: xywh(0 0 calc(1px * var(--extent-main)) calc(1px * var(--extent-main)));
+         transform:
+            translate(
+               calc(1px * var(--x)),
+               calc(1px * var(--y))
+            )
+            rotate(calc(
+               atan2(var(--y-mag), var(--x-mag)) - 45deg
+            ))
+         ;
+         fill:          none;
+         stroke:        rgb(128, 64, 0);
+         stroke-width:  var(--stroke-width);
+         vector-effect: non-scaling-stroke;
+      }
+   }
+}
+      ]]></style>
+      
+      <linearGradient id="getpos-grad-x-lt" x1="1" x2="0">
+         <stop offset="0%" stop-color="#FFE000FF" />
+         <stop offset="100%" stop-color="#FFE00000" />
+      </linearGradient>
+      <linearGradient id="getpos-grad-x-gt" x1="0" x2="1">
+         <stop offset="0%" stop-color="#FFE000FF" />
+         <stop offset="100%" stop-color="#FFE00000" />
+      </linearGradient>
+      <linearGradient id="getpos-grad-y-lt" x2="0" y1="1" y2="0">
+         <stop offset="0%" stop-color="#FFE000FF" />
+         <stop offset="100%" stop-color="#FFE00000" />
+      </linearGradient>
+      <linearGradient id="getpos-grad-y-gt" x2="0" y1="0" y2="1">
+         <stop offset="0%" stop-color="#FFE000FF" />
+         <stop offset="100%" stop-color="#FFE00000" />
+      </linearGradient>
+      <g id="getpos-x-lt">
+         <g class="getpos x lt">
+            <rect />
+            <g class="line">
+               <line x1="-100000" x2="100000" y1="0" y2="0" />
+            </g>
+         </g>
+      </g>
+      <g id="getpos-x-gt">
+         <g class="getpos x gt">
+            <rect />
+            <g class="line">
+               <line x1="-100000" x2="100000" y1="0" y2="0" />
+            </g>
+         </g>
+      </g>
+      <g id="getpos-y-lt">
+         <g class="getpos y lt">
+            <rect />
+            <g class="line">
+               <line x1="-100000" x2="100000" y1="0" y2="0" />
+            </g>
+         </g>
+      </g>
+      <g id="getpos-y-gt">
+         <g class="getpos y gt">
+            <rect />
+            <g class="line">
+               <line x1="-100000" x2="100000" y1="0" y2="0" />
+            </g>
+         </g>
+      </g>
+      <g id="getpos-box">
+         <g class="getpos box">
+            <rect />
+         </g>
+      </g>
+      <g id="getpos-corner">
+         <g class="getpos corner">
+            <rect />
+            <path class="line" d="M 0 100000 L 0 0 L 100000 0" />
+         </g>
+      </g>
+      
+      <rect id="obnd-Bridge01" class="obnd" style="--x1: -321; --y1: -1477; --x2: 321; --y2: 1481;" />
+      <rect id="obnd-Farmhouse01" class="obnd" style="--x1: -704; --y1: -352; --x2: 704; --y2: 352;" />
+      <rect id="obnd-Farmhouse02" class="obnd" style="--x1: -640; --y1: -556; --x2: 451; --y2: 343;" />
+      <rect id="obnd-Farmhouse03" class="obnd" style="--x1: -576; --y1: -459; --x2: 576; --y2: 459;" />
+      <rect id="obnd-Farmhouse04" class="obnd" style="--x1: -832; --y1: -960; --x2: 843; --y2: 459;" />
+      <rect id="obnd-Farmhouse05" class="obnd" style="--x1: -452; --y1: -512; --x2: 451; --y2: 343;" />
+      <rect id="obnd-Farmhouse05Destroyed02" class="obnd" style="--x1: -406; --y1: -517; --x2: 407; --y2: 343;" />
+      <rect id="obnd-Farmhouse06" class="obnd" style="--x1: -580; --y1: -536; --x2: 579; --y2: 343;" />
+      <rect id="obnd-FarmhouseSmith01" class="obnd" style="--x1: -964; --y1: -556; --x2: 707; --y2: 343;" />
+      <rect id="obnd-FarmInn01" class="obnd" style="--x1: -972; --y1: -836; --x2: 972; --y2: 836;" />
+      <rect id="obnd-FarmLonghouse01" class="obnd" style="--x1: -1100; --y1: -928; --x2: 1100; --y2: 779;" />
+      <rect id="obnd-FarmLumbermill01" class="obnd" style="--x1: -403; --y1: -582; --x2: 418; --y2: 1151;" />
+      <rect id="obnd-WalkwayCWallGate01" class="obnd" style="--x1: -534; --y1: -182; --x2: 662; --y2: 182;" />
+      <rect id="obnd-WalkwayCWallGate02" class="obnd" style="--x1: -534; --y1: -182; --x2: 512; --y2: 182;" />
       
       <!--
       
@@ -102,20 +332,213 @@ path {
    </defs>
    <g id="skyrim" transform="scale(1 -1)">
    
+   <g id="dawnstar-content">
+      <g name="barracks" transform="translate(31257.2617 101600.2266) rotate(-176)">
+         <rect class="obnd"  style="--x1: -640; --y1: -556; --x2: 451; --y2: 313;" />
+         <text class="label" style="--invert-parent: rotate(176deg)">Dawnstar Barracks</text>
+      </g>
+      <g name="blacksmith" transform="translate(30000.1270 103793.5547) rotate(-179.0496)">
+         <rect class="obnd"  style="--x1: -964; --y1: -556; --x2: 707; --y2: 323;" />
+         <text class="label" style="--invert-parent: rotate(179.0496deg)">Rustleif's House (Blacksmith)</text>
+      </g>
+      <g name="inn" transform="translate(29733.3027 101637.8828) rotate(-181.4324)">
+         <rect class="obnd"  style="--x1: -972; --y1: -836; --x2: 972; --y2: 836;" />
+         <text class="label" style="--invert-parent: rotate(181.4324deg)">Windpeak Inn</text>
+      </g>
+      <g name="iron-breaker-mine" transform="translate(36033.9180 103336.6328) rotate(-211.3992)">
+         <rect class="obnd"  style="--x1: -764; --y1: -809; --x2: 1012; --y2: 804;" />
+         <text class="label" style="--invert-parent: rotate(211.3992deg)">Iron-Breaker Mine</text>
+      </g>
+      <g name="mortar-and-pestle" transform="translate(33175.9570 106024.3750) rotate(-89.2804)">
+         <rect class="obnd"  style="--x1: -640; --y1: -556; --x2: 451; --y2: 313;" />
+         <text class="label" style="--invert-parent: rotate(89.2804deg)">The Mortar and Pestle</text>
+      </g>
+      <g name="quicksilver-mine" transform="translate(26899.8008 104912.3594) rotate(-325.9904)">
+         <rect class="obnd"  style="--x1: -764; --y1: -809; --x2: 1012; --y2: 804;" />
+         <text class="label" style="--invert-parent: rotate(325.9904deg)">Quicksilver Mine</text>
+      </g>
+      <g name="residence-beitild" transform="translate(32112.8262 107599.2188) rotate(-33)">
+         <rect class="obnd"  style="--x1: -452; --y1: -512; --x2: 451; --y2: 343;" />
+         <text class="label" style="--invert-parent: rotate(33deg)">Beitild's House</text>
+      </g>
+      <g name="residence-brina" transform="translate(32940.3086 104654.1484) rotate(-178.5577)">
+         <rect class="obnd"  style="--x1: -704; --y1: -459; --x2: 704; --y2: 459;" />
+         <text class="label" style="--invert-parent: rotate(178.5577deg)">Brina's House</text>
+      </g>
+      <g name="residence-fruki" transform="translate(27338.9863 106548.5469) rotate(-246.0000)">
+         <rect class="obnd"  style="--x1: -452; --y1: -512; --x2: 451; --y2: 343;" />
+         <text class="label" style="--invert-parent: rotate(246.0000deg)">Fruki's House</text>
+      </g>
+      <g name="residence-irgnir" transform="translate(35261.4453 105530.0000) rotate(-45.8366)">
+         <rect class="obnd"  style="--x1: -580; --y1: -536; --x2: 579; --y2: 343;" />
+         <text class="label" style="--invert-parent: rotate(45.8366deg)">Irgnir's House</text>
+      </g>
+      <g name="residence-leigelf" transform="translate(31750.2402 104033.9141) rotate(-159.4652)">
+         <rect class="obnd"  style="--x1: -452; --y1: -512; --x2: 451; --y2: 343;" />
+         <text class="label" style="--invert-parent: rotate(159.4652deg)">Leigelf's House</text>
+      </g>
+      <g name="residence-silus" transform="translate(31184.2031 108285.9609) rotate(-35)">
+         <rect class="obnd"  style="--x1: -580; --y1: -536; --x2: 579; --y2: 313;" />
+         <text class="label" style="--invert-parent: rotate(35deg)">Silus Vesuius' House</text>
+      </g>
+      <g name="sea-squall" transform="translate(29490.6602 106683.5625) rotate(-148.9692)">
+         <rect class="obnd"  style="--x1: -419; --y1: -1092; --x2: 419; --y2: 1092;" />
+         <text class="label" style="--invert-parent: rotate(148.9692deg)">The Sea Squall</text>
+      </g>
+      <g name="white-hall" transform="translate(33186.3867 101792.8359) rotate(-161.4324)">
+         <rect class="obnd"  style="--x1: -1100; --y1: -948; --x2: 1100; --y2: 844;" />
+         <text class="label" style="--invert-parent: rotate(161.4324deg)">The White Hall</text>
+      </g>
+   </g>
+   
+   <g id="falkreath-content">
+      <g name="barracks" class="loc" style="--x: -27674.3496; --y: -88197.8828; --yaw: -121;">
+         <use href="#obnd-Farmhouse02" />
+         <text class="label">Falkreath Barracks</text>
+      </g>
+      <g name="blacksmith" class="loc" style="--x: -30596.3242; --y: -88602.5078; --yaw: -175;">
+         <use href="#obnd-FarmhouseSmith01" />
+         <text class="label">Lod's House (Blacksmith)</text>
+      </g>
+      <g name="corpselight" class="loc" style="--x: -31381.8008; --y: -86371.9609; --yaw: 305.5709;">
+         <use href="#obnd-Farmhouse03" />
+         <text class="label">Corpselight Farm</text>
+      </g>
+      <g name="grave-concoctions" class="loc" style="--x: -28906.2871; --y: -88641.1641; --yaw: -210;">
+         <use href="#obnd-Farmhouse03" />
+         <text class="label">Grave Concoctions</text>
+      </g>
+      <g name="gray-pine-goods" class="loc" style="--x: -32168.3008; --y: -89283.5625; --yaw: 148.4324;">
+         <use href="#obnd-Farmhouse02" />
+         <text class="label">Gray Pine Goods</text>
+      </g>
+      <g name="hall-of-the-dead" class="loc" style="--x: -34782.3008; --y: -84131.5938; --yaw: 290.7043;">
+         <use href="#obnd-Farmhouse01" />
+         <text class="label">Hall of the Dead</text>
+      </g>
+      <g name="inn" class="loc" style="--x: -32749.4004; --y: -87478.5703; --yaw: 327;">
+         <use href="#obnd-FarmInn01" />
+         <text class="label">Dead Man's Drink</text>
+      </g>
+      <g name="longhouse" class="loc" style="--x: -28970.2637; --y: -86762.5781; --yaw: -30;">
+         <use href="#obnd-FarmLonghouse01" />
+         <text class="label">Jarl's Longhouse</text>
+      </g>
+      <g name="lumbermill" class="loc" style="--x: -29167.9297; --y: -83739.5859; --yaw: 112.1959;">
+         <use href="#obnd-FarmLumbermill01" />
+         <text class="label">Lumber Mill</text>
+      </g>
+      <g name="residence-dengeir" class="loc" style="--x: -30630.7383; --y: -84849.5859; --yaw: 302.6226;">
+         <use href="#obnd-Farmhouse04" />
+         <text class="label">Dengeir's House</text>
+      </g>
+      
+      <g name="gate-east-main-segment" class="loc" style="--x: -27384.0078; --y: -85020.1719; --yaw: 267.6170;">
+         <use href="#obnd-WalkwayCWallGate01" />
+         <text class="label">East Gate</text>
+      </g>
+      <g name="gate-west-main-segment" class="loc" style="--x: -33417.1406; --y: -89072.9219; --yaw: 235;">
+         <use href="#obnd-WalkwayCWallGate02" />
+         <text class="label">West Gate</text>
+      </g>
+   </g>
+   
+   <g id="markarth-content">
+   </g>
+   
+   <g id="morthal-content">
+      <g name="guardhouse" class="loc" style="--x: -36476.7031; --y: 62927.0977; --yaw: 148;">
+         <use href="#obnd-FarmhouseSmith01" />
+         <text class="label">Thaumaturgist's Hut</text>
+      </g>
+      <g name="inn" class="loc" style="--x: -40618.6406; --y: 65687.3516; --yaw: 330;">
+         <use href="#obnd-FarmInn01" />
+         <text class="label">Moorside Inn</text>
+      </g>
+      <g name="longhouse" class="loc" style="--x: -39517.1563; --y: 62932.9766; --yaw: 240;">
+         <use href="#obnd-FarmLonghouse01" />
+         <text class="label">Highmoon Hall</text>
+      </g>
+      <g name="lumbermill" class="loc" style="--x: -38358.2500; --y: 70407.0703; --yaw: 90;">
+         <use href="#obnd-FarmLumbermill01" />
+         <text class="label">Lumber Mill</text>
+      </g>
+      <g name="residence-alva" class="loc" style="--x: -35051.8672; --y: 64075.9102; --yaw: 120;">
+         <use href="#obnd-Farmhouse06" />
+         <text class="label">Alva's House</text>
+      </g>
+      <g name="residence-falion" class="loc" style="--x: -35126.9648; --y: 66134.9375; --yaw: 90;">
+         <use href="#obnd-FarmhouseSmith01" />
+         <text class="label">Falion's House</text>
+      </g>
+      <g name="residence-jorgen-lami" class="loc" style="--x: -40291.6719; --y: 70699.6641; --yaw: 270;">
+         <use href="#obnd-Farmhouse05" />
+         <text class="label">Jorgen and Lami's House</text>
+      </g>
+      <g name="residence-thonnir" class="loc" style="--x: -38415.7813; --y: 66643.7422; --yaw: 354;">
+         <use href="#obnd-Farmhouse06" />
+         <text class="label">Thonnir's House</text>
+      </g>
+      <g name="thaumaturgist" class="loc" style="--x: -37685.9336; --y: 65005.2930; --yaw: 84;">
+         <use href="#obnd-Farmhouse02" />
+         <text class="label">Thaumaturgist's Hut</text>
+      </g>
+      
+      <g name="burned-house" class="loc" style="--x: -41184.9648; --y: 63829.9531; --yaw: 237;">
+         <use href="#obnd-Farmhouse05Destroyed02" />
+         <text class="label">Burned House</text>
+      </g>
+   </g>
+   
    <g id="riften-content">
+      <use name="canal-north" href="#getpos-y-gt" style="--y: -96960; --x: 177000;" />
+      
+      <use name="mistveil-cortyard" href="#getpos-corner" style="--x: 173192; --y: -100256; --x-mag: 1; --y-mag: -1;" />
+      
+      <use name="haelga-bunkhouse" href="#getpos-box" style="--x: 173664; --x-around: 1728; --y: -94080; --y-around: 1408" />
+      <use id="honeyside" href="#getpos-corner" style="--x: 172768; --y: -94208; --x-mag: -1; --y-mag: 1;" />
+      
+      <use name="pawned-prawn" href="#getpos-box" style="--x: 172160; --x-around: 1280; --y: -94944; --y-around: 1472;" />
+      
+      <use name="residence-mjoll" href="#getpos-corner" style="--x: 174528; --y: -93376; --x-mag: 1; --y-mag: 1;" />
+      <use name="riftweald-manor" href="#getpos-box" style="--x: 174720; --x-around: 896; --y: -95840; --y-around: 1152;" />
+      
+      <use name="talos-shrine" href="#getpos-corner" style="--x: 176064; --y: -98976; --x-mag: 1; --y-mag: -1;" />
+      
+      <use name="residence-black-briar" href="#getpos-box" style="--x: 175008; --x-around: 2112; --y: -99072; --y-around: 2624;" />
+      
+      <use name="temple-of-mara" href="#getpos-box" style="--x: 176512; --x-around: 3456; --y: -97632; --y-around: 2688;" />
+      <use name="market-priority-lo" href="#getpos-box" style="--x: 173632; --x-around: 2688; --y: -96896; --y-around: 2240;" />
+      <use name="mistveil-in-front-of" href="#getpos-box" style="--x: 173568; --x-around: 1024; --y: -98688; --y-around: 1280;" />
+   
       <use href="#RTNorthGate01" transform="translate(174272 -92160) rotate(-90)" />
       <use href="#RTWall01Inner" transform="translate(172928 -92416) rotate(-90)" />
       <g name="HaelgasBunkhouse" transform="translate(173440 -93440) rotate(-90)">
+         <rect class="obnd"  style="--x1: -665; --y1: -658; --x2: 643; --y2: 658;" />
+         <text class="label" style="--invert-parent: rotate(90deg)">Haelga's Bunkhouse</text>
       </g>
       <g name="MjollAndBolliHouse" transform="translate(175234.0625 -93439.7031) rotate(-90)">
+         <rect class="obnd" style="--x1: -593; --y1: -868; --x2: 700; --y2: 641;" />
+         <text class="label" style="--invert-parent: rotate(90deg)">Bolli's House and Aerin/Mjoll's House</text>
       </g>
       <g name="SnowShodHouse" transform="translate(174978.0625 -94563.7031) rotate(-90)">
+         <rect class="obnd" style="--x1: -696; --y1: -665; --x2: 766; --y2: 1103;" />
+         <text class="label" style="--invert-parent: rotate(90deg)">Snow-Shod Manor</text>
       </g>
       <g name="SnowShodDeck" transform="translate(174978.0625 -94563.7031) rotate(-90)">
       </g>
-      <g name="Honeyside" transform="translate(172165.0938 -93699.4609) rotate(-90)">
+      <g>
+         <g name="Honeyside" transform="translate(172165.0938 -93699.4609) rotate(-90)">
+            <rect class="obnd" style="--x1: -1535; --y1: -767; --x2: 553; --y2: 426;" />
+            <text class="label" style="--invert-parent: rotate(90deg)">
+               Honeyside
+               <set attributeName="class" to="label remote-hover" begin="honeyside.mouseover" dur="0.1" fill="freeze" restart="whenNotActive" />
+               <set attributeName="class" to="label" begin="honeyside.mouseout" dur="0.1" fill="freeze" restart="whenNotActive" />
+            </text>
+         </g>
       </g>
       <g name="HoneysideDeck" transform="translate(172165.0938 -93699.4609) rotate(-90)">
+         <rect class="obnd" style="--x1: -523; --y1: -944; --x2: 331; --y2: -260;" />
       </g>
       <g name="RTCanalsL01" transform="translate(172672 -94528) rotate(-90)">
       </g>
@@ -126,36 +549,60 @@ path {
       <g name="RTCanalsBridge01" transform="translate(173952 -94656) rotate(-135)">
       </g>
       <g name="RiftwealdManor" transform="translate(175232 -95744) rotate(-90)">
+         <rect class="obnd" style="--x1: -665; --y1: -816; --x2: 713; --y2: 1031;" />
+         <text class="label" style="--invert-parent: rotate(90deg)">Riftweald Manor</text>
       </g>
       <g name="RiftwealdManorDeckFront" transform="translate(174720 -96000) rotate(-60)">
+         <rect class="obnd" style="--x1: -273; --y1: -193; --x2: 317; --y2: 176;" />
       </g>
       <g name="BeeAndBarb" transform="translate(172928 -95488) rotate(-90)">
+         <rect class="obnd" style="--x1: -728; --y1: -499; --x2: 768; --y2: 623;" />
+         <text class="label" style="--invert-parent: rotate(90deg)">Bee and Barb</text>
       </g>
       <g name="PawnedPrawn" transform="translate(172032 -95252) rotate(-90)">
+         <rect class="obnd" style="--x1: -424; --y1: -354; --x2: 425; --y2: 352;" />
+         <text class="label" style="--invert-parent: rotate(90deg)">Pawned Prawn</text>
       </g>
       <g name="BlackBriarMeadery" transform="translate(171776 -96046) rotate(-90)">
+         <rect class="obnd" style="--x1: -629; --y1: -1713; --x2: 629; --y2: 483;" />
+         <text class="label" style="--invert-parent: rotate(90deg)">Black-Briar Meadery</text>
       </g>
       <g name="BlackBriarMeaderyBack" transform="translate(170752 -96046) rotate(-90)">
+         <rect class="obnd" style="--x1: -629; --y1: -689; --x2: 629; --y2: 903;" />
+         <text class="label" style="--invert-parent: rotate(90deg)">Black-Briar Meadery (Back)</text>
       </g>
       <g name="RTWalltoDocks01Inner" transform="translate(171656 -96624) rotate(-90)">
       </g>
       <g name="ScorchedHammer" transform="translate(171784 -97408) rotate(-90)">
+         <rect class="obnd" style="--x1: -553; --y1: -349; --x2: 606; --y2: 810;" />
+         <text class="label" style="--invert-parent: rotate(90deg)">Scorched Hammer</text>
       </g>
       <g name="HonorhallOrphanage" transform="translate(171472 -98928) rotate(-90)">
+         <rect class="obnd" style="--x1: -543; --y1: -746; --x2: 1363; --y2: 861;" />
+         <text class="label" style="--invert-parent: rotate(90deg)">Honorhall Orphanage</text>
       </g>
       <g name="RTOrphanageWall01" transform="translate(171904 -99520) rotate(-90)">
       </g>
       <g name="RTSouthGate01" transform="translate(171904 -100352) rotate(-90)">
       </g>
       <g name="TempleOfMara" transform="translate(176768 -97024) rotate(-90)">
+         <rect class="obnd" style="--x1: -751; --y1: -532; --x2: 799; --y2: 622;" />
+         <text class="label" style="--invert-parent: rotate(90deg)">Temple of Mara</text>
       </g>
       <g name="RTMausoleum01" transform="translate(176844 -97856) rotate(-90)">
+         <rect class="obnd" style="--x1: -314; --y1: -223; --x2: 287; --y2: 223;" />
+         <text class="label" style="--invert-parent: rotate(90deg)">Thieves Guild hidden entrance</text>
       </g>
       <g name="RTBlackBriarManor01" transform="translate(175232 -98560) rotate(-90)">
+         <rect class="obnd" style="--x1: -948; --y1: -1227; --x2: 584; --y2: 1440;" />
+         <rect class="obnd" style="--x1: -187; --y1: -282; --x2: 76; --y2: 181;" />
+         <text class="label" style="--invert-parent: rotate(90deg)">Black-Briar Manor</text>
       </g>
       <g name="RTKeep01" transform="translate(173184 -101120) rotate(-90)">
+         <rect class="obnd" style="--x1: -903; --y1: -456; --x2: 1174; --y2: 1716;" />
       </g>
       <g name="RTKeepL01" transform="translate(174208 -100480) rotate(-90)">
+         <rect class="obnd" style="--x1: -179; --y1: -437; --x2: 370; --y2: 1116;" />
       </g>
       <g name="RTWall02Inner" transform="translate(175488 -92672) rotate(-90)">
          <path d="
@@ -247,19 +694,111 @@ path {
       
       <!-- outside the walls: -->
       <g name="RTFishery01" transform="translate(168713 -96499) rotate(-90)">
+         <rect class="obnd" style="--x1: -817; --y1: -501; --x2: 815; --y2: 513;" />
+         <text class="label" style="--invert-parent: rotate(90deg)">Riften Fishery</text>
       </g>
       <g name="RTWarehouse01" transform="translate(169610 -98730) rotate(-90)">
+         <rect class="obnd" style="--x1: -861; --y1: -563; --x2: 558; --y2: 855;" />
+         <text class="label" style="--invert-parent: rotate(90deg)">Riften Warehouse</text>
       </g>
       
       <g name="RTStables01" transform="translate(173068 -91864) rotate(-13.1784)">
+         <rect class="obnd" style="--x1: -479; --y1: -342; --x2: 473; --y2: 344;" />
+         <text class="label" style="--invert-parent: rotate(13.1784deg)">Riften Stables</text>
       </g>
       <g name="RTFarmhouse01" transform="translate(172204 -91196) rotate(-68.7553)">
+         <rect class="obnd" style="--x1: -434; --y1: -343; --x2: 425; --y2: 343;" />
       </g>
       
       <g name="riften-khajiit-caravan-campsite">
          <g name="NorTentLarge" transform="translate(172437.2813 -89793.5547) rotate(-47.2528)">
          </g>
          <circle name="campfire" cx="171936" cy="-90016" r="184" />
+      </g>
+   </g>
+   
+   <g id="riverwood-content">
+      <g name="blacksmith" class="loc" style="--x: 21002.3906; --y: -44734.1680; --yaw: 315;">
+         <use href="#obnd-FarmhouseSmith01" />
+         <text class="label">Alvor's House (Blacksmith)</text>
+      </g>
+      <g name="inn" class="loc" style="--x: 23863.5645; --y: -44502.5508; --yaw: 132;">
+         <use href="#obnd-FarmInn01" />
+         <text class="label">Sleeping Giant Inn</text>
+      </g>
+      <g name="lumbermill" class="loc" style="--x: 19277.2676; --y: -44311.2500; --yaw: 45.2412;">
+         <use href="#obnd-FarmLumbermill01" />
+         <text class="label">Lumber Mill</text>
+      </g>
+      <g name="residence-faendal" class="loc" style="--x: 21640.2930; --y: -48385.4844; --yaw: 185.1621;">
+         <use href="#obnd-Farmhouse05" />
+         <text class="label">Faendal's House</text>
+      </g>
+      <g name="residence-gerdur" class="loc" style="--x: 23563.5742; --y: -47612.2695; --yaw: 133;">
+         <use href="#obnd-Farmhouse04" />
+         <text class="label">Gerdur's House</text>
+      </g>
+      <g name="residence-sven" class="loc" style="--x: 20906.0098; --y: -46558.1602; --yaw: 151.1352;">
+         <use href="#obnd-Farmhouse06" />
+         <text class="label">Sven's House</text>
+      </g>
+      <g name="riverwood-trader" class="loc" style="--x: 22176.3594; --y: -45866.6797; --yaw: 135;">
+         <use href="#obnd-Farmhouse04" />
+         <text class="label">Riverwood Trader</text>
+      </g>
+      
+      <g class="loc" style="--x: 24282.6563; --y: -39516.7305; --yaw: 149.4594;">
+         <use href="#obnd-Bridge01" />
+         <text class="label">North Bridge</text>
+      </g>
+   </g>
+   
+   <g id="solitude-content">
+   </g>
+   
+   <g id="whiterun-content">
+   </g>
+   
+   <g id="windhelm-content">
+   </g>
+   
+   <g id="winterhold-content">
+      <g name="inn" class="loc" style="--x: 110534.5625; --y: 102141.4688; --yaw: 68;">
+         <use href="#obnd-FarmInn01" />
+         <text class="label">The Frozen Hearth</text>
+      </g>
+      <g name="longhouse" class="loc" style="--x: 108893.0156; --y: 100651.5938; --yaw: 247;">
+         <use href="#obnd-FarmLonghouse01" />
+         <text class="label">Jarl's Longhouse</text>
+      </g>
+      <g name="residence-kraldar" class="loc" style="--x: 108494.1875; --y: 104247.0781; --yaw: 287.7846;">
+         <use href="#obnd-Farmhouse01" />
+         <text class="label">Kraldar's House</text>
+      </g>
+      <g name="residence-ranmir" class="loc" style="--x: 108269.7656; --y: 102967.4688; --yaw: 262;">
+         <use href="#obnd-Farmhouse02" />
+         <text class="label">Ranmir's House</text>
+      </g>
+      
+      <g name="bridge-to-college" class="loc" style="--x: 111813.2578; --y: 107077.2578; --yaw: 105;">
+         <rect class="obnd" style="--x1: -412; --y1: -1926; --x2: 2890; --y2: 330;" />
+         <text class="label">Bridge to College</text>
+      </g>
+      <g name="bridge-to-college" class="loc" style="--x: 116384.0000; --y: 111648.0000; --yaw: 45;">
+         <rect class="obnd" style="--x1: -759; --y1: -6080; --x2: 759; --y2: -1151;" />
+         <text class="label">Bridge to College</text>
+      </g>
+      <g name="college-tower-primary" class="loc" style="--x: 116384; --y: 111648; --yaw: 45;">
+         <rect class="obnd" style="--x1: -1354; --y1: 767; --x2: 1354; --y2: 3882;" />
+         <text class="label">College Primary Tower</text>
+      </g>
+      <g name="college-tower-south" class="loc" style="--x: 116384; --y: 111648; --yaw: 0;">
+         <rect class="obnd" style="--x1: -607; --y1: -3392; --x2: 607; --y2: -1247;" />
+         <text class="label">College Hall of Countenance</text>
+      </g>
+      <g name="college-tower-west" class="loc" style="--x: 116384; --y: 111648; --yaw: 90;">
+         <rect class="obnd" style="--x1: -607; --y1: -3392; --x2: 607; --y2: -1247;" />
+         <text class="label">College Hall of Attainment</text>
       </g>
    </g>
    

@@ -4,6 +4,12 @@
 preserveAspectRatio="xMinYMin meet" />
    <view id="dawnstar" viewBox="28000 -112500 17000 15000" />
    <view id="falkreath" viewBox="-40000 80000 30000 15000" />
+   <view id="karthwasten" viewBox="-140000 -45000 30000 8000" 
+preserveAspectRatio="xMinYMin meet" />
+   <view id="kynesgrove" viewBox="130000 -17500 25000 10000" 
+preserveAspectRatio="xMinYMin meet" />
+   <view id="markarth" viewBox="-180000 -11000 30000 15000" 
+preserveAspectRatio="xMinYMin meet" />
    <view id="morthal" viewBox="-43000 -72000 17000 14000" />
    <view id="riften" viewBox="176000 88500 2000 15000" />
    <view id="riverwood" viewBox="15000 38000 2000 11000" 
@@ -17,8 +23,8 @@ path {
 }
 
 .obnd {
-   fill:   rgba(255, 0, 0, 0.2);
-   stroke: red;
+   fill:          rgba(255, 0, 0, 0.2);
+   stroke:        red;
    stroke-width:  1px;
    vector-effect: non-scaling-stroke;
    
@@ -32,6 +38,21 @@ path {
    }
 }
 
+.point {
+   r:             100px;
+   fill:          rgba(224, 160, 160, 0.5);
+   stroke:        rgb(224, 64, 64);
+   stroke-width:  1px;
+   vector-effect: non-scaling-stroke;
+}
+
+.walkway:is(path, line) {
+   fill:          none;
+   stroke:        #80808080;
+   stroke-width:  2px;
+   vector-effect: non-scaling-stroke;
+}
+
 .loc {
    transform:
       translate(
@@ -39,6 +60,14 @@ path {
          calc(1px * var(--y))
       )
       rotate(calc(-1deg * var(--yaw,0)))
+   ;
+   
+   --invert-transform:
+      rotate(calc(1deg * var(--yaw,0)))
+      translate(
+         calc(-1px * var(--x)),
+         calc(-1px * var(--y))
+      )
    ;
    
    &>.label {
@@ -60,7 +89,7 @@ path {
    
    transform: var(--invert-parent,) scale(1, -1.0);
 }
-g:has(.obnd:hover)>.label,
+g:has(.obnd:hover, .point:hover)>.label,
 .loc:has(use[href^="#obnd-"]:hover)>.label,
 .label.remote-hover {
    display: initial;
@@ -224,6 +253,7 @@ g:has(path)>.obnd {
       </g>
       
       <rect id="obnd-Bridge01" class="obnd" style="--x1: -321; --y1: -1477; --x2: 321; --y2: 1481;" />
+      <rect id="obnd-DragonMoundBase" class="obnd" style="--x1: -1480; --y1: -1517; --x2: 1519; --y2: 1482;" />
       <rect id="obnd-Farmhouse01" class="obnd" style="--x1: -704; --y1: -352; --x2: 704; --y2: 352;" />
       <rect id="obnd-Farmhouse02" class="obnd" style="--x1: -640; --y1: -556; --x2: 451; --y2: 343;" />
       <rect id="obnd-Farmhouse03" class="obnd" style="--x1: -576; --y1: -459; --x2: 576; --y2: 459;" />
@@ -235,6 +265,8 @@ g:has(path)>.obnd {
       <rect id="obnd-FarmInn01" class="obnd" style="--x1: -972; --y1: -836; --x2: 972; --y2: 836;" />
       <rect id="obnd-FarmLonghouse01" class="obnd" style="--x1: -1100; --y1: -928; --x2: 1100; --y2: 779;" />
       <rect id="obnd-FarmLumbermill01" class="obnd" style="--x1: -403; --y1: -582; --x2: 418; --y2: 1151;" />
+      <rect id="obnd-RockCaveEntrance01" class="obnd" style="--x1: -428; --y1: -800; --x2: 974; --y2: 727;" />
+      <rect id="obnd-RockCaveMineEntrance" class="obnd" style="--x1: -856; --y1: -188; --x2: 740; --y2: 1086;" />
       <rect id="obnd-WalkwayCWallGate01" class="obnd" style="--x1: -534; --y1: -182; --x2: 662; --y2: 182;" />
       <rect id="obnd-WalkwayCWallGate02" class="obnd" style="--x1: -534; --y1: -182; --x2: 512; --y2: 182;" />
       
@@ -443,7 +475,151 @@ g:has(path)>.obnd {
       </g>
    </g>
    
+   <g id="karthwasten-content">
+      <g class="loc" style="--x: -134800.6406; --y: 38894.2734; --yaw: 268.8986;">
+         <use href="#obnd-Farmhouse01" />
+         <text class="label">Miner's Barracks</text>
+      </g>
+      <g class="loc" style="--x: -133992.6406; --y: 37280.0898; --yaw: 201.0039;">
+         <use href="#obnd-Farmhouse02" />
+         <text class="label">Enmon's House</text>
+      </g>
+      <g class="loc" style="--x: -131872.2656; --y: 37684.3008; --yaw: 160;">
+         <use href="#obnd-FarmhouseSmith01" />
+         <text class="label">Karthwasten Hall</text>
+      </g>
+      <g class="loc" style="--x: -133552.7344; --y: 43132.6758; --yaw: 47.2692;">
+         <use href="#obnd-RockCaveEntrance01" />
+         <text class="label">Cave</text>
+      </g>
+      <g class="loc" style="--x: -135643.1094; --y: 40518.2969; --yaw: 298.4078;">
+         <use href="#obnd-RockCaveMineEntrance" />
+         <text class="label">Mine</text>
+      </g>
+   </g>
+   
+   <g id="kynesgrove-content">
+      <g name="inn" class="loc" style="--x: 136358.9531; --y: 11202.0830; --yaw: 90.7469;">
+         <use href="#obnd-FarmInn01" />
+         <text class="label">Braidwood Inn</text>
+      </g>
+      <g class="loc" style="--x: 138048.6563; --y: 13965.3936; --yaw: 42.9718;">
+         <use href="#obnd-RockCaveMineEntrance" />
+         <text class="label">Steamscorch Mine</text>
+      </g>
+      <g class="loc" style="--x: 134765.0313; --y: 12937.0488; --yaw: 0;">
+         <circle class="point" />
+         <text class="label">KynesgroveCampMARKER</text>
+      </g>
+      <g class="loc" style="--x: 146095.0781; --y: 13652.4727; --yaw: 357.9718;">
+         <use href="#obnd-DragonMoundBase" />
+         <text class="label">Dragon Mound</text>
+      </g>
+   </g>
+   
    <g id="markarth-content">
+      <g class="loc" style="--x: -172864; --y: 5376; --yaw: 0.0001;">
+         <rect class="obnd" style="--x1: -1113; --y1: -2013; --x2: 1194; --y2: 2569;" />
+         <text class="label">Main Gate</text>
+      </g>
+      <g class="loc" style="--x: -170911.9375; --y: 7111.9414; --yaw: 135;">
+         <rect class="obnd" style="--x1: -275; --y1: -224; --x2: 277; --y2: 224;" />
+         <text class="label">Markarth Stables</text>
+      </g>
+      
+      <g class="loc" style="--x: -175705.0781; --y: 6175.4106; --z: -3175.0176; --yaw: 360;">
+         <circle class="point" />
+         <text class="label">Abandoned House</text>
+      </g>
+      <g class="loc" style="--x: -174684; --y: 6107.7124; --z: -3283.1919; --yaw: 330.1890;">
+         <circle class="point" />
+         <text class="label">Arnleif and Sons Trading Company</text>
+      </g>
+      <g class="loc" style="--x: -174400; --y: 1280; --z: -3712; --yaw: 0.0001;">
+         <rect class="obnd" style="--x1: -811; --y1: -566; --x2: 690; --y2: 505;" />
+         <text class="label">Cidhna Mine Main Entrance</text>
+      </g>
+      <g class="loc" style="--x: -177643.7188; --y: 522.4930; --z: -2198.6799; --yaw: 197;">
+         <circle class="point" />
+         <text class="label">Cidhna Mine Secret Exit</text>
+      </g>
+      <g class="loc" style="--x: -173392; --y: 2368; --z: -3895.0232; --yaw: 355;">
+         <circle class="point" />
+         <text class="label">Cidhna Mine Smelter</text>
+      </g>
+      <g class="loc" style="--x: -176320; --y: 2432; --z: -3328; --yaw: 0;">
+         <rect class="obnd" style="--x1: -202; --y1: -237; --x2: 508; --y2: 278;" />
+         <text class="label">Ghorza's Forge</text>
+      </g>
+      <g class="loc" style="--x: -174272; --y: 4224; --z: -896; --yaw: 0;">
+         <rect class="obnd" style="--x1: -414; --y1: -372; --x2: 363; --y2: 587;" />
+         <text class="label">Guard Tower</text>
+      </g>
+      <g class="loc" style="--x: -176274.9688; --y: 889.7735; --z: -3002.9980; --yaw: 202;">
+         <circle class="point" />
+         <text class="label">The Hag's Cure</text>
+      </g>
+      <g class="loc" style="--x: -177776.5000; --y: 1580.8185; --z: -2296.8518; --yaw: 325;">
+         <circle class="point" />
+         <text class="label">Hall of the Dead</text>
+      </g>
+      <g class="loc" style="--x: -174742.4375; --y: 3724.7949; --z: -3983.4333; --yaw: 330.0004;">
+         <circle class="point" />
+         <text class="label">Markarth Warrens</text>
+      </g>
+      <g class="loc" style="--x: -174601.9844; --y: 4889.9355; --z: -3250.2163; --yaw: 127.5;">
+         <circle class="point" />
+         <text class="label">Silver-Blood Inn</text>
+      </g>
+      <g class="loc" style="--x: -177101.5000; --y: 6500.1040; --z: -2687.4702; --yaw: 251.3270;">
+         <circle class="point" />
+         <text class="label">Treasury House</text>
+      </g>
+      <g class="loc" style="--x: -179141.4531; --y: 3286.3093; --z: -2170.8215; --yaw: 255.0005;">
+         <circle class="point" />
+         <text class="label">Understone Keep</text>
+      </g>
+      <g class="loc" style="--x: -174966.9688; --y: 7492.3828; --z: -1891.9020; --yaw: 310.8000;">
+         <circle class="point" />
+         <text class="label">Vlindrel Hall</text>
+      </g>
+      <g class="loc" style="--x: -178928; --y: 3384; --z: -633.2000; --yaw: 255;">
+         <circle class="point" />
+         <text class="label">Wizard's Quarters 02</text>
+      </g>
+      <g class="loc" style="--x: -178427; --y: 1910; --z: -169.8583; --yaw: 165;">
+         <circle class="point" />
+         <text class="label">Wizard's Quarters 03</text>
+      </g>
+      
+      <g class="loc" style="--x: -175976.0156; --y: 6537.2148; --z: -2742.9221; --yaw: 345.0001;">
+         <circle class="point" />
+         <text class="label">Endon's House</text>
+      </g>
+      <g class="loc" style="--x: -175682.4531; --y: 7041.6318; --z: -1908; --yaw: 341;">
+         <circle class="point" />
+         <text class="label">Nepos' House</text>
+      </g>
+      <g class="loc" style="--x: -173160; --y: 1691; --z: -3454; --yaw: 162;">
+         <circle class="point" />
+         <text class="label">Smelter Overseer's House</text>
+      </g>
+      
+      <path name="walkways" class="walkway" d="
+         M -177440 1152
+         L -176864 1824
+         L -177184 2704
+         L -176704 3200
+         L -176272 3440
+         L -175664 3632
+         L -174848 4416
+         L -174544 4864
+         L -174384 4608
+         
+         M -177184 2704
+         
+         M -176272 3440
+      " />
    </g>
    
    <g id="morthal-content">

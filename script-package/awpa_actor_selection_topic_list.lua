@@ -163,6 +163,12 @@ do
                comparison    = { operator = "==", operand = 0 }
             }
          })
+         do
+            local list = actor_info.overrides.begin_asking_about.conditions
+            for i = 1, #list do
+               list[i]:apply_to_info(info)
+            end
+         end
          utils.replace_info_link_to_list(info, {
             self.quest_info:get_or_create_result_topic()
          })

@@ -70,7 +70,7 @@ do
             if node.node_name == "begin-asking-about" then
                local over = self.overrides.begin_asking_about
                node:for_each_child_element(function(node)
-                  if node.node_name == "conditions" then
+                  if node.node_name == "filter-conditions" then
                      awpa.condition.construct_list_from_xml(node, over.conditions, {
                         scope      = self.quest_info,
                         quest_info = self.quest_info,

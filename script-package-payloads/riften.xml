@@ -112,32 +112,27 @@
             <begin-asking-about>
                <filter-conditions>
                   <!--
-                     TODO: only after he moves to Riften
+                     TODO: only after (and if!) he moves to Riften
                   -->
                </filter-conditions>
             </begin-asking-about>
          </actor>
          <actor editor-id="Bersi">
-            <begin-asking-to>
-               <filter-conditions>
-                  <!--
-                     TODO: don't allow asking this actor while harassing 
-                     their shop/business for the TG, nor in the immediate 
-                     aftermath of having done so
-                  -->
-               </filter-conditions>
-            </begin-asking-to>
+            <!--
+               TODO: don't allow asking this actor while harassing 
+               their shop/business for the TG, nor in the immediate 
+               aftermath of having done so. check via quest dialogue 
+               conditions; use a helper script if necessary
+            -->
          </actor>
          <actor editor-id="Bolli" />
          <actor editor-id="BrandShei">
-            <begin-asking-to>
-               <filter-conditions>
-                  <!--
-                     TODO: don't allow asking this actor while the player 
-                     is busy framing him, or while he's in jail
-                  -->
-               </filter-conditions>
-            </begin-asking-to>
+            <!--
+               TODO: don't allow asking this actor while the player 
+               is busy framing him, or while he's in jail Enforce this 
+               via dialogue conditions on the quest, with a helper 
+               script if necessary.
+            -->
          </actor>
          <actor editor-id="Briehl" />
          <actor editor-id="Brynjolf">
@@ -159,15 +154,12 @@
          <actor editor-id="Edda" />
          <actor editor-id="Elgrim" />
          <actor editor-id="Esbern">
-            <begin-asking-to>
-               <filter-conditions>
-                  <!--
-                     TODO: Only allow asking Esbern if encountering his locked 
-                     door in the Ratway Vaults prior to searching for him in 
-                     the main quest. Always have him refuse and shoo you away.
-                  -->
-               </filter-conditions>
-            </begin-asking-to>
+            <!--
+               TODO: don't allow asking this actor while the player 
+               is busy framing him, or while he's in jail Enforce this 
+               via dialogue conditions on the quest, with a helper 
+               script if necessary.
+            -->
          </actor>
          <actor editor-id="EtienneRarnis">
             <!--
@@ -206,6 +198,15 @@
                   <line>Find someone else.</line>
                </topic>
             </begin-asking-to>
+         </actor>
+         <actor editor-id="Fastred">
+            <begin-asking-about>
+               <filter-conditions>
+                  <!--
+                     TODO: only after (and if!) she moves to Riften
+                  -->
+               </filter-conditions>
+            </begin-asking-about>
          </actor>
          <actor editor-id="Francois" />
          <actor editor-id="FromDeepestFathoms" name="From-Deepest-Fathoms">
@@ -252,15 +253,12 @@
          <actor editor-id="Grelod">
          </actor>
          <actor editor-id="Haelga">
-            <begin-asking-to>
-               <filter-conditions>
-                  <!--
-                     TODO: don't allow asking this actor while harassing 
-                     their shop/business for the TG, nor in the immediate 
-                     aftermath of having done so
-                  -->
-               </filter-conditions>
-            </begin-asking-to>
+            <!--
+               TODO: don't allow asking this actor while harassing 
+               their shop/business for the TG, nor in the immediate 
+               aftermath of having done so. check via quest dialogue 
+               conditions; use a helper script if necessary
+            -->
          </actor>
          <actor editor-id="Hafjorg" />
          <actor editor-id="Harrald" />
@@ -350,15 +348,12 @@
             </begin-asking-about>
          </actor>
          <actor editor-id="Keerava">
-            <begin-asking-to>
-               <filter-conditions>
-                  <!--
-                     TODO: don't allow asking this actor while harassing 
-                     their shop/business for the TG, nor in the immediate 
-                     aftermath of having done so
-                  -->
-               </filter-conditions>
-            </begin-asking-to>
+            <!--
+               TODO: don't allow asking this actor while harassing 
+               their shop/business for the TG, nor in the immediate 
+               aftermath of having done so. check via quest dialogue 
+               conditions; use a helper script if necessary
+            -->
          </actor>
          <actor editor-id="Laila">
             <invoke name="actor-exiled-by-imperials" />
@@ -505,17 +500,12 @@
             </begin-asking-about>
          </actor>
          <actor editor-id="TalenJei" name="Talen-Jei">
-            <begin-asking-to>
-               <conditions>
-                  <!--
-                     TODO: don't allow asking this actor while harassing 
-                     their shop/business for the TG, nor in the immediate 
-                     aftermath of having done so
-                     
-                     (same conditions as Keerava)
-                  -->
-               </conditions>
-            </begin-asking-to>
+            <!--
+               TODO: don't allow asking this actor while harassing 
+               their shop/business for the TG, nor in the immediate 
+               aftermath of having done so. check via quest dialogue 
+               conditions; use a helper script if necessary
+            -->
          </actor>
          <actor editor-id="Threki" />
          <actor editor-id="Thrynn">

@@ -87,10 +87,19 @@ path {
    text-anchor:    middle;
    vertical-align: middle;
    
-   transform: var(--invert-parent,) scale(1, -1.0);
+   transform: var(--invert-parent, translate(calc(var(--x)*1px),calc(var(--y)*1px))) scale(1, -1);
 }
-g:has(.obnd:hover, .point:hover)>.label,
-.loc:has(use[href^="#obnd-"]:hover)>.label,
+:is(
+   g:has(.obnd:hover, .point:hover),
+   .loc:has(use[href^="#obnd-"]:hover)
+) {
+   &>.label {
+      display: initial;
+   }
+   &:has(.label.for-obnd)>.label:not(.for-obnd) {
+      display: none;
+   }
+}
 .label.remote-hover {
    display: initial;
 }
@@ -102,19 +111,55 @@ g:has(path)>.obnd {
    display: none !important;
 }
 
+circle.getdistance {
+   --stroke-width: 1px;
+   
+   fill:          rgba(255, 224, 0, 0.5);
+   stroke:        rgba(128, 64, 0, 1.0);
+   stroke-width:  var(--stroke-width);
+   vector-effect: non-scaling-stroke;
+}
 .getpos {
    --extent-cross: 10000;
    --extent-main:   5000;
    
    --stroke-width: 1px;
    
+   --fill: rgba(255, 224, 0, 0.5);
+   --line: rgba(128,  64, 0, 1.0);
+   &.fallback {
+      --fill: rgba(0, 224, 255, 0.5);
+      --line: rgba(0,  64, 128, 1.0);
+   }
+   &:hover {
+      --fill: rgba(255, 224, 0, 0.75);
+   }
+   
+   &:is(path, rect) {
+      fill:          var(--fill);
+      stroke:        var(--line);
+      stroke-width:  var(--stroke-width);
+      vector-effect: non-scaling-stroke;
+   }
+   &.minmax {
+      --x-min: var(--x-gte, var(--x-gt));
+      --x-max: var(--x-lte, var(--x-lt));
+      --y-min: var(--y-gte, var(--y-gt));
+      --y-max: var(--y-lte, var(--y-lt));
+      
+      x:      calc(var(--x-min) * 1px);
+      y:      calc(var(--y-min) * 1px);
+      width:  calc((var(--x-max) - var(--x-min)) * 1px);
+      height: calc((var(--y-max) - var(--y-min)) * 1px);
+   }
+   
    rect {
-      fill: rgba(255, 224, 0, 0.5);
+      fill: var(--fill);
    }
    g.line {
       transform: translate(calc(1px * var(--x)), calc(1px * var(--y)));
       line {
-         stroke:        rgba(128, 64, 0, 1.0);
+         stroke:        var(--line);
          stroke-width:  var(--stroke-width);
          vector-effect: non-scaling-stroke;
          clip-path:     stroke-box circle(calc(1px * var(--extent-cross)) at center center);
@@ -159,7 +204,7 @@ g:has(path)>.obnd {
          width:  calc(1px * var(--x-around));
          height: calc(1px * var(--y-around));
          
-         stroke:        rgba(128, 64, 0, 1.0);
+         stroke:        var(--line);
          stroke-width:  var(--stroke-width);
          vector-effect: non-scaling-stroke;
       }
@@ -184,7 +229,7 @@ g:has(path)>.obnd {
             ))
          ;
          fill:          none;
-         stroke:        rgb(128, 64, 0);
+         stroke:        var(--line);
          stroke-width:  var(--stroke-width);
          vector-effect: non-scaling-stroke;
       }
@@ -667,51 +712,107 @@ g:has(path)>.obnd {
    </g>
    
    <g id="riften-content">
-      <use name="canal-north" href="#getpos-y-gt" style="--y: -96960; --x: 177000;" />
-      
-      <use name="mistveil-cortyard" href="#getpos-corner" style="--x: 173192; --y: -100256; --x-mag: 1; --y-mag: -1;" />
-      
-      <use name="haelga-bunkhouse" href="#getpos-box" style="--x: 173664; --x-around: 1728; --y: -94080; --y-around: 1408" />
-      <use id="honeyside" href="#getpos-corner" style="--x: 172768; --y: -94208; --x-mag: -1; --y-mag: 1;" />
-      
-      <use name="pawned-prawn" href="#getpos-box" style="--x: 172160; --x-around: 1280; --y: -94944; --y-around: 1472;" />
-      
-      <use name="residence-mjoll" href="#getpos-corner" style="--x: 174528; --y: -93376; --x-mag: 1; --y-mag: 1;" />
-      <use name="riftweald-manor" href="#getpos-box" style="--x: 174720; --x-around: 896; --y: -95840; --y-around: 1152;" />
-      
-      <use name="talos-shrine" href="#getpos-corner" style="--x: 176064; --y: -98976; --x-mag: 1; --y-mag: -1;" />
-      
-      <use name="residence-black-briar" href="#getpos-box" style="--x: 175008; --x-around: 2112; --y: -99072; --y-around: 2624;" />
-      
-      <use name="temple-of-mara" href="#getpos-box" style="--x: 176512; --x-around: 3456; --y: -97632; --y-around: 2688;" />
-      <use name="market-priority-lo" href="#getpos-box" style="--x: 173632; --x-around: 2688; --y: -96896; --y-around: 2240;" />
-      <use name="mistveil-in-front-of" href="#getpos-box" style="--x: 173568; --x-around: 1024; --y: -98688; --y-around: 1280;" />
+      <g class="conditionals">
+         <!--
+            Container element for all of our dialogue conditions.
+         -->
+         <use id="riften--mistveil-cortyard" href="#getpos-corner" style="--x: 173192; --y: -100256; --x-mag: 1; --y-mag: -1;" />
+         <rect id="riften--gate-north" class="getpos minmax" style="--x-lte: 176192; --x-gte: 173776; --y-lte: -92448; --y-gte: -93376;" />
+         <rect id="riften--haelga-bunkhouse" class="getpos minmax" style="--x-lte: 173935; --x-gte: 172816; --y-lte: -92480; --y-gte: -94512;" />
+         <rect id="riften--honeyside" class="getpos minmax" style="--x-lte: 172816; --x-gte: 171008; --y-lte: -92480; --y-gte: -94304;" />
+         <rect id="riften--honorhall-orphanage" class="getpos minmax" style="--x-lte: 173152; --x-gte: 171152; --y-lte: -98304; --y-gte: -100432;" />
+         <g id="riften--market-priority-hi">
+            <!-- [REFR:000FF215]RiftenTGCacheEnablerRef -->
+            <circle class="getdistance" r="632" cx="173400.546875px" cy="-97022.773438px" />
+         </g>
+         <g id="riften--mistveil-keep">
+            <!-- x constrained to (-INF, 173192] OR [172576, INF) -->
+            <g clip-path="view-box shape(
+               from 0 0,
+               move to  173192  0,
+               line by       0  -1000000,
+               line by -100000  0,
+               line by       0  2000000,
+               close,
+               move to  172576  0,
+               line by       0  -1000000,
+               line by  100000  0,
+               line by       0  2000000,
+               close
+            )">
+               <!-- [REFR:000C44B1]MistveilKeepMapMarker -->
+               <circle class="getdistance" r="1024" cx="173481.640625" cy="-99978.976562" />
+               
+               <!-- [REFR:0010CEE1] -->
+               <circle class="getdistance" r="1100" cx="174559.15625" cy="-100609.390625" />
+            </g>
+         </g>
+         <use id="riften--pawned-prawn" href="#getpos-box" style="--x: 172160; --x-around: 1280; --y: -94944; --y-around: 1472;" />
+         <rect id="riften--residence-bolli" class="getpos minmax" style="--x-lte: 176240; --x-gte: 174528; --y-lte: -93024; --y-gte: -93456;" />
+         <rect id="riften--residence-mjoll" class="getpos minmax" style="--x-lte: 176448; --x-gte: 174528; --y-lte: -93456; --y-gte: -94080;" />
+         <use id="riften--riftweald-manor" href="#getpos-box" style="--x: 174720; --x-around: 896; --y: -95840; --y-around: 1152;" />
+         <g id="riften--riftweald-manor-backyard">
+            <!-- X gte constant, bounded Y -->
+            <path class="getpos" d="
+               M 175168 -95840
+               m  10000      0
+               m      0  -1152
+               l -10000      0
+               l      0   1152
+               l      0   1152
+               l  10000      0
+            " />
+         </g>
+         <rect id="riften--talos-shrine" class="getpos minmax" style="--x-lte: 177376; --x-gte: 176064; --y-lte: -98976; --y-gte: -100272;" />
+         <rect id="riften--bee-and-barb" class="getpos minmax" style="--x-lt: 174272; --x-gte: 171680; --y-lte: -94528; --y-gte: -96192;" />
+         <rect id="riften--blacksmith" class="getpos minmax" style="--x-lt: 172992; --x-gte: 171712; --y-lte: -96880; --y-gte: -100384;" />
+         <rect id="riften--residence-black-briar" class="getpos minmax" style="--x-lte: 176064; --x-gte: 173952; --y-lte: -97760; --y-gte: -100400;" />
+         <g id="riften--residence-snow-shod">
+            <!-- X gte constant, bounded Y -->
+            <path class="getpos" d="
+               M 174272 -94624
+               m  10000      0
+               m      0  -1472
+               l -10000      0
+               l      0   1472
+               l      0   1472
+               l  10000      0
+            " />
+         </g>
+         <rect id="riften--temple-of-mara" class="getpos minmax" style="--x-lte: 177872; --x-gte: 174864; --y-lte: -96288; --y-gte: -98976;" />
+         <use id="riften--market-priority-lo" href="#getpos-box" style="--x: 173632; --x-around: 2688; --y: -96896; --y-around: 2240;" />
+         <use id="riften--mistveil-in-front-of" href="#getpos-box" style="--x: 173568; --x-around: 1024; --y: -98688; --y-around: 1280;" />
+         <rect id="riften--canal-north" class="getpos minmax fallback" style="--x-lte: 175344; --x-gte: 171824; --y-lte: -93936; --y-gte: -96960;" />
+         <rect id="riften--canal-south" class="getpos minmax fallback" style="--x-lte: 175344; --x-gte: 171552; --y-lte: -96960; --y-gte: -98800;" />
+      </g>
    
-      <use href="#RTNorthGate01" transform="translate(174272 -92160) rotate(-90)" />
+      <!--
+         Map visuals, to indicate buildings, walls, et cetera.
+      -->
+      <g name="RTNorthGate01" class="loc" style="--x: 174272; --y: -92160; --yaw: 90;">
+         <use href="#RTNorthGate01" />
+         <text class="label" data-hoverlink="riften--gate-north">North Gate</text>
+      </g>
       <use href="#RTWall01Inner" transform="translate(172928 -92416) rotate(-90)" />
-      <g name="HaelgasBunkhouse" transform="translate(173440 -93440) rotate(-90)">
+      <g name="HaelgasBunkhouse" class="loc" style="--x: 173440; --y: -93440; --yaw: 90;">
          <rect class="obnd"  style="--x1: -665; --y1: -658; --x2: 643; --y2: 658;" />
-         <text class="label" style="--invert-parent: rotate(90deg)">Haelga's Bunkhouse</text>
+         <text class="label" data-hoverlink="riften--haelga-bunkhouse">Haelga's Bunkhouse</text>
       </g>
-      <g name="MjollAndBolliHouse" transform="translate(175234.0625 -93439.7031) rotate(-90)">
+      <g name="MjollAndBolliHouse" class="loc" style="--x: 175234.0625; --y: -93439.7031; --yaw: 90;">
          <rect class="obnd" style="--x1: -593; --y1: -868; --x2: 700; --y2: 641;" />
-         <text class="label" style="--invert-parent: rotate(90deg)">Bolli's House and Aerin/Mjoll's House</text>
+         <text class="label for-obnd">Bolli's House and Aerin/Mjoll's House</text>
+         <text class="label" data-hoverlink="riften--residence-bolli">Bolli's House</text>
+         <text class="label" data-hoverlink="riften--residence-mjoll">Aerin's House</text>
       </g>
-      <g name="SnowShodHouse" transform="translate(174978.0625 -94563.7031) rotate(-90)">
+      <g name="SnowShodHouse" class="loc" style="--x: 174978.0625; --y: -94563.7031; --yaw: 90;">
          <rect class="obnd" style="--x1: -696; --y1: -665; --x2: 766; --y2: 1103;" />
-         <text class="label" style="--invert-parent: rotate(90deg)">Snow-Shod Manor</text>
+         <text class="label" data-hoverlink="riften--residence-snow-shod">Snow-Shod Manor</text>
       </g>
       <g name="SnowShodDeck" transform="translate(174978.0625 -94563.7031) rotate(-90)">
       </g>
-      <g>
-         <g name="Honeyside" transform="translate(172165.0938 -93699.4609) rotate(-90)">
-            <rect class="obnd" style="--x1: -1535; --y1: -767; --x2: 553; --y2: 426;" />
-            <text class="label" style="--invert-parent: rotate(90deg)">
-               Honeyside
-               <set attributeName="class" to="label remote-hover" begin="honeyside.mouseover" dur="0.1" fill="freeze" restart="whenNotActive" />
-               <set attributeName="class" to="label" begin="honeyside.mouseout" dur="0.1" fill="freeze" restart="whenNotActive" />
-            </text>
-         </g>
+      <g name="Honeyside" class="loc" style="--x: 172165.0938; --y: -93699.4609; --yaw: 90;">
+         <rect class="obnd" style="--x1: -1535; --y1: -767; --x2: 553; --y2: 426;" />
+         <text class="label" data-hoverlink="riften--honeyside">Honeyside</text>
       </g>
       <g name="HoneysideDeck" transform="translate(172165.0938 -93699.4609) rotate(-90)">
          <rect class="obnd" style="--x1: -523; --y1: -944; --x2: 331; --y2: -260;" />
@@ -724,55 +825,55 @@ g:has(path)>.obnd {
       </g>
       <g name="RTCanalsBridge01" transform="translate(173952 -94656) rotate(-135)">
       </g>
-      <g name="RiftwealdManor" transform="translate(175232 -95744) rotate(-90)">
+      <g name="RiftwealdManor" class="loc" style="--x: 175232; --y: -95744; --yaw: 90;">
          <rect class="obnd" style="--x1: -665; --y1: -816; --x2: 713; --y2: 1031;" />
-         <text class="label" style="--invert-parent: rotate(90deg)">Riftweald Manor</text>
+         <text class="label" data-hoverlink="riften--riftweald-manor">Riftweald Manor</text>
       </g>
       <g name="RiftwealdManorDeckFront" transform="translate(174720 -96000) rotate(-60)">
          <rect class="obnd" style="--x1: -273; --y1: -193; --x2: 317; --y2: 176;" />
       </g>
-      <g name="BeeAndBarb" transform="translate(172928 -95488) rotate(-90)">
+      <g name="BeeAndBarb" class="loc" style="--x: 172928; --y: -95488; --yaw: 90;">
          <rect class="obnd" style="--x1: -728; --y1: -499; --x2: 768; --y2: 623;" />
-         <text class="label" style="--invert-parent: rotate(90deg)">Bee and Barb</text>
+         <text class="label" data-hoverlink="riften--bee-and-barb">Bee and Barb</text>
       </g>
-      <g name="PawnedPrawn" transform="translate(172032 -95252) rotate(-90)">
+      <g name="PawnedPrawn" class="loc" style="--x: 172032; --y: -95252; --yaw: 90;">
          <rect class="obnd" style="--x1: -424; --y1: -354; --x2: 425; --y2: 352;" />
-         <text class="label" style="--invert-parent: rotate(90deg)">Pawned Prawn</text>
+         <text class="label" data-hoverlink="riften--pawned-prawn">Pawned Prawn</text>
       </g>
-      <g name="BlackBriarMeadery" transform="translate(171776 -96046) rotate(-90)">
+      <g name="BlackBriarMeadery" class="loc" style="--x: 171776; --y: -96046; --yaw: 90;">
          <rect class="obnd" style="--x1: -629; --y1: -1713; --x2: 629; --y2: 483;" />
-         <text class="label" style="--invert-parent: rotate(90deg)">Black-Briar Meadery</text>
+         <text class="label">Black-Briar Meadery</text>
       </g>
-      <g name="BlackBriarMeaderyBack" transform="translate(170752 -96046) rotate(-90)">
+      <g name="BlackBriarMeaderyBack" class="loc" style="--x: 170752; --y: -96046; --yaw: 90;">
          <rect class="obnd" style="--x1: -629; --y1: -689; --x2: 629; --y2: 903;" />
-         <text class="label" style="--invert-parent: rotate(90deg)">Black-Briar Meadery (Back)</text>
+         <text class="label">Black-Briar Meadery (Back)</text>
       </g>
       <g name="RTWalltoDocks01Inner" transform="translate(171656 -96624) rotate(-90)">
       </g>
-      <g name="ScorchedHammer" transform="translate(171784 -97408) rotate(-90)">
+      <g name="ScorchedHammer" class="loc" style="--x: 171784; --y: -97408; --yaw: 90;">
          <rect class="obnd" style="--x1: -553; --y1: -349; --x2: 606; --y2: 810;" />
-         <text class="label" style="--invert-parent: rotate(90deg)">Scorched Hammer</text>
+         <text class="label" data-hoverlink="riften--blacksmith">The Scorched Hammer</text>
       </g>
-      <g name="HonorhallOrphanage" transform="translate(171472 -98928) rotate(-90)">
+      <g name="HonorhallOrphanage" class="loc" style="--x: 171472; --y: -98928; --yaw: 90;">
          <rect class="obnd" style="--x1: -543; --y1: -746; --x2: 1363; --y2: 861;" />
-         <text class="label" style="--invert-parent: rotate(90deg)">Honorhall Orphanage</text>
+         <text class="label" data-hoverlink="riften--honorhall-orphanage">Honorhall Orphanage</text>
       </g>
       <g name="RTOrphanageWall01" transform="translate(171904 -99520) rotate(-90)">
       </g>
       <g name="RTSouthGate01" transform="translate(171904 -100352) rotate(-90)">
       </g>
-      <g name="TempleOfMara" transform="translate(176768 -97024) rotate(-90)">
+      <g name="TempleOfMara" class="loc" style="--x: 176768; --y: -97024; --yaw: 90;">
          <rect class="obnd" style="--x1: -751; --y1: -532; --x2: 799; --y2: 622;" />
-         <text class="label" style="--invert-parent: rotate(90deg)">Temple of Mara</text>
+         <text class="label" data-hoverlink="riften--temple-of-mara">Temple of Mara</text>
       </g>
-      <g name="RTMausoleum01" transform="translate(176844 -97856) rotate(-90)">
+      <g name="RTMausoleum01" class="loc" style="--x: 176844; --y: -97856; --yaw: 90;">
          <rect class="obnd" style="--x1: -314; --y1: -223; --x2: 287; --y2: 223;" />
-         <text class="label" style="--invert-parent: rotate(90deg)">Thieves Guild hidden entrance</text>
+         <text class="label">Thieves Guild hidden entrance</text>
       </g>
-      <g name="RTBlackBriarManor01" transform="translate(175232 -98560) rotate(-90)">
+      <g name="RTBlackBriarManor01" class="loc" style="--x: 175232; --y: -98560; --yaw: 90;">
          <rect class="obnd" style="--x1: -948; --y1: -1227; --x2: 584; --y2: 1440;" />
          <rect class="obnd" style="--x1: -187; --y1: -282; --x2: 76; --y2: 181;" />
-         <text class="label" style="--invert-parent: rotate(90deg)">Black-Briar Manor</text>
+         <text class="label" data-hoverlink="riften--residence-black-briar">Black-Briar Manor</text>
       </g>
       <g name="RTKeep01" transform="translate(173184 -101120) rotate(-90)">
          <rect class="obnd" style="--x1: -903; --y1: -456; --x2: 1174; --y2: 1716;" />
@@ -891,6 +992,9 @@ g:has(path)>.obnd {
          </g>
          <circle name="campfire" cx="171936" cy="-90016" r="184" />
       </g>
+      
+      <text class="label" style="--x: 173440; --y: -97024;" data-hoverlink="riften--market-priority-lo,riften--market-priority-hi">Market</text>
+      <text class="label" style="--x: 176750; --y: -99676;" data-hoverlink="riften--talos-shrine">Talos Shrine</text>
    </g>
    
    <g id="riverwood-content">
@@ -979,4 +1083,36 @@ g:has(path)>.obnd {
    </g>
    
    </g>
+   
+   <script><![CDATA[
+document.querySelectorAll(".conditionals").forEach(function(node) {
+   let list = [...node.children].reverse();
+   node.replaceChildren(...list);
+});
+
+document.querySelectorAll("[data-hoverlink]").forEach(function(node) {
+   let list = node.getAttribute("data-hoverlink").split(",");
+   for(let name of list) {
+      let elem;
+      //
+      elem = document.createElementNS("http://www.w3.org/2000/svg", "set");
+      elem.setAttribute("attributeName", "class");
+      elem.setAttribute("to", "label remote-hover");
+      elem.setAttribute("begin", name.replaceAll('-', "\\-") + ".mouseover");
+      elem.setAttribute("dur", "0.1");
+      elem.setAttribute("fill", "freeze");
+      elem.setAttribute("restart", "whenNotActive");
+      node.append(elem);
+      //
+      elem = document.createElementNS("http://www.w3.org/2000/svg", "set");
+      elem.setAttribute("attributeName", "class");
+      elem.setAttribute("to", node.getAttribute("class"));
+      elem.setAttribute("begin", name.replaceAll('-', "\\-") + ".mouseout");
+      elem.setAttribute("dur", "0.1");
+      elem.setAttribute("fill", "freeze");
+      elem.setAttribute("restart", "whenNotActive");
+      node.append(elem);
+   }
+});
+   ]]></script>
 </svg>

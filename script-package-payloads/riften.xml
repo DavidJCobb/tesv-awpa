@@ -1096,24 +1096,6 @@
          <constant name="height-coordinate-ground" value="11040" />
          <constant name="north-south-dividing-y-coordinate" value="-96960" />
          
-         <g name="canal-north">
-            <conditions>
-               <y of="subject" gte="north-south-dividing-y-coordinate" />
-               <z of="subject" lt="height-coordinate-ground" />
-            </conditions>
-            <line>I think I saw him down in the canal, on the north side of the city.</line>
-            <line>He might be in the canal's northern walkways.</line>
-            <line>I saw him down in the north side of the canal not too long ago.</line>
-         </g>
-         <g name="canal-south">
-            <conditions>
-               <y of="subject" lt="north-south-dividing-y-coordinate" />
-               <z of="subject" lt="height-coordinate-ground" />
-            </conditions>
-            <line>I think I saw him down in the canal, on the south side of the city.</line>
-            <line>He might be in the canal's southern walkways.</line>
-            <line>I saw him down in the south side of the canal not too long ago.</line>
-         </g>
          <g name="mistveil-courtyard">
             <conditions>
                <x of="subject" gte="173192" />
@@ -1126,7 +1108,9 @@
          
          <g name="gate-north">
             <conditions>
-               <x of="subject" at="173664" around="1728" />
+               <x of="subject" lte="176192" />
+               <x of="subject" gte="173776" />
+               <y of="subject" lte="-92448" />
                <y of="subject" gte="-93376" />
             </conditions>
             <line>I think I saw him by the north gate.</line>
@@ -1136,8 +1120,10 @@
          </g>
          <g name="haelga-bunkhouse">
             <conditions>
-               <x of="subject" at="173664" around="1728" />
-               <y of="subject" at="-94080" around="1408" />
+               <x of="subject" gte="172816" />
+               <x of="subject" lte="173936" />
+               <y of="subject" lte="-92480" />
+               <y of="subject" gte="-94512" />
                <z of="subject" gt="height-coordinate-ground" />
             </conditions>
             <g name="speaker-inside-subject-outside">
@@ -1169,8 +1155,10 @@
                Northwest corner of the city.
             -->
             <conditions>
-               <x of="subject" lte="172768" />
-               <y of="subject" gte="-94208" />
+               <x of="subject" gte="171008" />
+               <x of="subject" lte="172816" />
+               <y of="subject" lte="-92480" />
+               <y of="subject" gte="-94304" />
             </conditions>
             <g name="speaker-inside-subject-outside">
                <conditions>
@@ -1185,7 +1173,9 @@
          <g name="honorhall-orphanage">
             <conditions>
                <x of="subject" lte="173152" />
-               <y of="subject" at="-99264" around="2496" />
+               <x of="subject" gte="171152" />
+               <y of="subject" lte="-98304" />
+               <y of="subject" gte="-100432" />
                <z of="subject" gt="height-coordinate-ground" />
             </conditions>
             <g name="speaker-inside-subject-outside">
@@ -1200,11 +1190,11 @@
          </g>
          <g name="market-priority-hi">
             <conditions>
-               <distance of="subject" to="[REFR:000FF215]RiftenTGCacheEnablerRef" lte="184" />
+               <distance of="subject" to="[REFR:000FF215]RiftenTGCacheEnablerRef" lte="632" />
             </conditions>
             <g name="speaker-and-subject-both-in-market">
                <conditions>
-                  <distance of="speaker" to="[REFR:000FF215]RiftenTGCacheEnablerRef" lte="184" />
+                  <distance of="speaker" to="[REFR:000FF215]RiftenTGCacheEnablerRef" lte="632" />
                </conditions>
                <shared-info name="shared-exterior-market-with-us" />
             </g>
@@ -1290,7 +1280,9 @@
          <g name="residence-bolli">
             <conditions>
                <x of="subject" gte="174528" />
-               <y of="subject" at="-93728" around="704" />
+               <x of="subject" lte="176240" />
+               <y of="subject" lte="-93024" />
+               <y of="subject" gte="-93456" />
             </conditions>
             <g name="speaker-inside-subject-outside">
                <conditions>
@@ -1316,7 +1308,9 @@
          <g name="residence-mjoll">
             <conditions>
                <x of="subject" gte="174528" />
-               <y of="subject" gte="-93376" />
+               <x of="subject" lte="176448" />
+               <y of="subject" gte="-94080" />
+               <y of="subject" lte="-93456" />
             </conditions>
             <g name="speaker-inside-subject-outside">
                <conditions>
@@ -1371,7 +1365,9 @@
             -->
             <conditions>
                <x of="subject" gte="176064" />
+               <x of="subject" lte="177376" />
                <y of="subject" lte="-98976" />
+               <y of="subject" gte="-100272" />
             </conditions>
             <g name="shrine-tender">
                <conditions>
@@ -1393,7 +1389,9 @@
          <g name="bee-and-barb">
             <conditions>
                <x of="subject" lt="174272" />
-               <y of="subject" at="-95488" around="1408" />
+               <x of="subject" gte="171680" />
+               <y of="subject" lte="-94528" />
+               <y of="subject" gte="-96192" />
             </conditions>
             <g name="speaker-inside-subject-outside">
                <conditions>
@@ -1421,7 +1419,9 @@
          <g name="blacksmith">
             <conditions>
                <x of="subject" lt="172992" />
-               <y of="subject" at="-96832" around="2368" />
+               <x of="subject" gte="171712" />
+               <y of="subject" gte="-98016" />
+               <y of="subject" lte="-96880" />
             </conditions>
             <g name="speaker-inside-subject-outside">
                <conditions>
@@ -1464,8 +1464,10 @@
          </g> <!-- /blacksmith -->
          <g name="residence-black-briar" priority="-25">
             <conditions>
-               <x of="subject" at="175008" around="2112" />
-               <y of="subject" at="-99072" around="2624" />
+               <x of="subject" lte="176064" />
+               <x of="subject" gte="173952" />
+               <y of="subject" lte="-97760" />
+               <y of="subject" gte="-100400" />
             </conditions>
             <g name="speaker-inside-subject-outside">
                <conditions>
@@ -1519,8 +1521,10 @@
          </g> <!-- /residence-snow-shod -->
          <g name="temple-of-mara">
             <conditions>
-               <x of="subject" at="176512" around="3456" />
-               <y of="subject" at="-97632" around="2688" />
+               <x of="subject" lte="177872" />
+               <x of="subject" gte="174864" />
+               <y of="subject" lte="-96288" />
+               <y of="subject" gte="-98976" />
             </conditions>
             <g name="speaker-inside-subject-outside">
                <conditions>
@@ -1552,6 +1556,31 @@
             <line>I saw him walking past Mistveil Keep not too long ago.</line>
             <line>Try checking in front of Mistveil Keep.</line>
          </g> <!-- /mistveil-in-front-of -->
+         
+         <g name="canal-north">
+            <conditions>
+               <x of="subject" lte="175344" />
+               <x of="subject" gte="171824" />
+               <y of="subject" lte="-93936" />
+               <y of="subject" gte="north-south-dividing-y-coordinate" />
+               <z of="subject" lt="height-coordinate-ground" />
+            </conditions>
+            <line>I think I saw him down in the canal, on the north side of the city.</line>
+            <line>He might be in the canal's northern walkways.</line>
+            <line>I saw him down in the north side of the canal not too long ago.</line>
+         </g>
+         <g name="canal-south">
+            <conditions>
+               <x of="subject" lte="175344" />
+               <x of="subject" gte="171552" />
+               <y of="subject" lt="north-south-dividing-y-coordinate" />
+               <y of="subject" gte="-98800" />
+               <z of="subject" lt="height-coordinate-ground" />
+            </conditions>
+            <line>I think I saw him down in the canal, on the south side of the city.</line>
+            <line>He might be in the canal's southern walkways.</line>
+            <line>I saw him down in the south side of the canal not too long ago.</line>
+         </g>
       </top-g> <!-- /ExteriorWithinWalls -->
       
       

@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <payload>
    <shared-infos>
+      <shared-info id="shared-unknown" editor-id-slug="UnknownLocation">
+         <line>I don't know where he is.</line>
+         <line>Sorry, but I don't know.</line>
+         <line>I haven't seen him around.</line>
+         <line>No clue, honestly.</line>
+      </shared-info>
+   
       <shared-info id="shared-upstairs" editor-id-slug="FloorUpstairs">
          <line>He's upstairs.</line>
          <line>Try checking upstairs.</line>

@@ -133,6 +133,9 @@ circle.getdistance {
    }
    &:hover {
       --fill: rgba(255, 224, 0, 0.75);
+      &.fallback {
+         --fill: rgba(0, 224, 255, 0.75);
+      }
    }
    
    &:is(path, rect) {
@@ -716,10 +719,10 @@ circle.getdistance {
          <!--
             Container element for all of our dialogue conditions.
          -->
-         <use id="riften--mistveil-cortyard" href="#getpos-corner" style="--x: 173192; --y: -100256; --x-mag: 1; --y-mag: -1;" />
+         <rect id="riften--mistveil-courtyard" class="getpos minmax" style="--x-lte: 175360; --x-gte: 173192; --y-lte: -100256; --y-gte: -102272;" />
          <rect id="riften--gate-north" class="getpos minmax" style="--x-lte: 176192; --x-gte: 173776; --y-lte: -92448; --y-gte: -93376;" />
-         <rect id="riften--haelga-bunkhouse" class="getpos minmax" style="--x-lte: 173935; --x-gte: 172816; --y-lte: -92480; --y-gte: -94512;" />
-         <rect id="riften--honeyside" class="getpos minmax" style="--x-lte: 172816; --x-gte: 171008; --y-lte: -92480; --y-gte: -94304;" />
+         <rect id="riften--haelga-bunkhouse" class="getpos minmax" style="--x-lte: 174528; --x-gte: 172816; --y-lte: -92480; --y-gte: -94512;" />
+         <rect id="riften--honeyside" class="getpos minmax" style="--x-lte: 172816; --x-gte: 171008; --y-lte: -92480; --y-gte: -94512;" />
          <rect id="riften--honorhall-orphanage" class="getpos minmax" style="--x-lte: 173152; --x-gte: 171152; --y-lte: -98304; --y-gte: -100432;" />
          <g id="riften--market-priority-hi">
             <!-- [REFR:000FF215]RiftenTGCacheEnablerRef -->
@@ -750,38 +753,17 @@ circle.getdistance {
          <use id="riften--pawned-prawn" href="#getpos-box" style="--x: 172160; --x-around: 1280; --y: -94944; --y-around: 1472;" />
          <rect id="riften--residence-bolli" class="getpos minmax" style="--x-lte: 176240; --x-gte: 174528; --y-lte: -93024; --y-gte: -93456;" />
          <rect id="riften--residence-mjoll" class="getpos minmax" style="--x-lte: 176448; --x-gte: 174528; --y-lte: -93456; --y-gte: -94080;" />
-         <use id="riften--riftweald-manor" href="#getpos-box" style="--x: 174720; --x-around: 896; --y: -95840; --y-around: 1152;" />
-         <g id="riften--riftweald-manor-backyard">
-            <!-- X gte constant, bounded Y -->
-            <path class="getpos" d="
-               M 175168 -95840
-               m  10000      0
-               m      0  -1152
-               l -10000      0
-               l      0   1152
-               l      0   1152
-               l  10000      0
-            " />
-         </g>
+         <rect id="riften--riftweald-manor" class="getpos minmax" style="--x-lte: 175168; --x-gte: 174272; --y-lte: -95360; --y-gte: -96416;" />
+         <rect id="riften--riftweald-manor-backyard" class="getpos minmax" style="--x-lte: 177728; --x-gte: 175168; --y-lte: -95264; --y-gte: -96416;" />
          <rect id="riften--talos-shrine" class="getpos minmax" style="--x-lte: 177376; --x-gte: 176064; --y-lte: -98976; --y-gte: -100272;" />
-         <rect id="riften--bee-and-barb" class="getpos minmax" style="--x-lt: 174272; --x-gte: 171680; --y-lte: -94528; --y-gte: -96192;" />
+         <rect id="riften--bee-and-barb" class="getpos minmax" style="--x-lt: 174272; --x-gte: 171680; --y-lte: -94528; --y-gte: -97024;" />
          <rect id="riften--blacksmith" class="getpos minmax" style="--x-lt: 172992; --x-gte: 171712; --y-lte: -96880; --y-gte: -100384;" />
          <rect id="riften--residence-black-briar" class="getpos minmax" style="--x-lte: 176064; --x-gte: 173952; --y-lte: -97760; --y-gte: -100400;" />
-         <g id="riften--residence-snow-shod">
-            <!-- X gte constant, bounded Y -->
-            <path class="getpos" d="
-               M 174272 -94624
-               m  10000      0
-               m      0  -1472
-               l -10000      0
-               l      0   1472
-               l      0   1472
-               l  10000      0
-            " />
-         </g>
-         <rect id="riften--temple-of-mara" class="getpos minmax" style="--x-lte: 177872; --x-gte: 174864; --y-lte: -96288; --y-gte: -98976;" />
+         <rect id="riften--residence-snow-shod" class="getpos minmax" style="--x-lte: 177488; --x-gte: 174272; --y-lte: -93888; --y-gte: -95360;" />
+         <rect id="riften--temple-of-mara" class="getpos minmax" style="--x-lte: 177872; --x-gte: 174656; --y-lte: -96288; --y-gte: -98976;" />
+         <rect id="riften--market-priority-lo" class="getpos minmax" style="--x-lte: 174656; --x-gte: 171712; --y-lte: -95920; --y-gte: -98240;" />
          <use id="riften--market-priority-lo" href="#getpos-box" style="--x: 173632; --x-around: 2688; --y: -96896; --y-around: 2240;" />
-         <use id="riften--mistveil-in-front-of" href="#getpos-box" style="--x: 173568; --x-around: 1024; --y: -98688; --y-around: 1280;" />
+         <rect id="riften--mistveil-in-front-of" class="getpos minmax" style="--x-lte: 174080; --x-gte: 173056; --y-lte: -98240; --y-gte: -100400;" />
          <rect id="riften--canal-north" class="getpos minmax fallback" style="--x-lte: 175344; --x-gte: 171824; --y-lte: -93936; --y-gte: -96960;" />
          <rect id="riften--canal-south" class="getpos minmax fallback" style="--x-lte: 175344; --x-gte: 171552; --y-lte: -96960; --y-gte: -98800;" />
       </g>

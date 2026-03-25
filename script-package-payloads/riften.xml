@@ -1098,8 +1098,10 @@
          
          <g name="mistveil-courtyard">
             <conditions>
+               <x of="subject" lte="175360" />
                <x of="subject" gte="173192" />
                <y of="subject" lte="-100256" />
+               <y of="subject" gte="-102272" />
             </conditions>
             <line>He could be in Mistveil Keep's courtyard.</line>
             <line>I think you might find him in Mistveil Keep's courtyard.</line>
@@ -1121,7 +1123,7 @@
          <g name="haelga-bunkhouse">
             <conditions>
                <x of="subject" gte="172816" />
-               <x of="subject" lte="173936" />
+               <x of="subject" lte="174528" />
                <y of="subject" lte="-92480" />
                <y of="subject" gte="-94512" />
                <z of="subject" gt="height-coordinate-ground" />
@@ -1158,7 +1160,7 @@
                <x of="subject" gte="171008" />
                <x of="subject" lte="172816" />
                <y of="subject" lte="-92480" />
-               <y of="subject" gte="-94304" />
+               <y of="subject" gte="-94512" />
             </conditions>
             <g name="speaker-inside-subject-outside">
                <conditions>
@@ -1332,8 +1334,10 @@
          </g> <!-- /residence-mjoll -->
          <g name="riftweald-manor">
             <conditions>
-               <x of="subject" at="174720" around="896" />
-               <y of="subject" at="-95840" around="1152" />
+               <x of="subject" lte="175168" />
+               <x of="subject" gte="174272" />
+               <y of="subject" lte="-95360" />
+               <y of="subject" gte="-96416" />
             </conditions>
             <line>I think I saw him walking past Riftweald Manor a little while ago.</line>
             <line>Try looking around Riftweald Manor.</line>
@@ -1344,8 +1348,10 @@
          </g> <!-- /riftweald-manor -->
          <g name="riftweald-manor-backyard">
             <conditions>
+               <x of="subject" lte="177728" />
                <x of="subject" gte="175168" />
-               <y of="subject" at="-95840" around="1152" />
+               <y of="subject" lte="-95264" />
+               <y of="subject" gte="-96416" />
             </conditions>
             <line>I think I saw him walking around behind Riftweald Manor.</line>
             <line>Try looking around the manor just north of the temple.</line>
@@ -1391,7 +1397,7 @@
                <x of="subject" lt="174272" />
                <x of="subject" gte="171680" />
                <y of="subject" lte="-94528" />
-               <y of="subject" gte="-96192" />
+               <y of="subject" gte="-97024" />
             </conditions>
             <g name="speaker-inside-subject-outside">
                <conditions>
@@ -1507,7 +1513,9 @@
          <g name="residence-snow-shod">
             <conditions>
                <x of="subject" gte="174272" />
-               <y of="subject" at="-94624" around="1472" />
+               <x of="subject" lte="177488" />
+               <y of="subject" lte="-93888" />
+               <y of="subject" gte="-95360" />
             </conditions>
             <g name="speaker-inside-subject-outside">
                <conditions>
@@ -1522,7 +1530,7 @@
          <g name="temple-of-mara">
             <conditions>
                <x of="subject" lte="177872" />
-               <x of="subject" gte="174864" />
+               <x of="subject" gte="174656" />
                <y of="subject" lte="-96288" />
                <y of="subject" gte="-98976" />
             </conditions>
@@ -1542,15 +1550,19 @@
          </g> <!-- /temple-of-mara -->
          <g name="market-priority-lo">
             <conditions>
-               <x of="subject" at="173632" around="2688" />
-               <y of="subject" at="-96896" around="2240" />
+               <x of="subject" lte="174656" />
+               <x of="subject" gte="171712" />
+               <y of="subject" lte="-95920" />
+               <y of="subject" gte="-98240" />
             </conditions>
             <shared-info name="shared-exterior-market" />
          </g> <!-- /market-priority-lo -->
          <g name="mistveil-in-front-of" priority="-100">
             <conditions>
-               <x of="subject" at="173568" around="1024" />
-               <y of="subject" at="-98688" around="1280" />
+               <x of="subject" lte="174080" />
+               <x of="subject" gte="173056" />
+               <y of="subject" lte="-98240" />
+               <y of="subject" gte="-100400" />
             </conditions>
             <line>I'm pretty sure he's over by Mistveil Keep.</line>
             <line>I saw him walking past Mistveil Keep not too long ago.</line>
@@ -1583,6 +1595,8 @@
          </g>
       </top-g> <!-- /ExteriorWithinWalls -->
       
+      <!-- final fallback lines -->
+      <shared-info name="shared-unknown" />
       
    </quest>
 </payload>

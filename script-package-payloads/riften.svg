@@ -14,6 +14,8 @@ preserveAspectRatio="xMinYMin meet" />
    <view id="riften" viewBox="176000 88500 2000 15000" />
    <view id="riverwood" viewBox="15000 38000 2000 11000" 
 preserveAspectRatio="xMinYMin meet" />
+   <view id="solitude" viewBox="-80000 -113000 40000 22000" 
+preserveAspectRatio="xMinYMin meet" />
    <view id="winterhold" viewBox="105000 -116000 30000 18000" 
 preserveAspectRatio="xMinYMin meet" />
    <defs>
@@ -1058,6 +1060,105 @@ circle.getdistance {
    </g>
    
    <g id="solitude-content">
+      <g class="loc" style="--x: -65711.1563; --y: 104474.5781; --yaw: 155.5471;">
+         <rect class="obnd" style="--x1: -190.17385; --y1: -543.2422; --x2: 190.17385; --y2: 543.2422;" />
+         <text class="label">Gate</text>
+      </g>
+      
+      <g class="loc" style="--x: -63407.6055; --y: 106585.9609; --yaw: 45;">
+         <rect class="obnd" style="--x1: -687; --y1: -806; --x2: 630; --y2: 551;" />
+         <text class="label">Angeline's Aromatics</text>
+      </g>
+      <g class="loc" style="--x: -54401.8828; --y: 105002.0391; --yaw: 45;">
+         <rect class="obnd" style="--x1: -1064; --y1: -1343; --x2: 1017; --y2: 1004;" />
+         <text class="label">Bard's College</text>
+      </g>
+      <g class="loc" style="--x: -61733.6484; --y: 107131.1328; --z: -7784.2358; --yaw: 290;">
+         <circle class="point" />
+         <text class="label">Blacksmith</text>
+      </g>
+      <g class="loc" style="--x: -51686.5938; --y: 100838.5938; --yaw: 45;">
+         <rect class="obnd" style="--x1: -1256; --y1: -1597; --x2: 2313; --y2: 1620;" />
+         <text class="label">The Blue Palace</text>
+      </g>
+      <g class="loc" style="--x: -63000.3047; --y: 104821.0156; --yaw: 45;">
+         <rect class="obnd" style="--x1: -517; --y1: -606; --x2: -63; --y2: 1033;" />
+         <text class="label">Bits and Pieces</text>
+      </g>
+      <g class="loc" style="--x: -53225.2578; --y: 103644.3906; --yaw: 45;">
+         <rect class="obnd" style="--x1: -1012; --y1: -825; --x2: 756; --y2: 554;" />
+         <text class="label">Bryling's House</text>
+      </g>
+      <g class="loc" style="--x: -55035.4531; --y: 102920.3125; --yaw: 45;">
+         <rect class="obnd" style="--x1: -799; --y1: -379; --x2: 894; --y2: 807;" />
+         <text class="label">Erikur's House</text>
+      </g>
+      <g class="loc" style="--x: -56438.3516; --y: 104730.5078; --yaw: 45;">
+         <rect class="obnd" style="--x1: -1096; --y1: -565; --x2: 1142; --y2: 537;" />
+         <text class="label">Evette San's House</text>
+      </g>
+      <g class="loc" style="--x: -62422.4336; --y: 107675.9844; --z: -7796.9380; --yaw: 290.2341;">
+         <circle class="point" />
+         <text class="label">Fletcher</text>
+      </g>
+      <g class="loc" style="--x: -57863.8789; --y: 105431.9609; --yaw: 225;">
+         <rect class="obnd" style="--x1: -276; --y1: -701; --x2: 437; --y2: 743;" />
+         <text class="label">Hall of the Dead</text>
+      </g>
+      <g class="loc" style="--x: -55442.7461; --y: 105952.3906; --yaw: 45;">
+         <rect class="obnd" style="--x1: -574; --y1: -1248; --x2: 857; --y2: 819;" />
+         <text class="label">Proudspire Manor</text>
+      </g>
+      <g class="loc" style="--x: -63837.5156; --y: 104210.0781; --yaw: 45;">
+         <rect class="obnd" style="--x1: -435; --y1: -454; --x2: 369; --y2: 799;" />
+         <text class="label">Radiant Raiment</text>
+      </g>
+      <g class="loc" style="--x: -56596.7422; --y: 106834.8594; --yaw: 45;">
+         <rect class="obnd" style="--x1: -1071; --y1: -1031; --x2: 1219; --y2: 710;" />
+         <text class="label">Vittoria Vici's House</text>
+      </g>
+      <g class="loc" style="--x: -64652.1055; --y: 105748.7422; --yaw: 225;">
+         <rect class="obnd" style="--x1: -412; --y1: -503; --x2: 426; --y2: 877;" />
+         <text class="label">The Winking Skeever</text>
+      </g>
+      
+      <!-- Castle Dour area -->
+      <g class="loc" style="--x: -61895.7305; --y: 108646.2734; --z: -7936;">
+         <circle class="point" />
+         <text class="label">Castle Dour Entrance</text>
+      </g>
+      <g class="loc" style="--x: -60311.0156; --y: 107932.5156; --z: -7743.9971; --yaw: 180;">
+         <circle class="point" />
+         <text class="label">Emperor's Tower Front Entrance</text>
+      </g>
+      <g class="loc" style="--x: -60311; --y: 106946; --z: -6794; --yaw: 270;">
+         <circle class="point" />
+         <text class="label">Emperor's Tower Rear Entrance</text>
+      </g>
+      <g class="loc" style="--x: -60643.8984; --y: 110480.7344; --z: -7144.8032; --yaw: 315;">
+         <circle class="point" />
+         <text class="label">Justiciar's Headquarters</text>
+      </g>
+      <g class="loc" style="--x: -58661.1445; --y: 110698.4531; --z: -7744; --yaw: 45;">
+         <circle class="point" />
+         <text class="label">Temple of the Divines</text>
+      </g>
+      
+      <!-- the small farm down the road -->
+      <g class="loc" style="--x: -74769.4141; --y: 95629.6797; --yaw: 274.0568;">
+         <circle class="obnd" r="280" />
+         <text class="label">Grain Silo</text>
+      </g>
+      
+      <!-- docks -->
+      <g class="loc" style="--x: -66620; --y: 98160; --yaw: 60;">
+         <rect class="obnd" style="--x1: -1125; --y1: -287; --x2: 904; --y2: 693;" />
+         <text class="label">East Empire Company Office</text>
+      </g>
+      <g class="loc" style="--x: -66470.6641; --y: 94288.3203; --yaw: 242;">
+         <rect class="obnd" style="--x1: -904; --y1: -2202; --x2: 904; --y2: 2243;" />
+         <text class="label">The Red Wave</text>
+      </g>
    </g>
    
    <g id="whiterun-content">

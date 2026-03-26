@@ -720,6 +720,7 @@ circle.getdistance {
             Container element for all of our dialogue conditions.
          -->
          <rect id="riften--mistveil-courtyard" class="getpos minmax" style="--x-lte: 175360; --x-gte: 173192; --y-lte: -100256; --y-gte: -102272;" />
+         <rect id="riften--residence-bolli" class="getpos minmax" style="--x-lte: 176240; --x-gte: 174528; --y-lte: -93024; --y-gte: -93456;" />
          <rect id="riften--gate-north" class="getpos minmax" style="--x-lte: 176192; --x-gte: 173776; --y-lte: -92448; --y-gte: -93376;" />
          <rect id="riften--haelga-bunkhouse" class="getpos minmax" style="--x-lte: 174528; --x-gte: 172816; --y-lte: -92480; --y-gte: -94512;" />
          <rect id="riften--honeyside" class="getpos minmax" style="--x-lte: 172816; --x-gte: 171008; --y-lte: -92480; --y-gte: -94512;" />
@@ -750,8 +751,7 @@ circle.getdistance {
                <circle class="getdistance" r="1100" cx="174559.15625" cy="-100609.390625" />
             </g>
          </g>
-         <use id="riften--pawned-prawn" href="#getpos-box" style="--x: 172160; --x-around: 1280; --y: -94944; --y-around: 1472;" />
-         <rect id="riften--residence-bolli" class="getpos minmax" style="--x-lte: 176240; --x-gte: 174528; --y-lte: -93024; --y-gte: -93456;" />
+         <rect id="riften--pawned-prawn" class="getpos minmax" style="--x-lte: 172800; --x-gte: 171648; --y-lte: -94512; --y-gte: -95680;" />
          <rect id="riften--residence-mjoll" class="getpos minmax" style="--x-lte: 176448; --x-gte: 174528; --y-lte: -93456; --y-gte: -94080;" />
          <rect id="riften--riftweald-manor" class="getpos minmax" style="--x-lte: 175168; --x-gte: 174272; --y-lte: -95360; --y-gte: -96416;" />
          <rect id="riften--riftweald-manor-backyard" class="getpos minmax" style="--x-lte: 177728; --x-gte: 175168; --y-lte: -95264; --y-gte: -96416;" />
@@ -762,15 +762,57 @@ circle.getdistance {
          <rect id="riften--residence-snow-shod" class="getpos minmax" style="--x-lte: 177488; --x-gte: 174272; --y-lte: -93888; --y-gte: -95360;" />
          <rect id="riften--temple-of-mara" class="getpos minmax" style="--x-lte: 177872; --x-gte: 174656; --y-lte: -96288; --y-gte: -98976;" />
          <rect id="riften--market-priority-lo" class="getpos minmax" style="--x-lte: 174656; --x-gte: 171712; --y-lte: -95920; --y-gte: -98240;" />
-         <use id="riften--market-priority-lo" href="#getpos-box" style="--x: 173632; --x-around: 2688; --y: -96896; --y-around: 2240;" />
          <rect id="riften--mistveil-in-front-of" class="getpos minmax" style="--x-lte: 174080; --x-gte: 173056; --y-lte: -98240; --y-gte: -100400;" />
          <rect id="riften--canal-north" class="getpos minmax fallback" style="--x-lte: 175344; --x-gte: 171824; --y-lte: -93936; --y-gte: -96960;" />
          <rect id="riften--canal-south" class="getpos minmax fallback" style="--x-lte: 175344; --x-gte: 171552; --y-lte: -96960; --y-gte: -98800;" />
+         <rect id="riften--khajiit-caravan" class="getpos minmax" style="--x-lte: 172800; --x-gte: 170816; --y-lte: -89360; --y-gte: -90656;" />
+         <rect id="riften--stables" class="getpos minmax" style="--x-lte: 173648; --x-gte: 171904; --y-lte: -90656; --y-gte: -92160;" />
+         <rect id="riften--plankside-fishery" class="getpos minmax" style="--x-lte: 169600; --x-gte: 167008; --y-lte: -95392; --y-gte: -97616;" />
+         <rect id="riften--plankside-warehouse" class="getpos minmax" style="--x-lte: 170400; --x-gte: 168544; --y-lte: -97616; --y-gte: -99152;" />
+         <rect id="riften--plankside-general" class="getpos minmax fallback" style="--x-lte: 171696; --x-gte: 165312; --y-lte: -94528; --y-gte: -99680;" />
       </g>
    
       <!--
          Map visuals, to indicate buildings, walls, et cetera.
       -->
+      <path class="walkway" name="honeyside-deck" d="
+         M 171328 -92656
+         L 171328 -93888
+         L 171536 -93888
+         L 171536 -93312
+         M 171536 -93888
+         L 171760 -93888
+      " />
+      <path class="walkway" name="docks" d="
+         M 171552 -95360
+         L 169968 -95360
+         L 169968 -95872
+         L 169968 -96768
+         L 170240 -96768
+         L 171632 -96768
+         M 170240 -96768
+         L 170240 -97776
+         L 169712 -97776
+         L 169712 -98288
+         L 168960 -98288
+         L 168960 -98944
+         M 169968 -96768
+         L 169248 -96768
+         L 169248 -97408
+         L 168192 -97408
+         L 167536 -97408
+         M 168192 -97408
+         L 168192 -96496
+         L 167328 -96496
+         M 168192 -96496
+         L 168192 -95600
+         M 169968 -95872
+         L 169248 -95872
+         L 169248 -95600
+         L 167152 -95600
+         M 169248 -95872
+         L 169248 -96768
+      " />
       <g name="RTNorthGate01" class="loc" style="--x: 174272; --y: -92160; --yaw: 90;">
          <use href="#RTNorthGate01" />
          <text class="label" data-hoverlink="riften--gate-north">North Gate</text>

@@ -153,14 +153,6 @@
          <actor editor-id="Dinya" />
          <actor editor-id="Edda" />
          <actor editor-id="Elgrim" />
-         <actor editor-id="Esbern">
-            <!--
-               TODO: don't allow asking this actor while the player 
-               is busy framing him, or while he's in jail Enforce this 
-               via dialogue conditions on the quest, with a helper 
-               script if necessary.
-            -->
-         </actor>
          <actor editor-id="EtienneRarnis">
             <!--
                Etienne is held prisoner in the Thalmor Embassy. If he survives 
@@ -1088,9 +1080,12 @@
          </g> <!-- /bee-and-barb -->
       </top-g> <!-- /Interiors -->
       
-      <top-g editor-id-slug="ExteriorWithinWalls">
+      <top-g editor-id-slug="Exterior">
          <conditions>
-            <parent-world of="subject" is="RiftenWorld" />
+            <or>
+               <parent-world of="subject" is="RiftenWorld" />
+               <parent-world of="subject" is="Tamriel" />
+            </or>
          </conditions>
          
          <constant name="height-coordinate-ground" value="11040" />
@@ -1108,6 +1103,34 @@
             <line>At Mistveil Keep, maybe. Try checking the courtyard.</line>
          </g>
          
+         <g name="residence-bolli">
+            <conditions>
+               <x of="subject" gte="174528" />
+               <x of="subject" lte="176240" />
+               <y of="subject" lte="-93024" />
+               <y of="subject" gte="-93456" />
+            </conditions>
+            <g name="speaker-inside-subject-outside">
+               <conditions>
+                  <parent-cell of="speaker" is="RiftenBollisHouse" />
+               </conditions>
+               <shared-info id="shared-outside-this-building" />
+            </g>
+            <g name="resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Bolli" />
+                     <actor-base of="subject" is="Nivenor" />
+                  </or>
+               </conditions>
+               <line>He's over by his house, near the city's north gate.</line>
+               <line>Have you checked around his home, near the north gate?</line>
+               <shared-info name="shared-exterior-near-own-home" />
+            </g>
+            <line>He's over by Bolli's house.</line>
+            <line>I saw him walking by Bolli's house not too long ago.</line>
+            <line>Hmm... Try checking around Bolli's house, by the north gate.</line>
+         </g> <!-- /residence-bolli -->
          <g name="gate-north">
             <conditions>
                <x of="subject" lte="176192" />
@@ -1239,8 +1262,10 @@
                In the alleyway west of the Bee and Barb.
             -->
             <conditions>
-               <x of="subject" at="172160" around="1280" />
-               <y of="subject" at="-94944" around="1472" />
+               <x of="subject" lte="172800" />
+               <x of="subject" gte="171648" />
+               <y of="subject" lte="-94512" />
+               <y of="subject" gte="-95680" />
                <z of="subject" gt="height-coordinate-ground" />
             </conditions>
             <g name="speaker-inside-subject-outside">
@@ -1279,34 +1304,6 @@
             <line>Try checking the Pawned Prawn. I remember seeing him over there.</line>
             <line>Have you looked over by the Pawned Prawn? I saw him headed that way.</line>
          </g> <!-- /pawned-prawn -->
-         <g name="residence-bolli">
-            <conditions>
-               <x of="subject" gte="174528" />
-               <x of="subject" lte="176240" />
-               <y of="subject" lte="-93024" />
-               <y of="subject" gte="-93456" />
-            </conditions>
-            <g name="speaker-inside-subject-outside">
-               <conditions>
-                  <parent-cell of="speaker" is="RiftenBollisHouse" />
-               </conditions>
-               <shared-info id="shared-outside-this-building" />
-            </g>
-            <g name="resident">
-               <conditions>
-                  <or>
-                     <actor-base of="subject" is="Bolli" />
-                     <actor-base of="subject" is="Nivenor" />
-                  </or>
-               </conditions>
-               <line>He's over by his house, near the city's north gate.</line>
-               <line>Have you checked around his home, near the north gate?</line>
-               <shared-info name="shared-exterior-near-own-home" />
-            </g>
-            <line>He's over by Bolli's house.</line>
-            <line>I saw him walking by Bolli's house not too long ago.</line>
-            <line>Hmm... Try checking around Bolli's house, by the north gate.</line>
-         </g> <!-- /residence-bolli -->
          <g name="residence-mjoll">
             <conditions>
                <x of="subject" gte="174528" />
@@ -1592,6 +1589,62 @@
             <line>I think I saw him down in the canal, on the south side of the city.</line>
             <line>He might be in the canal's southern walkways.</line>
             <line>I saw him down in the south side of the canal not too long ago.</line>
+         </g>
+         
+         <g name="khajiit-caravan">
+            <conditions>
+               <x of="subject" lte="172800" />
+               <x of="subject" gte="170816" />
+               <y of="subject" lte="-89360" />
+               <y of="subject" gte="-90656" />
+            </conditions>
+            <line>I think I saw him over by where the Khajiit caravaners camp out.</line>
+            <line>If you head past the stables, you'll be where traveling Khajiit merchants tend to make camp. I remember seeing him on his way to that spot.</line>
+            <line>Try looking north of the stables, where traveling salesmen often set up camp.</line>
+         </g>
+         <g name="stables">
+            <conditions>
+               <x of="subject" lte="173648" />
+               <x of="subject" gte="171904" />
+               <y of="subject" lte="-90656" />
+               <y of="subject" gte="-92160" />
+            </conditions>
+            <line>He might be at the stables, perhaps.</line>
+            <line>Try looking around the city stables.</line>
+            <line>I think I remember seeing him heading toward the stables.</line>
+            <line>I saw him on his way to the stables not too long ago.</line>
+         </g>
+         <g name="plankside-fishery">
+            <conditions>
+               <x of="subject" lte="169600" />
+               <x of="subject" gte="167008" />
+               <y of="subject" lte="-95392" />
+               <y of="subject" gte="-97616" />
+            </conditions>
+            <line>He might be hanging around the Riften Fishery.</line>
+            <line>I think I spotted him over by the fishery not too long ago.</line>
+            <line>Hm... I'd look around the fishery for him, if I were you.</line>
+         </g>
+         <g name="plankside-warehouse">
+            <conditions>
+               <x of="subject" lte="170400" />
+               <x of="subject" gte="168544" />
+               <y of="subject" lte="-97616" />
+               <y of="subject" gte="-99152" />
+            </conditions>
+            <line>He might be hanging around the warehouse at Plankside.</line>
+            <line>I think I saw him heading to the warehouse on the docks.</line>
+         </g>
+         <g name="plankside-general">
+            <conditions>
+               <x of="subject" lte="171696" />
+               <x of="subject" gte="165312" />
+               <y of="subject" lte="-94528" />
+               <y of="subject" gte="-99680" />
+            </conditions>
+            <line>I think he's out on the docks.</line>
+            <line>Try checking Plankside, the western area of the city.</line>
+            <line>He might be out by the lake.</line>
          </g>
       </top-g> <!-- /ExteriorWithinWalls -->
       

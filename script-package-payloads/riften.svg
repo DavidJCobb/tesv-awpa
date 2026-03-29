@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <svg xmlns="http://www.w3.org/2000/svg">
-   <view id="all" viewBox="-200000 -200000 400000 400000" 
+   <view id="all" viewBox="-200000 -150000 400000 300000" 
 preserveAspectRatio="xMinYMin meet" />
    <view id="dawnstar" viewBox="28000 -112500 17000 15000" />
    <view id="falkreath" viewBox="-40000 80000 30000 15000" />

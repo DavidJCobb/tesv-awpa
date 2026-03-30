@@ -129,7 +129,7 @@ function utils.replace_info_responses(info, text)
    end
 end
 
-function utils.resolve_form_reference(text)
+function utils.resolve_form_reference(text, optional)
    local SIGS = {
       ACHR = form_types.actor,
       ACTI = form_types.activator,
@@ -155,6 +155,9 @@ function utils.resolve_form_reference(text)
    if not form_id then
       sig, editor_id = text:match("^%[(....)%](.*)$")
       if not sig then
+         if optional then
+            return
+         end
          error("malformed form reference: " .. text)
       end
    end

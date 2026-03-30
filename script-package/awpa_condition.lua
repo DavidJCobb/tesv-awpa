@@ -69,7 +69,7 @@ do
                self.comparison.operator = v
                self.comparison.operand  = tonumber(operand) or operand
                if not tonumber(operand) then
-                  local form = utils.resolve_form_reference(self.comparison.operand)
+                  local form = utils.resolve_form_reference(self.comparison.operand, true)
                   if form then
                      self.comparison.operand = form
                   else
@@ -131,6 +131,7 @@ do
       local TAGNAMES_TO_CONSTRUCTOR_NAMES = {
          ["actor-base"]             = "actor_base",
          ["death-count"]            = "death_count",
+         ["distance"]               = "distance",
          ["enable-state"]           = "enable_state",
          ["faction-membership"]     = "faction_membership",
          ["global"]                 = "global",
@@ -138,11 +139,13 @@ do
          ["offers-services"]        = "offers_services",
          ["papyrus-quest-variable"] = "papyrus_quest_variable",
          ["parent-cell"]            = "parent_cell",
+         ["parent-world"]           = "parent_world",
          ["quest-completed"]        = "quest_completion",
          ["quest-not-completed"]    = "quest_completion",
          ["quest-running"]          = "quest_running_state",
          ["quest-not-running"]      = "quest_running_state",
          ["quest-stage"]            = "quest_stage",
+         ["race"]                   = "race",
          ["x"]                      = "position",
          ["y"]                      = "position",
          ["z"]                      = "position",

@@ -24,6 +24,7 @@ awpa_actor_redirect_topic.lua
 awpa_condition.lua
 awpa_condition_actor_base.lua
 awpa_condition_death_count.lua
+awpa_condition_distance.lua
 awpa_condition_enable_state.lua
 awpa_condition_faction_membership.lua
 awpa_condition_global.lua
@@ -31,9 +32,12 @@ awpa_condition_location.lua
 awpa_condition_offers_services.lua
 awpa_condition_papyrus_quest_variable.lua
 awpa_condition_parent_cell.lua
+awpa_condition_parent_world.lua
 awpa_condition_position.lua
 awpa_condition_quest_completion.lua
+awpa_condition_quest_running_state.lua
 awpa_condition_quest_stage.lua
+awpa_condition_race.lua
 awpa_condition_set.lua
 awpa_constant.lua
 awpa_group.lua

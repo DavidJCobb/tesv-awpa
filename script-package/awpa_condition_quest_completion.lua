@@ -34,7 +34,7 @@ do
          if not v then
             error("needs `name` attribute")
          end
-         self.form = utils.resolve_form_reference(v)
+         self.form = utils.resolve_form_reference(v, true)
          if not self.form then
             self.form = dovah.get_form_by_editor_id(v, form_types.quest)
             if not self.form then

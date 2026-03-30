@@ -52,10 +52,10 @@
          />
       </condition-set>
       <condition-set name="vald-is-spawned">
-         <quest-running quest="TG07" />
+         <quest-running name="TG07" />
       </condition-set>
       <condition-set name="vald-is-spawned-and-alive">
-         <condition-set name="vald-is-spawned" />
+         <quest-running name="TG07" />
          <death-count for="Vald" lte="0" />
       </condition-set>
       
@@ -72,23 +72,35 @@
          <!-- TODO -->
       </condition-set>
       
+      <condition-set name="is-bunkhouse-tenant">
+         <!-- faction for Bunkhouse tenants AND STAFF -->
+         <faction-membership of="subject" includes="RiftenHaelgasBunkhouseFaction" />
+         
+         <!-- faction for Bunkhouse staff to sweep the floors, etc. -->
+         <faction-membership of="subject" excludes="RiftenBunkhouseMarkerRestrictFaction" />
+      </condition-set>
+      
       <!-- Use this for TG actors that are never seen on the city surface. -->
       <macro name="tg-member-dfn-never-surface">
-         <begin-asking-about>
-            <filter-conditions>
-               <condition-set name="player-in-thieves-guild" />
-               <condition-set name="speaker-in-thieves-guild" />
-            </filter-conditions>
-         </begin-asking-about>
+         <data>
+            <begin-asking-about>
+               <filter-conditions>
+                  <condition-set name="player-in-thieves-guild" />
+                  <condition-set name="speaker-in-thieves-guild" />
+               </filter-conditions>
+            </begin-asking-about>
+         </data>
       </macro>
       
       <!-- Use this for actors that are exiled if the Empire takes the city. -->
       <macro name="actor-exiled-by-imperials">
-         <begin-asking-about>
-            <filter-conditions>
-                <condition-set name="riften-under-stormcloak-control" />
-            </filter-conditions>
-         </begin-asking-about>
+         <data>
+            <begin-asking-about>
+               <filter-conditions>
+                   <condition-set name="under-stormcloak-control" />
+               </filter-conditions>
+            </begin-asking-about>
+         </data>
       </macro>
       
       <actors>
@@ -101,7 +113,7 @@
             <invoke name="tg-member-dfn-never-surface" />
             <begin-asking-about>
                <filter-conditions>
-                  <enable-state for="[REFR:000B4082]TGStatusStageThree" is="enabled" />
+                  <enable-state for="[REFR:000AC9D5]TGStatusStageThree" is="enabled" />
                </filter-conditions>
             </begin-asking-about>
          </actor>
@@ -138,11 +150,10 @@
          <actor editor-id="Brynjolf">
          </actor>
          <actor editor-id="ConstanceMichel">
-            <begin-asking-to>
-               <filter-conditions>
-                  <condition-set name="grelod-murder-not-in-progress" />
-               </filter-conditions>
-            </begin-asking-to>
+            <!--
+               TODO: don't allow asking this actor while she's shocked 
+               by Grelod's murder.
+            -->
          </actor>
          <actor editor-id="CynricEndell">
             <invoke name="tg-member-dfn-never-surface" />
@@ -209,8 +220,8 @@
                -->
                <filter-conditions>
                   <or>
-                     <quest-status for="MS04" is="running" />
-                     <quest-status for="MS04" is="complete" />
+                     <quest-running name="MS04" />
+                     <quest-completed name="MS04" />
                   </or>
                </filter-conditions>
             </begin-asking-about>
@@ -219,7 +230,7 @@
             <invoke name="tg-member-dfn-never-surface" />
             <begin-asking-about>
                <filter-conditions>
-                  <enable-state for="[REFR:000B4082]TGStatusGuildStateThreeRef" is="enabled" />
+                  <enable-state for="[REFR:000B4082]TGStatusGuildStageThreeRef" is="enabled" />
                </filter-conditions>
             </begin-asking-about>
          </actor>
@@ -353,7 +364,7 @@
          <actor editor-id="LouisLetrush" />
          <actor editor-id="Madesi" />
          <actor editor-id="Maramal" />
-         <actor editor-id="Marcurio">
+         <actor editor-id="HirelingMarcurio" name="Marcurio">
             <begin-asking-about>
                <filter-conditions>
                   <!--
@@ -366,7 +377,6 @@
          </actor>
          <actor editor-id="Marise" />
          <actor editor-id="Maul">
-            <invoke name="tg-member-dfn-when-player-banned" />
             <begin-asking-to>
                <!--
                   If you're not in the Thieves Guild and have never intimidated 
@@ -478,10 +488,16 @@
          </actor>
          <actor editor-id="Samuel" />
          <actor editor-id="Sapphire">
-            <invoke name="tg-member-dfn-when-player-banned" />
          </actor>
          <actor editor-id="Shadr" />
-         <actor editor-id="Snilf" />
+         <!--
+            Snilf's ActorBase is not flagged as unique, so we cannot fill an 
+            alias with him without making his ref permanently persistent (and 
+            avoiding permanent persistence is the reason we're using aliases 
+            in the first place). We therefore cannot allow the player to ask 
+            about him.
+         -->
+         <!--<actor editor-id="Snilf" />-->
          <actor editor-id="Svana" />
          <actor editor-id="Syndus">
             <invoke name="tg-member-dfn-never-surface" />
@@ -590,33 +606,29 @@
          <parameter name="OWNER" />
          <parameter name="OWNER-PRINTABLE" default-value="%OWNER%" />
          <data>
-            <group>
+            <g>
                <conditions>
                   <actor-base of="subject" is="%OWNER%" />
                </conditions>
-               <lines>
-                  <shared-info id="shared-in-own-room" />
-               </lines>
-            </group>
-            <group>
+               <shared-info id="shared-in-own-room" />
+            </g>
+            <g>
                <conditions>
                   <actor-base of="speaker" is="%OWNER%" />
                </conditions>
-               <lines>
-                  <shared-info id="shared-in-my-room" />
-               </lines>
-            </group>
+               <shared-info id="shared-in-my-room" />
+            </g>
             <line>He's in <substitution parameter="OWNER-PRINTABLE" />'s room.</line>
          </data>
       </macro>
       
-      <top-g editor-id-slug="SuperNearPlayer">
+      <top-g slug="SuperNearPlayer">
          <conditions>
             <distance of="player" to="subject" lte="128" />
          </conditions>
-         <shared-info name="shared-near-player" />
+         <shared-info id="shared-near-player" />
       </top-g>
-      <top-g editor-id-slug="SameInterior">
+      <top-g slug="SameInterior">
          <conditions>
             <parent-cell of="speaker" same-as="subject" />
          </conditions>
@@ -654,7 +666,7 @@
                   </or>
                   <condition-set of="subject" name="subject-in-multifloor-interior" />
                </conditions>
-               <shared-info name="shared-upstairs" />
+               <shared-info id="shared-upstairs" />
             </g>
             <g name="downstairs">
                <conditions>
@@ -670,7 +682,7 @@
                   </or>
                   <condition-set of="subject" name="subject-in-multifloor-interior" />
                </conditions>
-               <shared-info name="shared-downstairs" />
+               <shared-info id="shared-downstairs" />
             </g>
          </g>
          <g name="specific-rooms">
@@ -705,7 +717,7 @@
                      <x of="subject" gte="640" />
                      <y of="subject" lte="-128" />
                   </conditions>
-                  <shared-info name="shared-behind-the-counter" />
+                  <shared-info id="shared-behind-the-counter" />
                </g>
             </g> <!-- /bee-and-barb -->
             <g name="black-briar-manor">
@@ -747,14 +759,14 @@
                         <x of="subject" gte="-1472" />
                         <y of="subject" gte="-1088" />
                      </conditions>
-                     <shared-info name="shared-dining-room" />
+                     <shared-info id="shared-dining-room" />
                   </g>
                   <g name="foyer">
                      <conditions>
                         <x of="subject" at="-1344" around="768" />
                         <y of="subject" lte="128" />
                      </conditions>
-                     <shared-info name="shared-foyer" />
+                     <shared-info id="shared-foyer" />
                   </g>
                </g> <!-- /1F -->
                <g name="2F">
@@ -836,7 +848,7 @@
                      <y of="speaker" lte="front-back-dividing-y-coordinate" />
                      <y of="subject" gte="front-back-dividing-y-coordinate" />
                   </conditions>
-                  <shared-info name="shared-back-of-the-store" />
+                  <shared-info id="shared-back-of-the-store" />
                </g>
                <g name="alchemy-table">
                   <conditions>
@@ -844,7 +856,7 @@
                      <x of="subject" lte="-320" />
                      <y of="subject" at="784" around="192" />
                   </conditions>
-                  <shared-info name="shared-behind-the-counter" />
+                  <shared-info id="shared-behind-the-counter" />
                </g>
                <g name="counter">
                   <conditions>
@@ -852,14 +864,14 @@
                      <x of="subject" at="-64" around="320" />
                      <y of="subject" at="784" around="192" />
                   </conditions>
-                  <shared-info name="shared-behind-the-counter" />
+                  <shared-info id="shared-behind-the-counter" />
                </g>
                <g name="front">
                   <conditions>
                      <y of="speaker" gte="front-back-dividing-y-coordinate" />
                      <y of="subject" lte="front-back-dividing-y-coordinate" />
                   </conditions>
-                  <shared-info name="shared-front-of-building" />
+                  <shared-info id="shared-front-of-building" />
                </g>
             </g> <!-- /elgrims-elixirs -->
             <g name="haelgas-bunkhouse">
@@ -898,7 +910,7 @@
                         <x of="subject" lte="-448" />
                         <y of="subject" gte="-64" />
                      </conditions>
-                     <shared-info name="shared-dining-room" />
+                     <shared-info id="shared-dining-room" />
                   </g>
                </g> <!-- /1F -->
                <g name="2F">
@@ -936,8 +948,10 @@
                </g> <!-- /2F -->
             </g> <!-- /house-clan-snow-shod -->
             <g name="house-mjoll">
-               <z of="speaker" gte="320" />
-               <z of="subject" gte="320" />
+               <conditions>
+                  <z of="speaker" gte="320" />
+                  <z of="subject" gte="320" />
+               </conditions>
                <g name="bedroom-aerin">
                   <conditions>
                      <x of="subject" lte="0" />
@@ -974,7 +988,7 @@
                            <actor-base of="subject" is="Maul" />
                         </or>
                      </conditions>
-                     <shared-info name="shared-in-own-room" />
+                     <shared-info id="shared-in-own-room" />
                   </g>
                   <line>He's in the housecarl's room.</line>
                   <line>Check the housecarl's bedroom.</line>
@@ -996,7 +1010,7 @@
                            <actor-base of="subject" is="Hemming" />
                         </or>
                      </conditions>
-                     <shared-info name="shared-in-own-room" />
+                     <shared-info id="shared-in-own-room" />
                   </g>
                   <line>He's in the steward's room.</line>
                   <line>Check the steward's bedroom.</line>
@@ -1038,13 +1052,13 @@
                </or>
                <condition-set of="subject" name="subject-in-multifloor-interior" />
             </conditions>
-            <shared-info name="shared-same-floor" />
+            <shared-info id="shared-same-floor" />
          </g>
          
-         <shared-info name="shared-same-building" />
+         <shared-info id="shared-same-building" />
       </top-g> <!-- /SameInterior -->
       
-      <top-g editor-id-slug="Interiors">
+      <top-g slug="Interiors">
          <g name="bee-and-barb">
             <conditions>
                <parent-cell of="subject" is="RiftenBeeandBarb" />
@@ -1080,7 +1094,7 @@
          </g> <!-- /bee-and-barb -->
       </top-g> <!-- /Interiors -->
       
-      <top-g editor-id-slug="Exterior">
+      <top-g slug="Exterior">
          <conditions>
             <or>
                <parent-world of="subject" is="RiftenWorld" />
@@ -1125,7 +1139,7 @@
                </conditions>
                <line>He's over by his house, near the city's north gate.</line>
                <line>Have you checked around his home, near the north gate?</line>
-               <shared-info name="shared-exterior-near-own-home" />
+               <shared-info id="shared-exterior-near-own-home" />
             </g>
             <line>He's over by Bolli's house.</line>
             <line>I saw him walking by Bolli's house not too long ago.</line>
@@ -1215,42 +1229,40 @@
          </g>
          <g name="market-priority-hi">
             <conditions>
-               <distance of="subject" to="[REFR:000FF215]RiftenTGCacheEnablerRef" lte="632" />
+               <distance of="subject" to="[REFR:000FF215]TGRiftenCacheEnablerRef" lte="632" />
             </conditions>
             <g name="speaker-and-subject-both-in-market">
                <conditions>
-                  <distance of="speaker" to="[REFR:000FF215]RiftenTGCacheEnablerRef" lte="632" />
+                  <distance of="speaker" to="[REFR:000FF215]TGRiftenCacheEnablerRef" lte="632" />
                </conditions>
-               <shared-info name="shared-exterior-market-with-us" />
+               <shared-info id="shared-exterior-market-with-us" />
             </g>
-            <shared-info name="shared-exterior-market" />
+            <shared-info id="shared-exterior-market" />
          </g> <!-- /market-priority-hi -->
          <g name="mistveil-keep">
             <conditions>
+               <!--
+                  The map marker covers the front steps inside the wall. The second 
+                  ref is a wall-lean marker at the edge of the courtyard; applying 
+                  a radius of 1100 to it covers the area within the awkwardly-angled 
+                  the wall to east of the steps.
+                  
+                  The X-span is meant to cover the entrance to the Riften Jail, as 
+                  well as some odds-and-ends on the walls near the courtyard just 
+                  in case the player manages to parkour around.
+                  
+                  The relationship here is `A || B || (C && D)`, which, given the 
+                  boolean operator predecence, is `(A || B || C) && (A || B || D)`.
+               -->
                <or>
-                  <!--
-                     The map marker covers the front steps inside the wall. The second 
-                     ref is a wall-lean marker at the edge of the courtyard; applying 
-                     a radius of 1100 to it covers the area within the awkwardly-angled 
-                     the wall to east of the steps.
-                     
-                     The X-span is meant to cover the entrance to the Riften Jail, as 
-                     well as some odds-and-ends on the walls near the courtyard just 
-                     in case the player manages to parkour around.
-                     
-                     The relationship here is `A || B || (C && D)`, which, given the 
-                     boolean operator predecence, is `(A || B || C) && (A || B || D)`.
-                  -->
-                  <or>
-                     <distance of="subject" to="[REFR:000C44B1]MistveilKeepMapMarker" lte="1024" />
-                     <distance of="subject" to="[REFR:0010CEE1]" lte="1100" />
-                     <x of="subject" lte="173192" />
-                  </or>
-                  <or>
-                     <distance of="subject" to="[REFR:000C44B1]MistveilKeepMapMarker" lte="1024" />
-                     <distance of="subject" to="[REFR:0010CEE1]" lte="1100" />
-                     <x of="subject" gte="172576" />
-                  </or>
+                  <distance of="subject" to="[REFR:000C44B1]MistveilKeepMapMarker" lte="1024" />
+                  <distance of="subject" to="[REFR:0010CEE1]" lte="1100" />
+                  <x of="subject" lte="173192" />
+               </or>
+               <or>
+                  <distance of="subject" to="[REFR:000C44B1]MistveilKeepMapMarker" lte="1024" />
+                  <distance of="subject" to="[REFR:0010CEE1]" lte="1100" />
+                  <x of="subject" gte="172576" />
                </or>
             </conditions>
             <line>I'm pretty sure he's at Mistveil Keep.</line>
@@ -1283,7 +1295,7 @@
                   -->
                   <or>
                      <actor-base of="subject" is="Bersi" />
-                     <death-count of="Bersi" gte="1" />
+                     <death-count for="Bersi" gte="1" />
                   </or>
                   <or>
                      <actor-base of="subject" is="Bersi" />
@@ -1323,7 +1335,7 @@
                </conditions>
                <line>He's over by his house, near the city's north gate.</line>
                <line>Have you checked around his home, near the north gate?</line>
-               <shared-info name="shared-exterior-near-own-home" />
+               <shared-info id="shared-exterior-near-own-home" />
             </g>
             <line>He's over by Mjoll's house.</line>
             <line>I saw him walking past Mjoll's house not too long ago.</line>
@@ -1375,7 +1387,7 @@
             <g name="shrine-tender">
                <conditions>
                   <actor-base of="subject" is="Nura" />
-                  <condition-set name="riften-under-stormcloak-control" />
+                  <condition-set name="under-stormcloak-control" />
                </conditions>
                <line>The priestess of Talos? He tends to the Shrine of Talos near the south wall of the city.</line>
                <line>He's probably at the statue of Talos right now. You'll find it out behind the Temple of Mara.</line>
@@ -1463,7 +1475,7 @@
             </g>
             <line>Might be near the Scorched Hammer, maybe.</line>
             <line>I remember seeing him around the Scorched Hammer a little while ago.</line>
-            <shared-info name="shared-exterior-near-blacksmith" />
+            <shared-info id="shared-exterior-near-blacksmith" />
          </g> <!-- /blacksmith -->
          <g name="residence-black-briar" priority="-25">
             <conditions>
@@ -1552,7 +1564,7 @@
                <y of="subject" lte="-95920" />
                <y of="subject" gte="-98240" />
             </conditions>
-            <shared-info name="shared-exterior-market" />
+            <shared-info id="shared-exterior-market" />
          </g> <!-- /market-priority-lo -->
          <g name="mistveil-in-front-of" priority="-100">
             <conditions>
@@ -1649,7 +1661,7 @@
       </top-g> <!-- /ExteriorWithinWalls -->
       
       <!-- final fallback lines -->
-      <shared-info name="shared-unknown" />
+      <shared-info id="shared-unknown" />
       
    </quest>
 </payload>

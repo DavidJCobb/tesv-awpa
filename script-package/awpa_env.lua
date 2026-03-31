@@ -14,7 +14,13 @@ awpa.env = {
    
    built_in_shared_infos = {},
    
-   diagnose_topic_helper_deletions = false
+   diagnose_topic_helper_deletions = false,
+   
+   content_counts = {
+      extant    = 0,
+      generated = 0,
+      on_change = nil,
+   }
 }
 
 function awpa.env:reset()
@@ -29,6 +35,22 @@ function awpa.env:reset()
    self.built_in_shared_infos = {}
    
    self.diagnose_topic_helper_deletions = false
+   
+   self.content_counts.extant    = 0
+   self.content_counts.generated = 0
+end
+
+function awpa.env:on_content_object_constructed()
+   self.content_counts.extant = self.content_counts.extant + 1
+end
+function awpa.env:on_content_object_processed()
+   local cc <const> = self.content_counts
+   cc.generated = cc.generated + 1
+   
+   local callback = cc.on_change
+   if callback then
+      callback(cc.extant, cc.generated)
+   end
 end
 
 function awpa.env:set_object_id(object, id)
@@ -269,7 +291,7 @@ function awpa.env:generate_content()
    
    do
       local INFOS = {
-         ["InvisibleInfo"] = { "" },
+         ["InvisibleInfo"] = { "   " },
          ["BeginActorSelection"] = {
             "Who are you looking for?",
             "Who is it? I might have seen them around.",
@@ -278,7 +300,7 @@ function awpa.env:generate_content()
             "Suit yourself.",
             "All right, then.",
          },
-         ["ActorSelected"] = { "" },
+         ["ActorSelected"] = { "   " },
       }
       local infos = preexisting_infos
       local size  = #infos

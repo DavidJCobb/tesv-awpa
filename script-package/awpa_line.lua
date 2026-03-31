@@ -40,6 +40,8 @@ do
             male   = nil,
             female = nil,
          }
+         
+         awpa.env:on_content_object_constructed()
       end,
       instance_members = instance_members,
    })
@@ -198,6 +200,7 @@ do
             end
          end
          
+         awpa.env:on_content_object_processed()
          if gendered then
             local info_m = _get_or_create_by_id(self.form_ids.male)
             local info_f = _get_or_create_by_id(self.form_ids.female)

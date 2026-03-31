@@ -123,7 +123,7 @@ do
          if not info then
             info = dovah.create_form(form_types.topic_info, { parent = topic })
          end
-         info.use_shared_info = awpa.env.built_in_shared_infos["ActorSelected"][0]
+         info.use_shared_info = awpa.env.built_in_shared_infos["ActorSelected"][1]
          do -- papyrus
             local papyrus = info.papyrus
             do
@@ -172,6 +172,7 @@ do
          utils.replace_info_link_to_list(info, {
             self.quest_info:get_or_create_result_topic()
          })
+         info.invisible_continue = true
       end
       
       function instance_members:generate_all_forms()

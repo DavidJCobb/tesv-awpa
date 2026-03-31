@@ -58,14 +58,9 @@ do
                return
             end
             if node.node_name == "shared-info" then
-               local si = awpa.env.shared_infos_by_id[node.attributes["id"]]
-               if not si then
-                  error("missing sharedinfo: " .. tostring(node.attributes["id"]))
-               end
                local item = awpa.shared_info_reference()
                local list = self.children
                list[#list + 1] = item
-               item.source = si
                item:from_xml(node)
                return
             end
@@ -95,7 +90,7 @@ do
             for i = 1, #topics do
                local t = topics[i]
                if t.editor_id == editor_id then
-                  self.forms.topic  = t
+                  self.topic        = t
                   self.topic_helper = awpa.topic_helper(t)
                   return t
                end
@@ -104,7 +99,7 @@ do
          local topic = dovah.create_form(form_types.topic, { parent = branch })
          topic.editor_id = editor_id
          topic.text      = "<Results Group>"
-         self.forms.topic = topic
+         self.topic        = topic
          self.topic_helper = awpa.topic_helper(topic)
          return topic
       end

@@ -69,6 +69,17 @@ do
          end
          
          self:add_tab()
+         
+         self._tracking_lines = false
+         awpa.env.content_counts.on_change = function(extant, generated)
+            if self._tracking_lines then
+               self:progress_update(nil, generated, nil)
+            else
+print(string.format("tracking per-line progress... %d lines", tonumber(extant)))
+               self:progress_update("Generating lines... (%v/%m)", generated, extant)
+               self._tracking_lines = true
+            end
+         end
       end,
       instance_members = instance_members
    })
@@ -139,6 +150,7 @@ do
             self:progress_update(nil, i, nil)
          end
          self:progress_update_indeterminate("Generating content...")
+         self._tracking_lines = false
          awpa.env:generate_content()
          do
             self:progress_update("Preparing to update XML payloads... (%v/%m)", nil, payload_count)

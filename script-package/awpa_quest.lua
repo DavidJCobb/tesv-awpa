@@ -87,6 +87,20 @@ do
                group:from_xml(node)
                return
             end
+            if node.node_name == "line" then
+               local item = awpa.line(self)
+               local list = self.results_root_topic.children
+               list[#list + 1] = item
+               item:from_xml(node)
+               return
+            end
+            if node.node_name == "shared-info" then
+               local item = awpa.shared_info_reference(self)
+               local list = self.results_root_topic.children
+               list[#list + 1] = item
+               item:from_xml(node)
+               return
+            end
             if node.node_name == "macro" then
                -- TODO
                return
@@ -181,6 +195,7 @@ do
                alias.allow_reserved  = true
                alias.allow_reuse     = true
                alias.fill            = actor_form
+               alias.optional        = true
                
                aliases_by_actor[actor_form] = alias
                alias_ids_in_use[alias_id]   = true
@@ -194,6 +209,14 @@ do
       end
       function instance_members:generate_dialogue()
          local quest = self:get_or_create_form()
+         quest.allow_repeated_stages      = true
+         quest.run_once                   = false
+         quest.start_game_enabled         = false
+         quest.warn_on_alias_fill_failure = true
+         do
+            local alias = quest.aliases["ActorToFind"]
+            alias.optional = true
+         end
          
          self:ensure_actor_selection_aliases()
          

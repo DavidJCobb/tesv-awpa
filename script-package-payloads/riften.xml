@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <payload>
+   <shared-infos>
+      <shared-info id="mistveil-keep-employee" editor-id-slug="MistveilKeepEmployee">
+         <line>He should be working at Mistveil Keep right now.</line>
+      </shared-info>
+      <shared-info id="mistveil-keep-housecarl" editor-id-slug="MistveilKeepHousecarl">
+         <line>The Jarl's housecarl? He'll be at Mistveil Keep.</line>
+      </shared-info>
+      <shared-info id="mistveil-keep-jarl" editor-id-slug="MistveilKeepJarl">
+         <line>Riften's Jarl? He should be at Mistveil Keep right now.</line>
+         <line>Probably sitting on his throne in Mistveil Keep.</line>
+         <line>You'll find the Jarl at Mistveil Keep.</line>
+      </shared-info>
+      <shared-info id="mistveil-keep-jarl-son" editor-id-slug="MistveilKeepJarlSon">
+         <line>The Jarl's son? You'll find him at Mistveil Keep.</line>
+         <line>That would be the Jarl's son. Check Mistveil Keep.</line>
+      </shared-info>
+      <shared-info id="mistveil-keep-steward" editor-id-slug="MistveilKeepSteward">
+         <line>The Jarl's steward? He'll be at Mistveil Keep.</line>
+      </shared-info>
+   </shared-infos>
    <quest id="AWPARiften">
       <dialogue-conditions>
          <!-- Can only ask Riften townspeople: -->
@@ -109,7 +129,7 @@
          <actor editor-id="Anuriel">
             <invoke name="actor-exiled-by-imperials" />
          </actor>
-         <actor editor-id="Arnskar">
+         <actor editor-id="Arnskar" name="Arnskar Ember-Master">
             <invoke name="tg-member-dfn-never-surface" />
             <begin-asking-about>
                <filter-conditions>
@@ -117,10 +137,10 @@
                </filter-conditions>
             </begin-asking-about>
          </actor>
-         <actor editor-id="Asbjorn" />
-         <actor editor-id="Asgeir" />
+         <actor editor-id="Asbjorn" name="Asbjorn Fire-Timer" />
+         <actor editor-id="Asgeir" name="Asgeir Snow-Shod" />
          <actor editor-id="Balimund" />
-         <actor editor-id="BassianusAxius">
+         <actor editor-id="BassianusAxius" name="Bassianus Axius">
             <begin-asking-about>
                <filter-conditions>
                   <!--
@@ -129,7 +149,7 @@
                </filter-conditions>
             </begin-asking-about>
          </actor>
-         <actor editor-id="Bersi">
+         <actor editor-id="Bersi" name="Bersi Honey-Hand">
             <!--
                TODO: don't allow asking this actor while harassing 
                their shop/business for the TG, nor in the immediate 
@@ -138,7 +158,7 @@
             -->
          </actor>
          <actor editor-id="Bolli" />
-         <actor editor-id="BrandShei">
+         <actor editor-id="BrandShei" name="Brand-Shei">
             <!--
                TODO: don't allow asking this actor while the player 
                is busy framing him, or while he's in jail Enforce this 
@@ -149,22 +169,22 @@
          <actor editor-id="Briehl" />
          <actor editor-id="Brynjolf">
          </actor>
-         <actor editor-id="ConstanceMichel">
+         <actor editor-id="ConstanceMichel" name="Constance Michel">
             <!--
                TODO: don't allow asking this actor while she's shocked 
                by Grelod's murder.
             -->
          </actor>
-         <actor editor-id="CynricEndell">
+         <actor editor-id="CynricEndell" name="Cynric Endell">
             <invoke name="tg-member-dfn-never-surface" />
          </actor>
-         <actor editor-id="DelvinMallory" name="Delvin">
+         <actor editor-id="DelvinMallory" name="Delvin Mallory">
             <invoke name="tg-member-dfn-never-surface" />
          </actor>
-         <actor editor-id="Dinya" />
+         <actor editor-id="Dinya" name="Dinya Balu" />
          <actor editor-id="Edda" />
          <actor editor-id="Elgrim" />
-         <actor editor-id="EtienneRarnis">
+         <actor editor-id="EtienneRarnis" name="Etienne Rarnis">
             <!--
                Etienne is held prisoner in the Thalmor Embassy. If he survives 
                the player's raid on the place, he relocates to Riften to join 
@@ -211,7 +231,7 @@
                </filter-conditions>
             </begin-asking-about>
          </actor>
-         <actor editor-id="Francois" />
+         <actor editor-id="Francois" name="Francois Beaufort" />
          <actor editor-id="FromDeepestFathoms" name="From-Deepest-Fathoms">
             <begin-asking-about>
                <!--
@@ -253,7 +273,7 @@
                </topic>
             </begin-asking-to>
          </actor>
-         <actor editor-id="Grelod">
+         <actor editor-id="Grelod" name="Grelod the Kind">
          </actor>
          <actor editor-id="Haelga">
             <!--
@@ -265,8 +285,8 @@
          </actor>
          <actor editor-id="Hafjorg" />
          <actor editor-id="Harrald" />
-         <actor editor-id="Hemming" />
-         <actor editor-id="HerluinLothaire">
+         <actor editor-id="Hemming" name="Hemming Black-Briar" />
+         <actor editor-id="HerluinLothaire" name="Herluin Lothaire">
             <invoke name="tg-member-dfn-never-surface" />
             <begin-asking-about>
                <filter-conditions>
@@ -275,14 +295,14 @@
             </begin-asking-about>
          </actor>
          <actor editor-id="Hroar" />
-         <actor editor-id="Hofgrir" />
+         <actor editor-id="Hofgrir" name="Hofgrir Horse-Crusher" />
          <actor editor-id="Indaryn">
             <!--
                TODO: examine Indaryn's lines and character; not sure he 
                would be a helpful man
             -->
          </actor>
-         <actor editor-id="Ingun">
+         <actor editor-id="Ingun" name="Ingun Black-Briar">
             <begin-responding>
                <topic slug="Scatterbrained">
                   <!--
@@ -358,10 +378,10 @@
                conditions; use a helper script if necessary
             -->
          </actor>
-         <actor editor-id="Laila">
+         <actor editor-id="Laila" name="Laila Law-Giver">
             <invoke name="actor-exiled-by-imperials" />
          </actor>
-         <actor editor-id="LouisLetrush" />
+         <actor editor-id="LouisLetrush" name="Louis Letrush" />
          <actor editor-id="Madesi" />
          <actor editor-id="Maramal" />
          <actor editor-id="HirelingMarcurio" name="Marcurio">
@@ -375,7 +395,7 @@
                </filter-conditions>
             </begin-asking-about>
          </actor>
-         <actor editor-id="Marise" />
+         <actor editor-id="Marise" name="Marise Avrael" />
          <actor editor-id="Maul">
             <begin-asking-to>
                <!--
@@ -430,7 +450,7 @@
                </bribe>
             </begin-asking-to>
          </actor>
-         <actor editor-id="Maven">
+         <actor editor-id="Maven" name="Maven Black-Briar">
             <begin-asking-to>
                <topic slug="AnnoyedByFilthyCommoner">
                   <!--
@@ -453,22 +473,22 @@
                </topic>
             </begin-asking-to>
          </actor>
-         <actor editor-id="MercerFrey">
+         <actor editor-id="MercerFrey" name="Mercer Frey">
             <invoke name="tg-member-dfn-never-surface" />
          </actor>
-         <actor editor-id="Mjoll" />
-         <actor editor-id="Molgrom" />
-         <actor editor-id="Niluva" />
+         <actor editor-id="Mjoll" name="Mjoll the Lioness" />
+         <actor editor-id="Molgrom" name="Molgrom Twice-Killed" />
+         <actor editor-id="Niluva" name="Niluva Hlaalu" />
          <actor editor-id="Niruin">
             <invoke name="tg-member-dfn-never-surface" />
          </actor>
          <actor editor-id="Nivenor" />
-         <actor editor-id="Nura" />
-         <actor editor-id="RavynImyan" name="Ravyn">
+         <actor editor-id="Nura" name="Nura Snow-Shod" />
+         <actor editor-id="RavynImyan" name="Ravyn Imyan">
             <invoke name="tg-member-dfn-never-surface" />
          </actor>
-         <actor editor-id="Romlyn" />
-         <actor editor-id="Runa" />
+         <actor editor-id="Romlyn" name="Romlyn Dreth" />
+         <actor editor-id="Runa" name="Runa Fair-Shield" />
          <actor editor-id="Rune">
             <invoke name="tg-member-dfn-never-surface" />
          </actor>
@@ -498,7 +518,7 @@
             about him.
          -->
          <!--<actor editor-id="Snilf" />-->
-         <actor editor-id="Svana" />
+         <actor editor-id="Svana" name="Svana Far-Shield" />
          <actor editor-id="Syndus">
             <invoke name="tg-member-dfn-never-surface" />
             <begin-asking-about>
@@ -515,15 +535,16 @@
                conditions; use a helper script if necessary
             -->
          </actor>
-         <actor editor-id="Threki" />
+         <actor editor-id="Threki" name="Threki the Innocent" />
          <actor editor-id="Thrynn">
             <invoke name="tg-member-dfn-never-surface" />
          </actor>
          <actor editor-id="Tonilia">
             <invoke name="tg-member-dfn-never-surface" />
          </actor>
-         <actor editor-id="Tythis" />
+         <actor editor-id="Tythis" name="Tythis Ulen" />
          <actor editor-id="Ungrien" />
+         <actor editor-id="Unmid" />
          <actor editor-id="Vald">
             <begin-asking-about>
                <filter-conditions>
@@ -532,7 +553,7 @@
             </begin-asking-about>
          </actor>
          <actor editor-id="Valindor" />
-         <actor editor-id="VanrythGatharian">
+         <actor editor-id="VanrythGatharian" name="Vanryth Gatharian">
             <invoke name="tg-member-dfn-never-surface" />
             <begin-asking-about>
                <filter-conditions>
@@ -540,16 +561,16 @@
                </filter-conditions>
             </begin-asking-about>
          </actor>
-         <actor editor-id="Vekel">
+         <actor editor-id="Vekel" name="Vekel the Man">
             <invoke name="tg-member-dfn-never-surface" />
          </actor>
          <actor editor-id="Vex">
             <invoke name="tg-member-dfn-never-surface" />
          </actor>
-         <actor editor-id="VipirtheFleet" name="Vipir">
+         <actor editor-id="VipirtheFleet" name="Vipir the Fleet">
             <invoke name="tg-member-dfn-never-surface" />
          </actor>
-         <actor editor-id="Vulwulf">
+         <actor editor-id="Vulwulf" name="Vulwulf Snow-Shod">
             <begin-asking-to>
                <topic slug="Racism">
                   <!--
@@ -598,10 +619,31 @@
             </begin-responding>
          </actor>
          <actor editor-id="Wujeeta" />
-         <actor editor-id="Wilhelm" />
+         <actor editor-id="Wylandriah" />
       </actors>
       
       <!-- Content macros: -->
+      <macro name="owned-house">
+         <parameter name="OWNER" />
+         <parameter name="OWNER-PRINTABLE" default-value="%OWNER%" />
+         <data>
+            <g>
+               <conditions>
+                  <actor-base of="subject" is="%OWNER%" />
+               </conditions>
+               <shared-info id="shared-at-own-home" />
+            </g>
+            <g>
+               <conditions>
+                  <actor-base of="speaker" is="%OWNER%" />
+               </conditions>
+               <shared-info id="shared-at-my-home" />
+            </g>
+            <line>He's at <substitution parameter="OWNER-PRINTABLE" />'s house.</line>
+            <line>I think he's visiting <substitution parameter="OWNER-PRINTABLE" /> right now.</line>
+            <line>I think I saw him on his way to <substitution parameter="OWNER-PRINTABLE" />'s house.</line>
+         </data>
+      </macro>
       <macro name="owned-room">
          <parameter name="OWNER" />
          <parameter name="OWNER-PRINTABLE" default-value="%OWNER%" />
@@ -630,6 +672,7 @@
       </top-g>
       <top-g slug="SameInterior">
          <conditions>
+            <is-in-interior of="subject" />
             <parent-cell of="speaker" same-as="subject" />
          </conditions>
          
@@ -1059,6 +1102,9 @@
       </top-g> <!-- /SameInterior -->
       
       <top-g slug="Interiors">
+         <conditions>
+            <is-in-interior of="subject" />
+         </conditions>
          <g name="bee-and-barb">
             <conditions>
                <parent-cell of="subject" is="RiftenBeeandBarb" />
@@ -1092,6 +1138,808 @@
             <line>I think I saw him walk into the Bee and Barb a little while ago.</line>
             <line>Pretty sure he's at the Bee and Barb right now.</line>
          </g> <!-- /bee-and-barb -->
+         <g name="beggars-row">
+            <conditions>
+               <parent-cell of="subject" is="RiftenHouseofMjolltheLioness" />
+            </conditions>
+            <g name="asking-about-madesi">
+               <conditions>
+                  <actor-base of="subject" is="Madesi" />
+               </conditions>
+               <line>Madesi sleeps with the beggars down in Beggar's Row. You can reach it from the canal's walkways.</line>
+               <line>He stays in Beggar's Row. Check the northern part of the canal.</line>
+               <line>He lives in a homeless den down in the canals.</line>
+               <g name="grelka">
+                  <conditions>
+                     <actor-base of="speaker" is="Grelka" />
+                  </conditions>
+                  <line emotion="disgust:55" script-notes="this is a racist quip">Check Beggar's Row. It's as close to a swamp as you'll get around here.</line>
+               </g>
+               <g name="svana">
+                  <conditions>
+                     <actor-base of="speaker" is="Svana" />
+                  </conditions>
+                  <line emotion="sad:80" script-notes="Stress &quot;says;&quot; you doubt he's being truthful, and you're worried that he feels he isn't welcome at the Bunkhouse due to the racist behavior of tenants such as Grelka.">He sleeps in Beggar's Row. He says he prefers it down there, but...</line>
+                  <line emotion="sad:70" script-notes="You doubt that he is being truthful, and are worried about him.">Probably at Beggar's Row, in the canal. Supposedly he likes sleeping someplace cold and damp.</line>
+               </g>
+            </g>
+            <g name="asking-about-beggar">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Edda" />
+                     <actor-base of="subject" is="Snilf" />
+                  </or>
+               </conditions>
+               <line>One of the beggars? They've got a nest down in the sewers. You can reach it from the northern part of the canal.</line>
+               <line>There's no better place to look for a beggar than Beggar's Row, in the canal.</line>
+               <line>The beggars sleep in a homeless den down in the canal. Try checking there.</line>
+            </g>
+            <line>Try checking Beggar's Row, down in the northern part of the canal.</line>
+            <line>I think I saw him walking into Beggar's Row, in the canal.</line>
+         </g> <!-- /beggars-row -->
+         <g name="black-briar-manor">
+            <conditions>
+               <parent-cell of="subject" is="RiftenBlackBriarManor" />
+            </conditions>
+            <g name="asking-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="speaker" is="Hemming" />
+                     <actor-base of="speaker" is="Ingun" />
+                     <actor-base of="speaker" is="Maven" />
+                     <actor-base of="speaker" is="Sibbi" />
+                  </or>
+               </conditions>
+               <g name="asking-resident-about-housecarl">
+                  <conditions>
+                     <actor-base of="subject" is="Maul" />
+                  </conditions>
+                  <line>Maul is our housecarl. He stays in our manor when he isn't assisting with family business elsewhere.</line>
+                  <line>Our housecarl lives with us at Black-Briar Manor. He's likely there now.</line>
+                  <line>He should be guarding our family manor right now.</line>
+                  <line>I believe he's at home right now. He lives in our manor.</line>
+               </g>
+               <g name="asking-resident-about-resident">
+                  <conditions>
+                     <or>
+                        <actor-base of="subject" is="Hemming" />
+                        <actor-base of="subject" is="Ingun" />
+                        <actor-base of="subject" is="Maven" />
+                        <actor-base of="subject" is="Sibbi" />
+                     </or>
+                  </conditions>
+                  <line>He's probably at home right now.</line>
+                  <line>I think he's at home.</line>
+                  <line>Try checking our family manor.</line>
+                  <line>I believe I saw him heading home not too long ago.</line>
+               </g>
+               <line>I saw him around our family manor a little while ago.</line>
+               <line>Try checking our manor, next to Mistveil Keep.</line>
+               <line>He walked into my family's manor not too long ago.</line>
+            </g>
+            <g name="asking-about-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Hemming" />
+                     <actor-base of="subject" is="Ingun" />
+                     <actor-base of="subject" is="Maven" />
+                     <actor-base of="subject" is="Sibbi" />
+                  </or>
+               </conditions>
+               <line>He's probably at the Black-Briar family's mansion.</line>
+               <line>Check Black-Briar Manor.</line>
+               <shared-info id="shared-at-own-home" />
+            </g>
+            <line>I think I saw him around Black-Briar Manor not too long ago.</line>
+            <line>You might find him over by Black-Briar Manor.</line>
+            <line>Hm... Try looking around Black-Briar Manor.</line>
+         </g> <!-- /black-briar-manor -->
+         <g name="black-briar-meadery">
+            <conditions>
+               <parent-cell of="subject" is="RiftenBlackBriarMeadery" />
+            </conditions>
+            <g name="asking-about-employee">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Asgeir" />
+                     <actor-base of="subject" is="Indaryn" />
+                     <actor-base of="subject" is="Niluva" />
+                     <actor-base of="subject" is="Romlyn" />
+                  </or>
+               </conditions>
+               <line>He works at the Black-Briar Meadery. He's probably there now.</line>
+               <line>He's probably at work right now. Check the Black-Briar Meadery.</line>
+               <line>One of the employees at Black-Briar Meadery. Try looking in there.</line>
+            </g>
+            <line>I think I saw him by the Black-Briar Meadery.</line>
+            <line>I'd check the Black-Briar Meadery.</line>
+            <line>He might be at the city's meadery.</line>
+            <line>Try looking in the Black-Briar Meadery.</line>
+         </g> <!-- /black-briar-meadery -->
+         <g name="elgrims-elixirs">
+            <conditions>
+               <parent-cell of="subject" is="RiftenElgrimsElixirs" />
+            </conditions>
+            <g name="asking-about-ingun">
+               <conditions>
+                  <actor-base of="subject" is="Ingun" />
+               </conditions>
+               <line>He studies alchemy at Elgrim's Elixirs. Try looking in there.</line>
+               <line>Knowing him, he's probably hanging out with the local alchemists.</line>
+               <line>Elgrim's Elixirs. He hardly goes anywhere else.</line>
+            </g>
+            <g name="asking-about-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Elgrim" />
+                     <actor-base of="subject" is="Hafjorg" />
+                  </or>
+               </conditions>
+               <g name="at-work">
+                  <conditions>
+                     <offers-services of="subject" />
+                  </conditions>
+                  <line>He runs a shop out of his house: Elgrim's Elixirs. It's down in the canal.</line>
+                  <line>Elgrim and Hafjorg run Elgrim's Elixirs out of their home in the canal.</line>
+                  <line>He works out of his home. Head to Elgrim's Elixirs.</line>
+               </g>
+               <shared-info id="shared-at-own-home" />
+            </g>
+            <line>Try checking Elgrim's Elixirs.</line>
+            <line>I think I saw him on his way to Elgrim's Elixirs not too long ago.</line>
+            <line>Buying potions, perhaps. I saw him heading to Elgrim's Elixirs.</line>
+            <line>I remember seeing him walking into Elgrim's Elixirs a little while ago.</line>
+         </g> <!-- /elgrims-elixirs -->
+         <g name="haelgas-bunkhouse">
+            <conditions>
+               <parent-cell of="subject" is="RiftenHaelgasBunkhouse" />
+            </conditions>
+            <g non-exclusive="true">
+               <conditions>
+                  <condition-set name="is-bunkhouse-tenant" of="subject" />
+               </conditions>
+               <line>He's one of the tenants at the Bunkhouse. He's probably there now.</line>
+               <line>He's probably at the Bunkhouse, where he lives.</line>
+               <line>He stays at the Bunkhouse. Have you looked there?</line>
+            </g>
+            <g non-exclusive="true">
+               <conditions>
+                  <actor-base of="speaker" is-not="Haelga" />
+                  <actor-base of="subject" is-not="Haelga" />
+               </conditions>
+               <line>I think I saw him walking into Haelga's Bunkhouse.</line>
+               <line>Hmm... Try checking Haelga's Bunkhouse.</line>
+            </g>
+            <line>I'm pretty sure I saw him at the Bunkhouse not too long ago.</line>
+            <line>Try looking in the Bunkhouse.</line>
+         </g> <!-- /haelgas-bunkhouse -->
+         <g name="hall-of-the-dead">
+            <conditions>
+               <parent-cell of="subject" is="RiftenMausoleum" />
+            </conditions>
+            <g non-exclusive="true">
+               <conditions>
+                  <actor-base of="subject" is="Alessandra" />
+               </conditions>
+               <line>He works at the Hall of the Dead. Have you looked there?</line>
+            </g>
+            <line>I believe he's at the Hall of the Dead right now. It's near the Temple of Mara.</line>
+            <line>Try checking the Hall of the Dead. If you enter the Temple of Mara's courtyard, coming from the market, the door will be on your left.</line>
+            <line>I think I saw him walk into the Hall of the Dead not too long ago.</line>
+         </g> <!-- /hall-of-the-dead -->
+         <g name="honeyside">
+            <conditions>
+               <parent-cell of="subject" is="RiftenHoneyside" />
+            </conditions>
+            <g non-exclusive="true">
+               <conditions>
+                  <actor-base of="subject" is="HousecarlRiften" />
+               </conditions>
+               <line>He's the housecarl at Honeyside.</line>
+            </g>
+            <line>Try checking Honeyside.</line>
+            <line>Hm... I'd look around Honeyside, a house at the northwest corner of the city.</line>
+            <line emotion="puzzled:60">Maybe Honeyside? Have you looked there?</line>
+         </g> <!-- /honeyside -->
+         <g name="honorhall-orphanage">
+            <conditions>
+               <parent-cell of="subject" is="RiftenHonorhallOprhanage" />
+            </conditions>
+            <g name="grelod" non-exclusive="true">
+               <conditions>
+                  <actor-base of="subject" is="Grelod" />
+               </conditions>
+               <g name="asking-kid">
+                  <conditions>
+                     <or>
+                        <actor-base of="subject" is="Francois" />
+                        <actor-base of="subject" is="Hroar" />
+                        <actor-base of="subject" is="Runa" />
+                        <actor-base of="subject" is="Samuel" />
+                     </or>
+                  </conditions>
+                  <line emotion="sad:70">She's probably at the orphanage right now.</line>
+               </g>
+               <g name="contempt">
+                  <conditions>
+                     <or>
+                        <!--
+                           Arbitrarily-chosen actors that I assume would notice Grelod 
+                           and speak negatively about her, either out of genuine moral 
+                           condemnation or simply because they are snarky.
+                        -->
+                        <actor-base of="subject" is="BrandShei" />
+                        <actor-base of="subject" is="Edda" />
+                        <actor-base of="subject" is="Grelod" />
+                        <actor-base of="subject" is="Marise" />
+                        <actor-base of="subject" is="Rune" />
+                        <actor-base of="subject" is="Saerlund" />
+                        <actor-base of="subject" is="Sapphire" />
+                        <actor-base of="subject" is="Svana" />
+                        <actor-base of="subject" is="Tythis" />
+                        <actor-base of="subject" is="Vex" />
+                     </or>
+                  </conditions>
+                  <line emotion="digust:80">I'm not sure why you or anyone else would want to see him, but he works at Honorhall Orphanage.</line>
+                  <line emotion="digust:70">He runs Honorhall Orphanage, unfortunately. Try looking in there.</line>
+                  <line emotion="digust:80">He'll be at Honorhall Orphanage, probably snarling at one of the children.</line>
+                  <line emotion="angry:75">He's at Honorhall Orphanage. Pretty sure I heard her barking at the kids in there a little while ago.</line>
+                  <line emotion="digust:80">Ugh, him. Have you checked Honorhall Orphanage?</line>
+                  <line emotion="digust:100">You'll find that awful harpy at Honorhall.</line>
+               </g>
+               <line>He runs Honorhall Orphanage. You'll probably find him there.</line>
+            </g>
+            <g name="constance">
+               <conditions>
+                  <actor-base of="subject" is="ConstanceMichel" />
+               </conditions>
+               <line>He works at Honorhall Orphanage. Have you looked there?</line>
+               <line>You'll find him at Honorhall Orphanage.</line>
+            </g>
+            <g name="resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Francois" />
+                     <actor-base of="subject" is="Hroar" />
+                     <actor-base of="subject" is="Runa" />
+                     <actor-base of="subject" is="Samuel" />
+                  </or>
+               </conditions>
+               <line>One of the orphans. You'll find him at Honorhall.</line>
+               <line>He's one of the children living at Honorhall Orphanage.</line>
+               <line>He lives at Honorhall Orphanage.</line>
+            </g>
+            <line>I think I saw him stop by Honorhall Orphanage.</line>
+            <line>Try checking Honorhall Orphanage, at the southwest corner of the city.</line>
+            <line>I might've seen him walking into Honorhall Orphanage not too long ago.</line>
+         </g> <!-- /honorhall-orphanage -->
+         <g name="mistveil-keep-main">
+            <conditions>
+               <parent-cell of="subject" is="RiftenMistveilKeep" />
+            </conditions>
+            <g name="from-elsewhere-in-keep">
+               <conditions>
+                  <or>
+                     <parent-cell of="speaker" is="RiftenMistveilBarracks" />
+                     <parent-cell of="speaker" is="RiftenMistveilKeepJarlsChambers" />
+                  </or>
+               </conditions>
+               <line>He should be in the Keep's main hall.</line>
+               <line>Check the main hall.</line>
+               <line>I'd expect him to be in the main hall right now.</line>
+            </g>
+            <g name="stormcloak">
+               <conditions>
+                  <condition-set name="under-stormcloak-control" />
+               </conditions>
+               <g name="housecarl">
+                  <conditions>
+                     <actor-base of="subject" is="Unmid" />
+                  </conditions>
+                  <shared-info id="mistveil-keep-housecarl" />
+                  <shared-info id="mistveil-keep-employee" />
+               </g>
+               <g name="jarl">
+                  <conditions>
+                     <actor-base of="subject" is="Laila" />
+                  </conditions>
+                  <shared-info id="mistveil-keep-jarl" />
+               </g>
+               <g name="jarl-son">
+                  <conditions>
+                     <condition-set name="under-stormcloak-control" />
+                     <or>
+                        <actor-base of="subject" is="Harrald" />
+                        <actor-base of="subject" is="Saerlund" />
+                     </or>
+                  </conditions>
+                  <shared-info id="mistveil-keep-jarl-son" />
+                  <line>Ah, Jarl Laila's son. He'll be at Mistveil Keep.</line>
+               </g>
+               <g name="steward">
+                  <conditions>
+                     <actor-base of="subject" is="Anuriel" />
+                  </conditions>
+                  <shared-info id="mistveil-keep-steward" />
+                  <shared-info id="mistveil-keep-employee" />
+               </g>
+            </g>
+            <g name="imperial">
+               <conditions>
+                  <condition-set name="under-imperial-control" />
+               </conditions>
+               <g name="housecarl">
+                  <conditions>
+                     <actor-base of="subject" is="Maul" />
+                  </conditions>
+                  <shared-info id="mistveil-keep-housecarl" />
+                  <shared-info id="mistveil-keep-employee" />
+               </g>
+               <g name="jarl">
+                  <conditions>
+                     <actor-base of="subject" is="Maven" />
+                  </conditions>
+                  <g name="poly-ticks">
+                     <!--
+                        Characters with significant Stormcloak sympathies will not acknowledge 
+                        Maven as the Jarl. Characters who oppose the Black-Briars for apolitical 
+                        reasons will likewise be incensed.
+                     -->
+                     <conditions>
+                        <or>
+                           <!--
+                              Ardent Stormcloak supporters:
+                           -->
+                           <actor-base of="speaker" is="Nura" />
+                           <actor-base of="speaker" is="Vulwulf" />
+                           <!--
+                              Non-political objectors:
+                           -->
+                           <actor-base of="speaker" is="Mjoll" />
+                        </or>
+                     </conditions>
+                     <line emotion="digust:70">Maven is at Mistveil Keep right now.</line>
+                     <line emotion="digust:60">Check Mistveil Keep.</line>
+                     <line emotion="anger:90">The Imperials put him on the throne. Try checking there.</line>
+                  </g>
+                  <shared-info id="mistveil-keep-jarl" />
+               </g>
+               <g name="steward">
+                  <conditions>
+                     <actor-base of="subject" is="Hemming" />
+                  </conditions>
+                  <shared-info id="mistveil-keep-steward" />
+                  <shared-info id="mistveil-keep-employee" />
+               </g>
+            </g>
+            <g name="wizard">
+               <conditions>
+                  <actor-base of="subject" is="Wylandriah" />
+               </conditions>
+               <line>The court wizard. He'll be at Mistveil Keep.</line>
+               <line>A member of the Jarl's court. Try checking Mistveil Keep.</line>
+               <shared-info id="mistveil-keep-employee" />
+            </g>
+            <line>Check Mistveil Keep.</line>
+            <line>I saw him walking into Mistveil Keep not too long ago.</line>
+            <line>He's over at Mistveil Keep.</line>
+         </g> <!-- /mistveil-keep-main -->
+         <g name="mistveil-keep-barracks">
+            <conditions>
+               <parent-cell of="subject" is="RiftenMistveilKeepBarracks" />
+            </conditions>
+            <g name="from-elsewhere-in-keep">
+               <conditions>
+                  <or>
+                     <parent-cell of="speaker" is="RiftenMistveilKeep" />
+                     <parent-cell of="speaker" is="RiftenMistveilKeepJarlsChambers" />
+                  </or>
+               </conditions>
+               <line>He should be in the Keep's barracks.</line>
+               <line>Check the barracks.</line>
+               <line>I'd expect him to be in the barracks right now.</line>
+            </g>
+            <line>Check Mistveil Keep's barracks.</line>
+            <line>I saw him walking into the barracks at Mistveil Keep, a little while ago.</line>
+            <line>He's over at Mistveil Keep, in the barracks.</line>
+         </g> <!-- /mistveil-keep-barracks -->
+         <g name="mistveil-keep-chambers">
+            <conditions>
+               <parent-cell of="subject" is="RiftenMistveilKeepJarlsChambers" />
+            </conditions>
+            <g name="from-elsewhere-in-keep">
+               <conditions>
+                  <or>
+                     <parent-cell of="speaker" is="RiftenMistveilKeep" />
+                     <parent-cell of="speaker" is="RiftenMistveilBarracks" />
+                  </or>
+               </conditions>
+               <line>Check the Jarl's chambers.</line>
+               <line>I'd expect him to be in the Jarl's chambers right now.</line>
+            </g>
+            <line>Check Mistveil Keep's bedrooms.</line>
+            <line>He's over at Mistveil Keep.</line>
+         </g> <!-- /mistveil-keep-chambers -->
+         <g name="pawned-prawn">
+            <conditions>
+               <parent-cell of="subject" is="RiftenPawnedPrawn" />
+            </conditions>
+            <g name="owner">
+               <conditions>
+                  <!--
+                     is Bersi || (is Drifa && Bersi Dead)
+                     ==
+                     (Bersi || Drifa) && (Bersi || Bersi Dead)
+                  -->
+                  <or>
+                     <actor-base of="subject" is="Bersi" />
+                     <actor-base of="subject" is="Drifa" />
+                  </or>
+                  <or>
+                     <actor-base of="subject" is="Bersi" />
+                     <death-count for="Bersi" gt="0" />
+                  </or>
+                  <offers-services of="subject" />
+               </conditions>
+               <line>He runs the Pawned Prawn out of his home on the city's west wall.</line>
+               <line>He should be working at his shop, the Pawned Prawn, right now.</line>
+               <line>Have you checked his store, the Pawned Prawn?</line>
+               <line>Try the Pawned Prawn, Riften's general goods store. He works there.</line>
+            </g>
+            <g name="resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Bersi" />
+                     <actor-base of="subject" is="Drifa" />
+                  </or>
+               </conditions>
+               <g name="resident-about-resident">
+                  <conditions>
+                     <or>
+                        <actor-base of="speaker" is="Bersi" />
+                        <actor-base of="speaker" is="Drifa" />
+                     </or>
+                  </conditions>
+                  <line>We own the Pawned Prawn, on the city's west wall. I'm sure you'll find him there.</line>
+                  <line>Try checking our shop, the Pawned Prawn. He should be in there right now.</line>
+                  <line>He's at the Pawned Prawn, our store.</line>
+               </g>
+               <shared-info id="shared-at-own-home" />
+            </g>
+            <line>I believe I saw him stopping by the Pawned Prawn not too long ago.</line>
+            <line>He might be at the Pawned Prawn right now.</line>
+            <line>Hm... Try looking in the Pawned Prawn.</line>
+            <line>I remember seeing him heading toward the Pawned Prawn a little while ago.</line>
+         </g> <!-- /pawned-prawn -->
+         <g name="riften-fishery">
+            <conditions>
+               <parent-cell of="subject" is="RiftenFishery" />
+            </conditions>
+            <g name="owner">
+               <conditions>
+                  <actor-base of="subject" is="Bolli" />
+               </conditions>
+               <line>He owns Riften's fishery. He might be there right now.</line>
+               <line>The fishery's owner. I think he's there now.</line>
+            </g>
+            <g name="employee">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Valindor" />
+                     <actor-base of="subject" is="Wujeeta" />
+                  </or>
+               </conditions>
+               <line>He works at the Riften Fishery. Have you looked there?</line>
+               <line>He should be working at the fishery right now.</line>
+               <line>Try checking the Riften Fishery. He works there.</line>
+            </g>
+            <line>Try checking the Riften Fishery.</line>
+            <line>I think I saw him heading to the Riften Fishery not too long ago.</line>
+            <line>He might be at the Riften Fishery.</line>
+         </g> <!-- /riften-fishery -->
+         <g name="riften-jail">
+            <conditions>
+               <parent-cell of="subject" is="RiftenJail01" />
+            </conditions>
+            <g name="molgrom">
+               <conditions>
+                  <actor-base of="subject" is="Molgrom" />
+               </conditions>
+               <g name="brynjolf-on-molgrom">
+                  <conditions>
+                     <actor-base of="speaker" is="Brynjolf" />
+                     <condition-set name="player-in-thieves-guild" />
+                  </conditions>
+                  <line emotion="anger:65">One of ours. You'll find him in the city jail. His methods were too messy, and he's paying the price for that.</line>
+                  <line emotion="disgust:80">Molgrom was working a job for us. He took shortcuts and spilled too much blood. That's bad for business, so now he gets to spend some time in jail until he's learned his lesson.</line>
+                  <line emotion="anger:70">He's in jail. He botched a job and tried to kill his way out, and there are consequences for that.</line>
+               </g>
+            </g>
+            <g name="sibbi">
+               <conditions>
+                  <actor-base of="subject" is="Sibbi" />
+               </conditions>
+               <g name="townies-on-sibbi">
+                  <conditions>
+                     <or>
+                        <actor-base of="speaker" is="BrandShei" />
+                        <actor-base of="speaker" is="Haelga" />
+                        <actor-base of="speaker" is="Mjoll" />
+                     </or>
+                  </conditions>
+                  <line emotion="disgust:60">He's locked up in jail right now. Word is, he killed someone.</line>
+                  <line emotion="disgust:70">He's been arrested for murder. He's in jail right now.</line>
+                  <line emotion="disgust:70">They have him in jail on a murder charge.</line>
+                  <line emotion="disgust:80">He's in jail, and with any luck, he'll stay there.</line>
+               </g>
+               <g name="ingun-on-sibbi">
+                  <conditions>
+                     <actor-base of="speaker" is="Ingun" />
+                  </conditions>
+                  <line script-notes="apathetic/disinterested">He's in jail for now. There was some sort of conflict involving his ex-fiance.</line>
+                  <line script-notes="&quot;Relationships,&quot; plural, is not a typo; bro has been pursuing multiple women at once, and I'm writing Ingun as aware of this but largely apathetic to it.">He's been arrested. Something went wrong with his relationships, I suppose.</line>
+                  <line script-notes="apathetic/disinterested">He's being held in jail while Mother and the guards sort out... some sort of misunderstanding, I guess.</line>
+               </g>
+               <g name="svana-on-sibbi">
+                  <conditions>
+                     <actor-base of="speaker" is="Svana" />
+                  </conditions>
+                  <line emotion="puzzled:70" script-notes="Slight emphasis on &quot;allegedly.&quot; You find it hard to believe this about the man who's gradually tricking you into becoming his side piece.">He's in jail right now, allegedly for murder.</line>
+                  <line emotion="puzzled:80" script-notes="Emphasis on &quot;say.&quot; You find it hard to believe this about the man who's gradually tricking you into becoming his side piece.">He's being held in jail. They say he murdered someone.</line>
+                  <line emotion="puzzled:60" script-notes="Emphasis on &quot;supposedly.&quot; You find it hard to believe this about the man who's gradually tricking you into becoming his side piece.">He's been arrested. Supposedly, he killed someone. I have my doubts.</line>
+                  <line emotion="sad:80" script-notes="Sibbi is trying to groom you into a relationship and has been successful so far, and you are therefore in denial that your activities led his fiance to attack him, and him to murder her brother.">He was arrested after some kind of conflict with his fiance and her brother. He'll be in jail until that gets sorted out.</line>
+               </g>
+            </g>
+            <g name="inmate">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="BrandShei" />
+                     <actor-base of="subject" is="Molgrom" />
+                     <actor-base of="subject" is="Romlyn" />
+                     <actor-base of="subject" is="Sibbi" />
+                     <actor-base of="subject" is="Threki" />
+                  </or>
+               </conditions>
+               <line>He's in jail right now.</line>
+               <line>He's been arrested. You'll find him in a jail cell.</line>
+               <line>He's being held at the city jail.</line>
+            </g>
+            <line>I think I saw him stopping by the Riften Jail not too long ago.</line>
+            <line>Apparently, he had some business to take care of at the Riften Jail.</line>
+         </g> <!-- /riften-jail -->
+         <g name="riften-stables">
+            <conditions>
+               <parent-cell of="subject" is="RiftenStables" />
+            </conditions>
+            <g name="asking-about-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Hofgrir" />
+                     <actor-base of="subject" is="Shadr" />
+                  </or>
+               </conditions>
+               <line>He works at the Riften Stables. Have you looked there?</line>
+               <line>Have you checked over by the Riften Stables? He works there.</line>
+               <line>Try looking for him at the Riften Stables.</line>
+               <line>He works as a stablehand. Try checking the stables.</line>
+            </g>
+            <line>I believe he's at the Riften Stables.</line>
+            <line>Try checking the city stables.</line>
+            <line>He might be headed to the Riften Stables right now.</line>
+         </g> <!-- /riften-stables -->
+         <g name="riften-warehouse">
+            <conditions>
+               <parent-cell of="subject" is="RiftenWarehouse" />
+            </conditions>
+            <line>He might be at the warehouse down on Plankside.</line>
+            <line>Try checking the warehouse out on the docks.</line>
+         </g> <!-- /riften-warehouse -->
+         <g name="residence-aerin-mjoll">
+            <conditions>
+               <parent-cell of="subject" is="RiftenHouseofMjolltheLioness" />
+            </conditions>
+            <g name="asking-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="speaker" is="Aerin" />
+                     <actor-base of="speaker" is="Mjoll" />
+                  </or>
+               </conditions>
+               <shared-info id="shared-at-my-home" />
+            </g>
+            <g name="asking-about-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Aerin" />
+                     <actor-base of="subject" is="Mjoll" />
+                  </or>
+               </conditions>
+               <shared-info id="shared-at-own-home" />
+            </g>
+            <line>I believe he's at Aerin and Mjoll's house right now.</line>
+            <line>I think I saw him heading toward Aerin and Mjoll's house, by the north gate.</line>
+            <line>Try checking Mjoll the Lioness's house.</line>
+         </g> <!-- /residence-aerin-mjoll -->
+         <g name="residence-bolli-nivenor">
+            <conditions>
+               <parent-cell of="subject" is="RiftenBollisHouse" />
+            </conditions>
+            <g name="asking-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="speaker" is="Bolli" />
+                     <actor-base of="speaker" is="Nivenor" />
+                  </or>
+               </conditions>
+               <g name="asking-resident-about-resident">
+                  <conditions>
+                     <or>
+                        <actor-base of="subject" is="Bolli" />
+                        <actor-base of="subject" is="Nivenor" />
+                     </or>
+                  </conditions>
+                  <shared-info id="shared-at-our-home" />
+               </g>
+               <shared-info id="shared-at-my-home" />
+            </g>
+            <g name="asking-about-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Bolli" />
+                     <actor-base of="subject" is="Nivenor" />
+                  </or>
+               </conditions>
+               <shared-info id="shared-at-own-home" />
+            </g>
+            <line>I believe he's at Bolli's house right now.</line>
+            <line>I think I saw him heading toward Bolli's house, by the north gate.</line>
+            <line>Try checking Bolli's house.</line>
+         </g> <!-- /residence-bolli-nivenor -->
+         <g name="residence-marise">
+            <conditions>
+               <parent-cell of="subject" is="RiftenMariseAvraelsHouse" />
+            </conditions>
+            <invoke name="owned-room">
+               <parameter name="OWNER" value="Marise" />
+            </invoke>
+         </g> <!-- /residence-marise -->
+         <g name="residence-romlyn">
+            <conditions>
+               <parent-cell of="subject" is="RiftenRomlynDrethsHouse" />
+            </conditions>
+            <invoke name="owned-room">
+               <parameter name="OWNER" value="Romlyn" />
+            </invoke>
+         </g> <!-- /residence-romlyn -->
+         <g name="residence-valindor">
+            <conditions>
+               <parent-cell of="subject" is="RiftenValindorsHouse" />
+            </conditions>
+            <invoke name="owned-room">
+               <parameter name="OWNER" value="Valindor" />
+            </invoke>
+         </g> <!-- /residence-valindor -->
+         <g name="residence-snow-shod">
+            <conditions>
+               <parent-cell of="subject" is="RiftenHouseofClanSnowShod" />
+            </conditions>
+            <g name="resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Asgeir" />
+                     <actor-base of="subject" is="Nura" />
+                     <actor-base of="subject" is="Vulwulf" />
+                  </or>
+               </conditions>
+               <g name="resident-about-resident">
+                  <conditions>
+                     <or>
+                        <actor-base of="speaker" is="Asgeir" />
+                        <actor-base of="speaker" is="Nura" />
+                        <actor-base of="speaker" is="Vulwulf" />
+                     </or>
+                  </conditions>
+                  <shared-info id="shared-at-our-home" />
+               </g>
+               <shared-info id="shared-at-own-home" />
+            </g>
+            <line>I believe I saw him on his way to Snow-Shod Manor not too long ago.</line>
+            <line>I think I saw him over by Snow-Shod Manor.</line>
+            <line>Try checking around Clan Snow-Shod's mansion.</line>
+            <line>He might be around Snow-Snod Manor.</line>
+         </g> <!-- /residence-snow-shod -->
+         <g name="temple-of-mara">
+            <conditions>
+               <parent-cell of="subject" is="RiftenTempleofMara" />
+            </conditions>
+            <g name="priest">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Briehl" />
+                     <actor-base of="subject" is="Dinya" />
+                     <actor-base of="subject" is="Maramal" />
+                  </or>
+               </conditions>
+               <line>He's a Priest of Mara. He's probably at the temple right now.</line>
+               <line>He works as a priest at the Temple of Mara. Try checking there.</line>
+               <line>You'll find him at the Temple of Mara. He's a priest there.</line>
+            </g>
+            <g name="alessandra" non-exclusive="true">
+               <conditions>
+                  <actor-base of="subject" is="Alessandra" />
+               </conditions>
+               <line>He works at the Hall of the Dead, but he sleeps at the Temple of Mara. Try checking the temple.</line>
+            </g>
+            <g name="nivenor-on-bolli" non-exclusive="true">
+               <conditions>
+                  <actor-base of="subject" is="Bolli" />
+                  <actor-base of="speaker" is="Nivenor" />
+               </conditions>
+               <line emotion="disgust:70">He's probably giving away all our gold at the Temple of Mara.</line>
+               <line emotion="disgust:60">He's at the Temple of Mara. If I'm lucky, he isn't handing over the deed to the fishery...</line>
+               <line emotion="anger:80" script-notes="Emphasis on &quot;you&quot; and &quot;too;&quot; you are angry that he donates gold to the poor rather than spending literally all of it on you.">Try checking the Temple of Mara. And hey, maybe he'll give you some of our gold too...</line>
+            </g>
+            <line>I think I saw him walking into the Temple of Mara not too long ago.</line>
+            <line>I think he's down at the temple.</line>
+            <line>Try checking the Temple of Mara.</line>
+            <line>He might be at the Temple of Mara. I saw him heading down that way.</line>
+         </g> <!-- /temple-of-mara -->
+         <g name="ragged-flagon">
+            <conditions>
+               <parent-cell of="subject" is="RiftenRaggedFlagon" />
+               <condition-set name="speaker-in-thieves-guild" />
+               <condition-set name="player-in-thieves-guild" />
+            </conditions>
+            <line>He's at the Ragged Flagon right now.</line>
+            <line>Try looking in the Flagon.</line>
+            <line>I think he's down at the Ragged Flagon right now.</line>
+         </g> <!-- /ragged-flagon -->
+         <g name="ragged-flagon-cistern">
+            <conditions>
+               <parent-cell of="subject" is="RiftenThievesGuildHeadquarters" />
+               <condition-set name="speaker-in-thieves-guild" />
+               <condition-set name="player-in-thieves-guild" />
+            </conditions>
+            <line>He's down in our headquarters.</line>
+            <line>Check the cistern behind the Ragged Flagon.</line>
+            <line>He's down in the Ratway Cistern -- the chamber behind the Ragged Flagon.</line>
+         </g> <!-- /ragged-flagon-cistern -->
+         <g name="ratway">
+            <conditions>
+               <or>
+                  <parent-cell of="subject" is="RiftenEsbernsVault" />
+                  <parent-cell of="subject" is="RiftenRatway01" />
+                  <parent-cell of="subject" is="RiftenRatway02" />
+               </or>
+            </conditions>
+            <line>He's down in the Ratway.</line>
+            <line>He's somewhere in the Ratway.</line>
+         </g> <!-- /ragged-flagon-cistern -->
+         <g name="scorched-hammer">
+            <conditions>
+               <parent-cell of="subject" is="RiftenBlacksmith" />
+            </conditions>
+            <g name="asking-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="speaker" is="Asbjorn" />
+                     <actor-base of="speaker" is="Balimund" />
+                  </or>
+               </conditions>
+               <shared-info id="shared-at-my-home" />
+            </g>
+            <g name="asking-about-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Asbjorn" />
+                     <actor-base of="subject" is="Balimund" />
+                  </or>
+               </conditions>
+               <shared-info id="shared-at-own-home" />
+            </g>
+            <line>He's at the blacksmith's house.</line>
+            <line>He's at The Scorched Hammer. Check inside.</line>
+         </g> <!-- /scorched-hammer -->
       </top-g> <!-- /Interiors -->
       
       <top-g slug="Exterior">

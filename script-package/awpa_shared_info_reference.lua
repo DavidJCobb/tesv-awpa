@@ -12,12 +12,26 @@ do
          self.source   = nil -- awpa.shared_info_set
          self.form_ids = {} -- vector<int>
          self.forms    = {} -- vector<topic_info>
+         
+         awpa.env:on_content_object_constructed()
       end,
       instance_members = instance_members,
    })
    do -- member functions
       function instance_members:from_xml(element)
          self.source_xml_node = element
+         
+         do
+            local id = element.attributes["id"]
+            if not id then
+               error("`shared-info` reference specifies no `id`")
+            end
+            local si = awpa.env.shared_infos_by_id[id]
+            if not si then
+               error("missing sharedinfo: " .. tostring(id))
+            end
+            self.source = si
+         end
          
          local id_list = element.attributes["form-ids"]
          if id_list then
@@ -41,6 +55,9 @@ do
       
       function instance_members:generate_infos(topic)
          self.forms = {}
+         
+         local actor_to_find
+         
          for i = 1, #self.source.forms do
             local si     = self.source.forms[i]
             local gender = nil
@@ -61,6 +78,7 @@ do
                and f.use_shared_info == si
                then
                   info = f
+                  utils.replace_condition_list(info, {})
                   break
                end
             end
@@ -70,10 +88,12 @@ do
             self.forms[i] = info
             info.use_shared_info = si
             info.is_random = true
-            utils.replace_condition_list(info, {})
             if gender then
                local cnd = info.conditions:insert()
-               cnd.run_on              = topic.parent_quest.aliases["ActorToFind"]
+               if not actor_to_find then
+                  actor_to_find = topic.parent_quest.aliases["ActorToFind"]
+               end
+               cnd.run_on              = actor_to_find
                cnd.function_name       = "GetIsSex"
                cnd.parameters[1]       = gender
                cnd.comparison.operator = "=="
@@ -85,6 +105,8 @@ do
             ids[i] = self.forms[i].form_id
          end
          self.form_ids = ids
+         
+         awpa.env:on_content_object_processed()
       end
    end
 end

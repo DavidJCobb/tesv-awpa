@@ -88,7 +88,6 @@ do
             cnd.comparison.operator = ">="
             cnd.comparison.operand  = self.range.origin - self.range.half_extent
             
-            cnd = info.conditions:insert()
             self:_set_condition_common(cnd)
             self:_set_condition_run_on(cnd)
             cnd.function_name = "GetPos"

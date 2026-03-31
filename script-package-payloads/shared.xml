@@ -7,6 +7,26 @@
          <line>I haven't seen him around.</line>
          <line>No clue, honestly.</line>
       </shared-info>
+      
+      <shared-info id="shared-at-my-home" editor-id-slug="AtMyHome">
+         <line>He's at my place right now.</line>
+         <line>I saw him around my house not too long ago.</line>
+         <line>Try checking around my house.</line>
+      </shared-info>
+      <shared-info id="shared-at-own-home" editor-id-slug="AtOwnHome">
+         <line>He's at home right now.</line>
+         <line>I'm pretty sure he's at home.</line>
+         <line>Try checking by his house.</line>
+         <line>I think I saw him heading home.</line>
+         <line>He's probably at home.</line>
+         <line>Have you tried stopping by his house?</line>
+      </shared-info>
+      <shared-info id="shared-at-our-home" editor-id-slug="AtOurHome">
+         <line>He's at our home right now.</line>
+         <line>I'm pretty sure he's at our place.</line>
+         <line>Have you checked our home?</line>
+         <line>Try looking around our house.</line>
+      </shared-info>
    
       <shared-info id="shared-upstairs" editor-id-slug="FloorUpstairs">
          <line>He's upstairs.</line>

@@ -54,14 +54,9 @@ do
                return
             end
             if node.node_name == "shared-info" then
-               local si = awpa.env.shared_infos_by_id[node.attributes["id"]]
-               if not si then
-                  error("missing sharedinfo")
-               end
                local item = awpa.shared_info_reference()
                local list = self.children
                list[#list + 1] = item
-               item.source = si
                item:from_xml(node)
                return
             end

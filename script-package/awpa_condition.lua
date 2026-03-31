@@ -135,6 +135,8 @@ do
          ["enable-state"]           = "enable_state",
          ["faction-membership"]     = "faction_membership",
          ["global"]                 = "global",
+         ["is-in-exterior"]         = "is_in_interior",
+         ["is-in-interior"]         = "is_in_interior",
          ["location"]               = "location",
          ["offers-services"]        = "offers_services",
          ["papyrus-quest-variable"] = "papyrus_quest_variable",

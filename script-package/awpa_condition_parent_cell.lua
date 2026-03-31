@@ -77,7 +77,13 @@ do
       function instance_members:is_no_op()
          self:assert_valid()
          if self.actor then
-            if self.run_on == self.actor then
+            local MAPPING = {
+               ["ActorToFind"] = "subject",
+               ["player"]      = "player",
+               ["subject"]     = "speaker",
+            }
+            local mapped = MAPPING[self.run_on]
+            if mapped and mapped == self.actor then
                return true
             end
          end

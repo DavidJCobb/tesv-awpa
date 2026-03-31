@@ -1340,8 +1340,8 @@
                </conditions>
                <line>He works at the Hall of the Dead. Have you looked there?</line>
             </g>
-            <line>I believe he's at the Hall of the Dead right now. It's near the Temple of Mara.</line>
-            <line>Try checking the Hall of the Dead. If you enter the Temple of Mara's courtyard, coming from the market, the door will be on your left.</line>
+            <line>I believe he's at the Hall of the Dead right now. It's underneath the Temple of Mara.</line>
+            <line>Try checking the Hall of the Dead. The entrance is below the Temple of Mara's front door.</line>
             <line>I think I saw him walk into the Hall of the Dead not too long ago.</line>
          </g> <!-- /hall-of-the-dead -->
          <g name="honeyside">

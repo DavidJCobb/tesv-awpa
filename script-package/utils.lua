@@ -58,6 +58,7 @@ function utils.make_invisible_info(topic, editor_id, destination)
    end
    
    info.use_shared_info = awpa.env.built_in_shared_infos["InvisibleInfo"][1]
+   info.invisible_continue = true
    
    if type(destination) == "userdata" then
       destination = { destination }

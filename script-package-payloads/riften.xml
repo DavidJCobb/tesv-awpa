@@ -1343,7 +1343,7 @@
          </g> <!-- /honeyside -->
          <g name="honorhall-orphanage">
             <conditions>
-               <parent-cell of="subject" is="RiftenHonorhallOprhanage" />
+               <parent-cell of="subject" is="RiftenHonorhallOrphanage" />
             </conditions>
             <g name="grelod" non-exclusive="true">
                <conditions>

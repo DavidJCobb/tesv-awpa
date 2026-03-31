@@ -395,7 +395,7 @@
                </filter-conditions>
             </begin-asking-about>
          </actor>
-         <actor editor-id="Marise" name="Marise Avrael" />
+         <actor editor-id="Marise" name="Marise Aravel" />
          <actor editor-id="Maul">
             <begin-asking-to>
                <!--
@@ -639,9 +639,9 @@
                </conditions>
                <shared-info id="shared-at-my-home" />
             </g>
-            <line>He's at <substitution parameter="OWNER-PRINTABLE" />'s house.</line>
-            <line>I think he's visiting <substitution parameter="OWNER-PRINTABLE" /> right now.</line>
-            <line>I think I saw him on his way to <substitution parameter="OWNER-PRINTABLE" />'s house.</line>
+            <line>He's at %OWNER-PRINTABLE%'s house.</line>
+            <line>I think he's visiting %OWNER-PRINTABLE% right now.</line>
+            <line>I think I saw him on his way to %OWNER-PRINTABLE%'s house.</line>
          </data>
       </macro>
       <macro name="owned-room">
@@ -660,7 +660,7 @@
                </conditions>
                <shared-info id="shared-in-my-room" />
             </g>
-            <line>He's in <substitution parameter="OWNER-PRINTABLE" />'s room.</line>
+            <line>He's in %OWNER-PRINTABLE%'s room.</line>
          </data>
       </macro>
       
@@ -847,6 +847,9 @@
                </g> <!-- /2F -->
             </g> <!-- /black-briar-manor -->
             <g name="black-briar-meadery">
+               <conditions>
+                  <parent-cell of="subject" is="RiftenBlackBriarMeadery" />
+               </conditions>
                <g>
                   <conditions>
                      <!--
@@ -880,6 +883,10 @@
                </g>
             </g> <!-- /black-briar-meadery -->
             <g name="elgrims-elixirs">
+               <conditions>
+                  <parent-cell of="subject" is="RiftenElgrimsElixirs" />
+               </conditions>
+               
                <constant name="front-back-dividing-y-coordinate" value="32" />
             
                <condition-set name="speaker-is-up-front">
@@ -918,6 +925,9 @@
                </g>
             </g> <!-- /elgrims-elixirs -->
             <g name="haelgas-bunkhouse">
+               <conditions>
+                  <parent-cell of="subject" is="RiftenHaelgasBunkhouse" />
+               </conditions>
                <g name="bedroom-haelga">
                   <conditions>
                      <x of="subject" gte="-128" />
@@ -941,6 +951,9 @@
                </g>
             </g> <!-- /haelgas-bunkhouse -->
             <g name="house-clan-snow-shod">
+               <conditions>
+                  <parent-cell of="subject" is="RiftenHouseofClanSnowShod" />
+               </conditions>
                <g name="1F">
                   <conditions>
                      <z of="speaker" gte="64" />
@@ -992,6 +1005,7 @@
             </g> <!-- /house-clan-snow-shod -->
             <g name="house-mjoll">
                <conditions>
+                  <parent-cell of="subject" is="RiftenHouseofMjolltheLioness" />
                   <z of="speaker" gte="320" />
                   <z of="subject" gte="320" />
                </conditions>
@@ -1015,6 +1029,9 @@
                </g>
             </g> <!-- /house-mjoll -->
             <g name="mistveil-keep-main">
+               <conditions>
+                  <parent-cell of="subject" is="RiftenMistveilKeep" />
+               </conditions>
                <g name="room-housecarl">
                   <conditions>
                      <x of="subject" lte="-1600" />
@@ -1380,12 +1397,12 @@
                         <actor-base of="subject" is="Vex" />
                      </or>
                   </conditions>
-                  <line emotion="digust:80">I'm not sure why you or anyone else would want to see him, but he works at Honorhall Orphanage.</line>
-                  <line emotion="digust:70">He runs Honorhall Orphanage, unfortunately. Try looking in there.</line>
-                  <line emotion="digust:80">He'll be at Honorhall Orphanage, probably snarling at one of the children.</line>
-                  <line emotion="angry:75">He's at Honorhall Orphanage. Pretty sure I heard her barking at the kids in there a little while ago.</line>
-                  <line emotion="digust:80">Ugh, him. Have you checked Honorhall Orphanage?</line>
-                  <line emotion="digust:100">You'll find that awful harpy at Honorhall.</line>
+                  <line emotion="disgust:80">I'm not sure why you or anyone else would want to see him, but he works at Honorhall Orphanage.</line>
+                  <line emotion="disgust:70">He runs Honorhall Orphanage, unfortunately. Try looking in there.</line>
+                  <line emotion="disgust:80">He'll be at Honorhall Orphanage, probably snarling at one of the children.</line>
+                  <line emotion="anger:75">He's at Honorhall Orphanage. Pretty sure I heard her barking at the kids in there a little while ago.</line>
+                  <line emotion="disgust:80">Ugh, him. Have you checked Honorhall Orphanage?</line>
+                  <line emotion="disgust:100">You'll find that awful harpy at Honorhall.</line>
                </g>
                <line>He runs Honorhall Orphanage. You'll probably find him there.</line>
             </g>
@@ -1498,8 +1515,8 @@
                            <actor-base of="speaker" is="Mjoll" />
                         </or>
                      </conditions>
-                     <line emotion="digust:70">Maven is at Mistveil Keep right now.</line>
-                     <line emotion="digust:60">Check Mistveil Keep.</line>
+                     <line emotion="disgust:70">Maven is at Mistveil Keep right now.</line>
+                     <line emotion="disgust:60">Check Mistveil Keep.</line>
                      <line emotion="anger:90">The Imperials put him on the throne. Try checking there.</line>
                   </g>
                   <shared-info id="mistveil-keep-jarl" />
@@ -1526,7 +1543,7 @@
          </g> <!-- /mistveil-keep-main -->
          <g name="mistveil-keep-barracks">
             <conditions>
-               <parent-cell of="subject" is="RiftenMistveilKeepBarracks" />
+               <parent-cell of="subject" is="RiftenMistveilBarracks" />
             </conditions>
             <g name="from-elsewhere-in-keep">
                <conditions>
@@ -1797,7 +1814,7 @@
          </g> <!-- /residence-bolli-nivenor -->
          <g name="residence-marise">
             <conditions>
-               <parent-cell of="subject" is="RiftenMariseAvraelsHouse" />
+               <parent-cell of="subject" is="RiftenMariseAravelsHouse" />
             </conditions>
             <invoke name="owned-room">
                <parameter name="OWNER" value="Marise" />

@@ -86,13 +86,13 @@ do
                   local a = cnd.run_on
                   local b = "subject"
                   if not object_is_form(a) then
-                     cnd.override_types_with = "packdata"
+                     cnd.override_types_with = "alias"
                   end
                   cnd.parameters[1] = a
                   cnd.run_on        = b
                end
             elseif self.other == "subject" then
-               cnd.override_types_with = "packdata"
+               cnd.override_types_with = "alias"
                cnd.parameters[1] = self.quest_info.form.aliases["ActorToFind"]
             end
          else

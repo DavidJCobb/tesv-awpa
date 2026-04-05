@@ -29,7 +29,6 @@ do
                end)
                self.buttons[#self.buttons + 1] = button
             end
-            widget:add_spacer("h")
             do
                local button = ui.button.new("Delete Current Tab")
                widget:add_child(button)
@@ -39,6 +38,15 @@ do
                      self.tabbox:remove_tab(i)
                      table.remove(self.tabs, i)
                   end
+               end)
+               self.buttons[#self.buttons + 1] = button
+            end
+            widget:add_spacer("h")
+            do
+               local button = ui.button.new("Perf log")
+               widget:add_child(button)
+               button:on("OnActivated", "", function()
+                  self:show_perf_log()
                end)
                self.buttons[#self.buttons + 1] = button
             end
@@ -114,6 +122,17 @@ print(string.format("tracking per-line progress... %d lines", tonumber(extant)))
          self.progress.maximum = 0
          self.progress.format = text
       end
+      function instance_members:show_perf_log()
+         local win = ui.window.new()
+         win.title = "Perf log"
+         win:set_layout("down")
+         do
+            local tb = ui.textarea.new()
+            win:add_child(tb)
+            tb.text = awpa.perflog:to_string()
+         end
+         win:show()
+      end
       function instance_members:generate(do_round_trip)
          for i = 1, #self.tabs do
             self.tabs[i]:set_allow_editing(false)
@@ -123,6 +142,7 @@ print(string.format("tracking per-line progress... %d lines", tonumber(extant)))
          end
       
          awpa.env:reset()
+         awpa.perflog:clear()
          
          local payload_count <const> = #self.tabs
       
@@ -145,8 +165,14 @@ print(string.format("tracking per-line progress... %d lines", tonumber(extant)))
                end
                payload.xml_root_src = parser.root
             end
+local bench_a = benchmark.new()
+local bench_b = benchmark.new()
             macros.transform(payload.xml_root_src)
+bench_a:stop()
             process_xml(payload.xml_root_src)
+bench_b:stop()
+awpa.perflog:log(bench_a, "Macro process time for tab %d", i)
+awpa.perflog:log(bench_b, "Post-parse XML load time for tab %d", i)
             self:progress_update(nil, i, nil)
          end
          self:progress_update_indeterminate("Generating content...")

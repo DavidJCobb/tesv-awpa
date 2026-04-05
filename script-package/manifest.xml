@@ -16,6 +16,7 @@ string_builder.lua
 utils.lua
 xml.lua
 awpa_env.lua
+awpa_perflog.lua
 awpa_scope.lua
 awpa_actor.lua
 awpa_actor_redirect.lua

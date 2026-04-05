@@ -150,7 +150,13 @@ do
       end
       
       function instance_members:generate_infos(topic)
+         local bench_a = benchmark.new()
+         
+         local bench_b = benchmark.new()
          local gendered = has_masc_pronouns(self.text)
+         bench_b:stop()
+         
+         local bench_c
          
          local target_alias = nil
          if gendered then
@@ -194,9 +200,19 @@ do
             resp.emotion_type  = self.emotion.type
             resp.emotion_value = self.emotion.value
             if fem then
+               bench_c = benchmark.new()
                resp.text = swap_masc_pronouns_to_fem(self.text)
+               bench_c:stop()
             else
                resp.text = self.text
+            end
+         end
+         
+         local function _print_benches()
+            awpa.perflog:log(bench_a, "awpa.line:generate_infos(...) for text: \"%s\"", self.text)
+            awpa.perflog:log(bench_b, " - `has_masc_pronouns` execution time (result: %d)", gendered and 1 or 0)
+            if bench_c then
+               awpa.perflog:log(bench_c, " - `swap_masc_pronouns_to_fem` execution time")
             end
          end
          
@@ -209,6 +225,7 @@ do
             self.form_ids.female = info_f.form_id
             _configure(info_m, false)
             _configure(info_f, true)
+            _print_benches()
             return info_m, info_f
          else
             local info_u = _get_or_create_by_id(self.form_ids.unisex)
@@ -216,6 +233,7 @@ do
             self.form_ids.male   = nil
             self.form_ids.female = nil
             _configure(info_u, false)
+            _print_benches()
             return info_u
          end
       end

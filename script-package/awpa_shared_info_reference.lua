@@ -54,6 +54,8 @@ do
       end
       
       function instance_members:generate_infos(topic)
+         local bench = benchmark.new()
+      
          self.forms = {}
          
          local actor_to_find
@@ -106,6 +108,7 @@ do
          end
          self.form_ids = ids
          
+         awpa.perflog:log(bench, "awpa.shared_info_reference:generate_infos(...) given definition '%s'", self.source.id)
          awpa.env:on_content_object_processed()
       end
    end

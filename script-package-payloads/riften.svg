@@ -731,21 +731,8 @@ circle.getdistance {
             <!-- [REFR:000FF215]RiftenTGCacheEnablerRef -->
             <circle class="getdistance" r="632" cx="173400.546875px" cy="-97022.773438px" />
          </g>
-         <g id="riften--mistveil-keep">
-            <!-- x constrained to (-INF, 173192] OR [172576, INF) -->
-            <g clip-path="view-box shape(
-               from 0 0,
-               move to  173192  0,
-               line by       0  -1000000,
-               line by -100000  0,
-               line by       0  2000000,
-               close,
-               move to  172576  0,
-               line by       0  -1000000,
-               line by  100000  0,
-               line by       0  2000000,
-               close
-            )">
+         <g id="riften--mistveil-keep-radii">
+            <g>
                <!-- [REFR:000C44B1]MistveilKeepMapMarker -->
                <circle class="getdistance" r="1024" cx="173481.640625" cy="-99978.976562" />
                
@@ -753,6 +740,7 @@ circle.getdistance {
                <circle class="getdistance" r="1100" cx="174559.15625" cy="-100609.390625" />
             </g>
          </g>
+         <rect id="riften--mistveil-keep-box" class="getpos minmax" style="--x-lte: 173192; --x-gte: 172576; --y-lte: -100432; --y-gte: -100800;" />
          <rect id="riften--pawned-prawn" class="getpos minmax" style="--x-lte: 172800; --x-gte: 171648; --y-lte: -94512; --y-gte: -95680;" />
          <rect id="riften--residence-mjoll" class="getpos minmax" style="--x-lte: 176448; --x-gte: 174528; --y-lte: -93456; --y-gte: -94080;" />
          <rect id="riften--riftweald-manor" class="getpos minmax" style="--x-lte: 175168; --x-gte: 174272; --y-lte: -95360; --y-gte: -96416;" />

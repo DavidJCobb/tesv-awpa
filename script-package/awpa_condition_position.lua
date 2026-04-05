@@ -41,7 +41,7 @@ do
          or element.node_name == "y"
          or element.node_name == "z"
          then
-            self.axis = element.node_name
+            self.axis = element.node_name:upper()
          else
             error("mismatched node name")
          end

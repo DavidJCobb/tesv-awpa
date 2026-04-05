@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <payload>
    <shared-infos>
+      <shared-info id="mistveil-keep-exterior" editor-id-slug="MistveilKeepExterior">
+         <line>I'm pretty sure he's at Mistveil Keep.</line>
+         <line>I saw him walking around Mistveil Keep not too long ago.</line>
+         <line>Try checking Mistveil Keep.</line>
+      </shared-info>
       <shared-info id="mistveil-keep-employee" editor-id-slug="MistveilKeepEmployee">
          <line>He should be working at Mistveil Keep right now.</line>
       </shared-info>
@@ -1957,6 +1962,15 @@
             <line>He's at the blacksmith's house.</line>
             <line>He's at The Scorched Hammer. Check inside.</line>
          </g> <!-- /scorched-hammer -->
+      
+         <!-- final fallback lines for this top-group -->
+         <g name="me-outside-they-inside">
+            <conditions>
+               <is-in-exterior of="speaker" />
+            </conditions>
+            <line>I don't know where he is. I haven't seen him walking around, though, so he must be indoors.</line>
+         </g>
+         <shared-info id="shared-unknown" />
       </top-g> <!-- /Interiors -->
       
       <top-g slug="Exterior">
@@ -2104,36 +2118,33 @@
             </g>
             <shared-info id="shared-exterior-market" />
          </g> <!-- /market-priority-hi -->
-         <g name="mistveil-keep">
+         <g name="mistveil-keep-radii">
             <conditions>
                <!--
                   The map marker covers the front steps inside the wall. The second 
                   ref is a wall-lean marker at the edge of the courtyard; applying 
                   a radius of 1100 to it covers the area within the awkwardly-angled 
                   the wall to east of the steps.
-                  
-                  The X-span is meant to cover the entrance to the Riften Jail, as 
-                  well as some odds-and-ends on the walls near the courtyard just 
-                  in case the player manages to parkour around.
-                  
-                  The relationship here is `A || B || (C && D)`, which, given the 
-                  boolean operator predecence, is `(A || B || C) && (A || B || D)`.
                -->
                <or>
                   <distance of="subject" to="[REFR:000C44B1]MistveilKeepMapMarker" lte="1024" />
                   <distance of="subject" to="[REFR:0010CEE1]" lte="1100" />
-                  <x of="subject" lte="173192" />
-               </or>
-               <or>
-                  <distance of="subject" to="[REFR:000C44B1]MistveilKeepMapMarker" lte="1024" />
-                  <distance of="subject" to="[REFR:0010CEE1]" lte="1100" />
-                  <x of="subject" gte="172576" />
                </or>
             </conditions>
-            <line>I'm pretty sure he's at Mistveil Keep.</line>
-            <line>I saw him walking around Mistveil Keep not too long ago.</line>
-            <line>Try checking Mistveil Keep.</line>
-         </g> <!-- /mistveil-keep -->
+            <shared-info id="mistveil-keep-exterior" />
+         </g> <!-- /mistveil-keep-radii -->
+         <g name="mistveil-keep-box">
+            <conditions>
+               <!--
+                  This box is meant to cover the entrance to the Riften Jail.
+               -->
+               <x of="subject" lte="173192" />
+               <x of="subject" gte="172576" />
+               <y of="subject" lte="-100432" />
+               <y of="subject" gte="-100800" />
+            </conditions>
+            <shared-info id="mistveil-keep-exterior" />
+         </g> <!-- /mistveil-keep-box -->
          <g name="pawned-prawn">
             <!--
                In the alleyway west of the Bee and Barb.
@@ -2523,6 +2534,15 @@
             <line>Try checking Plankside, the western area of the city.</line>
             <line>He might be out by the lake.</line>
          </g>
+         
+         <!-- final fallback lines for this top-group -->
+         <g name="me-inside-they-outside">
+            <conditions>
+               <is-in-interior of="speaker" />
+            </conditions>
+            <line>I don't know. I'm in here, and he's out there, somewhere.</line>
+         </g>
+         <line>Somewhere outside. I'm not sure where.</line>
       </top-g> <!-- /ExteriorWithinWalls -->
       
       <!-- final fallback lines -->

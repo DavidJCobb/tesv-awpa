@@ -105,15 +105,25 @@ do
                --
                last_line = b or a
             elseif awpa.group.is(item) then
+               local th_infos   = topic_helper.infos.desired_order
+               local last_prior = th_infos[#th_infos]
                item:generate_infos(topic, topic_helper)
+               local last_after = th_infos[#th_infos]
+               if last_prior ~= last_after then
+                  last_line = last_after
+               end
             elseif awpa.shared_info_reference.is(item) then
                item:generate_infos(topic)
-               for i = 1, #item.forms do
+               local size = #item.forms
+               for i = 1, size do
                   local info = item.forms[i]
                   for j = 1, #conditions do
                      conditions[j]:apply_to_info(info)
                   end
                   topic_helper:append_desired_info(info)
+               end
+               if size > 0 then
+                  last_line = item.forms[size]
                end
             end
          end

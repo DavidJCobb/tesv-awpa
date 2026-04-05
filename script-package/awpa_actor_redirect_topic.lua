@@ -123,6 +123,7 @@ do
       function instance_members:generate_content(redirect_from_topic)
          local topic = self:get_or_create_topic()
          topic.text = self.topic_text or "<Redirect>"
+         topic.do_all_before_repeating = true
          do
             local info = utils.make_invisible_info(
                redirect_from_topic,

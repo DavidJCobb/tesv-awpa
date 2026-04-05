@@ -69,7 +69,8 @@ do
       
       function instance_members:generate_all_forms()
          local topic <const> = self:get_or_create_topic()
-         topic.text = "Can you help me find someone?"
+         topic.text     = "Can you help me find someone?"
+         topic.priority = 0 -- place at bottom
          
          --
          -- Process begin-asking-to actor redirects; get-or-create their link infos.

@@ -146,6 +146,7 @@ do
                   prop.value = self.quest_info.form.aliases["ActorToFind"]
                end
             end
+            papyrus.fragments.script_name = "AskWherePeopleAreFRAGMENTSelectActor"
             local frag = papyrus.fragments.on_begin
             frag.script_name   = "AskWherePeopleAreFRAGMENTSelectActor"
             frag.function_name = "Exec"

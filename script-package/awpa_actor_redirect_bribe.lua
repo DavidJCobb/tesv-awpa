@@ -270,6 +270,7 @@ do
                         prop.value = dovah.get_form_by_editor_id("DialogueFavorGeneric", form_types.quest)
                      end
                   end
+                  papyrus.fragments.script_name = "AskWherePeopleAreFRAGMENTBribe"
                   local frag = papyrus.fragments.on_begin
                   frag.script_name   = "AskWherePeopleAreFRAGMENTBribe"
                   frag.function_name = "Exec"

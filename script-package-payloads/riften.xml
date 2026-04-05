@@ -91,10 +91,10 @@
          <!-- TODO -->
       </condition-set>
       <condition-set name="speaker-in-thieves-guild">
-         <!-- TODO -->
+         <faction-membership of="speaker" includes="RiftenTGHeadquartersFaction" />
       </condition-set>
       <condition-set name="speaker-not-in-thieves-guild">
-         <!-- TODO -->
+         <faction-membership of="speaker" excludes="RiftenTGHeadquartersFaction" />
       </condition-set>
       
       <condition-set name="is-bunkhouse-tenant">
@@ -2238,11 +2238,26 @@
                <y of="subject" lte="-95264" />
                <y of="subject" gte="-96416" />
             </conditions>
+            <g name="asking-about-vald">
+               <conditions>
+                  <actor-base of="subject" is="Vald" />
+               </conditions>
+               <line>He works as a guard at Riftweald Manor. You'll probably find him in the backyard, harassing passers-by.</line>
+               <line>Ah, that's the brute who guards Riftweald Manor. Check the backyard.</line>
+               <line>He'll be guarding Riftweald Manor. He usually hangs out behind the building, trying to pick fights with anyone who walks by.</line>
+               <g>
+                  <conditions>
+                     <condition-set name="speaker-not-in-thieves-guild" />
+                  </conditions>
+                  <line>He likes harassing anyone who walks past Riftweald Manor's backyard. He works for... whoever owns the place.</line>
+               </g>
+            </g>
             <line>I think I saw him walking around behind Riftweald Manor.</line>
             <line>Try looking around the manor just north of the temple.</line>
             <line>Pretty sure he's hanging around behind Riftweald Manor.</line>
             <g non-exclusive="true">
                <conditions>
+                  <actor-base of="subject" is-not="Vald" />
                   <condition-set name="vald-is-spawned-and-alive" />
                </conditions>
                <line>He might be near Riftweald Manor's backyard. If you go looking around there, mind the brute guarding the place.</line>

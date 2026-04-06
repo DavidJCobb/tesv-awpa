@@ -60,6 +60,26 @@
             <quest-stage for="TG07" gte="30" />
             <faction-membership of="speaker" excludes="RiftenTGHeadquartersFaction" />
          </or>
+         
+         <!--
+            Cannot ask Bassianius or Fastred unless they've moved to Riften.
+         -->
+         <or> <!-- Bassianus -->
+            <actor-base of="speaker" is-not="BassianusAxius" />
+            <papyrus-quest-variable
+               for="T02PostQuest"
+               var="::BassianusMoveToRiften_var"
+               eq="1"
+            />
+         </or>
+         <or> <!-- Fastred -->
+            <actor-base of="speaker" is-not="Fastred" />
+            <papyrus-quest-variable
+               for="T02PostQuest"
+               var="::FastredMoveToRiften_var"
+               eq="1"
+            />
+         </or>
       </dialogue-conditions>
       
       <condition-set name="under-stormcloak-control">
@@ -149,8 +169,15 @@
             <begin-asking-about>
                <filter-conditions>
                   <!--
-                     TODO: only after (and if!) he moves to Riften
+                     We only care about Bassianus Axius once he's 
+                     moved to Riften.
                   -->
+                  <quest-running name="T02PostQuest" />
+                  <papyrus-quest-variable
+                     for="T02PostQuest"
+                     var="::BassianusMoveToRiften_var"
+                     eq="1"
+                  />
                </filter-conditions>
             </begin-asking-about>
          </actor>
@@ -231,8 +258,14 @@
             <begin-asking-about>
                <filter-conditions>
                   <!--
-                     TODO: only after (and if!) she moves to Riften
+                     We only care about Fastred if she moves to Riften.
                   -->
+                  <quest-running name="T02PostQuest" />
+                  <papyrus-quest-variable
+                     for="T02PostQuest"
+                     var="::FastredMoveToRiften_var"
+                     eq="1"
+                  />
                </filter-conditions>
             </begin-asking-about>
          </actor>

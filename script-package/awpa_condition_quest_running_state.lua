@@ -8,8 +8,8 @@ do
    awpa.conditions.quest_running_state = make_class({
       superclass  = awpa.condition,
       constructor = function(self)
-         self.form = nil
-         self.done = nil
+         self.form    = nil
+         self.running = nil
       end,
       instance_members = instance_members
    })
@@ -18,8 +18,8 @@ do
       function instance_members:copy(element)
          local out = awpa.conditions.quest_running_state()
          self:_copy_base(out)
-         out.form = self.form
-         out.done = self.done
+         out.form    = self.form
+         out.running = self.running
          return out
       end
       function instance_members:from_xml(element)
@@ -53,7 +53,7 @@ do
          self:_set_condition_common(cnd)
          cnd.function_name = "GetQuestRunning"
          cnd.parameters[1] = self.form
-         if self.done then
+         if self.running then
             cnd.comparison.operator = "=="
          else
             cnd.comparison.operator = "!="

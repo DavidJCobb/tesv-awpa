@@ -22,9 +22,7 @@ do
       constructor = function(self, quest_info)
          self.quest_info = quest_info
          self.forms = {
-            topic           = nil,
-            override_links  = {}, -- topic-infos linking to overrides
-            selection_links = {}, -- topic-infos linking to actor-selection topics
+            topic = nil,
          }
       end,
       instance_members = instance_members,
@@ -73,21 +71,40 @@ do
          topic.priority = 0 -- place at bottom
          
          --
-         -- Process begin-asking-to actor redirects; get-or-create their link infos.
-         -- Store all such link infos in `self.forms.override_links`.
+         -- Handle begin-asking-to actor redirects.
          --
-         local links_to_actor_overrides = {} -- set, i.e. s[info] = true
-         for i = 1, #self.quest_info.actors do
-            local actor_info = self.quest_info.actors[i]
-            do
-               local list = actor_info.redirects.begin_asking_to
+         local infos_to_keep_at_the_top = {} -- set, i.e. s[info] = true
+         if awpa.env.generate_flat_results then
+            local throwaway <const> = awpa.topic_helper(topic)
+            local context   <const> = awpa.group_generation_context(throwaway)
+            for i = 1, #self.quest_info.actors do
+               local actor_info = self.quest_info.actors[i]
+               local list       = actor_info.redirects.begin_asking_to
+               for j = 1, #list do
+                  list[j]:generate_content(context)
+               end
+               context.conditions = {}
+               context.speaker    = nil
+            end
+            for i = 1, #throwaway.infos.desired_order do
+               local info = throwaway.infos.desired_order[i]
+               infos_to_keep_at_the_top[info] = true
+            end
+         else -- if not flat results
+            for i = 1, #self.quest_info.actors do
+               local actor_info = self.quest_info.actors[i]
+               local list       = actor_info.redirects.begin_asking_to
                for i = 1, #list do
-                  local form = list[i].forms.inbound_link
+                  local redirect = list[i]
+                  redirect:get_or_create_topic()
+                  redirect:get_or_create_link(topic)
+                  redirect:generate_content()
+                  --
+                  local form = redirect.forms.inbound_link
                   if not form then
                      error("actor redirect wasn't generated")
                   end
-                  self.forms.override_links[#self.forms.override_links + 1] = form
-                  links_to_actor_overrides[form] = true
+                  infos_to_keep_at_the_top[form] = true
                end
             end
          end
@@ -95,26 +112,21 @@ do
          -- cache to skip redundant lookups:
          local actor_selection_topics <const> = self.quest_info.selection_topic_list.topics
          
-         local links_to_actor_selection = {}
+         local infos_to_keep_at_the_bottom = {}
          awpa.env:replace_topic_infos_with_builtin_shared_infos(
             topic,
             "BeginActorSelection",
             {
                process_shared = function(info)
-                  links_to_actor_selection[info] = true
+                  infos_to_keep_at_the_bottom[info] = true
                   
                   utils.replace_condition_list(info, {})
-                  -- TODO: conditions for whether you're allowed to ask the current 
-                  -- speaker at all; for example, you should not even see the "Can 
-                  -- you help me find someone?" topic when speaking to Maven if you 
-                  -- are in the Thieves Guild (i.e. you should not have the option 
-                  -- to annoy her)
                   
                   -- Link these responses to the actor-selection topics.
                   utils.replace_info_link_to_list(info, actor_selection_topics)
                end,
                process_unused = function(info)
-                  if links_to_actor_overrides[info] then
+                  if infos_to_keep_at_the_top[info] then
                      return true -- this is an actor override link; retain it
                   end
                   return false -- this is an unrecognized info (deleted from XML?); discard
@@ -127,14 +139,14 @@ do
                   local j   = 1
                   for i = 1, #list do
                      local info = list[i]
-                     if not links_to_actor_selection[info] then
+                     if not infos_to_keep_at_the_bottom[info] then
                         dst[j] = info
                         j = j + 1
                      end
                   end
                   for i = 1, #list do
                      local info = list[i]
-                     if links_to_actor_selection[info] then
+                     if infos_to_keep_at_the_bottom[info] then
                         dst[j] = info
                         j = j + 1
                      end
@@ -158,7 +170,6 @@ do
                end,
             }
          )
-         self.forms.selection_links = links_to_actor_selection
       end
    end
 end

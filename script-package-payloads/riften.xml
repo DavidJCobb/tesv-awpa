@@ -342,6 +342,19 @@
          </actor>
          <actor editor-id="Ingun" name="Ingun Black-Briar">
             <begin-responding>
+               <topic slug="IgnoresBeggars">
+                  <!--
+                     Even if you earn Ingun's favor, beggars remain totally beneath 
+                     her notice.
+                  -->
+                  <conditions>
+                     <quest-completed name="[QUST:00053308]FreeformRiften04" />
+                     <faction-membership of="subject" includes="FavorJobsBeggarsFaction" />
+                  </conditions>
+                  <line emotion="puzzled:80">I'm afraid I don't recognize that name.</line>
+                  <line emotion="puzzled:90">Hm... That name doesn't sound familiar. Should I know who that is?</line>
+                  <line emotion="puzzled:70">I'm sorry, but I haven't noticed him around.</line>
+               </topic>
                <topic slug="Scatterbrained">
                   <!--
                      Ingun should seem distracted and fail to provied a useful 
@@ -375,19 +388,6 @@
                   <line emotion="puzzled:90">Hmm... I don't remember seeing him, but... I probably wouldn't have noticed him.</line>
                   <line>I've been too focused on my experiments to really notice him.</line>
                   <line hours-until-reset="24" emotion="puzzled:70">I'm not sure. I've been thinking about my experiments... Would you happen to know a good place to gather Painted Troll Fat? Sorry, never mind.</line>
-               </topic>
-               <topic slug="IgnoresBeggars">
-                  <!--
-                     Even if you earn Ingun's favor, beggars remain totally beneath 
-                     her notice.
-                  -->
-                  <conditions>
-                     <quest-completed name="[QUST:00053308]FreeformRiften04" />
-                     <faction-membership of="subject" includes="FavorJobsBeggarsFaction" />
-                  </conditions>
-                  <line emotion="puzzled:80">I'm afraid I don't recognize that name.</line>
-                  <line emotion="puzzled:90">Hm... That name doesn't sound familiar. Should I know who that is?</line>
-                  <line emotion="puzzled:70">I'm sorry, but I haven't noticed him around.</line>
                </topic>
             </begin-responding>
          </actor>
@@ -1696,19 +1696,15 @@
             <conditions>
                <parent-cell of="subject" is="RiftenJail01" />
             </conditions>
-            <g name="molgrom">
+            <g name="brynjolf-on-molgrom">
                <conditions>
                   <actor-base of="subject" is="Molgrom" />
+                  <actor-base of="speaker" is="Brynjolf" />
+                  <condition-set name="player-in-thieves-guild" />
                </conditions>
-               <g name="brynjolf-on-molgrom">
-                  <conditions>
-                     <actor-base of="speaker" is="Brynjolf" />
-                     <condition-set name="player-in-thieves-guild" />
-                  </conditions>
-                  <line emotion="anger:65">One of ours. You'll find him in the city jail. His methods were too messy, and he's paying the price for that.</line>
-                  <line emotion="disgust:80">Molgrom was working a job for us. He took shortcuts and spilled too much blood. That's bad for business, so now he gets to spend some time in jail until he's learned his lesson.</line>
-                  <line emotion="anger:70">He's in jail. He botched a job and tried to kill his way out, and there are consequences for that.</line>
-               </g>
+               <line emotion="anger:65">One of ours. You'll find him in the city jail. His methods were too messy, and he's paying the price for that.</line>
+               <line emotion="disgust:80">Molgrom was working a job for us. He took shortcuts and spilled too much blood. That's bad for business, so now he gets to spend some time in jail until he's learned his lesson.</line>
+               <line emotion="anger:70">He's in jail. He botched a job and tried to kill his way out, and there are consequences for that.</line>
             </g>
             <g name="sibbi">
                <conditions>

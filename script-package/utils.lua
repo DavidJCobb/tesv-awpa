@@ -68,22 +68,16 @@ function utils.make_invisible_info(topic, editor_id, destination)
    return info
 end
 
-function utils.replace_condition_list(info, conditions)
-   local list = info.conditions
-   for i = #list, 1, -1 do
-      list:remove(i)
-   end
-   utils.append_condition_list(info, conditions)
-end
-function utils.append_condition_list(info, src_list)
-   local dst_list = info.conditions
-   if src_list and src_list.function_name then
+local function _append_conditions_to(info, dst_list, src_list)
+   if src_list.function_name then
       src_list = { src_list }
    end
    for i = 1, #src_list do
       local src = src_list[i]
       if awpa.condition.is(src) then
-         src:apply_to_info(info)
+         if not src:is_no_op() then
+            src:overwrite_condition(dst_list:insert())
+         end
          goto continue
       end
       local dst = dst_list:insert()
@@ -93,15 +87,28 @@ function utils.append_condition_list(info, src_list)
          for j = 1, 2 do
             dst.parameters[j] = src.parameters[j]
          end
-      else
-         for j = 1, 2 do
-            dst.parameters[j] = nil
-         end
       end
       dst.comparison.operator = src.comparison.operator
       dst.comparison.operand  = src.comparison.operand
       ::continue::
    end
+end
+
+function utils.clear_condition_list(info)
+   local list = info.conditions
+   for i = #list, 1, -1 do
+      list:remove(i)
+   end
+end
+function utils.replace_condition_list(info, conditions)
+   local list = info.conditions
+   for i = #list, 1, -1 do
+      list:remove(i)
+   end
+   _append_conditions_to(info, list, conditions)
+end
+function utils.append_condition_list(info, src_list)
+   _append_conditions_to(info, info.conditions, src_list)
 end
 
 function utils.replace_info_link_to_list(info, topics)

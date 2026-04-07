@@ -25,10 +25,7 @@ do
          self.quest_info = quest_info
          self.children = {} -- vector<variant<awpa.top_level_group, awpa.group, awpa.line, awpa.shared_info_reference>>
          self.forms = {
-            topic            = nil,
-            override_links   = {}, -- topic-infos linking to overrides
-            top_level_links  = {}, -- topic-infos linking to top-level groups
-            bare_infos       = {}, -- vector<topic_info>
+            topic = nil,
          }
          self.topic_helper = nil
       end,
@@ -44,11 +41,13 @@ do
          if self.topic_helper then
             visitor(self.topic_helper)
          end
-         for i = 1, #self.children do
-            local item = self.children[i]
-            if awpa.top_level_group.is(item) then
-               if item.topic_helper then
-                  visitor(item.topic_helper)
+         if not awpa.env.generate_flat_results then
+            for i = 1, #self.children do
+               local item = self.children[i]
+               if awpa.top_level_group.is(item) then
+                  if item.topic_helper then
+                     visitor(item.topic_helper)
+                  end
                end
             end
          end
@@ -86,15 +85,37 @@ do
          local topic = self:get_or_create_topic()
          local pre_existing_infos = topic.infos
          
+         local context = awpa.group_generation_context(self.topic_helper)
+         if awpa.env.generate_flat_results then
+            -- Handle begin-responding overrides.
+            for i = 1, #self.quest_info.actors do
+               local actor_info = self.quest_info.actors[i]
+               for _, redirect in ipairs(actor_info.redirects.begin_responding) do
+                  redirect:generate_content(context)
+               end
+               context.conditions = {}
+               context.speaker    = nil
+            end
+            
+            -- Handle child content.
+            for i = 1, #self.children do
+               context:generate_child(self.children[i])
+            end
+            return
+         end
+         
          -- Invisible-infos for linking to begin-responding overrides.
          for i = 1, #self.quest_info.actors do
             local actor_info = self.quest_info.actors[i]
             for _, redirect in ipairs(actor_info.redirects.begin_responding) do
+               redirect:get_or_create_topic()
+               redirect:get_or_create_link(topic)
+               redirect:generate_content()
+               --
                local form = redirect.forms.inbound_link
                if not form then
                   error("actor redirect wasn't generated")
                end
-               self.forms.override_links[#self.forms.override_links + 1] = form
                self.topic_helper:append_desired_info(form)
             end
          end
@@ -103,45 +124,13 @@ do
          for i = 1, #self.children do
             local item = self.children[i]
             if awpa.top_level_group.is(item) then
-               do -- Create topic and link
-                  local dst_topic = item:get_or_create_topic()
-                  
-                  local link
-                  for i = 1, #pre_existing_infos do
-                     local pei = pre_existing_infos[i]
-                     if pei.link_to[1] == dst_topic then
-                        link = pei
-                        break
-                     end
-                  end
-                  if not link then
-                     link = dovah.create_form(form_types.topic_info, { parent = topic })
-                     link.use_shared_info = awpa.env.built_in_shared_infos["InvisibleInfo"][1]
-                     link.link_to:insert(dst_topic)
-                     link.invisible_continue = true
-                  end
-                  self.forms.top_level_links[i] = link
-                  self.topic_helper:append_desired_info(link)
-                  utils.replace_condition_list(link, {})
-                  for i = 1, #item.conditions do
-                     item.conditions[i]:apply_to_info(link)
-                  end
+               item:create_link_info(self.topic_helper, pre_existing_infos) -- Create topic and link
+               local nest_context = awpa.group_generation_context(item.topic_helper)
+               for i = j, #item.children do
+                  nest_context:generate_child(item.chilren[j])
                end
-               
-               item:generate_children()
-            elseif awpa.line.is(item) then
-               local a, b = item:generate_infos(topic)
-               self.topic_helper:append_desired_info(a)
-               if b then
-                  self.topic_helper:append_desired_info(b)
-               end
-            elseif awpa.group.is(item) then
-               item:generate_infos(topic, self.topic_helper)
-            elseif awpa.shared_info_reference.is(item) then
-               item:generate_infos(topic)
-               for i = 1, #item.forms do
-                  self.topic_helper:append_desired_info(item.forms[i])
-               end
+            else
+               context:generate_child(item)
             end
          end
       end

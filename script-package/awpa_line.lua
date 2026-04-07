@@ -157,6 +157,7 @@ do
          bench_b:stop()
          
          local bench_c
+         local bench_d
          
          local target_alias = nil
          if gendered then
@@ -167,7 +168,7 @@ do
             if id then
                local info = dovah.get_form_by_id(id)
                if info and info.form_type == form_types.topic_info then
-                  utils.replace_condition_list(info, {}) -- let group conditions be rebuilt from scratch
+                  utils.clear_condition_list(info) -- let group conditions be rebuilt from scratch
                   return info
                end
             end
@@ -176,7 +177,7 @@ do
          local function _configure(info, fem)
             info.hours_until_reset = self.hours_until_reset
             info.use_shared_info   = nil
-            info.is_random = true
+            info.is_random         = true
             
             if gendered then
                local cnd = info.conditions:insert()
@@ -214,9 +215,14 @@ do
             if bench_c then
                awpa.perflog:log(bench_c, " - `swap_masc_pronouns_to_fem` execution time")
             end
+            if bench_d then
+               awpa.perflog:log(bench_d, " - execution time to update progress bar")
+            end
          end
          
+         bench_d = benchmark.new()
          awpa.env:on_content_object_processed()
+         bench_d:stop()
          if gendered then
             local info_m = _get_or_create_by_id(self.form_ids.male)
             local info_f = _get_or_create_by_id(self.form_ids.female)

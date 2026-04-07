@@ -72,7 +72,11 @@ do
       function instance_members:get_relevant_conditions()
          local out
          if not awpa.group.is(self.parent) then
-            return { table.unpack(self.conditions) }
+            if awpa.env.generate_flat_results and awpa.top_level_group.is(self.parent) then
+               out = { table.unpack(self.parent.conditions) }   
+            else
+               return { table.unpack(self.conditions) }
+            end
          else
             out = self.parent:get_relevant_conditions()
          end

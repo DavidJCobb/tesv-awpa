@@ -103,6 +103,35 @@ do
          self.topic_helper = awpa.topic_helper(topic)
          return topic
       end
+      function instance_members:create_link_info(from_topic_helper, pre_existing_infos)
+         local src_topic = from_topic_helper.form
+         local dst_topic = self:get_or_create_topic()
+         if not pre_existing_infos then
+            pre_existing_infos = src_topic.infos
+         end
+         
+         local link
+         for i = 1, #pre_existing_infos do
+            local pei = pre_existing_infos[i]
+            if pei.link_to[1] == dst_topic then
+               link = pei
+               break
+            end
+         end
+         if not link then
+            link = dovah.create_form(form_types.topic_info, { parent = src_topic })
+            link.use_shared_info = awpa.env.built_in_shared_infos["InvisibleInfo"][1]
+            link.link_to:insert(dst_topic)
+            link.invisible_continue = true
+         end
+         from_topic_helper:append_desired_info(link)
+         utils.replace_condition_list(link, {})
+         for i = 1, #self.conditions do
+            self.conditions[i]:apply_to_info(link)
+         end
+         
+         return link
+      end
       
       function instance_members:generate_children()
          local topic        = self:get_or_create_topic()

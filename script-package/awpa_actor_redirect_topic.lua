@@ -35,7 +35,9 @@ do
    })
    do -- member functions
       function instance_members:visit_topic_helpers(visitor)
-         visitor(self.topic_helper)
+         if self.topic_helper then
+            visitor(self.topic_helper)
+         end
       end
       
       function instance_members:from_xml(element)
@@ -51,7 +53,6 @@ do
                })
                return
             end
-            
             if node.node_name == "g" then
                local item = awpa.group(self.quest_info)
                local list = self.children
@@ -68,14 +69,9 @@ do
                return
             end
             if node.node_name == "shared-info" then
-               local si = awpa.env.shared_infos_by_id[node.attributes["id"]]
-               if not si then
-                  error("missing sharedinfo")
-               end
                local item = awpa.shared_info_reference()
                local list = self.children
                list[#list + 1] = item
-               item.source = si
                item:from_xml(node)
                return
             end
@@ -119,26 +115,43 @@ do
          self.topic_helper = awpa.topic_helper(topic)
          return topic
       end
+      function instance_members:get_or_create_link(src_topic)
+         if self.forms.inbound_link then
+            return self.forms.inbound_link
+         end
+         local dst_topic = self:get_or_create_topic()
+         
+         local info = utils.make_invisible_info(
+            src_topic,
+            string.format(
+               self.link_info_editor_id_format,
+               --
+               self.quest_info.form.editor_id,
+               self.actor_info.form.editor_id,
+               self.slug
+            ),
+            dst_topic
+         )
+         self.forms.inbound_link = info
+         
+         utils.replace_condition_list(info, {
+            run_on        = "subject",
+            function_name = "GetIsId",
+            parameters    = { self.actor_info.form },
+            comparison    = {
+               operator = "==",
+               operand  = 1,
+            }
+         })
+         utils.append_condition_list(info, self.conditions)
+         
+         return info
+      end
       
-      function instance_members:generate_content(redirect_from_topic)
-         local topic = self:get_or_create_topic()
-         topic.text = self.topic_text or "<Redirect>"
-         topic.do_all_before_repeating = true
-         do
-            local info = utils.make_invisible_info(
-               redirect_from_topic,
-               string.format(
-                  self.link_info_editor_id_format,
-                  --
-                  self.quest_info.form.editor_id,
-                  self.actor_info.form.editor_id,
-                  self.slug
-               ),
-               topic
-            )
-            self.forms.inbound_link = info
-            
-            utils.replace_condition_list(info, {
+      function instance_members:generate_content(context)
+         if awpa.env.generate_flat_results then
+            assert(not not context)
+            context.conditions = { {
                run_on        = "subject",
                function_name = "GetIsId",
                parameters    = { self.actor_info.form },
@@ -146,29 +159,18 @@ do
                   operator = "==",
                   operand  = 1,
                }
-            })
-            utils.append_condition_list(info, self.conditions)
+            } }
+         else
+            local topic = self:get_or_create_topic()
+            topic.text = self.topic_text or "<Redirect>"
+            topic.do_all_before_repeating = true
+            
+            assert(not context)
+            context = awpa.group_generation_context(self.topic_helper)
          end
-         
+         context.speaker = self.actor_info.form
          for i = 1, #self.children do
-            local item = self.children[i]
-            if awpa.group.is(item) then
-               item:generate_infos(topic, self.topic_helper)
-            elseif awpa.line.is(item) then
-               local a, b = item:generate_infos(topic)
-               self.topic_helper:append_desired_info(a)
-               if b then
-                  self.topic_helper:append_desired_info(b)
-               end
-            else
-               error("unrecognized object type")
-            end
-         end
-         
-         local list = topic.infos
-         for i = 1, #list do
-            local info = list[i]
-            info.speaker = self.actor_info.form
+            context:generate_child(self.children[i])
          end
       end
    end

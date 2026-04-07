@@ -14,6 +14,10 @@ do
          self.progress = ui.progress_bar.new()
          self.buttons  = {}
          
+         self.subwidgets = {
+            generate_flat = nil,
+         }
+         
          self.window.title = "Ask Where People Are - Generator"
          self.window:set_layout("down")
          do
@@ -52,7 +56,18 @@ do
             end
          end
          self.window:add_child(self.tabbox)
-         do
+         do -- options area
+            local widget = ui.widget.new()
+            widget:set_layout("down")
+            widget.layout_margins = 0
+            self.window:add_child(widget)
+            do
+               local check = ui.checkbox.new("Generate flat (no sub-topics)")
+               widget:add_child(check)
+               self.subwidgets.generate_flat = check
+            end
+         end
+         do -- bottom row
             local widget = ui.widget.new()
             widget:set_layout("ltr")
             widget.layout_margins = 0
@@ -81,10 +96,12 @@ do
          self._tracking_lines = false
          awpa.env.content_counts.on_change = function(extant, generated)
             if self._tracking_lines then
-               self:progress_update(nil, generated, nil)
+               self:progress_update(generated)
             else
-print(string.format("tracking per-line progress... %d lines", tonumber(extant)))
-               self:progress_update("Generating lines... (%v/%m)", generated, extant)
+               self:progress_start("Generating lines... (%v/%m)", extant)
+               if generated > 0 then
+                  self:progress_update(generated)
+               end
                self._tracking_lines = true
             end
          end
@@ -107,20 +124,31 @@ print(string.format("tracking per-line progress... %d lines", tonumber(extant)))
          self.progress.value   = 0
          self.progress.maximum = 1
       end
-      function instance_members:progress_update(text, value, max)
-         if text then
-            self.progress.format = text
-         end
+      function instance_members:progress_start(text, max)
+         self.progress.format  = text
          self.progress.minimum = 0
-         if max then
-            self.progress.maximum = max
-         end
-         self.progress.value = value or 0
+         self.progress.maximum = max
+         self.progress.value   = 0
       end
-      function instance_members:progress_update_indeterminate(text)
+      function instance_members:progress_update(value)
+         self.progress.value = value
+      end
+      function instance_members:progress_indeterminate(text)
          self.progress.minimum = 0
          self.progress.maximum = 0
-         self.progress.format = text
+         self.progress.format  = text
+         self.progress.value   = 0 -- avoids Qt API jank that hides the text
+      end
+      function instance_members:set_editing_enable_state(enabled)
+         for i = 1, #self.tabs do
+            self.tabs[i]:set_allow_editing(enabled)
+         end
+         for i = 1, #self.buttons do
+            self.buttons[i].enabled = enabled
+         end
+         for _, v in pairs(self.subwidgets) do
+            v.enabled = enabled
+         end
       end
       function instance_members:show_perf_log()
          local win = ui.window.new()
@@ -134,19 +162,16 @@ print(string.format("tracking per-line progress... %d lines", tonumber(extant)))
          win:show()
       end
       function instance_members:generate(do_round_trip)
-         for i = 1, #self.tabs do
-            self.tabs[i]:set_allow_editing(false)
-         end
-         for i = 1, #self.buttons do
-            self.buttons[i].enabled = false
-         end
+         self:set_editing_enable_state(false)
       
          awpa.env:reset()
          awpa.perflog:clear()
          
+         awpa.env.generate_flat_results = self.subwidgets.generate_flat.checked
+         
          local payload_count <const> = #self.tabs
       
-         self:progress_update("Parsing XML payloads... (%v/%m)", nil, payload_count)
+         self:progress_start("Parsing XML payloads... (%v/%m)", payload_count)
          local payloads = {}
          for i = 1, payload_count do
             local tab     = self.tabs[i]
@@ -173,13 +198,13 @@ bench_a:stop()
 bench_b:stop()
 awpa.perflog:log(bench_a, "Macro process time for tab %d", i)
 awpa.perflog:log(bench_b, "Post-parse XML load time for tab %d", i)
-            self:progress_update(nil, i, nil)
+            self:progress_update(i)
          end
-         self:progress_update_indeterminate("Generating content...")
+         self:progress_indeterminate("Generating content...")
          self._tracking_lines = false
          awpa.env:generate_content()
          do
-            self:progress_update("Preparing to update XML payloads... (%v/%m)", nil, payload_count)
+            self:progress_start("Preparing to update XML payloads... (%v/%m)", payload_count)
             local all_clones_map = {}
             for i = 1, payload_count do
                local tab     = self.tabs[i]
@@ -191,15 +216,15 @@ awpa.perflog:log(bench_b, "Post-parse XML load time for tab %d", i)
                for k, v in pairs(xml_to_clone_map) do
                   all_clones_map[k] = v
                end
-               self:progress_update(nil, i, nil)
+               self:progress_update(i)
             end
-            self:progress_update("Generating updated XML payloads... (%v/%m)", nil, #awpa.env.quests)
+            self:progress_start("Generating updated XML payloads... (%v/%m)", #awpa.env.quests)
             for i = 1, #awpa.env.quests do
                awpa.env.quests[i]:amend_xml_clone(all_clones_map)
-               self:progress_update(nil, i, nil)
+               self:progress_update(i)
             end
          end
-         self:progress_update("Serializing updated XML payloads... (%v/%m)", nil, payload_count)
+         self:progress_start("Serializing updated XML payloads... (%v/%m)", payload_count)
          for i = 1, payload_count do
             local tab     = self.tabs[i]
             local payload = payloads[i]
@@ -207,13 +232,13 @@ awpa.perflog:log(bench_b, "Post-parse XML load time for tab %d", i)
             local builder = string_builder()
             payload.xml_root_dst:serialize(builder)
             tab:set_output_xml(builder:to_string())
-            self:progress_update(nil, i, nil)
+            self:progress_update(i)
          end
          
          if do_round_trip then
-            self:progress_update_indeterminate("Resetting state for round-trip...")
+            self:progress_indeterminate("Resetting state for round-trip...")
             awpa.env:reset()
-            self:progress_update("Loading updated XML payloads... (%v/%m)", nil, payload_count)
+            self:progress_start("Loading updated XML payloads... (%v/%m)", payload_count)
             for i = 1, payload_count do
                local tab     = self.tabs[i]
                local payload = payloads[i]
@@ -221,9 +246,9 @@ awpa.perflog:log(bench_b, "Post-parse XML load time for tab %d", i)
                local deep = payload.xml_root_dst:clone(true)
                macros.transform(deep)
                process_xml(deep)
-               self:progress_update(nil, i, nil)
+               self:progress_update(i)
             end
-            self:progress_update_indeterminate("Generating content...")
+            self:progress_indeterminate("Generating content...")
             print("Performing round-trip test. If any infos are deleted by topic-helpers, then we failed to recycle infos properly.")
             awpa.env.diagnose_topic_helper_deletions = true
             awpa.env:generate_content()
@@ -232,12 +257,7 @@ awpa.perflog:log(bench_b, "Post-parse XML load time for tab %d", i)
          end
          
          self:progress_reset()
-         for i = 1, #self.tabs do
-            self.tabs[i]:set_allow_editing(true)
-         end
-         for i = 1, #self.buttons do
-            self.buttons[i].enabled = true
-         end
+         self:set_editing_enable_state(true)
       end
       function instance_members:show()
          self.window:show()

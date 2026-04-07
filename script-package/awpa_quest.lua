@@ -246,21 +246,6 @@ do
          end
          self.branch = branch_main
          
-         do
-            local ask_topic    = self.ask_root_topic:get_or_create_topic()
-            local result_topic = self:get_or_create_result_topic()
-            
-            for i = 1, #self.actors do
-               local actor_info = self.actors[i]
-               for _, item in ipairs(actor_info.redirects.begin_asking_to) do
-                  item:generate_content(ask_topic)
-               end
-               for _, item in ipairs(actor_info.redirects.begin_responding) do
-                  item:generate_content(result_topic)
-               end
-            end
-         end
-         
          self.selection_topic_list:generate_all_forms()
          self.ask_root_topic:generate_all_forms()
          self.results_root_topic:generate_all_forms()

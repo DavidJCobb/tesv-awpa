@@ -144,7 +144,49 @@ do
             self.contents[v]:amend_xml_clone(nodemap)
          end
       end
-   
+      
+      function instance_members:get_or_create_branch()
+         if not self.forms.branch then
+            local editor_id = string.format(
+               "%sBranch%sBribe",
+               self.quest_info.form.editor_id,
+               self.actor_info.form.editor_id
+            )
+            self.forms.branch = utils.get_or_create_branch(self.quest_info:get_or_create_form(), editor_id)
+         end
+         return self.forms.branch
+      end
+      function instance_members:get_or_create_link(src_topic)
+         if self.forms.inbound_link then
+            return self.forms.inbound_link
+         end
+         local dst_topic = self.contents["begin"]:get_or_create_topic(self:get_or_create_branch())
+         
+         local info = utils.make_invisible_info(
+            src_topic,
+            string.format(
+               "%sLinkInfo%sBribeStart",
+               self.quest_info.form.editor_id,
+               self.actor_info.form.editor_id
+            ),
+            dst_topic
+         )
+         self.forms.inbound_link = info
+         
+         utils.replace_condition_list(info, {
+            run_on        = "subject",
+            function_name = "GetIsId",
+            parameters    = { self.actor_info.form },
+            comparison    = {
+               operator = "==",
+               operand  = 1,
+            }
+         })
+         utils.append_condition_list(info, self.conditions)
+         
+         return info
+      end
+      
       function instance_members:generate_content()
          for _, v in ipairs(BRIBE_TOPIC_NAMES) do
             local data = self.contents[v]
@@ -153,20 +195,8 @@ do
             end
          end
          
-         local quest = self.quest_info.form
-      
-         --
-         -- Get or create our branch.
-         --
-         if not self.forms.branch then
-            local editor_id = string.format(
-               "%sBranch%sBribe",
-               self.quest_info.form.editor_id,
-               self.actor_info.form.editor_id
-            )
-            self.forms.branch = utils.get_or_create_branch(quest, editor_id)
-         end
-         local branch = self.forms.branch
+         local quest  = self.quest_info.form
+         local branch = self:get_or_create_branch()
          
          --
          -- Get or create our topics.
@@ -186,29 +216,11 @@ do
          self.contents["refuse"].topic.text = "Never mind."
          self.contents["poor"].topic.text   = "I don't have enough gold."
          
-         do
-            local info = utils.make_invisible_info(
-               self.quest_info.ask_root_topic:get_or_create_topic(),
-               string.format(
-                  "%sLinkInfo%sBribeStart",
-                  self.quest_info.form.editor_id,
-                  self.actor_info.form.editor_id
-               ),
-               self.contents["begin"].topic
-            )
-            self.forms.inbound_link = info
-            
-            utils.replace_condition_list(info, {
-               run_on        = "subject",
-               function_name = "GetIsId",
-               parameters    = { self.actor_info.form },
-               comparison    = {
-                  operator = "==",
-                  operand  = 1,
-               }
-            })
-            utils.append_condition_list(info, self.conditions)
-         end
+         -- HACK: even if we're being used to generate a flat tree, generate a non-flat 
+         --       link for now because the ask-root topic isn't set up to let us generate 
+         --       our bribe-start lines directly into it (the topic doesn't use a topic-
+         --       helper object, and thus can't use a generation-context object yet).
+         self:get_or_create_link(self.quest_info.ask_root_topic:get_or_create_topic())
          
          local function _generate_infos(source, topic, postprocess)
             for i = 1, #source do

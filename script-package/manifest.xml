@@ -43,6 +43,7 @@ awpa_condition_race.lua
 awpa_condition_set.lua
 awpa_constant.lua
 awpa_group.lua
+awpa_group_generation_context.lua
 awpa_line.lua
 awpa_quest.lua
 awpa_shared_info_reference.lua

@@ -14,6 +14,11 @@ awpa.env = {
    
    built_in_shared_infos = {},
    
+   -- If true, generate all results lines into a single topic, i.e. 
+   -- `top-g` elements don't generate separate topics, and neither 
+   -- do actor redirect topics.
+   generate_flat_results = false,
+   
    diagnose_topic_helper_deletions = false,
    
    content_counts = {
@@ -31,6 +36,8 @@ function awpa.env:reset()
    
    self.shared_info_quest = nil
    self.shared_info_topic = nil
+   
+   self.generate_flat_results = false
    
    self.built_in_shared_infos = {}
    

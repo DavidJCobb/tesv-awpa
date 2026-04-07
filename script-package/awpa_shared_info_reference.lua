@@ -58,55 +58,57 @@ do
       
          self.forms = {}
          
-         local actor_to_find
-         
-         for i = 1, #self.source.forms do
-            local si     = self.source.forms[i]
-            local gender = nil
-            do
-               local id = si.editor_id
-               local c  = id:sub(#id)
-               if c == "M" then
-                  gender = "Male"
-               elseif c == "F" then
-                  gender = "Female"
+         local form_ids_after = {}
+         do
+            local actor_to_find
+            local form_ids_prior <const> = self.form_ids
+            local form_ids_count <const> = #form_ids_prior
+            
+            local src_forms <const> = self.source.forms
+            local src_count <const> = #src_forms
+            for i = 1, src_count do
+               local si     = src_forms[i]
+               local gender = nil
+               do
+                  local c = si.editor_id:sub(-1)
+                  if c == "M" then
+                     gender = "Male"
+                  elseif c == "F" then
+                     gender = "Female"
+                  end
                end
-            end
-            local info
-            for j = 1, #self.form_ids do
-               local f = dovah.get_form_by_id(self.form_ids[i])
-               if  f
-               and f.form_type == form_types.topic_info
-               and f.use_shared_info == si
-               then
-                  info = f
-                  utils.replace_condition_list(info, {})
-                  break
+               local info
+               for j = 1, form_ids_count do
+                  local f = dovah.get_form_by_id(form_ids_prior[j])
+                  if  f
+                  and f.form_type == form_types.topic_info
+                  and f.use_shared_info == si
+                  then
+                     info = f
+                     utils.clear_condition_list(info)
+                     goto configure_info
+                  end
                end
-            end
-            if not info then
                info = dovah.create_form(form_types.topic_info, { parent = topic })
-            end
-            self.forms[i] = info
-            info.use_shared_info = si
-            info.is_random = true
-            if gender then
-               local cnd = info.conditions:insert()
-               if not actor_to_find then
-                  actor_to_find = topic.parent_quest.aliases["ActorToFind"]
+               ::configure_info::
+               self.forms[i] = info
+               form_ids_after[i] = info.form_id
+               info.use_shared_info = si
+               info.is_random = true
+               if gender then
+                  local cnd = info.conditions:insert()
+                  if not actor_to_find then
+                     actor_to_find = topic.parent_quest.aliases["ActorToFind"]
+                  end
+                  cnd.run_on              = actor_to_find
+                  cnd.function_name       = "GetIsSex"
+                  cnd.parameters[1]       = gender
+                  cnd.comparison.operator = "=="
+                  cnd.comparison.operand  = 1
                end
-               cnd.run_on              = actor_to_find
-               cnd.function_name       = "GetIsSex"
-               cnd.parameters[1]       = gender
-               cnd.comparison.operator = "=="
-               cnd.comparison.operand  = 1
             end
          end
-         local ids = {}
-         for i = 1, #self.forms do
-            ids[i] = self.forms[i].form_id
-         end
-         self.form_ids = ids
+         self.form_ids = form_ids_after
          
          awpa.perflog:log(bench, "awpa.shared_info_reference:generate_infos(...) given definition '%s'", self.source.id)
          awpa.env:on_content_object_processed()

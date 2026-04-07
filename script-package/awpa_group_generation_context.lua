@@ -43,9 +43,11 @@ do
          if awpa.line.is(item) then
             local a, b = item:generate_infos(topic)
             utils.append_condition_list(a, self.conditions)
+            cndlib.strip_redundant_conditions(a.conditions)
             topic_helper:append_desired_info(a)
             if b then
                utils.append_condition_list(b, self.conditions)
+               cndlib.strip_redundant_conditions(b.conditions)
                topic_helper:append_desired_info(b)
             end
          elseif awpa.group.is(item) or awpa.top_level_group.is(item) then
@@ -69,6 +71,7 @@ do
                for j = 1, cond_count do
                   self.conditions[j]:apply_to_info(info)
                end
+               cndlib.strip_redundant_conditions(info.conditions)
                topic_helper:append_desired_info(info)
             end
          end

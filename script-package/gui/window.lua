@@ -63,6 +63,7 @@ do
             self.window:add_child(widget)
             do
                local check = ui.checkbox.new("Generate flat (no sub-topics)")
+               check.checked = true
                widget:add_child(check)
                self.subwidgets.generate_flat = check
             end

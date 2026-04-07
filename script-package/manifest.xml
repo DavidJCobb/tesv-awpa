@@ -15,6 +15,7 @@ pronouns.lua
 string_builder.lua
 utils.lua
 xml.lua
+cndlib.lua
 awpa_env.lua
 awpa_perflog.lua
 awpa_scope.lua

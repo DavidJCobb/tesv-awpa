@@ -386,8 +386,8 @@
                   </g>
                   <line>I haven't noticed him around town. You'll have to ask someone else.</line>
                   <line emotion="puzzled:90">Hmm... I don't remember seeing him, but... I probably wouldn't have noticed him.</line>
-                  <line>I've been too focused on my experiments to really notice him.</line>
                   <line hours-until-reset="24" emotion="puzzled:70">I'm not sure. I've been thinking about my experiments... Would you happen to know a good place to gather Painted Troll Fat? Sorry, never mind.</line>
+                  <line>I've been too focused on my experiments to really notice him.</line>
                </topic>
             </begin-responding>
          </actor>

@@ -1400,7 +1400,7 @@
             <conditions>
                <parent-cell of="subject" is="RiftenHonorhallOrphanage" />
             </conditions>
-            <g name="grelod" non-exclusive="true">
+            <g name="grelod">
                <conditions>
                   <actor-base of="subject" is="Grelod" />
                </conditions>
@@ -1443,6 +1443,7 @@
                   <line emotion="disgust:100">You'll find that awful harpy at Honorhall.</line>
                </g>
                <line>He runs Honorhall Orphanage. You'll probably find him there.</line>
+               <line>Try checking Honorhall Orphanage, at the southwest corner of the city.</line>
             </g>
             <g name="constance">
                <conditions>

@@ -54,6 +54,9 @@ awpa-core/ask_root_topic.lua
 awpa-core/actor_selection_topic_list.lua
 awpa-core/results_root_topic.lua
 awpa-utils/topic_helper.lua
+awpa-core/line_collection.lua
+awpa-core/random_line_group.lua
+awpa-core/random_line_subgroup.lua
 macros.lua
 gui/tab.lua
 gui/window.lua

@@ -106,6 +106,46 @@ do
                return
             end
          end)
+         
+         do
+            --[[--
+            
+               TEST to see if we properly fold `g`s into random groups
+            
+            --]]--
+            local test = awpa.random_line_group.fold(self.results_root_topic)
+            local function _walk(list, indent)
+               if not indent or indent <= 0 then
+                  print("Dumping folded RLGs...")
+                  indent = 0
+               end
+               
+               local leading = "% " .. string.format("%u", indent) .. "s"
+               leading = string.format(leading, "")
+               
+               for i = 1, #list do
+                  local item = list[i]
+                  if awpa.line.is(item) then
+                     print(string.format("%s - LINE: %q", leading, item.text))
+                  elseif awpa.shared_info_reference.is(item) then
+                     print(string.format("%s - SHARED INFO: %s", leading, item.source.id))
+                  elseif awpa.random_line_group.is(item) then
+                     print(string.format("%s - RANDOM GROUP (%u conditions)", leading, #item.conditions))
+                     _walk(item.children, indent + 1)
+                  elseif awpa.random_line_subgroup.is(item) then
+                     print(string.format("%s - RANDOM SUBGROUP (%u conditions)", leading, #item.conditions))
+                     _walk(item.children, indent + 1)
+                  else
+                     print(string.format("%s - UNKNOWN", leading))
+                     dovah.dump(item)
+                  end
+               end
+               if indent == 0 then
+                  print("Dump done.")
+               end
+            end
+            _walk(test)
+         end
       end
       function instance_members:amend_xml_clone(nodemap)
          do

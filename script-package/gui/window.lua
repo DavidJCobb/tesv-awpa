@@ -16,6 +16,7 @@ do
          
          self.subwidgets = {
             generate_flat = nil,
+            dont_generate = nil,
          }
          
          self.window.title = "Ask Where People Are - Generator"
@@ -66,6 +67,11 @@ do
                check.checked = true
                widget:add_child(check)
                self.subwidgets.generate_flat = check
+            end
+            do
+               local check = ui.checkbox.new("Don't actually generate (i.e. debug loading)")
+               widget:add_child(check)
+               self.subwidgets.dont_generate = check
             end
          end
          do -- bottom row
@@ -200,6 +206,11 @@ bench_b:stop()
 awpa.perflog:log(bench_a, "Macro process time for tab %d", i)
 awpa.perflog:log(bench_b, "Post-parse XML load time for tab %d", i)
             self:progress_update(i)
+         end
+         if self.subwidgets.dont_generate.checked then
+            self:progress_reset()
+            self:set_editing_enable_state(true)
+            return
          end
          self:progress_indeterminate("Generating content...")
          self._tracking_lines = false

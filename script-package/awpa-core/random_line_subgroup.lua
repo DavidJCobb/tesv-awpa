@@ -9,6 +9,7 @@ do
       constructor = function(self)
          self.conditions = {}
          self.children   = {} -- vector<variant<shared_info_reference, line, random_line_subgroup>>
+         self.name         = "" -- for debugging
       end,
       instance_members = instance_members
    })

@@ -10,121 +10,131 @@ do
       constructor = function(self)
          self.conditions   = {}
          self.children     = {} -- vector<variant<shared_info_reference, line, random_line_subgroup>>
+         self.name         = "" -- for debugging
       end,
       instance_members = instance_members,
       static_members   = static_members
    })
    do -- static member functions
       function static_members.fold(container)
-         local function _copy_conditions(src_list, dst_list)
-            local dst_i = #dst_list
-            for i = 1, #src_list do
-               dst_i = dst_i + 1
-               dst_list[dst_i] = src_list[i]
+         local function _is_content_object(o)
+            if awpa.line.is(o)
+            or awpa.shared_info_reference.is(o)
+            or awpa.top_level_group.is(o)
+            or awpa.group.is(o)
+            then
+               return true
             end
+            return false
          end
          
          local dst_top = {}
+         local mapping = {}
+         local dummy_parent
          
-         local inherit_conditions  = {}
-         local dst_for_loose_lines = nil
-         local function _walk(src_object, dst_object, outermost_subgroup)
-            local src_list = src_object.children
-            local dst_list
-            if dst_object then
-               dst_list = dst_object.children
-            else
-               dst_list = dst_top
+         local function _get_dummy_parent()
+            if not dummy_parent then
+               dummy_parent = awpa.random_line_group()
             end
-            
-            local dst_has_own_lines = false
-            for i = 1, #src_list do
-               local src_item = src_list[i]
-               if awpa.line.is(src_item)
-               or awpa.shared_info_reference.is(src_item)
-               then
-                  dst_has_own_lines = true
-                  break
-               end
-            end
-            
-            for i = 1, #src_list do
-               local src_item = src_list[i]
-               
-               if awpa.line.is(src_item)
-               or awpa.shared_info_reference.is(src_item)
-               then
-                  if dst_object then
-                     dst_object.children[#dst_object.children + 1] = src_item
-                  else
-                     if not dst_for_loose_lines then
-                        dst_for_loose_lines = awpa.random_line_group()
-                        dst_top[#dst_top + 1] = dst_for_loose_lines
-                     end
-                     dst_for_loose_lines.children[#dst_for_loose_lines.children + 1] = src_item
-                  end
-                  goto continue
-               end
-               dst_for_loose_lines = nil
-               
-               if awpa.group.is(src_item)
-               or awpa.top_level_group.is(src_item)
-               then
-                  local exclusive = true
-                  if awpa.group.is(src_item) and not src_item.exclusive then
-                     exclusive = false
-                  end
-                  
-                  if exclusive and outermost_subgroup then
-                     local name_outer = outermost_subgroup.name or "<UNNAMED>"
-                     local name_inner = src_item.name or "<UNNAMED>"
-                     error(string.format("group %g is nested in subgroup %s", tostring(name_inner), tostring(name_outer)))
-                  end
-                  
-                  if not exclusive and not dst_object then
-                     local name_inner = src_item.name or "<UNNAMED>"
-                     error(string.format("group %g is a non-exclusive group with no parent/ancestor exclusive group", tostring(name_inner)))
-                  end
-                  
-                  local src_subgroup
-                  local conditions_to_keep
-                  local dst_item
-                  if exclusive then
-                     if dst_has_own_lines then
-                        dst_item = awpa.random_line_group()
-                        dst_top[#dst_top + 1] = dst_item
-                     end
-                     if src_object.conditions then -- top-level internal objects e.g. `results_root_topic` lack these
-                        conditions_to_keep = #inherit_conditions
-                        _copy_conditions(src_object.conditions, inherit_conditions)
-                     end
-                  else
-                     dst_item = awpa.random_line_subgroup()
-                     dst_list[#dst_list + 1] = dst_item
-                     src_subgroup = src_item
-                  end
-                  if dst_item then
-                     _copy_conditions(inherit_conditions, dst_item.conditions)
-                     _copy_conditions(src_item.conditions, dst_item.conditions)
-                  end
-                  _walk(src_item, dst_item, src_subgroup)
-                  if conditions_to_keep then
-                     for i = #inherit_conditions, conditions_to_keep + 1, -1 do
-                        inherit_conditions[i] = nil
-                     end
-                  end
-                  
-                  goto continue
-               end
-               
-               dovah.dump(src_item)
-               error("unknown child type")
-               
-               ::continue::
-            end
+            return dummy_parent
          end
          
-         _walk(container, nil, nil)
+         local function _handle_leaf(src_object, dst_parent)
+            if awpa.line.is(src_object)
+            or awpa.shared_info_reference.is(src_object)
+            then
+               dst_parent = dst_parent or _get_dummy_parent()
+               dst_parent.children[#dst_parent.children + 1] = src_object
+               return true
+            end
+            return false
+         end
+         local function _handle_inner(src_object, dst_parent)
+            if _handle_leaf(src_object, dst_parent) then
+               return true
+            end
+            if awpa.group.is(src_object) and not src_object.exclusive then
+               local dst_object = awpa.random_line_subgroup()
+               utils.join(dst_object.conditions, src_object.conditions)
+               dst_object.name = src_object.name or dst_object.name
+               
+               dst_parent = dst_parent or _get_dummy_parent()
+               local dst_i = #dst_parent.children + 1
+               dst_parent.children[dst_i] = dst_object
+               
+               for i = 1, #src_object.children do
+                  _handle_inner(src_object.children[i], dst_object)
+               end
+               
+               if #dst_object.children == 0 then
+                  --
+                  -- Do not retain empty groups.
+                  --
+                  dst_parent.children[dst_i] = nil
+               end
+               
+               return true
+            end
+            return false
+         end
+         local function _handle_outer(src_object, dst_parent)
+            if _handle_inner(src_object, dst_parent) then
+               return
+            end
+            if awpa.top_level_group.is(src_object)
+            or awpa.group.is(src_object)
+            then
+               if awpa.random_line_subgroup.is(dst_parent) then
+                  error("random top-group not allowed inside of random sub-group")
+               end
+               local dst_object = awpa.random_line_group()
+               dst_object.name = src_object.name or src_object.editor_id_slug or dst_object.name
+               do
+                  local subject   = src_object
+                  local ancestors = {}
+                  while subject do
+                     ancestors[#ancestors + 1] = subject
+                     subject = subject.parent
+                     if not _is_content_object(subject) then
+                        break
+                     end
+                  end
+                  for i = #ancestors, 1, -1 do
+                     local item = ancestors[i]
+                     utils.join(dst_object.conditions, item.conditions)
+                  end
+               end
+               for i = 1, #src_object.children do
+                  _handle_outer(src_object.children[i], dst_object)
+               end
+               
+               --
+               -- Insert outer groups after their contents are generated, so that when random 
+               -- top-groups are nested, the more-specific ones are checked before their less-
+               -- specific parents. (We can also take this opportunity to filter out groups 
+               -- that have no direct children.)
+               --
+               if #dst_object.children > 0 then
+                  dst_top[#dst_top + 1] = dst_object
+               end
+               
+               return
+            end
+            
+            dovah.dump(src_object)
+            error("unknown child type")
+         end
+         
+         if _is_content_object(container) then
+            _handle_outer(container)
+         else
+            for i = 1, #container.children do
+               _handle_outer(container.children[i])
+            end
+         end
+         if dummy_parent then
+            dst_top[#dst_top + 1] = dummy_parent
+         end
          
          return dst_top
       end

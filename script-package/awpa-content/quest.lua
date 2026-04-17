@@ -130,10 +130,10 @@ do
                   elseif awpa.shared_info_reference.is(item) then
                      print(string.format("%s - SHARED INFO: %s", leading, item.source.id))
                   elseif awpa.random_line_group.is(item) then
-                     print(string.format("%s - RANDOM GROUP (%u conditions)", leading, #item.conditions))
+                     print(string.format("%s - RANDOM GROUP: %q (%u conditions)", leading, item.name, #item.conditions))
                      _walk(item.children, indent + 1)
                   elseif awpa.random_line_subgroup.is(item) then
-                     print(string.format("%s - RANDOM SUBGROUP (%u conditions)", leading, #item.conditions))
+                     print(string.format("%s - RANDOM SUBGROUP %q (%u conditions)", leading, item.name, #item.conditions))
                      _walk(item.children, indent + 1)
                   else
                      print(string.format("%s - UNKNOWN", leading))

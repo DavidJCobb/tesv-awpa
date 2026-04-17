@@ -1,6 +1,20 @@
 
 utils = {}
 
+function utils.join(dst, src)
+   local src_size = #src
+   if src_size == 0 then
+      return
+   end
+   local dst_i = #dst + 1
+   for src_i = 1, src_size do
+      dst[dst_i] = src[src_i]
+      dst_i      = dst_i + 1
+   end
+end
+
+--
+
 function utils.get_or_create_branch(quest, editor_id, prior_branches)
    if not prior_branches then
       prior_branches = quest:get_all_dialogue_branches()

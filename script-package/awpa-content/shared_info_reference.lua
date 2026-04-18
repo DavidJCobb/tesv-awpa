@@ -55,6 +55,9 @@ do
       
       function instance_members:generate_infos(topic)
          local bench = benchmark.new()
+         local benches_form_create = {}
+         local benches_conditions  = {}
+         local benches_cnd_config  = {}
       
          self.forms = {}
          
@@ -89,28 +92,48 @@ do
                      goto configure_info
                   end
                end
+benches_form_create[i] = benchmark.new()
                info = dovah.create_form(form_types.topic_info, { parent = topic })
+benches_form_create[i]:stop()
                ::configure_info::
                self.forms[i] = info
                form_ids_after[i] = info.form_id
                info.use_shared_info = si
                info.is_random = true
                if gender then
+benches_conditions[i] = benchmark.new()
                   local cnd = info.conditions:insert()
                   if not actor_to_find then
                      actor_to_find = topic.parent_quest.aliases["ActorToFind"]
                   end
+benches_cnd_config[i] = benchmark.new()
                   cnd.run_on              = actor_to_find
                   cnd.function_name       = "GetIsSex"
                   cnd.parameters[1]       = gender
                   cnd.comparison.operator = "=="
                   cnd.comparison.operand  = 1
+benches_conditions[i]:stop()
+benches_cnd_config[i]:stop()
                end
             end
          end
          self.form_ids = form_ids_after
          
          awpa.perflog:log(bench, "awpa.shared_info_reference:generate_infos(...) given definition '%s'", self.source.id)
+         for i = 1, #self.source.forms do
+            local create    = benches_form_create[i]
+            local condition = benches_conditions[i]
+            local cnd_cfg   = benches_cnd_config[i]
+            if create then
+               awpa.perflog:log(create, " - form %u, creation", i)
+            end
+            if condition then
+               awpa.perflog:log(condition, " - form %u, create and configure conditions", i)
+            end
+            if cnd_cfg then
+               awpa.perflog:log(cnd_cfg, " - form %u, configure conditions", i)
+            end
+         end
          awpa.env:on_content_object_processed()
       end
    end

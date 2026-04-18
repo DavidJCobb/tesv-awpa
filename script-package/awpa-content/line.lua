@@ -192,21 +192,22 @@ do
                cnd.comparison.operand  = 1
             end
          
-            local resp = info.responses[1]
-            if not resp then
-               info.responses:insert()
-               resp = info.responses[1]
+            local resp_list = info.responses
+            if #resp_list < 1 then
+               resp_list:insert()
             end
-            resp.script_notes  = self.script_notes
-            resp.emotion_type  = self.emotion.type
-            resp.emotion_value = self.emotion.value
+            local text = self.text
             if fem then
                bench_c = benchmark.new()
-               resp.text = swap_masc_pronouns_to_fem(self.text)
+               text = swap_masc_pronouns_to_fem(self.text)
                bench_c:stop()
-            else
-               resp.text = self.text
             end
+            resp_list[1] = {
+               text          = text,
+               script_notes  = self.script_notes,
+               emotion_type  = self.emotion.type,
+               emotion_value = self.emotion.value,
+            }
          end
          
          local function _print_benches()

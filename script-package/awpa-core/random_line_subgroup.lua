@@ -26,7 +26,7 @@ do
          
       --]]--
       function instance_members:generate(topic, conditions)
-         local results <const> = awpa.line_collection.new()
+         local results <const> = awpa.line_collection()
          
          do
             local j = #conditions + 1

@@ -15,8 +15,9 @@ do
          self.buttons  = {}
          
          self.subwidgets = {
-            generate_flat = nil,
-            dont_generate = nil,
+            generate_flat   = nil,
+            dont_generate   = nil,
+            diagnose_th_del = nil,
          }
          
          self.window.title = "Ask Where People Are - Generator"
@@ -69,9 +70,14 @@ do
                self.subwidgets.generate_flat = check
             end
             do
-               local check = ui.checkbox.new("Don't actually generate (i.e. debug loading)")
+               local check = ui.checkbox.new("[Debug] Don't actually generate (i.e. debug loading)")
                widget:add_child(check)
                self.subwidgets.dont_generate = check
+            end
+            do
+               local check = ui.checkbox.new("[Debug] Diagnose topic-helper deletions")
+               widget:add_child(check)
+               self.subwidgets.diagnose_th_del = check
             end
          end
          do -- bottom row
@@ -211,6 +217,9 @@ awpa.perflog:log(bench_b, "Post-parse XML load time for tab %d", i)
             self:progress_reset()
             self:set_editing_enable_state(true)
             return
+         end
+         if self.subwidgets.diagnose_th_del.checked then
+            awpa.env.diagnose_topic_helper_deletions = true
          end
          self:progress_indeterminate("Generating content...")
          self._tracking_lines = false

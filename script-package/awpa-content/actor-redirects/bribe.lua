@@ -222,26 +222,6 @@ do
          --       helper object, and thus can't use a generation-context object yet).
          self:get_or_create_link(self.quest_info.ask_root_topic:get_or_create_topic())
          
-         local function _generate_infos(source, topic, postprocess)
-            for i = 1, #source do
-               local item = source[i]
-               if awpa.group.is(item) then
-                  item:generate_lines(topic)
-               elseif awpa.line.is(item) then
-                  item:generate_info(topic)
-               else
-                  error("unrecognized object type")
-               end
-            end
-            if postprocess then
-               local infos = topic.infos
-               for i = 1, #infos do
-                  local info = infos[i]
-                  postprocess(info)
-               end
-            end
-         end
-         
          -- ACTOR: "If you want info, it'll cost you."
          self.contents["begin"]:generate_infos(
             function(info)

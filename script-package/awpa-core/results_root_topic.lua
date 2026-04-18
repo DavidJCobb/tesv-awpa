@@ -87,20 +87,30 @@ do
          
          local context = awpa.group_generation_context(self.topic_helper)
          if awpa.env.generate_flat_results then
+            local rlg_list = {}
+         
             -- Handle begin-responding overrides.
             for i = 1, #self.quest_info.actors do
                local actor_info = self.quest_info.actors[i]
                for _, redirect in ipairs(actor_info.redirects.begin_responding) do
-                  redirect:generate_content(context)
+                  if awpa.actor_redirect_bribe.is(redirect) then -- HACK
+                     redirect:generate_content()
+                  else
+                     local inner_list = redirect:fold()
+                     utils.join(rlg_list, inner_list)
+                  end
                end
-               context.conditions = {}
-               context.speaker    = nil
             end
             
             -- Handle child content.
-            for i = 1, #self.children do
-               context:generate_child(self.children[i])
+            local inner_list = awpa.random_line_group.fold(self)
+            utils.join(rlg_list, inner_list)
+            
+            for i = 1, #rlg_list do
+               local rlg = rlg_list[i]
+               rlg:generate(self.topic_helper)
             end
+            
             return
          end
          

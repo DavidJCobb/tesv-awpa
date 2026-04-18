@@ -113,6 +113,7 @@ do
                TEST to see if we properly fold `g`s into random groups
             
             --]]--
+            --[[--
             local test = awpa.random_line_group.fold(self.results_root_topic)
             local function _walk(list, indent)
                if not indent or indent <= 0 then
@@ -144,7 +145,7 @@ do
                   print("Dump done.")
                end
             end
-            _walk(test)
+            _walk(test)--]]--
          end
       end
       function instance_members:amend_xml_clone(nodemap)

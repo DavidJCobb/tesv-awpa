@@ -148,6 +148,30 @@ do
          return info
       end
       
+      function instance_members:fold()
+         local actor_condition <const> = {
+            run_on        = "subject",
+            function_name = "GetIsId",
+            parameters    = { self.actor_info.form },
+            comparison    = {
+               operator = "==",
+               operand  = 1,
+            }
+         }
+      
+         local dst_list = awpa.random_line_group.fold(self)
+         for i = 1, #dst_list do
+            local dst_item = dst_list[i]
+            if awpa.random_line_group.is(dst_item) then
+               local cnd_list = {}
+               cnd_list[1] = actor_condition
+               utils.join(cnd_list, self.conditions)
+               utils.join(cnd_list, dst_item.conditions)
+               dst_item.conditions = cnd_list
+            end
+         end
+         return dst_list
+      end
       function instance_members:generate_content(context)
          if awpa.env.generate_flat_results then
             assert(not not context)

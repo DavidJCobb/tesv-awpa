@@ -158,11 +158,11 @@ do
             }
          
       --]]--
-      function instance_members:generate(topic_helper)
+      function instance_members:generate(topic_helper, postprocess)
          local topic   <const> = topic_helper.form
          local results <const> = {
-            top_level_lines = awpa.line_collection.new(),
-            specific_lines  = awpa.line_collection.new(),
+            top_level_lines = awpa.line_collection(),
+            specific_lines  = awpa.line_collection(),
          }
          
          for i = 1, #self.children do
@@ -177,6 +177,11 @@ do
             else
                error("unexpected object")
             end
+         end
+         
+         if postprocess then
+            results.top_level_lines:for_each_line(postprocess)
+            results.specific_lines:for_each_line(postprocess)
          end
          
          local function _store_list(list, last_is_random_end)

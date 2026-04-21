@@ -181,15 +181,15 @@ do
             
             if gendered then
                local cnd = info.conditions:insert()
-               cnd.run_on        = target_alias
-               cnd.function_name = "GetIsSex"
-               if fem then
-                  cnd.parameters[1] = "Female"
-               else
-                  cnd.parameters[1] = "Male"
-               end
-               cnd.comparison.operator = "=="
-               cnd.comparison.operand  = 1
+               cnd:overwrite_with({
+                  run_on        = target_alias,
+                  function_name = "GetIsSex",
+                  parameters    = { fem and "Female" or "Male" },
+                  comparison    = {
+                     operator = "==",
+                     operand  = 1
+                  }
+               })
             end
          
             local resp_list = info.responses

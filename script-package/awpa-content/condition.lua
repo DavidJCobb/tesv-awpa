@@ -95,11 +95,11 @@ do
          then
             cnd.run_on = self.run_on
          elseif self.run_on == "ActorToFind" then
-            local aliases = self.quest_info.form.aliases
             if self.is_override then
+               local aliases = self.quest_info.form.aliases
                cnd.run_on = aliases[self.is_override.form.editor_id]
             else
-               cnd.run_on = aliases["ActorToFind"]
+               cnd.run_on = self.quest_info.alias_for_actor_to_find
             end
          else
             error("invalid run-on")

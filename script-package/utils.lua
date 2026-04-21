@@ -90,20 +90,20 @@ local function _append_conditions_to(info, dst_list, src_list)
       local src = src_list[i]
       if awpa.condition.is(src) then
          if not src:is_no_op() then
-            src:overwrite_condition(dst_list:insert())
+            local dummy = {
+               run_on     = "subject",
+               parameters = {},
+               comparison = {
+                  operator = "==",
+                  operand  = 1
+               }
+            }
+            src:overwrite_condition(dummy)
+            dst_list:insert():overwrite_with(dummy)
          end
          goto continue
       end
-      local dst = dst_list:insert()
-      dst.run_on        = src.run_on
-      dst.function_name = src.function_name
-      if src.parameters then
-         for j = 1, 2 do
-            dst.parameters[j] = src.parameters[j]
-         end
-      end
-      dst.comparison.operator = src.comparison.operator
-      dst.comparison.operand  = src.comparison.operand
+      dst_list:insert():overwrite_with(src)
       ::continue::
    end
 end

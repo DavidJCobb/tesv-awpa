@@ -26,6 +26,8 @@ do
          self.ask_root_topic       = awpa.ask_root_topic(self)
          self.selection_topic_list = awpa.actor_selection_topic_list(self)
          self.results_root_topic   = awpa.results_root_topic(self)
+         
+         self.alias_for_actor_to_find = nil
       end,
       instance_members = instance_members,
    })
@@ -167,6 +169,7 @@ do
          if quest then
             self.form     = quest
             self.recycled = true
+            self.alias_for_actor_to_find = quest.aliases["ActorToFind"]
             return quest
          end
          quest = dovah.create_form(form_types.quest)
@@ -176,6 +179,7 @@ do
          do
             local alias = quest:create_ref_alias()
             alias.name = "ActorToFind"
+            self.alias_for_actor_to_find = alias
          end
          return quest
       end

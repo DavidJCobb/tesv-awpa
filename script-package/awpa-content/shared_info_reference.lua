@@ -107,11 +107,15 @@ benches_conditions[i] = benchmark.new()
                      actor_to_find = topic.parent_quest.aliases["ActorToFind"]
                   end
 benches_cnd_config[i] = benchmark.new()
-                  cnd.run_on              = actor_to_find
-                  cnd.function_name       = "GetIsSex"
-                  cnd.parameters[1]       = gender
-                  cnd.comparison.operator = "=="
-                  cnd.comparison.operand  = 1
+                  cnd:overwrite_with({
+                     run_on        = actor_to_find,
+                     function_name = "GetIsSex",
+                     parameters    = { gender },
+                     comparison    = {
+                        operator = "==",
+                        operand  = 1,
+                     }
+                  })
 benches_conditions[i]:stop()
 benches_cnd_config[i]:stop()
                end

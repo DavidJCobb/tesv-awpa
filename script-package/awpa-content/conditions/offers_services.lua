@@ -43,5 +43,16 @@ do
          end
          cnd.comparison.operand  = 1
       end
+      function instance_members:_to_native_compatible_table_impl()
+         local t = {
+            function_name = "GetOffersServicesNow",
+            comparison    = {
+               operator = self.equals and "==" or "!=",
+               operand  = 1
+            }
+         }
+         self:_set_condition_run_on(t)
+         return t
+      end
    end
 end

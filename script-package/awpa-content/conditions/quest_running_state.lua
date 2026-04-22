@@ -60,5 +60,16 @@ do
          end
          cnd.comparison.operand = 1
       end
+      function instance_members:_to_native_compatible_table_impl()
+         return {
+            run_on        = "subject",
+            function_name = "GetQuestRunning",
+            parameters    = { self.form },
+            comparison    = {
+               operator = self.running and "==" or "!=",
+               operand  = 1
+            }
+         }
+      end
    end
 end

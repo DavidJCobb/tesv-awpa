@@ -90,16 +90,7 @@ local function _append_conditions_to(info, dst_list, src_list)
       local src = src_list[i]
       if awpa.condition.is(src) then
          if not src:is_no_op() then
-            local dummy = {
-               run_on     = "subject",
-               parameters = {},
-               comparison = {
-                  operator = "==",
-                  operand  = 1
-               }
-            }
-            src:overwrite_condition(dummy)
-            dst_list:insert():overwrite_with(dummy)
+            dst_list:insert():overwrite_with(src:to_native_compatible_table())
          end
          goto continue
       end

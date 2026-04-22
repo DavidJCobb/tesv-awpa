@@ -114,5 +114,32 @@ do
          end
          cnd.comparison.operand  = 1
       end
+      function instance_members:_to_native_compatible_table_impl()
+         local t = {
+            comparison = {
+               operator = self.equals and "==" or "!=",
+               operand  = 1
+            }
+         }
+         self:_set_condition_run_on(t)
+         if self.actor then
+            t.function_name = "GetInSameCell"
+            
+            local param
+            if self.actor == "speaker" then
+               error("can't specify the speaker as a parameter")
+            elseif self.actor == "player" then
+               param = dovah.get_form_by_id(0x14)
+            elseif self.actor == "subject" then
+               t.override_types_with = "alias"
+               param = self.quest_info.alias_for_actor_to_find
+            end
+            t.parameters = { param }
+         else
+            t.function_name = "GetInCell"
+            t.parameters    = { self.cell }
+         end
+         return t
+      end
    end
 end

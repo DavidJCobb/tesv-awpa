@@ -11,6 +11,9 @@ do
          
          -- only for some condition functions:
          self.run_on = nil
+         
+         -- table, suitable for passing to native `condition:overwrite_with`
+         self.generated = nil
       end,
       instance_members = instance_members,
       static_members   = static_members,
@@ -125,6 +128,28 @@ do
          end
          local cnd = info.conditions:insert()
          self:overwrite_condition(cnd)
+      end
+      
+      function instance_members:to_native_compatible_table()
+         local t = self.generated
+         if not t then
+            t = self:_to_native_compatible_table_impl()
+            t.is_or_linked = self.is_or_linked or false
+            self.generated = t
+         end
+         return t
+      end
+      function instance_members:_to_native_compatible_table_impl()
+         local t = {
+            run_on     = "subject",
+            parameters = {},
+            comparison = {
+               operator = "==",
+               operand  = 1,
+            }
+         }
+         self:overwrite_condition(t)
+         return t
       end
    end
    do -- static members

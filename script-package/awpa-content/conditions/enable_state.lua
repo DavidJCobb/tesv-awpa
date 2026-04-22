@@ -74,5 +74,15 @@ do
          end
          cnd.comparison.operand = 1
       end
+      function instance_members:_to_native_compatible_table_impl()
+         return {
+            run_on        = self.form,
+            function_name = "GetDisabled",
+            comparison    = {
+               operator = self.enabled and "!=" or "==",
+               operand  = 1
+            }
+         }
+      end
    end
 end

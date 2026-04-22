@@ -10,10 +10,6 @@ do
       constructor = function(self)
          self.run_on = "subject"
          self.axis   = nil
-         self.range  = {
-            origin      = nil,
-            half_extent = nil
-         }
          self.comparison = {
             operator = nil,
             operand  = nil
@@ -28,10 +24,6 @@ do
          self:_copy_base(out)
          out.run_on = self.run_on
          out.axis   = self.axis
-         out.range  = {
-            origin      = self.range.origin,
-            half_extent = self.range.half_extent
-         }
          out.comparison.operator = self.comparison.operator
          out.comparison.operand  = self.comparison.operand
          return out
@@ -46,58 +38,24 @@ do
             error("mismatched node name")
          end
          self:_extract_run_on(element)
-         
-         local v = element.attributes["at"]
-         if v then
-            if tonumber(v) then
-               v = tonumber(v)
-            else
-               v = self:_resolve_constant(v)
-            end
-            self.range.origin = v
-            
-            v = element.attributes["within"]
-            if not v then
-               v = element.attributes["around"]
-               if not v then
-                  error("`at` must be used in conjunction with `within` (full-extent) or `around` (half-extent)")
-               end
-               v = tonumber(v) / 2
-            end
-            if tonumber(v) then
-               v = tonumber(v)
-            else
-               v = self:_resolve_constant(v)
-            end
-            self.range.half_extent = v
-         else
-            self:_extract_numeric_comparison(element)
-         end
-      end
-      function instance_members:assert_valid()
-         if self.range.origin and self.is_or_linked then
-            error("position range conditions cannot be OR-linked")
-         end
+         self:_extract_numeric_comparison(element)
       end
       function instance_members:overwrite_condition(cnd)
          self:_set_condition_common(cnd)
          self:_set_condition_run_on(cnd)
          cnd.function_name = "GetPos"
          cnd.parameters[1] = self.axis
-         if self.range.origin then
-            cnd.comparison.operator = ">="
-            cnd.comparison.operand  = self.range.origin - self.range.half_extent
-            
-            self:_set_condition_common(cnd)
-            self:_set_condition_run_on(cnd)
-            cnd.function_name = "GetPos"
-            cnd.parameters[1] = self.axis
-            cnd.comparison.operator = "<="
-            cnd.comparison.operand  = self.range.origin + self.range.half_extent
-         else
-            cnd.comparison.operator = self.comparison.operator
-            cnd.comparison.operand  = self.comparison.operand
-         end
+         cnd.comparison.operator = self.comparison.operator
+         cnd.comparison.operand  = self.comparison.operand
+      end
+      function instance_members:_to_native_compatible_table_impl()
+         local t = {
+            function_name = "GetPos",
+            parameters    = { self.axis },
+            comparison    = self.comparison
+         }
+         self:_set_condition_run_on(t)
+         return t
       end
    end
 end

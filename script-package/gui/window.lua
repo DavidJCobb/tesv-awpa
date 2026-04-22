@@ -223,7 +223,10 @@ awpa.perflog:log(bench_b, "Post-parse XML load time for tab %d", i)
          end
          self:progress_indeterminate("Generating content...")
          self._tracking_lines = false
+local bench_c = benchmark.new()
          awpa.env:generate_content()
+bench_c:stop()
+awpa.perflog:log(bench_c, "Time to generate content")
          do
             self:progress_start("Preparing to update XML payloads... (%v/%m)", payload_count)
             local all_clones_map = {}

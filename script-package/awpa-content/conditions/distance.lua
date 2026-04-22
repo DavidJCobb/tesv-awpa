@@ -101,5 +101,42 @@ do
          cnd.comparison.operator = self.comparison.operator
          cnd.comparison.operand  = self.comparison.operand
       end
+      function instance_members:_to_native_compatible_table_impl()
+         local t = {
+            function_name = "GetDistance",
+            comparison    = self.comparison,
+         }
+         self:_set_condition_run_on(t)
+         if type(self.other) == "string" then
+            if self.other == "speaker" then
+               --
+               -- SOMETHING.distance(subject) -> subject.distance(SOMETHING)
+               --
+               if self.run_on == "player" then
+                  --
+                  -- player.distance(subject) -> subject.distance(player)
+                  --
+                  t.parameters = { dovah.get_form_by_id(0x14) }
+                  t.run_on     = "subject"
+               else
+                  local a = t.run_on
+                  local b = "subject"
+                  if not object_is_form(a) then
+                     t.override_types_with = "alias"
+                  end
+                  t.parameters = { a }
+                  t.run_on     = b
+               end
+            elseif self.other == "subject" then
+               t.override_types_with = "alias"
+               t.parameters = { self.quest_info.alias_for_actor_to_find }
+            else
+               error("unhandled case")
+            end
+         else
+            t.parameters = { self.other }
+         end
+         return t
+      end
    end
 end

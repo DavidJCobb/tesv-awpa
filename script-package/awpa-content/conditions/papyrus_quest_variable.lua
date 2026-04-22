@@ -63,5 +63,13 @@ do
          cnd.comparison.operator = self.comparison.operator
          cnd.comparison.operand  = self.comparison.operand
       end
+      function instance_members:_to_native_compatible_table_impl()
+         return {
+            run_on        = "subject",
+            function_name = "GetVMQuestVariable",
+            parameters    = { self.form, self.variable },
+            comparison    = self.comparison
+         }
+      end
    end
 end

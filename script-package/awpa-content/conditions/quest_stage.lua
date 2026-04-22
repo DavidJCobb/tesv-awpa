@@ -92,5 +92,24 @@ do
          end
          cnd.parameters[1] = self.form
       end
+      function instance_members:_to_native_compatible_table_impl()
+         if type(self.done) == nil then
+            return {
+               run_on        = "subject",
+               function_name = "GetStage",
+               parameters    = { self.form },
+               comparison    = self.comparison
+            }
+         end
+         return {
+            run_on        = "subject",
+            function_name = "GetStageDone",
+            parameters    = { self.form, self.stage },
+            comparison    = {
+               operator = self.done and "==" or "!=",
+               operand  = 1
+            }
+         }
+      end
    end
 end

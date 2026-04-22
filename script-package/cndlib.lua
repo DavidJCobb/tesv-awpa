@@ -7,6 +7,19 @@ function cndlib.extract_comparison_to_table(cnd)
       operand  = cmp.operand
    }
 end
+function cndlib.extract_condition_to_table(cnd)
+   local parameters = cnd.parameters
+   return {
+      run_on        = cnd.run_on,
+      function_name = cnd.function_name,
+      parameters    = { parameters[1], parameters[2] },
+      comparison    = cndlib.extract_comparison_to_table(cnd),
+      is_or_linked  = cnd.is_or_linked,
+      
+      override_types_with     = cnd.override_types_with,
+      swap_subject_and_target = cnd.swap_subject_and_target,
+   }
+end
 
 -- Returns `true` if the comparison checks if a condition is true.
 -- Returns `false` if the comparison checks if a condition is false.
@@ -258,39 +271,31 @@ end
 
 -- Takes a native condition list, e.g. some_topic_info.conditions
 function cndlib.strip_redundant_conditions(list)
-   local or_groups = cndlib.list_to_or_groups(list)
+   local or_groups
+   do
+      local as_tables = {}
+      for i = 1, #list do
+         as_tables[i] = cndlib.extract_condition_to_table(list[i])
+      end
+      or_groups = cndlib.list_to_or_groups(as_tables)
+   end
    cndlib.strip_redundant_conditions_from_or_groups(or_groups)
    
-   local data = {}
+   local re_flattened = {}
    for i = 1, #or_groups do
       local group = or_groups[i]
       local size  = #group
       for j = 1, size do
-         local src = group[j]
-         local dst = {
-            comparison = {
-               operator = src.comparison.operator,
-               operand  = src.comparison.operand
-            },
-            function_name       = src.function_name,
-            is_or_linked        = false,
-            override_types_with = src.override_types_with,
-            parameters          = {
-               src.parameters[1],
-               src.parameters[2],
-            },
-            run_on = src.run_on,
-            swap_subject_and_target = src.swap_subject_and_target,
-         }
+         local item = group[j]
          if j < size then
-            dst.is_or_linked = true
+            item.is_or_linked = true
          end
-         data[#data + 1] = dst
+         re_flattened[#re_flattened + 1] = item
       end
    end
    
    local size_prior <const> = #list
-   local size_after <const> = #data
+   local size_after <const> = #re_flattened
    if size_prior == size_after then
       return
    end
@@ -300,29 +305,16 @@ function cndlib.strip_redundant_conditions(list)
       size_min = size_after
    end
    
-   local function _overwrite(src, dst)
-      dst.function_name           = src.function_name
-      dst.override_types_with     = src.override_types_with
-      dst.is_or_linked            = src.is_or_linked
-      dst.run_on                  = src.run_on
-      dst.swap_subject_and_target = src.swap_subject_and_target
-      for j = 1, 2 do
-         dst.parameters[j] = src.parameters[j]
-      end
-      dst.comparison.operator = src.comparison.operator
-      dst.comparison.operand  = src.comparison.operand
-   end
-   
    for i = 1, size_min do
-      local src = data[i]
+      local src = re_flattened[i]
       local dst = list[i]
-      _overwrite(src, dst)
+      dst:overwrite_with(src)
    end
    if size_after > size_prior then
       for i = size_prior + 1, size_after do
-         local src = data[i]
+         local src = re_flattened[i]
          local dst = list:insert()
-         _overwrite(src, dst)
+         dst:overwrite_with(src)
       end
    else
       for i = size_prior, size_after + 1, -1 do

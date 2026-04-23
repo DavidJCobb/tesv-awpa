@@ -1,29 +1,5 @@
 cndlib = {}
 
-function cndlib.extract_comparison_to_table(cnd)
-   local cmp = cnd.comparison
-   if type(cmp) == "table" then
-      return cmp
-   end
-   return {
-      operator = cmp.operator,
-      operand  = cmp.operand
-   }
-end
-function cndlib.extract_condition_to_table(cnd)
-   local parameters = cnd.parameters
-   return {
-      run_on        = cnd.run_on,
-      function_name = cnd.function_name,
-      parameters    = { parameters[1], parameters[2] },
-      comparison    = cndlib.extract_comparison_to_table(cnd),
-      is_or_linked  = cnd.is_or_linked,
-      
-      override_types_with     = cnd.override_types_with,
-      swap_subject_and_target = cnd.swap_subject_and_target,
-   }
-end
-
 -- Returns `true` if the comparison checks if a condition is true.
 -- Returns `false` if the comparison checks if a condition is false.
 -- Returns `nil` if the comparison is not a well-formed boolean check.
@@ -129,6 +105,13 @@ do
    }
 
    function cndlib.condition_is_superset(cnd_a, cnd_b)
+      if type(cnd_a) == "userdata" then
+         cnd_a = cnd_a:copy_as_table()
+      end
+      if type(cnd_b) == "userdata" then
+         cnd_b = cnd_b:copy_as_table()
+      end
+   
       local RETAIN_A              = -1
       local RETAIN_EITHER <const> =  0
       local RETAIN_B              =  1
@@ -152,8 +135,8 @@ do
          func_a = cnd_a.function_name
       end
       
-      local cmp_a = cndlib.extract_comparison_to_table(cnd_a)
-      local cmp_b = cndlib.extract_comparison_to_table(cnd_b)
+      local cmp_a = cnd_a.comparison
+      local cmp_b = cnd_b.comparison
       
       do -- check boolean conditions for exact matches
          local argcount = BOOLEAN_FUNCTION_ARGCOUNTS[func_a]
@@ -281,7 +264,7 @@ local function _native_list_to_table(list)
    end
    local as_tables = {}
    for i = 1, #list do
-      as_tables[i] = cndlib.extract_condition_to_table(list[i])
+      as_tables[i] = list[i]:copy_as_table()
    end
    return as_tables
 end
@@ -375,7 +358,7 @@ function cndlib.strip_redundant_GetIsSex_conditions(list)
       for i = 1, #list do
          local item = list[i]
          if item.function_name == "GetIsSex" then
-            as_tables[i] = cndlib.extract_condition_to_table(item)
+            as_tables[i] = item:copy_as_table()
             any_GetIsSex = true
          else
             as_tables[i] = item

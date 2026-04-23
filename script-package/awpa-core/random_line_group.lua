@@ -165,15 +165,28 @@ do
             specific_lines  = awpa.line_collection(),
          }
          
+         local conditions = {}
+         local conditions_are_sexed = false
+         for i = 1, #self.conditions do
+            local item = self.conditions[i]
+            if awpa.condition.is(item) then
+               item = item:to_native_compatible_table()
+            end
+            if (not conditions_are_sexed) and item.function_name == "GetIsSex" then
+               conditions_are_sexed = true
+            end
+            conditions[i] = item
+         end
+         cndlib.strip_redundant_conditions(conditions)
+         
          for i = 1, #self.children do
             local item = self.children[i]
             if awpa.line.is(item) then
-               results.top_level_lines:generate_line(item, topic, self.conditions)
+               results.top_level_lines:generate_line(item, topic, conditions, true, conditions_are_sexed)
             elseif awpa.shared_info_reference.is(item) then
-               results.top_level_lines:generate_shared_info(item, topic, self.conditions)
+               results.top_level_lines:generate_shared_info(item, topic, conditions, true, conditions_are_sexed)
             elseif awpa.random_line_subgroup.is(item) then
-               local conditions = { table.unpack(self.conditions) }
-               results.specific_lines:absorb(item:generate(topic, conditions))
+               results.specific_lines:absorb(item:generate(topic, conditions, conditions_are_sexed))
             else
                error("unexpected object")
             end

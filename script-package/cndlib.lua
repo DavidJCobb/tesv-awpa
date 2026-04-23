@@ -2,6 +2,9 @@ cndlib = {}
 
 function cndlib.extract_comparison_to_table(cnd)
    local cmp = cnd.comparison
+   if type(cmp) == "table" then
+      return cmp
+   end
    return {
       operator = cmp.operator,
       operand  = cmp.operand
@@ -269,58 +272,149 @@ do
    end
 end
 
--- Takes a native condition list, e.g. some_topic_info.conditions
+local function _native_list_to_table(list)
+   if type(list) == "table" then
+      local item = list[1]
+      if (not item) or type(item) == "table" then
+         return list
+      end
+   end
+   local as_tables = {}
+   for i = 1, #list do
+      as_tables[i] = cndlib.extract_condition_to_table(list[i])
+   end
+   return as_tables
+end
+
+local function _strip_conditions_from_or_groups(or_groups, func)
+   --[[--
+   
+      NOTE: This currently only looks for cases where a single-condition 
+      or-group (i.e. a single AND-linked condition) is redundant with an 
+      or-group. So for example:
+      
+         A && (B || C)
+         
+         (U && V) || (W && X)
+         
+      The `A` condition may be pruned, but this implementation cannot 
+      check the latter pair of or-groups.
+      
+   --]]--
+   local i = 1
+   local size = #or_groups
+   while i < size do
+      local group_a = or_groups[i]
+      if #group_a ~= 1 then
+         goto continue_1
+      end
+      do
+         local cnd_a = group_a[1]
+         
+         local j = i + 1
+         while j <= size do
+            local group_b = or_groups[j]
+            local all_rel = nil
+            for k = 1, #group_b do
+               local cnd_b = group_b[k]
+               local rel   = func(cnd_a, cnd_b)
+               if all_rel == nil then
+                  all_rel = rel
+               else
+                  if all_rel ~= rel then
+                     all_rel = false
+                     break
+                  end
+               end
+            end
+            if not all_rel then
+               goto continue_2
+            end
+            if all_rel == -1 then
+               --
+               -- Remove `group_b`.
+               --
+               table.remove(or_groups, j)
+               size = size - 1
+               j    = j - 1
+               goto continue_2
+            elseif all_rel == 1 or all_rel == 0 then
+               --
+               -- Remove `group_a`.
+               --
+               table.remove(or_groups, i)
+               size = size - 1
+               i    = i - 1
+               break
+            end
+            ::continue_2::
+            j = j + 1
+         end
+      end
+      ::continue_1::
+      i = i + 1
+   end
+end
+
+-- Takes an array-table or a native condition list, e.g. some_topic_info.conditions
 function cndlib.strip_redundant_conditions(list)
    local or_groups
    do
-      local as_tables = {}
-      for i = 1, #list do
-         as_tables[i] = cndlib.extract_condition_to_table(list[i])
-      end
+      local as_tables = _native_list_to_table(list)
       or_groups = cndlib.list_to_or_groups(as_tables)
    end
    cndlib.strip_redundant_conditions_from_or_groups(or_groups)
-   
-   local re_flattened = {}
-   for i = 1, #or_groups do
-      local group = or_groups[i]
-      local size  = #group
-      for j = 1, size do
-         local item = group[j]
-         if j < size then
-            item.is_or_linked = true
+   cndlib.or_groups_to_list(or_groups, list)
+end
+
+function cndlib.strip_redundant_GetIsSex_conditions(list)
+   local or_groups
+   do
+      local as_tables    = {}
+      local any_GetIsSex = false
+      for i = 1, #list do
+         local item = list[i]
+         if item.function_name == "GetIsSex" then
+            as_tables[i] = cndlib.extract_condition_to_table(item)
+            any_GetIsSex = true
+         else
+            as_tables[i] = item
          end
-         re_flattened[#re_flattened + 1] = item
       end
-   end
-   
-   local size_prior <const> = #list
-   local size_after <const> = #re_flattened
-   if size_prior == size_after then
-      return
-   end
-   
-   local size_min = size_prior
-   if size_prior > size_after then
-      size_min = size_after
-   end
-   
-   for i = 1, size_min do
-      local src = re_flattened[i]
-      local dst = list[i]
-      dst:overwrite_with(src)
-   end
-   if size_after > size_prior then
-      for i = size_prior + 1, size_after do
-         local src = re_flattened[i]
-         local dst = list:insert()
-         dst:overwrite_with(src)
+      if not any_GetIsSex then
+         return
       end
-   else
-      for i = size_prior, size_after + 1, -1 do
-         list:remove(i)
-      end
+      or_groups = cndlib.list_to_or_groups(as_tables)
    end
+   _strip_conditions_from_or_groups(or_groups, function(cnd_a, cnd_b)
+      if type(cnd_a) == "userdata"
+      or type(cnd_b) == "userdata"
+      or cnd_a.function_name ~= "GetIsSex"
+      or cnd_b.function_name ~= "GetIsSex"
+      or cnd_a.run_on ~= cnd_b.run_on
+      then
+         return false
+      end
+      local a_true = cndlib.boolean_comparison_is_truthy(cnd_a.comparison)
+      local b_true = cndlib.boolean_comparison_is_truthy(cnd_b.comparison)
+      if a_true == nil    -- condition is not a well-formed bool
+      or b_true == nil    -- condition is not a well-formed bool
+      or a_true ~= b_true -- conditions do not check for the same result
+      then
+         return false
+      end
+      if argcount > 0 then -- Compare parameters as relevant
+         local pa = cnd_a.parameters
+         local pb = cnd_b.parameters
+         for i = 1, argcount do
+            if pa[i] ~= pb[i] then
+               return false
+            end
+         end
+      end
+      return 0
+   end)
+   cndlib.or_groups_to_list(or_groups, list)
 end
 
 function cndlib.stringify(cnd)
@@ -392,72 +486,67 @@ function cndlib.list_to_or_groups(list)
    return or_groups
 end
 
-function cndlib.strip_redundant_conditions_from_or_groups(or_groups)
-   --[[--
-   
-      NOTE: This currently only looks for cases where a single-condition 
-      or-group (i.e. a single AND-linked condition) is redundant with an 
-      or-group. So for example:
-      
-         A && (B || C)
-         
-         (U && V) || (W && X)
-         
-      The `A` condition may be pruned, but this implementation cannot 
-      check the latter pair of or-groups.
-      
-   --]]--
-   local i = 1
-   local size = #or_groups
-   while i < size do
-      local group_a = or_groups[i]
-      if #group_a ~= 1 then
-         goto continue_1
+function cndlib.or_groups_to_list(or_groups, dst_list, overwrite_even_if_size_unchanged)
+   local re_flattened = {}
+   for i = 1, #or_groups do
+      local group = or_groups[i]
+      local size  = #group
+      for j = 1, size do
+         local item = group[j]
+         if j < size then
+            item.is_or_linked = true
+         end
+         re_flattened[#re_flattened + 1] = item
       end
-      do
-         local cnd_a = group_a[1]
-         
-         local j = i + 1
-         while j <= size do
-            local group_b = or_groups[j]
-            local all_rel = nil
-            for k = 1, #group_b do
-               local cnd_b = group_b[k]
-               local rel   = cndlib.condition_is_superset(cnd_a, cnd_b)
-               if all_rel == nil then
-                  all_rel = rel
-               else
-                  if all_rel ~= rel then
-                     all_rel = false
-                     break
-                  end
-               end
-            end
-            if not all_rel then
-               goto continue_2
-            end
-            if all_rel == -1 then
-               --
-               -- Remove `group_b`.
-               --
-               table.remove(or_groups, j)
-               size = size - 1
-               j    = j - 1
-               goto continue_2
-            elseif all_rel == 1 or all_rel == 0 then
-               --
-               -- Remove `group_a`.
-               --
-               table.remove(or_groups, i)
-               size = size - 1
-               i    = i - 1
-               break
-            end
-            ::continue_2::
-            j = j + 1
+   end
+   if not dst_list then
+      return re_flattened
+   end
+   
+   local size_prior <const> = #dst_list
+   local size_after <const> = #re_flattened
+   if size_prior == size_after and not overwrite_even_if_size_unchanged then
+      return
+   end
+   
+   local size_min = size_prior
+   if size_prior > size_after then
+      size_min = size_after
+   end
+   
+   local is_native_list <const> = type(dst_list) == "userdata"
+   
+   for i = 1, size_min do
+      local src = re_flattened[i]
+      if is_native_list then
+         dst_list[i]:overwrite_with(src)
+      else
+         dst_list[i] = src
+      end
+   end
+   if size_after > size_prior then
+      for i = size_prior + 1, size_after do
+         local src = re_flattened[i]
+         if is_native_list then
+            dst_list:insert():overwrite_with(src)
+         else
+            dst_list[i] = src
          end
       end
-      ::continue_1::
-      i = i + 1
+   else
+      if is_native_list then
+         for i = size_prior, size_after + 1, -1 do
+            dst_list:remove(i)
+         end
+      else
+         for i = size_prior, size_after + 1, -1 do
+            dst_list[i] = nil
+         end
+      end
    end
+   return dst_list
+end
+
+function cndlib.strip_redundant_conditions_from_or_groups(or_groups)
+   _strip_conditions_from_or_groups(or_groups, cndlib.condition_is_superset)
 end

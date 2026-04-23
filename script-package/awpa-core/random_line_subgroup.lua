@@ -25,30 +25,40 @@ do
             }
          
       --]]--
-      function instance_members:generate(topic, conditions)
+      function instance_members:generate(topic, conditions, conditions_are_sexed)
          local results <const> = awpa.line_collection()
          
+         local inner_conditions = {}
          do
-            local j = #conditions + 1
-            for i = 1, #self.conditions do
-               conditions[j] = self.conditions[i]
-               j = j + 1
+            local j = #conditions
+            for i = 1, j do
+               local item = conditions[i]
+               if awpa.condition.is(item) then
+                  item = item:to_native_compatible_table()
+               end
+               inner_conditions[i] = item
             end
+            for i = 1, #self.conditions do
+               local item = self.conditions[i]
+               if awpa.condition.is(item) then
+                  item = item:to_native_compatible_table()
+               end
+               if (not conditions_are_sexed) and item.function_name == "GetIsSex" then
+                  conditions_are_sexed = true
+               end
+               inner_conditions[j + i] = item
+            end
+            cndlib.strip_redundant_conditions(inner_conditions)
          end
-         local cnd_count = #conditions
          
          for i = 1, #self.children do
             local item = self.children[i]
             if awpa.line.is(item) then
-               results:generate_line(item, topic, conditions)
+               results:generate_line(item, topic, inner_conditions, true, conditions_are_sexed)
             elseif awpa.shared_info_reference.is(item) then
-               results:generate_shared_info(item, topic, conditions)
+               results:generate_shared_info(item, topic, inner_conditions, true, conditions_are_sexed)
             elseif awpa.random_line_subgroup.is(item) then
-               local subresults = item:generate(topic, conditions)
-               for j = #conditions, cnd_count + 1, -1 do
-                  conditions[j] = nil
-               end
-               results:absorb(subresults)
+               results:absorb(item:generate(topic, inner_conditions, conditions_are_sexed))
             else
                error("unexpected object")
             end

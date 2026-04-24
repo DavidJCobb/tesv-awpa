@@ -31,14 +31,6 @@ do
          self.infos.desired_set[info] = true
       end
       
-      function instance_members:generate_line(line)
-         local a, b = line:generate_infos(self.form)
-         self:append_desired_info(a)
-         if b then
-            self:append_desired_info(b)
-         end
-      end
-      
       -- Reorder all to-be-retained infos. Pre-existing infos that haven't 
       -- been recycled will be forced to the end of the topic; after all 
       -- topic-helpers have finalized info ordering, they should all then 

@@ -19,25 +19,16 @@ do
          --  - slug, if specified
          link_info_editor_id_format
       )
-         self.forms.topic  = nil
-         self.topic_helper = nil
+         self.forms.topic = nil
          
          self.slug     = ""
          self.children = {} -- vector<variant<awpa.line, awpa.group, awpa.shared_info_reference>>
-         
-         self.topic_editor_id_format = topic_editor_id_format
-         
-         self.link_info_editor_id_format = link_info_editor_id_format
-         
-         self.topic_text = "<Redirect>"
       end,
       instance_members = instance_members,
    })
    do -- member functions
       function instance_members:visit_topic_helpers(visitor)
-         if self.topic_helper then
-            visitor(self.topic_helper)
-         end
+         -- no-op.
       end
       
       function instance_members:from_xml(element)
@@ -84,70 +75,6 @@ do
          end
       end
       
-      function instance_members:get_or_create_topic()
-         local topic = self.forms.topic
-         if topic then
-            return topic
-         end
-         local branch    = self.quest_info.branch
-         local editor_id = string.format(
-            self.topic_editor_id_format,
-            --
-            self.quest_info.form.editor_id,
-            self.actor_info.form.editor_id,
-            self.slug
-         )
-         do
-            local topics = branch:get_all_topics()
-            for i = 1, #topics do
-               local t = topics[i]
-               if t.editor_id == editor_id then
-                  self.forms.topic  = t
-                  self.topic_helper = awpa.topic_helper(t)
-                  return t
-               end
-            end
-         end
-         topic = dovah.create_form(form_types.topic, { parent = branch })
-         topic.editor_id = editor_id
-         topic.text      = self.topic_text or "<Redirect>"
-         self.forms.topic  = topic
-         self.topic_helper = awpa.topic_helper(topic)
-         return topic
-      end
-      function instance_members:get_or_create_link(src_topic)
-         if self.forms.inbound_link then
-            return self.forms.inbound_link
-         end
-         local dst_topic = self:get_or_create_topic()
-         
-         local info = utils.make_invisible_info(
-            src_topic,
-            string.format(
-               self.link_info_editor_id_format,
-               --
-               self.quest_info.form.editor_id,
-               self.actor_info.form.editor_id,
-               self.slug
-            ),
-            dst_topic
-         )
-         self.forms.inbound_link = info
-         
-         utils.replace_condition_list(info, {
-            run_on        = "subject",
-            function_name = "GetIsId",
-            parameters    = { self.actor_info.form },
-            comparison    = {
-               operator = "==",
-               operand  = 1,
-            }
-         })
-         utils.append_condition_list(info, self.conditions)
-         
-         return info
-      end
-      
       function instance_members:fold()
          local actor_condition <const> = {
             run_on        = "subject",
@@ -171,31 +98,6 @@ do
             end
          end
          return dst_list
-      end
-      function instance_members:generate_content(context)
-         if awpa.env.generate_flat_results then
-            assert(not not context)
-            context.conditions = { {
-               run_on        = "subject",
-               function_name = "GetIsId",
-               parameters    = { self.actor_info.form },
-               comparison    = {
-                  operator = "==",
-                  operand  = 1,
-               }
-            } }
-         else
-            local topic = self:get_or_create_topic()
-            topic.text = self.topic_text or "<Redirect>"
-            topic.do_all_before_repeating = true
-            
-            assert(not context)
-            context = awpa.group_generation_context(self.topic_helper)
-         end
-         context.speaker = self.actor_info.form
-         for i = 1, #self.children do
-            context:generate_child(self.children[i])
-         end
       end
    end
 end

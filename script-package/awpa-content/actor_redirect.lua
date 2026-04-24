@@ -33,7 +33,12 @@ do
          error("purecall")
       end
       
-      function instance_members:generate_content(redirect_from_topic)
+      function instance_members:fold()
+         --
+         -- Overrides should return a list of `awpa.random_line_group` instances, 
+         -- to be written into whatever system topic is being generated (e.g. the 
+         -- actor-selection topic or the results-root topic).
+         --
          error("purecall")
       end
    end

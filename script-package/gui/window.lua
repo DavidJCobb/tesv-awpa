@@ -15,7 +15,6 @@ do
          self.buttons  = {}
          
          self.subwidgets = {
-            generate_flat   = nil,
             dont_generate   = nil,
             diagnose_th_del = nil,
          }
@@ -63,12 +62,6 @@ do
             widget:set_layout("down")
             widget.layout_margins = 0
             self.window:add_child(widget)
-            do
-               local check = ui.checkbox.new("Generate flat (no sub-topics)")
-               check.checked = true
-               widget:add_child(check)
-               self.subwidgets.generate_flat = check
-            end
             do
                local check = ui.checkbox.new("[Debug] Don't actually generate (i.e. debug loading)")
                widget:add_child(check)
@@ -179,8 +172,6 @@ do
       
          awpa.env:reset()
          awpa.perflog:clear()
-         
-         awpa.env.generate_flat_results = self.subwidgets.generate_flat.checked
          
          local payload_count <const> = #self.tabs
       

@@ -124,33 +124,22 @@ do
             info = dovah.create_form(form_types.topic_info, { parent = topic })
          end
          info.use_shared_info = awpa.env.built_in_shared_infos["ActorSelected"][1]
-         do -- papyrus
-            local papyrus = info.papyrus
-            do
-               local script = papyrus.scripts["AskWherePeopleAreFRAGMENTSelectActor"]
-               if not script then
-                  script = papyrus.scripts:insert("AskWherePeopleAreFRAGMENTSelectActor")
-               end
-               do
-                  local prop = script.properties["pkSrcAlias"]
-                  if not prop then
-                     prop = script.properties:insert("pkSrcAlias")
-                  end
-                  prop.value = actor_alias
-               end
-               do
-                  local prop = script.properties["pkDstAlias"]
-                  if not prop then
-                     prop = script.properties:insert("pkDstAlias")
-                  end
-                  prop.value = self.quest_info.form.aliases["ActorToFind"]
-               end
-            end
-            papyrus.fragments.script_name = "AskWherePeopleAreFRAGMENTSelectActor"
-            local frag = papyrus.fragments.on_begin
-            frag.script_name   = "AskWherePeopleAreFRAGMENTSelectActor"
-            frag.function_name = "Exec"
-         end
+         utils.set_papyrus_script_data(
+            info,
+            {
+               ["AskWherePeopleAreFRAGMENTSelectActor"] = {
+                  ["pkSrcAlias"] = actor_alias,
+                  ["pkDstAlias"] = self.quest_info.alias_for_actor_to_find,
+               }
+            },
+            {
+               script_name = "AskWherePeopleAreFRAGMENTSelectActor",
+               on_begin    = {
+                  script_name   = "AskWherePeopleAreFRAGMENTSelectActor"
+                  function_name = "Exec"
+               }
+            }
+         )
          utils.replace_condition_list(info, {
             {  -- Cannot ask about dead actors.
                run_on        = actor_alias,

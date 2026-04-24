@@ -11,6 +11,11 @@ do
          self.conditions   = {}
          self.children     = {} -- vector<variant<shared_info_reference, line, random_line_subgroup>>
          self.name         = "" -- for debugging
+         
+         -- Internal function invoked per-info. Needed for some actor-redirect types, 
+         -- such as "bribe" (to link "begin" infos to the "accept"/"refuse"/"poor" 
+         -- topics).
+         self.postprocess = nil
       end,
       instance_members = instance_members,
       static_members   = static_members
@@ -158,7 +163,7 @@ do
             }
          
       --]]--
-      function instance_members:generate(topic_helper, postprocess)
+      function instance_members:generate(topic_helper)
          local topic   <const> = topic_helper.form
          local results <const> = {
             top_level_lines = awpa.line_collection(),
@@ -192,9 +197,9 @@ do
             end
          end
          
-         if postprocess then
-            results.top_level_lines:for_each_line(postprocess)
-            results.specific_lines:for_each_line(postprocess)
+         if self.postprocess then
+            results.top_level_lines:for_each_line(self.postprocess)
+            results.specific_lines:for_each_line(self.postprocess)
          end
          
          local function _store_list(list, last_is_random_end)

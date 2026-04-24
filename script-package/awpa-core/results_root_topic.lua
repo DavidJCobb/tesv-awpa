@@ -41,16 +41,6 @@ do
          if self.topic_helper then
             visitor(self.topic_helper)
          end
-         if not awpa.env.generate_flat_results then
-            for i = 1, #self.children do
-               local item = self.children[i]
-               if awpa.top_level_group.is(item) then
-                  if item.topic_helper then
-                     visitor(item.topic_helper)
-                  end
-               end
-            end
-         end
       end
    
       function instance_members:get_or_create_topic()
@@ -83,65 +73,23 @@ do
       
       function instance_members:generate_all_forms()
          local topic = self:get_or_create_topic()
-         local pre_existing_infos = topic.infos
          
-         local context = awpa.group_generation_context(self.topic_helper)
-         if awpa.env.generate_flat_results then
-            local rlg_list = {}
-         
-            -- Handle begin-responding overrides.
-            for i = 1, #self.quest_info.actors do
-               local actor_info = self.quest_info.actors[i]
-               for _, redirect in ipairs(actor_info.redirects.begin_responding) do
-                  if awpa.actor_redirect_bribe.is(redirect) then -- HACK
-                     redirect:generate_content()
-                  else
-                     local inner_list = redirect:fold()
-                     utils.join(rlg_list, inner_list)
-                  end
-               end
-            end
-            
-            -- Handle child content.
-            local inner_list = awpa.random_line_group.fold(self)
-            utils.join(rlg_list, inner_list)
-            
-            for i = 1, #rlg_list do
-               local rlg = rlg_list[i]
-               rlg:generate(self.topic_helper)
-            end
-            
-            return
-         end
-         
-         -- Invisible-infos for linking to begin-responding overrides.
+         -- Handle begin-responding overrides.
          for i = 1, #self.quest_info.actors do
             local actor_info = self.quest_info.actors[i]
             for _, redirect in ipairs(actor_info.redirects.begin_responding) do
-               redirect:get_or_create_topic()
-               redirect:get_or_create_link(topic)
-               redirect:generate_content()
-               --
-               local form = redirect.forms.inbound_link
-               if not form then
-                  error("actor redirect wasn't generated")
+               local rlg_list = redirect:fold()
+               for i = 1, #rlg_list do
+                  rlg_list[i]:generate(self.topic_helper)
                end
-               self.topic_helper:append_desired_info(form)
             end
          end
          
-         -- Bare children.
-         for i = 1, #self.children do
-            local item = self.children[i]
-            if awpa.top_level_group.is(item) then
-               item:create_link_info(self.topic_helper, pre_existing_infos) -- Create topic and link
-               local nest_context = awpa.group_generation_context(item.topic_helper)
-               for i = j, #item.children do
-                  nest_context:generate_child(item.chilren[j])
-               end
-            else
-               context:generate_child(item)
-            end
+         -- Handle child content.
+         local rlg_list = awpa.random_line_group.fold(self)
+         for i = 1, #rlg_list do
+            local rlg = rlg_list[i]
+            rlg:generate(self.topic_helper)
          end
       end
    end

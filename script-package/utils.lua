@@ -213,3 +213,35 @@ function utils.resolve_form_reference(text, optional)
    end
    return form
 end
+
+function utils.set_papyrus_script_data(form, script_spec, fragment_spec)
+   local papyrus = form.papyrus
+   for scriptname, src_script in pairs(script_spec) do
+      local dst_script = papyrus.scripts[scriptname]
+      if not script then
+         dst_script = papyrus.scripts:insert(scriptname)
+      end
+      local dst_properties = dst_script.properties
+      for propname, propval in pairs(src_script) do
+         local dst_prop = dst_properties[propname]
+         if not dst_prop then
+            dst_prop = dst_properties:insert(propname)
+         end
+         dst_prop.value = propval
+      end
+   end
+   if fragment_spec then
+      local dst_fragments = papyrus.fragments
+      for k, v in fragment_spec do
+         if k == "script_name" then
+            dst_fragments[k] = v
+         else
+            local frag = dst_fragments[k]
+            for l, w in pairs(v) do
+               frag[l] = w
+            end
+         end
+      end
+   end
+end
+

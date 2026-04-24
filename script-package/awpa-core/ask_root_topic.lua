@@ -24,6 +24,7 @@ do
          self.forms = {
             topic = nil,
          }
+         self.topic_helper = nil
       end,
       instance_members = instance_members,
    })
@@ -74,38 +75,22 @@ do
          -- Handle begin-asking-to actor redirects.
          --
          local infos_to_keep_at_the_top = {} -- set, i.e. s[info] = true
-         if awpa.env.generate_flat_results then
+         do
             local throwaway <const> = awpa.topic_helper(topic)
-            local context   <const> = awpa.group_generation_context(throwaway)
             for i = 1, #self.quest_info.actors do
                local actor_info = self.quest_info.actors[i]
                local list       = actor_info.redirects.begin_asking_to
                for j = 1, #list do
-                  list[j]:generate_content(context)
+                  local redirect = list[j]
+                  local rlg_list = redirect:fold()
+                  for k = 1, #rlg_list do
+                     rlg_list[k]:generate(throwaway)
+                  end
                end
-               context.conditions = {}
-               context.speaker    = nil
             end
             for i = 1, #throwaway.infos.desired_order do
                local info = throwaway.infos.desired_order[i]
                infos_to_keep_at_the_top[info] = true
-            end
-         else -- if not flat results
-            for i = 1, #self.quest_info.actors do
-               local actor_info = self.quest_info.actors[i]
-               local list       = actor_info.redirects.begin_asking_to
-               for i = 1, #list do
-                  local redirect = list[i]
-                  redirect:get_or_create_topic()
-                  redirect:get_or_create_link(topic)
-                  redirect:generate_content()
-                  --
-                  local form = redirect.forms.inbound_link
-                  if not form then
-                     error("actor redirect wasn't generated")
-                  end
-                  infos_to_keep_at_the_top[form] = true
-               end
             end
          end
          

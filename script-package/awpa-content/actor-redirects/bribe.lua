@@ -69,25 +69,11 @@ do
       end
       function instance_members:generate_infos(postprocess)
          local topic = self:get_or_create_topic(self.owner.forms.branch)
-         for i = 1, #self.children do
-            local item = self.children[i]
-            if awpa.group.is(item) then
-               item:generate_infos(topic, self.topic_helper)
-            elseif awpa.line.is(item) then
-               local a, b = item:generate_infos(topic)
-               self.topic_helper:append_desired_info(a)
-               if b then
-                  self.topic_helper:append_desired_info(b)
-               end
-            else
-               error("unrecognized object type")
-            end
-         end
-         if postprocess then
-            local infos = self.topic_helper.infos.desired_order
-            for i = 1, #infos do
-               postprocess(infos[i])
-            end
+         
+         local rlg_list = awpa.random_line_group.fold(self)
+         for i = 1, #rlg_list do
+            rlg_list[i] = postprocess
+            rlg_list[i]:generate(self.topic_helper)
          end
       end
    end
@@ -187,53 +173,27 @@ do
          return info
       end
       
-      function instance_members:generate_content()
-         for _, v in ipairs(BRIBE_TOPIC_NAMES) do
-            local data = self.contents[v]
-            if #data.children == 0 then
-               error("This bribe override doesn't define all of the needed content.")
-            end
-         end
-         
-         local quest  = self.quest_info.form
+      function instance_members:_generate_inner_content()
          local branch = self:get_or_create_branch()
          
          --
          -- Get or create our topics.
          --
          for _, v in ipairs(BRIBE_TOPIC_NAMES) do
-            local data = self.contents[v]
-            data:get_or_create_topic(branch)
+            if v ~= "begin" then
+               local data = self.contents[v]
+               data:get_or_create_topic(branch)
+            end
          end
-         branch.starting_topic = self.contents["begin"].topic
+         branch.starting_topic = self.contents["accept"].topic
          branch.type = "normal"
          
          --
          -- Set topic text.
          --
-         self.contents["begin"].topic.text  = "<Bribe Root>"
          self.contents["accept"].topic.text = "I'll pay. (<BribeCost> gold)"
          self.contents["refuse"].topic.text = "Never mind."
          self.contents["poor"].topic.text   = "I don't have enough gold."
-         
-         -- HACK: even if we're being used to generate a flat tree, generate a non-flat 
-         --       link for now because the ask-root topic isn't set up to let us generate 
-         --       our bribe-start lines directly into it (the topic doesn't use a topic-
-         --       helper object, and thus can't use a generation-context object yet).
-         self:get_or_create_link(self.quest_info.ask_root_topic:get_or_create_topic())
-         
-         -- ACTOR: "If you want info, it'll cost you."
-         self.contents["begin"]:generate_infos(
-            function(info)
-               info.speaker = self.actor_info.form
-               utils.replace_info_link_to_list(info, {
-                  self.forms.accept_topic,
-                  self.forms.poor_topic,
-                  self.forms.refuse_topic
-               })
-               info.walk_away_topic = self.forms.refuse_topic
-            end
-         )
          
          -- PLAYER: "I can pay. (Bribe)"
          local result_topic = self.quest_info:get_or_create_result_topic()
@@ -241,33 +201,32 @@ do
             function(info)
                info.speaker = self.actor_info.form
                do -- Subject.GetBribeSuccess == 1
-                  local cnd = info.conditions:insert()
-                  cnd.run_on        = "subject"
-                  cnd.function_name = "GetBribeSuccess"
-                  cnd.comparison.operator = "=="
-                  cnd.comparison.operand  = 1
+                  local cnd = info.conditions:insert(1, {})
+                  cnd:overwrite_with({
+                     run_on        = "subject",
+                     function_name = "GetBribeSuccess",
+                     comparison    = {
+                        operator = "==",
+                        operand  = 1
+                     }
+                  })
                end
-               do -- papyrus
-                  local papyrus = info.papyrus
-                  do
-                     local script = papyrus.scripts["AskWherePeopleAreFRAGMENTBribe"]
-                     if not script then
-                        script = papyrus.scripts:insert("AskWherePeopleAreFRAGMENTBribe")
-                     end
-                     do
-                        local prop = script.properties["pFDS"]
-                        if not prop then
-                           prop = script.properties:insert("pFDS")
-                        end
-                        prop.value = dovah.get_form_by_editor_id("DialogueFavorGeneric", form_types.quest)
-                     end
-                  end
-                  papyrus.fragments.script_name = "AskWherePeopleAreFRAGMENTBribe"
-                  local frag = papyrus.fragments.on_begin
-                  frag.script_name   = "AskWherePeopleAreFRAGMENTBribe"
-                  frag.function_name = "Exec"
-               end
-               utils.replace_info_link_to_list(info, { result_topic })
+               utils.set_papyrus_script_data(
+                  info,
+                  {
+                     ["AskWherePeopleAreFRAGMENTBribe"] = {
+                        ["pFDS"] = dovah.get_form_by_editor_id("DialogueFavorGeneric", form_types.quest)
+                     }
+                  },
+                  {
+                     script_name = "AskWherePeopleAreFRAGMENTBribe",
+                     on_begin    = {
+                        script_name   = "AskWherePeopleAreFRAGMENTBribe",
+                        function_name = "Exec"
+                     }
+                  }
+               )
+               utils.replace_info_link_to_list(info, self.quest_info.selection_topic_list.topics)
             end
          )
          
@@ -276,11 +235,15 @@ do
             function(info)
                info.speaker = self.actor_info.form
                do -- Subject.GetBribeSuccess != 1
-                  local cnd = info.conditions:insert()
-                  cnd.run_on        = "subject"
-                  cnd.function_name = "GetBribeSuccess"
-                  cnd.comparison.operator = "!="
-                  cnd.comparison.operand  = 1
+                  local cnd = info.conditions:insert(1, {})
+                  cnd:overwrite_with({
+                     run_on        = "subject",
+                     function_name = "GetBribeSuccess",
+                     comparison    = {
+                        operator = "!=",
+                        operand  = 1
+                     }
+                  })
                end
             end
          )
@@ -291,6 +254,49 @@ do
                info.speaker = self.actor_info.form
             end
          )
+      end
+      function instance_members:fold()
+         for _, v in ipairs(BRIBE_TOPIC_NAMES) do
+            local data = self.contents[v]
+            if #data.children == 0 then
+               error("This bribe override doesn't define all of the needed content.")
+            end
+         end
+         
+         self:_generate_inner_content()
+         
+         local actor_condition <const> = {
+            run_on        = "subject",
+            function_name = "GetIsId",
+            parameters    = { self.actor_info.form },
+            comparison    = {
+               operator = "==",
+               operand  = 1,
+            }
+         }
+         
+         local rlg_list = awpa.random_line_group.fold(self.branches.begin)
+         for i = 1, #rlg_list do
+            local dst_item = rlg_list[i]
+            do -- conditions
+               local cnd_list = { actor_condition }
+               utils.join(cnd_list, self.conditions)
+               utils.join(cnd_list, dst_item.conditions)
+               dst_item.conditions = cnd_list
+            end
+            do -- link to topics
+               dst_item.postprocess = function(info)
+                  info.speaker = self.actor_info.form
+                  utils.replace_info_link_to_list(info, {
+                     self.forms.accept_topic,
+                     self.forms.poor_topic,
+                     self.forms.refuse_topic
+                  })
+                  info.walk_away_topic = self.forms.refuse_topic
+               end
+            end
+         end
+         return rlg_list
       end
    end
 end

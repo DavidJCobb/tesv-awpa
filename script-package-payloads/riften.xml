@@ -118,7 +118,7 @@
          -->
          <or>
             <actor-base of="speaker" is-not="Molgrom" />
-            <parent-cell of="speaker" is-not="RiftenJail" />
+            <parent-cell of="speaker" is-not="RiftenJail01" />
             <faction-membership of="player" includes="ThievesGuildFaction" />
          </or>
       </dialogue-conditions>
@@ -158,7 +158,7 @@
          <faction-membership of="speaker" excludes="RiftenTGHeadquartersFaction" />
       </condition-set>
       <condition-set name="speaker-in-jail">
-         <parent-cell of="speaker" is="RiftenJail" />
+         <parent-cell of="speaker" is="RiftenJail01" />
       </condition-set>
       
       <condition-set name="is-bunkhouse-tenant">

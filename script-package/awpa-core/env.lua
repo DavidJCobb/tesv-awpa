@@ -213,6 +213,12 @@ function awpa.env:replace_topic_infos_with_builtin_shared_infos(topic, key, opti
             utils.clear_info_responses(info)
          end
          desired_order[i] = info
+         if src_count > 1 then
+            info.is_random = true
+            if i == src_count then
+               info.is_random_end = true
+            end
+         end
          if process_si then
             process_si(info)
          end
@@ -255,10 +261,7 @@ function awpa.env:replace_topic_infos_with_builtin_shared_infos(topic, key, opti
       end
       for i = 1, #desired_order do
          local info = desired_order[i]
-         local prev
-         if i > 1 then
-            prev = desired_order[i - 1]
-         end
+         local prev = desired_order[i - 1]
          topic:place_info_after(info, prev)
          if process then
             process(info, i)

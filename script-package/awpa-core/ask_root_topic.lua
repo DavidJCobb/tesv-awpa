@@ -77,6 +77,7 @@ do
          -- Handle begin-asking-to actor redirects.
          --
          local infos_to_keep_at_the_top = {} -- set, i.e. s[info] = true
+         local infos_at_top_order       = {}
          do
             local throwaway <const> = awpa.topic_helper(topic)
             for i = 1, #self.quest_info.actors do
@@ -92,8 +93,9 @@ awpa.perflog:log(bench_a, "Time taken to RLG-fold `begin-asking-to` redirect for
                   end
                end
             end
-            for i = 1, #throwaway.infos.desired_order do
-               local info = throwaway.infos.desired_order[i]
+            infos_at_top_order = throwaway.infos.desired_order
+            for i = 1, #infos_at_top_order do
+               local info = infos_at_top_order[i]
                infos_to_keep_at_the_top[info] = true
             end
          end
@@ -112,8 +114,6 @@ awpa.perflog:log(bench_a, "Time taken to RLG-fold `begin-asking-to` redirect for
                   infos_to_keep_at_the_bottom[info] = true
                   
                   utils.clear_condition_list(info)
-                  
-                  -- Link these responses to the actor-selection topics.
                   utils.replace_info_link_to_list(info, actor_selection_topics)
                end,
                process_unused = function(info)
@@ -126,29 +126,32 @@ awpa.perflog:log(bench_a, "Time taken to RLG-fold `begin-asking-to` redirect for
                   --
                   -- Move the "BeginActorSelection" infos to the end.
                   --
-                  local dst = {}
-                  local j   = 1
-                  for i = 1, #list do
-                     local info = list[i]
-                     if not infos_to_keep_at_the_bottom[info] then
-                        dst[j] = info
-                        j = j + 1
+                  local top = infos_at_top_order
+                  local bot = {}
+                  do
+                     local k = 1
+                     for i = 1, #list do
+                        local info = list[i]
+                        if infos_to_keep_at_the_top[info] then
+                        elseif infos_to_keep_at_the_bottom[info] then
+                           bot[k] = info
+                           k = k + 1
+                        end
                      end
                   end
-                  for i = 1, #list do
-                     local info = list[i]
-                     if infos_to_keep_at_the_bottom[info] then
-                        dst[j] = info
-                        j = j + 1
-                     end
+                  local top_count = #top
+                  local bot_count = #bot
+                  for i = 1, top_count do
+                     list[i] = top[i]
                   end
-                  --
-                  -- Modify `list` itself.
-                  --
-                  for i = 1, #dst do
-                     list[i] = dst[i]
+                  for i = 1, bot_count do
+                     list[i + top_count] = bot[i]
+                  end
+                  for i = #list, top_count + bot_count + 1, -1 do
+                     list[i] = nil
                   end
                end,
+               --[[--
                process_all_retained = function(info)
                   --
                   -- TODO: Consider attaching a Papyrus fragment to all possible 
@@ -159,6 +162,7 @@ awpa.perflog:log(bench_a, "Time taken to RLG-fold `begin-asking-to` redirect for
                   --       through" if the player asks while script lag is happening.
                   --
                end,
+               --]]--
             }
          )
       end

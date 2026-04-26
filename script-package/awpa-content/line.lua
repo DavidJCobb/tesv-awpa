@@ -180,8 +180,7 @@ do
             info.is_random         = true
             
             if gendered then
-               local cnd = info.conditions:insert()
-               cnd:overwrite_with({
+               info.conditions:insert({
                   run_on        = target_alias,
                   function_name = "GetIsSex",
                   parameters    = { fem and "Female" or "Male" },
@@ -193,10 +192,7 @@ do
             end
          
             local resp_list = info.responses
-            if #resp_list < 1 then
-               resp_list:insert()
-            end
-            local text = self.text
+            local text      = self.text
             if fem then
                bench_c = benchmark.new()
                text = swap_masc_pronouns_to_fem(self.text)

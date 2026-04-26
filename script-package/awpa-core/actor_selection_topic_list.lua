@@ -146,6 +146,11 @@ do
                function_name = "GetDead",
                comparison    = { operator = "==", operand = 0 }
             },
+            {  -- Cannot ask about disabled actors.
+               run_on        = actor_alias,
+               function_name = "GetDisabled",
+               comparison    = { operator = "==", operand = 0 }
+            },
             {  -- Cannot ask an actor about themselves.
                run_on        = "subject",
                function_name = "GetIsID",

@@ -305,7 +305,7 @@ function awpa.env:generate_content()
             "Suit yourself.",
             "All right, then.",
          },
-         ["ActorSelected"] = { "   " },
+         ["ActorSelected"] = { "..." },
       }
       local infos = preexisting_infos
       local size  = #infos

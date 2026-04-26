@@ -39,7 +39,37 @@
             outside of Riften, actors that have not (yet) immigrated to 
             Riften, and Riften-native quest NPCs who travel.
          -->
-         <location of="speaker" is="RiftenLocation" />
+         <or>
+            <!--
+               RiftenLocation applies to RiftenWorld (i.e. everything in 
+               the city walls), as well as to the northern road leading 
+               into Riften. It is an ancestor of the locations for the 
+               city's interior cells as well.
+            -->
+            <location of="speaker" is="RiftenLocation" />
+            
+            <!--
+               RiftenMistveilKeepLocation applies to the Mistveil Keep 
+               interior cells. For some reason, it's also been applied 
+               to one of the cells that comprises Plankside, the dock 
+               area outside of the city walls. This cell covers the 
+               Riften Fishery and Warehouse, but not the outermost edges 
+               of either structure's docks.
+            -->
+            <location of="speaker" is="RiftenMistveilKeepLocation" />
+            
+            <!--
+               This unfortunately leaves the very ends of the Fishery's 
+               docks, the back ramp of the Warehouse, the water around 
+               the Warehouse, and the northwest corner of the Khajiit 
+               caravan campsite all excluded by our current dialogue 
+               conditions. The limits of boolean logic within condition 
+               lists mean that it won't be easy to remedy this without 
+               defining new Locations, and I'm hesitant to do that, as 
+               I don't know what interactions that might have with the 
+               game's overall Location system.
+            -->
+         </or>
          
          <!--
             Cannot ask TG members while expelled from the guild. (Require 
@@ -80,6 +110,17 @@
                eq="1"
             />
          </or>
+         
+         <!--
+            Cannot ask Molgrom unless you're in the Thieves Guild or he isn't 
+            in jail (the latter never occurs in vanilla, but maybe a mod might 
+            do it).
+         -->
+         <or>
+            <actor-base of="speaker" is-not="Molgrom" />
+            <parent-cell of="speaker" is-not="RiftenJail" />
+            <faction-membership of="player" includes="ThievesGuildFaction" />
+         </or>
       </dialogue-conditions>
       
       <condition-set name="under-stormcloak-control">
@@ -105,16 +146,19 @@
       </condition-set>
       
       <condition-set name="player-in-thieves-guild">
-         <!-- TODO -->
+         <faction-membership of="player" includes="ThievesGuildFaction" />
       </condition-set>
       <condition-set name="player-not-in-thieves-guild">
-         <!-- TODO -->
+         <faction-membership of="player" excludes="ThievesGuildFaction" />
       </condition-set>
       <condition-set name="speaker-in-thieves-guild">
          <faction-membership of="speaker" includes="RiftenTGHeadquartersFaction" />
       </condition-set>
       <condition-set name="speaker-not-in-thieves-guild">
          <faction-membership of="speaker" excludes="RiftenTGHeadquartersFaction" />
+      </condition-set>
+      <condition-set name="speaker-in-jail">
+         <parent-cell of="speaker" is="RiftenJail" />
       </condition-set>
       
       <condition-set name="is-bunkhouse-tenant">
@@ -191,12 +235,15 @@
          </actor>
          <actor editor-id="Bolli" />
          <actor editor-id="BrandShei" name="Brand-Shei">
-            <!--
-               TODO: don't allow asking this actor while the player 
-               is busy framing him, or while he's in jail Enforce this 
-               via dialogue conditions on the quest, with a helper 
-               script if necessary.
-            -->
+            <begin-asking-to>
+               <topic slug="InJail">
+                  <conditions>
+                     <condition-set name="speaker-in-jail" />
+                  </conditions>
+                  <shared-info id="shared-shaken-inmate-doesnt-know" />
+                  <shared-info id="shared-angry-inmate-doesnt-know" />
+               </topic>
+            </begin-asking-to>
          </actor>
          <actor editor-id="Briehl" />
          <actor editor-id="Brynjolf">
@@ -515,7 +562,16 @@
             <invoke name="tg-member-dfn-never-surface" />
          </actor>
          <actor editor-id="Mjoll" name="Mjoll the Lioness" />
-         <actor editor-id="Molgrom" name="Molgrom Twice-Killed" />
+         <actor editor-id="Molgrom" name="Molgrom Twice-Killed">
+            <begin-asking-to>
+               <topic slug="InJail">
+                  <conditions>
+                     <condition-set name="speaker-in-jail" />
+                  </conditions>
+                  <shared-info id="shared-blunt-inmate-doesnt-know" />
+               </topic>
+            </begin-asking-to>
+         </actor>
          <actor editor-id="Niluva" name="Niluva Hlaalu" />
          <actor editor-id="Niruin">
             <invoke name="tg-member-dfn-never-surface" />
@@ -548,6 +604,18 @@
          <actor editor-id="Sapphire">
          </actor>
          <actor editor-id="Shadr" />
+         <actor editor-id="Sibbi" name="Sibbi Black-Briar">
+            <begin-asking-to>
+               <topic slug="InJail">
+                  <conditions>
+                     <condition-set name="speaker-in-jail" />
+                  </conditions>
+                  <line emotion="anger:20">Do you really think I'm likely to know?</line>
+                  <line>If they aren't in a cell, then I don't know where they're at.</line>
+                  <line>I'm not in any position to help you with that.</line>
+               </topic>
+            </begin-asking-to>
+         </actor>
          <!--
             Snilf's ActorBase is not flagged as unique, so we cannot fill an 
             alias with him without making his ref permanently persistent (and 
@@ -573,7 +641,17 @@
                conditions; use a helper script if necessary
             -->
          </actor>
-         <actor editor-id="Threki" name="Threki the Innocent" />
+         <actor editor-id="Threki" name="Threki the Innocent">
+            <begin-asking-to>
+               <topic slug="InJail">
+                  <conditions>
+                     <condition-set name="speaker-in-jail" />
+                  </conditions>
+                  <shared-info id="shared-shaken-inmate-doesnt-know" />
+                  <shared-info id="shared-angry-inmate-doesnt-know" />
+               </topic>
+            </begin-asking-to>
+         </actor>
          <actor editor-id="Thrynn">
             <invoke name="tg-member-dfn-never-surface" />
          </actor>

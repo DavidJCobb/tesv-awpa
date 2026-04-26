@@ -102,12 +102,11 @@ benches_form_create[i]:stop()
                info.is_random = true
                if gender then
 benches_conditions[i] = benchmark.new()
-                  local cnd = info.conditions:insert()
                   if not actor_to_find then
                      actor_to_find = topic.parent_quest.aliases["ActorToFind"]
                   end
 benches_cnd_config[i] = benchmark.new()
-                  cnd:overwrite_with({
+                  info.conditions:insert({
                      run_on        = actor_to_find,
                      function_name = "GetIsSex",
                      parameters    = { gender },

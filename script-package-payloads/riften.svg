@@ -24,6 +24,14 @@ path {
    fill-rule: nonzero;
 }
 
+.cell-tagged-with-location {
+   fill:   rgba(128, 255, 255, 0.35);
+   x:      calc(4096px * var(--x));
+   y:      calc(4096px * var(--y));
+   width:  4096px;
+   height: 4096px;
+}
+
 .obnd {
    fill:          rgba(255, 0, 0, 0.2);
    stroke:        red;
@@ -717,6 +725,21 @@ circle.getdistance {
    </g>
    
    <g id="riften-content">
+      <g class="cells-tagged-with-location" data-location="RiftenLocation">
+         <rect class="cell-tagged-with-location" style="--x: 43; --y: -20;" data-form-id="BC4B" />
+         <rect class="cell-tagged-with-location" style="--x: 42; --y: -20;" data-form-id="BC4C" />
+         <rect class="cell-tagged-with-location" style="--x: 43; --y: -21;" data-form-id="BC6C" />
+         <rect class="cell-tagged-with-location" style="--x: 42; --y: -21;" data-form-id="BC6D" />
+         <rect class="cell-tagged-with-location" style="--x: 42; --y: -22;" data-form-id="BC8E" />
+         <rect class="cell-tagged-with-location" style="--x: 43; --y: -23;" data-form-id="BCAE" />
+         <rect class="cell-tagged-with-location" style="--x: 42; --y: -23;" data-form-id="BCAF" />
+         <rect class="cell-tagged-with-location" style="--x: 41; --y: -23;" data-form-id="BCB0" />
+         <!-- plus RiftenWorld itself -->
+      </g>
+      <g class="cells-tagged-with-location" data-location="RiftenMistveilKeepLocation">
+         <rect class="cell-tagged-with-location" style="--x: 41; --y: -24;" data-form-id="BCD1" />
+      </g>
+   
       <g class="conditionals">
          <!--
             Container element for all of our dialogue conditions.

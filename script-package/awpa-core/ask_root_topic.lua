@@ -71,6 +71,8 @@ do
          topic.text     = "Can you help me find someone?"
          topic.priority = 0 -- place at bottom
          
+         local prior_infos <const> = topic.infos
+         
          --
          -- Handle begin-asking-to actor redirects.
          --
@@ -82,7 +84,9 @@ do
                local list       = actor_info.redirects.begin_asking_to
                for j = 1, #list do
                   local redirect = list[j]
+local bench_a = benchmark.new()
                   local rlg_list = redirect:fold()
+awpa.perflog:log(bench_a, "Time taken to RLG-fold `begin-asking-to` redirect for actor %s", actor_info.name)
                   for k = 1, #rlg_list do
                      rlg_list[k]:generate(throwaway)
                   end
@@ -102,10 +106,12 @@ do
             topic,
             "BeginActorSelection",
             {
+               prior_infos = prior_infos,
+               
                process_shared = function(info)
                   infos_to_keep_at_the_bottom[info] = true
                   
-                  utils.replace_condition_list(info, {})
+                  utils.clear_condition_list(info)
                   
                   -- Link these responses to the actor-selection topics.
                   utils.replace_info_link_to_list(info, actor_selection_topics)

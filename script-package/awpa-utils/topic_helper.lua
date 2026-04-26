@@ -37,14 +37,13 @@ do
       -- use the deletion function (below) to delete any leftover infos 
       -- that weren't recycled.
       function instance_members:finalize_info_order()
-         local count_to_keep = #self.infos.desired_order
+         local desired_order <const> = self.infos.desired_order
+         local count_to_keep <const> = #desired_order
+         local wrapped_topic <const> = self.form
          for i = 1, count_to_keep do
-            local info = self.infos.desired_order[i]
-            local prev
-            if i > 1 then
-               prev = self.infos.desired_order[i - 1]
-            end
-            self.form:place_info_after(info, prev)
+            local info = desired_order[i]
+            local prev = desired_order[i - 1]
+            wrapped_topic:place_info_after(info, prev)
          end
       end
       
@@ -62,10 +61,11 @@ do
             self.form.form_id,
             self.form.editor_id
          ))
+         local desired_set <const> = self.infos.desired_set
          if awpa.env.diagnose_topic_helper_deletions then
             for i = count_to_keep + 1, count_of_all do
                local info = infos[i]
-               if self.infos.desired_set[info] then
+               if desired_set[info] then
                   error("failed to enforce info order; a desired info is near the end")
                end
                local text
@@ -92,7 +92,7 @@ do
          else
             for i = count_to_keep + 1, count_of_all do
                local info = infos[i]
-               if self.infos.desired_set[info] then
+               if desired_set[info] then
                   error("failed to enforce info order; a desired info is near the end")
                end
                info:delete()

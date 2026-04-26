@@ -154,11 +154,10 @@ do
             }
          })
          do
-            local list = actor_info.overrides.begin_asking_about.conditions
-            for i = 1, #list do
-               local item = list[i]
-               local src  = item:to_native_compatible_table()
-               info.conditions:insert(src)
+            local src_list = actor_info.overrides.begin_asking_about.conditions
+            local dst_list = info.conditions
+            for i = 1, #src_list do
+               dst_list:insert(src_list[i]:to_native_compatible_table())
             end
          end
          utils.replace_info_link_to_list(info, {

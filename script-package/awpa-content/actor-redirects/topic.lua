@@ -19,8 +19,6 @@ do
          --  - slug, if specified
          link_info_editor_id_format
       )
-         self.forms.topic = nil
-         
          self.slug     = ""
          self.children = {} -- vector<variant<awpa.line, awpa.group, awpa.shared_info_reference>>
       end,

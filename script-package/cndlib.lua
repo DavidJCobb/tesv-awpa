@@ -511,7 +511,7 @@ function cndlib.or_groups_to_list(or_groups, dst_list, overwrite_even_if_size_un
       for i = size_prior + 1, size_after do
          local src = re_flattened[i]
          if is_native_list then
-            dst_list:insert():overwrite_with(src)
+            dst_list:insert(src)
          else
             dst_list[i] = src
          end

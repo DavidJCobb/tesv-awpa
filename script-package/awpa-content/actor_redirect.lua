@@ -14,10 +14,6 @@ do
          self.conditions = {}
          self.actor_info = actor_info
          self.quest_info = actor_info.quest_info
-         
-         self.forms = {
-            inbound_link = nil, -- invisible info
-         }
       end,
       instance_members = instance_members,
    })

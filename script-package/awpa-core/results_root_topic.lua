@@ -78,7 +78,9 @@ do
          for i = 1, #self.quest_info.actors do
             local actor_info = self.quest_info.actors[i]
             for _, redirect in ipairs(actor_info.redirects.begin_responding) do
+local bench_a = benchmark.new()
                local rlg_list = redirect:fold()
+awpa.perflog:log(bench_a, "Time taken to RLG-fold `begin-responding` redirect for actor %s", actor_info.name)
                for i = 1, #rlg_list do
                   rlg_list[i]:generate(self.topic_helper)
                end
@@ -86,7 +88,9 @@ do
          end
          
          -- Handle child content.
+local bench_b = benchmark.new()
          local rlg_list = awpa.random_line_group.fold(self)
+awpa.perflog:log(bench_b, "Time taken to RLG-fold redirect for results-root topic")
          for i = 1, #rlg_list do
             local rlg = rlg_list[i]
             rlg:generate(self.topic_helper)

@@ -89,7 +89,7 @@ do
             self.contents[v] = bribe_topic(self, v)
          end
          
-         self.forms.branch = nil
+         self.forms = { branch = nil }
       end,
       instance_members = instance_members,
    })

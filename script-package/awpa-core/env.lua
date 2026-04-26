@@ -162,7 +162,12 @@ function awpa.env:replace_topic_infos_with_builtin_shared_infos(topic, key, opti
    --       to handle gendering, GetIsSex checks, et cetera.
    --
 
-   local infos = topic.infos
+   local infos
+   if options and options.prior_infos then
+      infos = options.prior_infos
+   else
+      infos = topic.infos
+   end
    
    local unused   = {}
    local recycled = {}
@@ -176,20 +181,20 @@ function awpa.env:replace_topic_infos_with_builtin_shared_infos(topic, key, opti
    -- use our shared infos), and track pre-existing infos that don't correspond 
    -- to our shared infos.
    --
-   do
-      for i = 1, #infos do
-         local info = infos[i]
-         local si   = info.use_shared_info
+   for i = 1, #infos do
+      local info = infos[i]
+      local si   = info.use_shared_info
+      if si then
          for j = 1, src_count do
             if si == src[j] then
                recycled[j] = info
                goto found
             end
          end
-         ::not_found::
-         unused[#unused + 1] = info
-         ::found::
       end
+      ::not_found::
+      unused[#unused + 1] = info
+      ::found::
    end
    --
    -- Generate a list of all recycled or created infos.
@@ -336,20 +341,25 @@ function awpa.env:generate_content()
       si_def:find_or_create_forms(self.shared_info_topic, preexisting_infos)
    end
 
+local bench_a = benchmark.new()
    for i = 1, #self.quests do
       local quest = self.quests[i]
       quest:generate_dialogue()
       
+local bench = benchmark.new()
       quest:visit_topic_helpers(function(topic_helper)
          topic_helper:finalize_info_order()
       end)
+awpa.perflog:log(bench, "Time taken to finalize info order for all topic-helpers in quest %s", quest.id)
       --
       -- These are separate steps to account for the case of a pre-existing info 
       -- being moved across topics, such that it is unused in an earlier-processed 
       -- topic but gets used in a later-processed topic.
       --
+bench = benchmark.new()
       quest:visit_topic_helpers(function(topic_helper)
          topic_helper:finalize_leftover_info_deletion()
       end)
+awpa.perflog:log(bench, "Time taken to finalize leftover info deletion for all topic-helpers in quest %s", quest.id)
    end
 end

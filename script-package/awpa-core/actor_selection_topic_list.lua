@@ -135,7 +135,7 @@ do
             {
                script_name = "AskWherePeopleAreFRAGMENTSelectActor",
                on_begin    = {
-                  script_name   = "AskWherePeopleAreFRAGMENTSelectActor"
+                  script_name   = "AskWherePeopleAreFRAGMENTSelectActor",
                   function_name = "Exec"
                }
             }
@@ -156,7 +156,9 @@ do
          do
             local list = actor_info.overrides.begin_asking_about.conditions
             for i = 1, #list do
-               list[i]:apply_to_info(info)
+               local item = list[i]
+               local src  = item:to_native_compatible_table()
+               info.conditions:insert(src)
             end
          end
          utils.replace_info_link_to_list(info, {

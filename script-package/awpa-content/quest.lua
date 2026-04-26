@@ -275,8 +275,7 @@ do
                local src = src_list[i]
                src:assert_valid()
                if not src:is_no_op() then
-                  local dst = dst_list:insert()
-                  src:overwrite_condition(dst)
+                  dst_list:insert():overwrite_with(src:to_native_compatible_table())
                end
             end
          end

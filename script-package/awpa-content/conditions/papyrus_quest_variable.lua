@@ -55,14 +55,6 @@ do
             error("no quest")
          end
       end
-      function instance_members:overwrite_condition(cnd)
-         self:_set_condition_common(cnd)
-         cnd.function_name = "GetVMQuestVariable"
-         cnd.parameters[1] = self.form
-         cnd.parameters[2] = self.variable
-         cnd.comparison.operator = self.comparison.operator
-         cnd.comparison.operand  = self.comparison.operand
-      end
       function instance_members:_to_native_compatible_table_impl()
          return {
             run_on        = "subject",

@@ -118,17 +118,6 @@ do
       function instance_members:is_no_op()
          return false
       end
-      function instance_members:overwrite_condition(cnd)
-         error("pure virtual function call")
-      end
-      function instance_members:apply_to_info(info)
-         self:assert_valid()
-         if self:is_no_op() then
-            return
-         end
-         local cnd = info.conditions:insert()
-         self:overwrite_condition(cnd)
-      end
       
       function instance_members:to_native_compatible_table()
          local t = self.generated
@@ -140,16 +129,9 @@ do
          return t
       end
       function instance_members:_to_native_compatible_table_impl()
-         local t = {
-            run_on     = "subject",
-            parameters = {},
-            comparison = {
-               operator = "==",
-               operand  = 1,
-            }
-         }
-         self:overwrite_condition(t)
-         return t
+         -- Should return a table `t` suitable for passing to `condition:overwrite_with`.
+         -- Does not need to worry about setting up `t.is_or_linked`.
+         error("pure virtual function call")
       end
    end
    do -- static members

@@ -218,7 +218,7 @@ function utils.set_papyrus_script_data(form, script_spec, fragment_spec)
    local papyrus = form.papyrus
    for scriptname, src_script in pairs(script_spec) do
       local dst_script = papyrus.scripts[scriptname]
-      if not script then
+      if not dst_script then
          dst_script = papyrus.scripts:insert(scriptname)
       end
       local dst_properties = dst_script.properties
@@ -232,7 +232,7 @@ function utils.set_papyrus_script_data(form, script_spec, fragment_spec)
    end
    if fragment_spec then
       local dst_fragments = papyrus.fragments
-      for k, v in fragment_spec do
+      for k, v in pairs(fragment_spec) do
          if k == "script_name" then
             dst_fragments[k] = v
          else

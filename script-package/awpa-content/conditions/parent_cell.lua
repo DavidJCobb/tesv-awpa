@@ -89,31 +89,6 @@ do
          end
          return false
       end
-      function instance_members:overwrite_condition(cnd)
-         self:_set_condition_common(cnd)
-         self:_set_condition_run_on(cnd)
-         
-         if self.actor then
-            cnd.function_name = "GetInSameCell"
-            if self.actor == "player" then
-               cnd.parameters[1] = dovah.get_form_by_id(0x14)
-            elseif self.actor == "speaker" then
-               error("can't specify the speaker as a parameter")
-            elseif self.actor == "subject" then
-               cnd.override_types_with = "alias"
-               cnd.parameters[1] = self.quest_info.form.aliases["ActorToFind"]
-            end
-         else
-            cnd.function_name = "GetInCell"
-            cnd.parameters[1] = self.cell
-         end
-         if self.equals then
-            cnd.comparison.operator = "=="
-         else
-            cnd.comparison.operator = "!="
-         end
-         cnd.comparison.operand  = 1
-      end
       function instance_members:_to_native_compatible_table_impl()
          local t = {
             comparison = {

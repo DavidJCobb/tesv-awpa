@@ -44,7 +44,6 @@ awpa-content/conditions/race.lua
 awpa-content/condition_set.lua
 awpa-content/constant.lua
 awpa-content/group.lua
-awpa-core/group_generation_context.lua
 awpa-content/line.lua
 awpa-content/quest.lua
 awpa-content/shared_info_reference.lua

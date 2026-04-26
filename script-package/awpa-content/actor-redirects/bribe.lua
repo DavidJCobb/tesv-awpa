@@ -72,7 +72,7 @@ do
          
          local rlg_list = awpa.random_line_group.fold(self)
          for i = 1, #rlg_list do
-            rlg_list[i] = postprocess
+            rlg_list[i].postprocess = postprocess
             rlg_list[i]:generate(self.topic_helper)
          end
       end
@@ -201,8 +201,7 @@ do
             function(info)
                info.speaker = self.actor_info.form
                do -- Subject.GetBribeSuccess == 1
-                  local cnd = info.conditions:insert(1, {})
-                  cnd:overwrite_with({
+                  local cnd = info.conditions:insert(1, {
                      run_on        = "subject",
                      function_name = "GetBribeSuccess",
                      comparison    = {
@@ -235,8 +234,7 @@ do
             function(info)
                info.speaker = self.actor_info.form
                do -- Subject.GetBribeSuccess != 1
-                  local cnd = info.conditions:insert(1, {})
-                  cnd:overwrite_with({
+                  local cnd = info.conditions:insert(1, {
                      run_on        = "subject",
                      function_name = "GetBribeSuccess",
                      comparison    = {
@@ -274,8 +272,17 @@ do
                operand  = 1,
             }
          }
+         local function postprocess(info)
+            info.speaker = self.actor_info.form
+            utils.replace_info_link_to_list(info, {
+               self.forms.accept_topic,
+               self.forms.poor_topic,
+               self.forms.refuse_topic
+            })
+            info.walk_away_topic = self.forms.refuse_topic
+         end
          
-         local rlg_list = awpa.random_line_group.fold(self.branches.begin)
+         local rlg_list = awpa.random_line_group.fold(self.contents["begin"])
          for i = 1, #rlg_list do
             local dst_item = rlg_list[i]
             do -- conditions
@@ -284,17 +291,7 @@ do
                utils.join(cnd_list, dst_item.conditions)
                dst_item.conditions = cnd_list
             end
-            do -- link to topics
-               dst_item.postprocess = function(info)
-                  info.speaker = self.actor_info.form
-                  utils.replace_info_link_to_list(info, {
-                     self.forms.accept_topic,
-                     self.forms.poor_topic,
-                     self.forms.refuse_topic
-                  })
-                  info.walk_away_topic = self.forms.refuse_topic
-               end
-            end
+            dst_item.postprocess = postprocess
          end
          return rlg_list
       end

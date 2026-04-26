@@ -57,19 +57,6 @@ do
             error("WRLD not found: " .. v)
          end
       end
-      function instance_members:overwrite_condition(cnd)
-         self:_set_condition_common(cnd)
-         self:_set_condition_run_on(cnd)
-         
-         cnd.function_name = "GetInWorldspace"
-         cnd.parameters[1] = self.world
-         if self.equals then
-            cnd.comparison.operator = "=="
-         else
-            cnd.comparison.operator = "!="
-         end
-         cnd.comparison.operand  = 1
-      end
       function instance_members:_to_native_compatible_table_impl()
          local t = {
             function_name = "GetInWorldspace",

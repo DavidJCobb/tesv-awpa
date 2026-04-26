@@ -74,26 +74,8 @@ do
             error("no quest")
          end
       end
-      function instance_members:overwrite_condition(cnd)
-         self:_set_condition_common(cnd)
-         if type(self.done) == "nil" then
-            cnd.function_name = "GetStage"
-            cnd.comparison.operator = self.comparison.operator
-            cnd.comparison.operand  = self.comparison.operand
-         else
-            cnd.function_name = "GetStageDone"
-            cnd.parameters[2] = self.stage
-            if self.done then
-               cnd.comparison.operator = "=="
-            else
-               cnd.comparison.operator = "!="
-            end
-            cnd.comparison.operand = 1
-         end
-         cnd.parameters[1] = self.form
-      end
       function instance_members:_to_native_compatible_table_impl()
-         if type(self.done) == nil then
+         if not self.stage then
             return {
                run_on        = "subject",
                function_name = "GetStage",

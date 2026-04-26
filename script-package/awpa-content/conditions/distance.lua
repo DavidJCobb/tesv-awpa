@@ -67,40 +67,6 @@ do
          
          self:_extract_numeric_comparison(element)
       end
-      function instance_members:overwrite_condition(cnd)
-         self:_set_condition_common(cnd)
-         self:_set_condition_run_on(cnd)
-         cnd.function_name = "GetDistance"
-         if type(self.other) == "string" then
-            if self.other == "speaker" then
-               --
-               -- SOMETHING.distance(subject) -> subject.distance(SOMETHING)
-               --
-               if self.run_on == "player" then
-                  --
-                  -- player.distance(subject) -> subject.distance(player)
-                  --
-                  cnd.parameters[1] = dovah.get_form_by_id(0x14)
-                  cnd.run_on = "subject"
-               else
-                  local a = cnd.run_on
-                  local b = "subject"
-                  if not object_is_form(a) then
-                     cnd.override_types_with = "alias"
-                  end
-                  cnd.parameters[1] = a
-                  cnd.run_on        = b
-               end
-            elseif self.other == "subject" then
-               cnd.override_types_with = "alias"
-               cnd.parameters[1] = self.quest_info.form.aliases["ActorToFind"]
-            end
-         else
-            cnd.parameters[1] = self.other
-         end
-         cnd.comparison.operator = self.comparison.operator
-         cnd.comparison.operand  = self.comparison.operand
-      end
       function instance_members:_to_native_compatible_table_impl()
          local t = {
             function_name = "GetDistance",

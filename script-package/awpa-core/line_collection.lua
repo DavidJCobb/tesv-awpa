@@ -15,7 +15,7 @@ do
    })
    do -- member functions
       function instance_members:for_each_line(functor)
-         for _, v in { "male", "female", "unisex" } do
+         for _, v in ipairs({ "male", "female", "unisex" }) do
             local list = self[v]
             for i = 1, #list do
                functor(list[i])

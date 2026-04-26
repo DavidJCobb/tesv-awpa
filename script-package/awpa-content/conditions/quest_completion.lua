@@ -49,17 +49,6 @@ do
             error("no quest")
          end
       end
-      function instance_members:overwrite_condition(cnd)
-         self:_set_condition_common(cnd)
-         cnd.function_name = "GetQuestCompleted"
-         cnd.parameters[1] = self.form
-         if self.done then
-            cnd.comparison.operator = "=="
-         else
-            cnd.comparison.operator = "!="
-         end
-         cnd.comparison.operand = 1
-      end
       function instance_members:_to_native_compatible_table_impl()
          return {
             run_on        = "subject",

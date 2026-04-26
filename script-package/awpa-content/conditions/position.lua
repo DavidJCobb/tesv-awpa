@@ -40,14 +40,6 @@ do
          self:_extract_run_on(element)
          self:_extract_numeric_comparison(element)
       end
-      function instance_members:overwrite_condition(cnd)
-         self:_set_condition_common(cnd)
-         self:_set_condition_run_on(cnd)
-         cnd.function_name = "GetPos"
-         cnd.parameters[1] = self.axis
-         cnd.comparison.operator = self.comparison.operator
-         cnd.comparison.operand  = self.comparison.operand
-      end
       function instance_members:_to_native_compatible_table_impl()
          local t = {
             function_name = "GetPos",

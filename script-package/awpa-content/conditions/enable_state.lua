@@ -63,17 +63,6 @@ do
             error("no ref")
          end
       end
-      function instance_members:overwrite_condition(cnd)
-         self:_set_condition_common(cnd)
-         cnd.run_on = self.form
-         cnd.function_name = "GetDisabled"
-         if self.enabled then
-            cnd.comparison.operator = "!="
-         else
-            cnd.comparison.operator = "=="
-         end
-         cnd.comparison.operand = 1
-      end
       function instance_members:_to_native_compatible_table_impl()
          return {
             run_on        = self.form,

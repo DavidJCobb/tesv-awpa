@@ -109,14 +109,8 @@ end
 
 function utils.replace_info_link_to_list(info, topics)
    local list = info.link_to
-   local size = #list
-   if size > 0 then
-      for i = size, 1, -1 do
-         list:remove(i)
-      end
-   end
-   size = #topics
-   for i = 1, size do
+   list:clear()
+   for i = 1, #topics do
       list:insert(topics[i])
    end
 end

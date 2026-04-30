@@ -49,11 +49,7 @@ end
 --
 
 function utils.clear_info_responses(info)
-   local list = info.responses
-   local size = #list
-   for i = size, 1, -1 do
-      list:remove(i)
-   end
+   info.responses:clear()
 end
 
 function utils.make_invisible_info(topic, editor_id, destination)
@@ -100,16 +96,11 @@ local function _append_conditions_to(info, dst_list, src_list)
 end
 
 function utils.clear_condition_list(info)
-   local list = info.conditions
-   for i = #list, 1, -1 do
-      list:remove(i)
-   end
+   info.conditions:clear()
 end
 function utils.replace_condition_list(info, conditions)
    local list = info.conditions
-   for i = #list, 1, -1 do
-      list:remove(i)
-   end
+   list:clear()
    _append_conditions_to(info, list, conditions)
 end
 function utils.append_condition_list(info, src_list)
@@ -131,15 +122,9 @@ function utils.replace_info_link_to_list(info, topics)
 end
 
 function utils.replace_info_responses(info, text)
-   local size = #info.responses
-   if size <= 0 then
-      info.responses:insert({ text = text })
-   else
-      info.responses[1].text = text
-      for i = 2, size do
-         info.responses:remove(i)
-      end
-   end
+   local list = info.responses
+   list:clear()
+   list:insert({ text = text })
 end
 
 function utils.resolve_form_reference(text, optional)

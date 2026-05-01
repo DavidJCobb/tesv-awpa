@@ -34,7 +34,6 @@ function cndlib.numeric_comparisons_are_redundant(cmp_a, cmp_b)
       if cmp_a.operand == cmp_b.operand then
          return 0
       end
-      local op = cmp_a.operator
       if op == "==" or op == "!=" then
          return false
       end
@@ -66,6 +65,23 @@ function cndlib.numeric_comparisons_are_redundant(cmp_a, cmp_b)
          or cmp_other.operator == ">=" and cmp_equal.operand >= cmp_other.operand
          then
             return a_eq and -1 or 1
+         end
+      end
+   end
+   do -- operator != is less specific than > and <
+      local a_neq = cmp_a.operator == "!="
+      local b_neq = cmp_b.operator == "!="
+      if a_neq or b_neq then
+         local cmp_neq   = cmp_a
+         local cmp_other = cmp_b
+         if b_neq then
+            cmp_neq, cmp_other = cmp_b, cmp_a
+         end
+         
+         if cmp_other.operator == "<" and cmp_neq.operand == cmp_other.operand
+         or cmp_other.operator == ">" and cmp_neq.operand == cmp_other.operand
+         then
+            return a_neq and 1 or -1
          end
       end
    end

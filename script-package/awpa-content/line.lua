@@ -41,6 +41,9 @@ do
             female = nil,
          }
          
+         self.is_gendered = false
+         self.text_fem    = nil
+         
          awpa.env:on_content_object_constructed()
       end,
       instance_members = instance_members,
@@ -52,7 +55,11 @@ do
          local hours = tonumber(element.attributes["hours-until-reset"])
          if hours then
             self.hours_until_reset = hours
-            -- TODO: validate
+            if hours < 0 or hours > 24 then
+               error("invalid value for `hours-until-reset` (must be in the range [0, 24])")
+            end
+         elseif element.attributes["hours-until-reset"] then
+            error("invalid value for `hours-until-reset` (not a number)")
          end
          
          local notes = element.attributes["script-notes"]
@@ -92,7 +99,40 @@ do
             end
          end
          
-         self.text = element:get_text_content()
+         do
+            local text_m   = ""
+            local text_f   = ""
+            local list     = element.children
+            local gendered = false
+            for i = 1, #list do
+               local node = list[i]
+               if xml.text.is(node) then
+                  local data <const> = node.data
+                  text_m = text_m .. data
+                  if not gendered then
+                     gendered = has_masc_pronouns(data)
+                  end
+                  if gendered then
+                     text_f = text_f .. swap_masc_pronouns_to_fem(data)
+                  else
+                     text_f = text_f .. data
+                  end
+               elseif xml.element.is(node) then
+                  if node.node_name == "verbatim" then
+                     local data <const> = node:get_text_content()
+                     text_m = text_m .. data
+                     text_f = text_f .. data
+                  else
+                     error("unexpected child element in `line`")
+                  end
+               end
+            end
+            self.text        = text_m
+            self.is_gendered = gendered
+            if gendered then
+               self.text_fem = text_f
+            end
+         end
          
          do
             local id = element.attributes["form-id-m"]
@@ -153,7 +193,7 @@ do
          local bench_a = benchmark.new()
          
          local bench_b = benchmark.new()
-         local gendered = has_masc_pronouns(self.text)
+         local gendered = self.is_gendered
          bench_b:stop()
          
          local bench_c
@@ -194,9 +234,7 @@ do
             local resp_list = info.responses
             local text      = self.text
             if fem then
-               bench_c = benchmark.new()
-               text = swap_masc_pronouns_to_fem(self.text)
-               bench_c:stop()
+               text = self.text_fem
             end
             resp_list[1] = {
                text          = text,

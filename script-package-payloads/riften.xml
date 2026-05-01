@@ -468,7 +468,18 @@
          <actor editor-id="Laila" name="Laila Law-Giver">
             <invoke name="actor-exiled-by-imperials" />
          </actor>
-         <actor editor-id="LouisLetrush" name="Louis Letrush" />
+         <actor editor-id="LouisLetrush" name="Louis Letrush">
+            <begin-asking-about>
+               <filter-conditions>
+                  <!--
+                     Louis hires you to obtain a horse, Frost, from the 
+                     Black-Briar family. Once you get the horse, Louis 
+                     leaves Riften, intending never to return.
+                  -->
+                  <quest-stage for="MS03" lt="50" />
+               </filter-conditions>
+            </begin-asking-about>
+         </actor>
          <actor editor-id="Madesi" />
          <actor editor-id="Maramal" />
          <actor editor-id="HirelingMarcurio" name="Marcurio">
@@ -706,33 +717,46 @@
                   <line>No. Leave me be, you Imperial bastard.</line>
                   <line>No. Leave me alone, you Imperial dog.</line>
                   <line>No, Imperial.</line>
-                  <line>The carriage driver is just outside the north gate. He can take you back to Cyrodiil where you belong.</line>
+                  <line>The carriage driver is just outside the north gate. <verbatim>He</verbatim> can take you back to Cyrodiil where you belong.</line>
                </topic>
             </begin-asking-to>
             <begin-responding>
-               <topic slug="AfternoonDrinking">
+               <topic slug="Drinking">
+                  <!--
+                     Vulwulf drinks at the Bee and Barb during the afternoon hours [13, 18) 
+                     and through the nighttime hours [20, 3). Given that he starts to leave 
+                     the Bee and Barb at 6pm and 3am, respectively, we want our conditions 
+                     to encompass those hours so that he gives these replies if the player 
+                     asks him while he's on his way out of the building.
+                     
+                     As such, these lines apply to all hours of the day except 19:00, and 
+                     [4, 12].
+                  -->
                   <conditions>
-                     <global name="GameHour" gte="13" />
-                     <global name="GameHour" lte="18" />
                      <parent-cell of="speaker" is="RiftenBeeandBarb" />
                      <parent-cell of="subject" is-not="RiftenBeeandBarb" />
-                  </conditions>
-                  <line>I wouldn't know. I've been here since noon.</line>
-                  <line>If they're not in here, then I don't know where they are.</line>
-                  <line>They're not in here, that's for sure.</line>
-               </topic>
-               <topic slug="NighttimeDrinking">
-                  <conditions>
                      <or>
-                        <global name="GameHour" lte="3" />
-                        <global name="GameHour" gte="20" />
+                        <global name="GameHour" lt="4" />
+                        <global name="GameHour" gt="12" />
                      </or>
-                     <parent-cell of="speaker" is="RiftenBeeandBarb" />
-                     <parent-cell of="subject" is-not="RiftenBeeandBarb" />
+                     <global name="GameHour" neq="19" />
                   </conditions>
-                  <line>I wouldn't know. I've been here since dinner.</line>
-                  <line>If they're not in here, then I don't know where they are.</line>
-                  <line>They're not in here, that's for sure.</line>
+                  <g non-exclusive="true">
+                     <conditions>
+                        <global name="GameHour" gt="12" />
+                        <global name="GameHour" lt="19" />
+                     </conditions>
+                     <line>I wouldn't know. I've been here since noon.</line>
+                  </g>
+                  <g non-exclusive="true">
+                     <conditions>
+                        <global name="GameHour" lt="4" />
+                        <global name="GameHour" gt="19" />
+                     </conditions>
+                     <line>I wouldn't know. I've been here since dinner.</line>
+                  </g>
+                  <line>If he's not in here, then I don't know where he is.</line>
+                  <line>He's not in here, that's for sure.</line>
                </topic>
             </begin-responding>
          </actor>

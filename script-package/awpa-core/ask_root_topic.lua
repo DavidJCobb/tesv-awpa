@@ -113,7 +113,7 @@ awpa.perflog:log(bench_a, "Time taken to RLG-fold `begin-asking-to` redirect for
                process_shared = function(info)
                   infos_to_keep_at_the_bottom[info] = true
                   
-                  utils.clear_condition_list(info)
+                  info.conditions:clear()
                   utils.replace_info_link_to_list(info, actor_selection_topics)
                end,
                process_unused = function(info)

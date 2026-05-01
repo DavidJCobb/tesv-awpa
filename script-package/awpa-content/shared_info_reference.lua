@@ -88,7 +88,7 @@ do
                   and f.use_shared_info == si
                   then
                      info = f
-                     utils.clear_condition_list(info)
+                     info.conditions:clear()
                      goto configure_info
                   end
                end

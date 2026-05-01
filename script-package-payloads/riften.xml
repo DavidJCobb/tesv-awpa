@@ -25,7 +25,9 @@
          <line>The Jarl's steward? He'll be at Mistveil Keep.</line>
       </shared-info>
    </shared-infos>
-   <quest id="AWPARiften">
+   <quest id="AWPARiften"
+      locations="RiftenLocation,RiftenMistveilKeepLocation"
+   >
       <dialogue-conditions>
          <!-- Can only ask Riften townspeople: -->
          <faction-membership of="speaker" includes="TownRiftenFaction" />

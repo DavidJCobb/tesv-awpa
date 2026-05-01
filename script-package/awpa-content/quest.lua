@@ -10,6 +10,8 @@ do
       constructor = function(self)
          self.source_xml_node = nil
          
+         self.locations = {}
+         
          self.actors = {}
          
          -- Dialogue conditions for the quest.
@@ -50,6 +52,24 @@ do
       function instance_members:from_xml(element)
          self.source_xml_node = element
          awpa.env:set_object_id(self, element.attributes["id"])
+         
+         do
+            local attr = element.attributes["locations"]
+            if not attr or attr == "" then
+               error("attribute `locations` expected (comma-separated list of Location editor IDs)")
+            end
+            local list = self.locations
+            for name in attr:gmatch("([^,]+)") do
+               local form = dovah.get_form_by_editor_id(name, form_types.location)
+               if not form then
+                  error(string.format("quest `%s` requested invalid location ID `%s`", self.id, name))
+               end
+               list[#list + 1] = form
+            end
+            if #list == 0 then
+               error("each AWPA content quest must specify the Location(s) to which it pertains")
+            end
+         end
          
          element:for_each_child_element(function(node)
             if self:_consume_xml_child_as_scope(node) then
@@ -108,47 +128,6 @@ do
                return
             end
          end)
-         
-         do
-            --[[--
-            
-               TEST to see if we properly fold `g`s into random groups
-            
-            --]]--
-            --[[--
-            local test = awpa.random_line_group.fold(self.results_root_topic)
-            local function _walk(list, indent)
-               if not indent or indent <= 0 then
-                  print("Dumping folded RLGs...")
-                  indent = 0
-               end
-               
-               local leading = "% " .. string.format("%u", indent) .. "s"
-               leading = string.format(leading, "")
-               
-               for i = 1, #list do
-                  local item = list[i]
-                  if awpa.line.is(item) then
-                     print(string.format("%s - LINE: %q", leading, item.text))
-                  elseif awpa.shared_info_reference.is(item) then
-                     print(string.format("%s - SHARED INFO: %s", leading, item.source.id))
-                  elseif awpa.random_line_group.is(item) then
-                     print(string.format("%s - RANDOM GROUP: %q (%u conditions)", leading, item.name, #item.conditions))
-                     _walk(item.children, indent + 1)
-                  elseif awpa.random_line_subgroup.is(item) then
-                     print(string.format("%s - RANDOM SUBGROUP %q (%u conditions)", leading, item.name, #item.conditions))
-                     _walk(item.children, indent + 1)
-                  else
-                     print(string.format("%s - UNKNOWN", leading))
-                     dovah.dump(item)
-                  end
-               end
-               if indent == 0 then
-                  print("Dump done.")
-               end
-            end
-            _walk(test)--]]--
-         end
       end
       function instance_members:amend_xml_clone(nodemap)
          do
@@ -170,6 +149,7 @@ do
             self.form     = quest
             self.recycled = true
             self.alias_for_actor_to_find = quest.aliases["ActorToFind"]
+            self:ensure_papyrus_script()
             return quest
          end
          quest = dovah.create_form(form_types.quest)
@@ -181,7 +161,16 @@ do
             alias.name = "ActorToFind"
             self.alias_for_actor_to_find = alias
          end
+         self:ensure_papyrus_script()
          return quest
+      end
+      
+      function instance_members:ensure_papyrus_script()
+         utils.set_papyrus_script_data(self.form, {
+            ["AskWherePeopleAreContentQuestBase"] = {
+               ["pkLocations"] = self.locations,
+            }
+         })
       end
       
       function instance_members:ensure_actor_selection_aliases()
@@ -258,6 +247,7 @@ do
          quest.run_once                   = false
          quest.start_game_enabled         = false
          quest.warn_on_alias_fill_failure = true
+         quest.object_window_category     = "Ask Where People Are/Content"
          do
             local alias = quest.aliases["ActorToFind"]
             alias.optional = true

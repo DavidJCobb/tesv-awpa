@@ -168,7 +168,7 @@ do
             if id then
                local info = dovah.get_form_by_id(id)
                if info and info.form_type == form_types.topic_info then
-                  utils.clear_condition_list(info) -- let group conditions be rebuilt from scratch
+                  info.conditions:clear() -- let group conditions be rebuilt from scratch
                   return info
                end
             end

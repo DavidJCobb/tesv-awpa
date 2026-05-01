@@ -48,10 +48,6 @@ end
 
 --
 
-function utils.clear_info_responses(info)
-   info.responses:clear()
-end
-
 function utils.make_invisible_info(topic, editor_id, destination)
    local infos = topic.infos
    local info
@@ -95,9 +91,6 @@ local function _append_conditions_to(info, dst_list, src_list)
    end
 end
 
-function utils.clear_condition_list(info)
-   info.conditions:clear()
-end
 function utils.replace_condition_list(info, conditions)
    local list = info.conditions
    list:clear()

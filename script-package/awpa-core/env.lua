@@ -210,7 +210,7 @@ function awpa.env:replace_topic_infos_with_builtin_shared_infos(topic, key, opti
          if not info then
             info = dovah.create_form(form_types.topic_info, { parent = topic })
             info.use_shared_info = src[i]
-            utils.clear_info_responses(info)
+            info.responses:clear()
          end
          desired_order[i] = info
          if src_count > 1 then
@@ -270,7 +270,57 @@ function awpa.env:replace_topic_infos_with_builtin_shared_infos(topic, key, opti
    end
 end
 
+local function _generate_core_service_quest()
+   local player_ref <const> = dovah.get_form_by_id(0x14)
+
+   local quest = dovah.get_form_by_editor_id("AWPACoreSvc", form_types.quest)
+   if not quest then
+      quest = dovah.create_form(form_types.quest)
+      quest.editor_id = "AWPACoreSvc"
+   end
+   quest.allow_repeated_stages      = true
+   quest.start_game_enabled         = true
+   quest.warn_on_alias_fill_failure = true
+   quest.object_window_category     = "Ask Where People Are/Core"
+   utils.set_papyrus_script_data(quest, {
+      ["AskWherePeopleAreCoreService"] = {
+         ["AskWherePeopleAreContentQuests"] = dovah.get_form_by_editor_id("AskWherePeopleAreContentQuests", form_types.formlist),
+         ["PlayerRef"] = player_ref,
+      }
+   })
+   
+   local alias = quest.aliases["Player"]
+   if not alias then
+      alias = quest:create_ref_alias()
+      alias.name            = "Player"
+      alias.allow_dead      = true
+      alias.allow_destroyed = true
+      alias.allow_disabled  = true
+      alias.allow_reserved  = true
+      alias.allow_reuse     = true
+      alias.fill            = player_ref
+      alias.optional        = false
+   end
+   utils.set_papyrus_script_data(alias, {
+      ["AskWherePeopleAreCorePlayerAlias"] = {
+         ["AWPACoreSvc"] = quest,
+      }
+   })
+end
+
 function awpa.env:generate_content()
+   local all_quests_form_list
+   do
+      local editor_id = "AskWherePeopleAreContentQuests"
+      all_quests_form_list = dovah.get_form_by_editor_id(editor_id, form_types.formlist)
+      if not all_quests_form_list then
+         all_quests_form_list           = dovah.create_form(form_types.formlist)
+         all_quests_form_list.editor_id = editor_id
+      end
+   end
+   
+   _generate_core_service_quest()
+
    if not self.shared_info_quest then
       local quest = dovah.get_form_by_editor_id("AWPASharedInfos", form_types.quest)
       if not quest then
@@ -347,6 +397,13 @@ function awpa.env:generate_content()
 local bench_a = benchmark.new()
    for i = 1, #self.quests do
       local quest = self.quests[i]
+      do
+         local form = quest:get_or_create_form()
+         local list = all_quests_form_list.entries
+         if not list:index_of(form) then
+            list:insert(form)
+         end
+      end
       quest:generate_dialogue()
       
 local bench = benchmark.new()

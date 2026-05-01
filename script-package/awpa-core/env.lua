@@ -166,7 +166,7 @@ function awpa.env:replace_topic_infos_with_builtin_shared_infos(topic, key, opti
    if options and options.prior_infos then
       infos = options.prior_infos
    else
-      infos = topic.infos
+      infos = topic:get_infos_as_table()
    end
    
    local unused   = {}
@@ -295,7 +295,7 @@ function awpa.env:generate_content()
       end
    end
    
-   local preexisting_infos = self.shared_info_topic.infos
+   local preexisting_infos = self.shared_info_topic:get_infos_as_table()
    
    do
       local INFOS = {

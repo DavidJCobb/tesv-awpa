@@ -51,7 +51,7 @@ do
                   -- If the branch is newly-created, it may have been created with 
                   -- a blank starting topic.
                   --
-                  if #t.infos == 0 and t.editor_id == "" and t.text == "" then
+                  if #t:get_infos_as_table() == 0 and t.editor_id == "" and t.text == "" then
                      t.editor_id = editor_id
                      self.forms.topic = t
                      return t
@@ -71,7 +71,7 @@ do
          topic.text     = "Can you help me find someone?"
          topic.priority = 0 -- place at bottom
          
-         local prior_infos <const> = topic.infos
+         local prior_infos <const> = topic:get_infos_as_table()
          
          --
          -- Handle begin-asking-to actor redirects.

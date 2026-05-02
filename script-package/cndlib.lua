@@ -106,11 +106,12 @@ do
    }
    
    local NUMERIC_FUNCTION_ARGCOUNTS = {
-      ["GetDeadCount"]       = 1,
-      ["GetDistance"]        = 1,
-      ["GetGlobalValue"]     = 1,
-      ["GetPos"]             = 1,
-      ["GetVMQuestVariable"] = 2,
+      ["GetDeadCount"]        = 1,
+      ["GetDistance"]         = 1,
+      ["GetGlobalValue"]      = 1,
+      ["GetPos"]              = 1,
+      ["GetRelationshipRank"] = 1,
+      ["GetVMQuestVariable"]  = 2,
    }
    
    -- Conditions for which the "run on" ref is completely irrelevant.

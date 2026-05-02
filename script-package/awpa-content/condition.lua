@@ -155,6 +155,7 @@ do
          ["quest-not-running"]      = "quest_running_state",
          ["quest-stage"]            = "quest_stage",
          ["race"]                   = "race",
+         ["relationship-rank"]      = "relationship_rank",
          ["x"]                      = "position",
          ["y"]                      = "position",
          ["z"]                      = "position",

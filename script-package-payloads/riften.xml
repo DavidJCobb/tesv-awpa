@@ -643,6 +643,18 @@
          </actor>
          <actor editor-id="MercerFrey" name="Mercer Frey">
             <invoke name="tg-member-dfn-never-surface" />
+            <begin-asking-about>
+               <filter-conditions>
+                  <!--
+                     Once Mercer Frey is revealed to be a traitor, you can't ask 
+                     for his location.
+                  -->
+                  <or>
+                     <quest-not-running name="TG07" />
+                     <quest-stage for="TG07" gte="30" />
+                  </or>
+               </filter-conditions>
+            </begin-asking-about>
          </actor>
          <actor editor-id="Mjoll" name="Mjoll the Lioness" />
          <actor editor-id="Molgrom" name="Molgrom Twice-Killed">
@@ -770,12 +782,16 @@
                      is actively racist against all Imperials, and spends his days and 
                      nights drinking himself to death at the Bee and Barb, interrupting 
                      his time at the bar only to eat dinner with his surviving family.
+                     
+                     If the player is an Imperial and hasn't befriended him, then have 
+                     him react with racism.
                   -->
                   <conditions>
                      <or>
                         <race of="player" is="ImperialRace" />
                         <race of="player" is="ImperialRaceVampire" />
                      </or>
+                     <relationship-rank with="player" lt="1" />
                   </conditions>
                   <line>No. Leave me be, you Imperial bastard.</line>
                   <line>No. Leave me alone, you Imperial dog.</line>

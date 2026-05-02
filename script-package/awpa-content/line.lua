@@ -192,9 +192,7 @@ do
       function instance_members:generate_infos(topic)
          local bench_a = benchmark.new()
          
-         local bench_b = benchmark.new()
-         local gendered = self.is_gendered
-         bench_b:stop()
+         local gendered <const> = self.is_gendered
          
          local bench_c
          local bench_d
@@ -246,10 +244,6 @@ do
          
          local function _print_benches()
             awpa.perflog:log(bench_a, "awpa.line:generate_infos(...) for text: \"%s\"", self.text)
-            awpa.perflog:log(bench_b, " - `has_masc_pronouns` execution time (result: %d)", gendered and 1 or 0)
-            if bench_c then
-               awpa.perflog:log(bench_c, " - `swap_masc_pronouns_to_fem` execution time")
-            end
             if bench_d then
                awpa.perflog:log(bench_d, " - execution time to update progress bar")
             end

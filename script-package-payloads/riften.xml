@@ -123,6 +123,53 @@
             <parent-cell of="speaker" is-not="RiftenJail01" />
             <faction-membership of="player" includes="ThievesGuildFaction" />
          </or>
+         
+         <!--
+            TG01: Taking Care of Business: Don't allow the player to ask the 
+            shopkeepers for help/directions in between trying and failing to 
+            extort them, and eventually succeeding at extorting them.
+         -->
+         <or> <!-- Cannot ask Keerava between failing to scare her, and coercing her -->
+            <!-- not asking Keerava: -->
+            <actor-base of="speaker" is-not="Keerava" />
+            <!-- OR TG01 not running: -->
+            <quest-not-running name="TG01" />
+            <!-- OR have sucessfully extorted her: -->
+            <quest-stage for="TG01" done="30" />
+            <papyrus-quest-variable for="TG01" var="::pTG01KeeravaPaid_var" eq="1" />
+            <!-- OR haven't yet confronted her: -->
+            <papyrus-quest-variable for="TG01" var="::pTG01KeeravaWarned_var" eq="0" />
+            <!-- OR confronted the other two targets, so she's already scared: -->
+            <papyrus-quest-variable for="TG01" var="::pTG01GotCash_var" gte="2" />
+         </or>
+         <or> <!-- Cannot ask Bersi between failing to scare her, and coercing her -->
+            <!-- not asking Bersi: -->
+            <actor-base of="speaker" is-not="Bersi" />
+            <!-- OR TG01 not running: -->
+            <quest-not-running name="TG01" />
+            <!-- OR have sucessfully extorted him: -->
+            <quest-stage for="TG01" done="40" />
+            <papyrus-quest-variable for="TG01" var="::pTG01BersiPaid_var" eq="1" />
+            <!-- OR haven't yet confronted him: -->
+            <papyrus-quest-variable for="TG01" var="::pTG01BersiWarned_var" eq="0" />
+            <!-- OR confronted the other two targets, so he's already scared: -->
+            <papyrus-quest-variable for="TG01" var="::pTG01GotCash_var" gte="2" />
+            <!-- OR have broken his urn: -->
+            <papyrus-quest-variable for="TG01" var="::pTG01SmashUrn_var" gte="3" />
+         </or>
+         <or> <!-- Cannot ask Haelga between failing to scare her, and coercing her -->
+            <!-- not asking Haelga: -->
+            <actor-base of="speaker" is-not="Haelga" />
+            <!-- OR TG01 not running: -->
+            <quest-not-running name="TG01" />
+            <!-- OR have sucessfully extorted her: -->
+            <quest-stage for="TG01" done="45" />
+            <papyrus-quest-variable for="TG01" var="::pTG0HaelgaPaid_var" eq="1" />
+            <!-- OR haven't yet confronted her: -->
+            <papyrus-quest-variable for="TG01" var="::pTG01HaelgaWarned_var" eq="0" />
+            <!-- OR confronted the other two targets, so she's already scared: -->
+            <papyrus-quest-variable for="TG01" var="::pTG01GotCash_var" gte="2" />
+         </or>
       </dialogue-conditions>
       
       <condition-set name="under-stormcloak-control">
@@ -229,11 +276,34 @@
          </actor>
          <actor editor-id="Bersi" name="Bersi Honey-Hand">
             <!--
-               TODO: don't allow asking this actor while harassing 
-               their shop/business for the TG, nor in the immediate 
-               aftermath of having done so. check via quest dialogue 
-               conditions; use a helper script if necessary
+               Dialogue conditions block off "Can you help me find someone?" 
+               if the player fails to extort Bersi on behalf of the Thieves 
+               Guild (i.e. trying to use just words, and not yet resorting 
+               to other means).
+               
+               But I think it'd be funny if, right after breaking the urn, 
+               you could ask him and he'd just react dumbfounded and angry. 
+               I don't recall offhand if the TG01 dialogue setup allows for 
+               it (i.e. if his reaction to the urn is a blocking branch or 
+               not).
             -->
+            <begin-asking-to>
+               <topic slug="ButWhatAboutMyUrn">
+                  <conditions>
+                     <!--
+                        Haven't yet collected payment:
+                     -->
+                     <quest-stage for="TG01" not-done="40" />
+                     <papyrus-quest-variable for="TG01" var="::pTG01BersiPaid_var" eq="0" />
+                     <!--
+                        Urn smashed:
+                     -->
+                     <papyrus-quest-variable for="TG01" var="::pTG01SmashUrn_var" gte="3" />
+                  </conditions>
+                  <line emotion="fear:40">I... What? I can't believe you smashed my urn!</line>
+                  <line emotion="anger:60" script-notes="angry, shocked, indignant at what the player just did; all the more indignant for them casually asking a completely irrelevant question after doing it; emphasis on &quot;directions&quot;">You're going to smash my belongings and then ask me for directions?</line>
+               </topic>
+            </begin-asking-to>
          </actor>
          <actor editor-id="Bolli" />
          <actor editor-id="BrandShei" name="Brand-Shei">
@@ -364,10 +434,10 @@
          </actor>
          <actor editor-id="Haelga">
             <!--
-               TODO: don't allow asking this actor while harassing 
-               their shop/business for the TG, nor in the immediate 
-               aftermath of having done so. check via quest dialogue 
-               conditions; use a helper script if necessary
+               Dialogue conditions block off "Can you help me find someone?" 
+               if the player fails to extort Haelga on behalf of the Thieves 
+               Guild (i.e. trying to use just words, and not yet resorting 
+               to other means).
             -->
          </actor>
          <actor editor-id="Hafjorg" />
@@ -459,10 +529,10 @@
          </actor>
          <actor editor-id="Keerava">
             <!--
-               TODO: don't allow asking this actor while harassing 
-               their shop/business for the TG, nor in the immediate 
-               aftermath of having done so. check via quest dialogue 
-               conditions; use a helper script if necessary
+               Dialogue conditions block off "Can you help me find someone?" 
+               if the player fails to extort Keerava on behalf of the Thieves 
+               Guild (i.e. trying to use just words, and not yet resorting 
+               to other means).
             -->
          </actor>
          <actor editor-id="Laila" name="Laila Law-Giver">
@@ -646,14 +716,7 @@
                </filter-conditions>
             </begin-asking-about>
          </actor>
-         <actor editor-id="TalenJei" name="Talen-Jei">
-            <!--
-               TODO: don't allow asking this actor while harassing 
-               their shop/business for the TG, nor in the immediate 
-               aftermath of having done so. check via quest dialogue 
-               conditions; use a helper script if necessary
-            -->
-         </actor>
+         <actor editor-id="TalenJei" name="Talen-Jei" />
          <actor editor-id="Threki" name="Threki the Innocent">
             <begin-asking-to>
                <topic slug="InJail">

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<payload>
+   <shared-infos>
+      <shared-info id="dawnstar-bay" editor-id-slug="DawnstarBay">
+         <line>I'm pretty sure I saw him out at the bay.</line>
+         <line>Try checking the coast.</line>
+         <line>I think he was on his way to the bay.</line>
+         <line>Have you looked over by the water?</line>
+      </shared-info>
+   </shared-infos>
+   
+   <quest id="AWPADawnstar"
+      locations="DawnstarLocation"
+   >
+      <dialogue-conditions>
+         <or>
+            <faction-membership of="speaker" includes="TownDawnstarFaction" />
+            <!-- These actors aren't in TownDawnstarFaction: -->
+            <actor-base of="speaker" is="LeifWayfinder" />
+            <actor-base of="speaker" is="Guthrum" />
+            <actor-base of="speaker" is="RavamVerethi" />
+            <actor-base of="speaker" is="SilusVesuius" />
+         </or>
+         <faction-membership of="speaker" excludes="GuardFactionDawnstar" />
+         
+         <location of="speaker" is="DawnstarLocation" />
+      </dialogue-conditions>
+      
+      <actors>
+         <actor editor-id="Abelone" />
+         <actor editor-id="Beitild" />
+         <actor editor-id="Bodil" />
+         <actor editor-id="Borgny" />
+         <actor editor-id="BrinaMerilis" name="Brina Merilis" />
+         <actor editor-id="Bulfrek" />
+         <actor editor-id="Edith" />
+         <actor editor-id="Erandur">
+            <!--
+               TODO: Only allow asking about him until his quest is resolved.
+            -->
+         </actor>
+         <actor editor-id="Frida" />
+         <actor editor-id="Fruki" />
+         <actor editor-id="Gjak" />
+         <actor editor-id="Guthrum" />
+         <actor editor-id="HorikHalfhand" name="Horik Halfhand" />
+         <actor editor-id="Irgnir" />
+         <actor editor-id="Jod" />
+         <actor editor-id="Karl" />
+         <actor editor-id="Karita" />
+         <actor editor-id="LeifWayfinder" name="Captain Wayfinder" />
+         <actor editor-id="Leigelf" />
+         <actor editor-id="LondNorthstrider" name="Lond" />
+         <actor editor-id="Madena" />
+         <actor editor-id="RavamVerethi" name="Ravam Verethi" />
+         <actor editor-id="Rustleif" />
+         <actor editor-id="Seren" />
+         <actor editor-id="SilusVesuius" name="Silus Vesuius" />
+         <actor editor-id="SkaldtheElder" name="Skald the Elder" />
+         <actor editor-id="Thoring" />
+      </actors>
+      
+      <top-g slug="SuperNearPlayer">
+         <conditions>
+            <distance of="player" to="subject" lte="128" />
+         </conditions>
+         <shared-info id="shared-near-player" />
+      </top-g>
+      <top-g slug="SameInterior">
+         <conditions>
+            <is-in-interior of="subject" />
+            <parent-cell of="speaker" same-as="subject" />
+         </conditions>
+         
+         <!-- TODO -->
+      </top-g>
+      <top-g slug="Interiors">
+         <conditions>
+            <is-in-interior of="subject" />
+         </conditions>
+         
+         <!-- TODO -->
+      </top-g>
+      
+      <top-g slug="Exterior">
+         <conditions>
+            <parent-world of="subject" is="Tamriel" />
+         </conditions>
+         
+         <constant name="main-street-y-min" value="100720" />
+         <constant name="main-street-y-max" value="103424" />
+         <constant name="main-street-z-min" value="-13568" />
+         
+         <g name="bay">
+            <g>
+               <conditions>
+                  <x of="subject" gte="29248" />
+                  <x of="subject" lte="31376" />
+                  <y of="subject" gte="105328" />
+                  <y of="subject" lte="106656" />
+               </conditions>
+               <shared-info id="dawnstar-bay" />
+            </g>
+            <g>
+               <conditions>
+                  <x of="subject" gte="28736" />
+                  <x of="subject" lte="30080" />
+                  <y of="subject" gte="106656" />
+                  <y of="subject" lte="107632" />
+               </conditions>
+               <shared-info id="dawnstar-bay" />
+            </g>
+            <g>
+               <conditions>
+                  <x of="subject" gte="25952" />
+                  <x of="subject" lte="30080" />
+                  <y of="subject" gte="107632" />
+                  <y of="subject" lte="110560" />
+               </conditions>
+               <shared-info id="dawnstar-bay" />
+            </g>
+         </g>
+         
+         <g name="iron-breaker-mine">
+            <conditions>
+               <x of="subject" gte="34144" />
+               <x of="subject" lte="36896" />
+               <y of="subject" gte="102624" />
+               <y of="subject" lte="104544" />
+            </conditions>
+            <line>I saw him over by Iron-Breaker Mine.</line>
+            <line>I think he was headed to Iron-Breaker Mine not too long ago.</line>
+            <line>Try looking over by Iron-Breaker Mine.</line>
+         </g>
+         
+         <g name="barracks">
+            <conditions>
+               <x of="subject" gte="30768" />
+               <x of="subject" lte="32032" />
+               <y of="subject" gte="main-street-y-min" />
+               <y of="subject" lte="main-street-y-max" />
+               <z of="subject" gte="main-street-z-min" />
+            </conditions>
+            <line>I remember seeing him by the Barracks not too long ago.</line>
+            <line>I saw him walking past the Barracks next to the White Hall a little while ago.</line>
+            <line>I'm pretty sure he's around the Barracks right now.</line>
+         </g>
+         <g name="irgnir-house">
+            <conditions>
+               <x of="subject" gte="34048" />
+               <x of="subject" lte="36896" />
+               <y of="subject" gte="104544" />
+               <y of="subject" lte="106976" />
+            </conditions>
+            <g name="resident">
+               <conditions>
+                  <actor-base of="subject" is="Irgnir" />
+               </conditions>
+               <shared-info id="shared-exterior-near-own-home" />
+            </g>
+            <line>He's over by Irgnir's house.</line>
+            <line>I saw him walking past Irgnir's house not too long ago.</line>
+            <line>Try looking near Irgnir's house, over by Iron-Breaker Mine.</line>
+         </g>
+         <g name="mortar-and-pestle">
+            <conditions>
+               <x of="subject" gte="31376" />
+               <x of="subject" lte="34048" />
+               <y of="subject" gte="105328" />
+               <y of="subject" lte="106976" />
+            </conditions>
+            <line>I think he's over by the Mortar and Pestle.</line>
+            <line>He might be around the Mortar and Pestle.</line>
+            <line>He was passing by the town's apothecary not too long ago. <verbatim>Her</verbatim> shop's by the water.</line>
+         </g>
+         <g name="white-hall">
+            <conditions>
+               <x of="subject" gte="30768" />
+               <x of="subject" lte="34688" />
+               <y of="subject" gte="main-street-y-min" />
+               <y of="subject" lte="103568" />
+               <z of="subject" gte="main-street-z-min" />
+            </conditions>
+            <line>Try checking the White Hall.</line>
+            <line>I think he's at the White Hall right now.</line>
+            <line>Pretty sure I saw him by the White Hall.</line>
+            <line>He was heading toward the White Hall not too long ago.</line>
+         </g>
+         <g name="windpeak-inn">
+            <conditions>
+               <x of="subject" gte="27504" />
+               <x of="subject" lte="30768" />
+               <y of="subject" gte="main-street-y-min" />
+               <y of="subject" lte="main-street-y-max" />
+               <z of="subject" gte="main-street-z-min" />
+            </conditions>
+            <line>I believe he's at Windpeak Inn right now.</line>
+            <line>He might be at Windpeak Inn.</line>
+            <line>Have you looked around Windpeak Inn? Might be a good place to start.</line>
+            <line>I think I saw him headed toward Windpeak Inn a while ago.</line>
+         </g>
+         <!-- TODO -->
+      </top-g>
+      
+      <!-- final fallback lines -->
+      <shared-info id="shared-unknown" />
+   </quest>
+</payload>

@@ -423,6 +423,40 @@ circle.getdistance {
    <g id="skyrim" transform="scale(1 -1)">
    
    <g id="dawnstar-content">
+      <g class="cells-tagged-with-location" data-location="DawnstarLocation">
+         <rect class="cell-tagged-with-location" style="--x: 8; --y: 26;" data-form-id="8E95" />
+         <rect class="cell-tagged-with-location" style="--x: 7; --y: 26;" data-form-id="8E96" />
+         <rect class="cell-tagged-with-location" style="--x: 6; --y: 26;" data-form-id="8E97" />
+         <rect class="cell-tagged-with-location" style="--x: 8; --y: 25;" data-form-id="8EB4" />
+         <rect class="cell-tagged-with-location" style="--x: 7; --y: 25;" data-form-id="8EB5" />
+         <rect class="cell-tagged-with-location" style="--x: 6; --y: 25;" data-form-id="8EB6" />
+         <rect class="cell-tagged-with-location" style="--x: 8; --y: 24;" data-form-id="8ED3" />
+         <rect class="cell-tagged-with-location" style="--x: 7; --y: 24;" data-form-id="8ED4" />
+         <rect class="cell-tagged-with-location" style="--x: 6; --y: 24;" data-form-id="8ED5" />
+         <rect class="cell-tagged-with-location" style="--x: 6; --y: 23;" data-form-id="8EF4" />
+         <!-- plus RiftenWorld itself -->
+      </g>
+      
+      <g class="conditionals" style="
+         --main-street-y-min: 100720;
+         --main-street-y-max: 103424;
+         --main-street-z-min: -13568;
+      ">
+         <rect name="iron-breaker-mine" class="getpos minmax" style="--x-lte: 36896; --x-gte: 34144; --y-lte: 104544; --y-gte: 102624;" />
+         
+         <!-- start of bay -->
+         <rect name="bay-01" class="getpos minmax" style="--x-lte: 31376; --x-gte: 29248; --y-lte: 106656; --y-gte: 105328;" />
+         <rect name="bay-01" class="getpos minmax" style="--x-lte: 30080; --x-gte: 28736; --y-lte: 107632; --y-gte: 106656;" />
+         <rect name="bay-01" class="getpos minmax" style="--x-lte: 30080; --x-gte: 25952; --y-lte: 110560; --y-gte: 107632;" />
+         <!-- end of bay -->
+         
+         <rect name="barracks" class="getpos minmax" style="--x-lte: 32032; --x-gte: 30768; --y-lte: var(--main-street-y-max); --y-gte: var(--main-street-y-min);" />
+         <rect name="irgnir-house" class="getpos minmax" style="--x-lte: 36896; --x-gte: 34048; --y-lte: 106976; --y-gte: 104544;" />
+         <rect name="mortar-and-pestle" class="getpos minmax" style="--x-lte: 34048; --x-gte: 31376; --y-lte: 106976; --y-gte: 105328;" />
+         <rect name="white-hall" class="getpos minmax" style="--x-lte: 34688; --x-gte: 30768; --y-lte: 103568; --y-gte: var(--main-street-y-min);" />
+         <rect name="windpeak-inn" class="getpos minmax" style="--x-lte: 30768; --x-gte: 27504; --y-lte: var(--main-street-y-max); --y-gte: var(--main-street-y-min);" />
+      </g>
+      
       <g name="barracks" transform="translate(31257.2617 101600.2266) rotate(-176)">
          <rect class="obnd"  style="--x1: -640; --y1: -556; --x2: 451; --y2: 313;" />
          <text class="label" style="--invert-parent: rotate(176deg)">Dawnstar Barracks</text>

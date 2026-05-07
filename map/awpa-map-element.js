@@ -199,7 +199,7 @@ class AWPAMapElement extends HTMLElement {
       this.#status_bar.classList.add("status-bar");
       this.#status_bar.innerHTML = `
 <div class="segment" id="grid-coords">
-   ...
+   &lt;no cell&gt;
 </div>
 <div class="segment" id="current-ref">
    &lt;no ref&gt;
@@ -311,8 +311,8 @@ class AWPAMapElement extends HTMLElement {
       node.textContent = `(${grid_x}, ${grid_y})`;
    }
    #on_svg_mouseout(e) {
-      let node = this.#shadow.querySelector("#grid-coords");
-      node.textContent = "...";
+      this.#shadow.querySelector("#grid-coords").textContent = "<no cell>";
+      this.#shadow.querySelector("#current-ref").textContent = "<no ref>";
    }
    
    view_place(name) {
@@ -327,7 +327,6 @@ class AWPAMapElement extends HTMLElement {
          }
       }
       this.#svg.setAttribute("viewBox", `${min.x*4096} ${min.y*4096} ${(max.x-min.x+1)*4096} ${(max.y-min.y+1)*4096}`);
-      //this.#svg.setAttribute("viewBox", `${min.x*4096} ${-max.y*4096} ${(max.x-min.x+1)*4096} ${-(min.y-max.y-1)*4096}`);
    }
    
    #load(template_node) {
@@ -388,8 +387,6 @@ class AWPAMapElement extends HTMLElement {
             this.#svg.append(node);
          }
       }
-      
-      console.log("loaded");
    }
 };
 window.customElements.define("awpa-map", AWPAMapElement);

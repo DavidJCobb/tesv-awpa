@@ -35,7 +35,7 @@ class AWPARef {
    }
    
    /*Element*/ render() {
-      let node = document.createElementNS(SVG_NAMESPACE, "rect");
+      let node = document.createElementNS(SVG_NAMESPACE, "g");
       //let node = document.createElement("rect");
       node.classList.add("ref");
       if (this.name)
@@ -45,23 +45,29 @@ class AWPARef {
       style.setProperty("--y",   this.pos.y);
       style.setProperty("--yaw", this.yaw);
       
+      let x_span;
+      let y_span;
       if (this.base) {
          if (this.owner?.owner) {
             let base = this.owner.owner.base_form_by_id(this.base);
             if (base) {
-               node.classList.add("with-bounds");
-               style.setProperty("--obnd-x-min", base.x.min);
-               style.setProperty("--obnd-x-max", base.x.max);
-               style.setProperty("--obnd-y-min", base.y.min);
-               style.setProperty("--obnd-y-max", base.y.max);
+               x_span = base.x;
+               y_span = base.y;
             }
          }
       } else if (this.bounds) {
-         node.classList.add("with-bounds");
-         style.setProperty("--obnd-x-min", this.bounds.x.min);
-         style.setProperty("--obnd-x-max", this.bounds.x.max);
-         style.setProperty("--obnd-y-min", this.bounds.y.min);
-         style.setProperty("--obnd-y-max", this.bounds.y.max);
+         x_span = this.bounds.x;
+         y_span = this.bounds.y;
+      }
+      if (x_span && y_span) {
+         let obnd = document.createElementNS(SVG_NAMESPACE, "rect");
+         node.append(obnd);
+         obnd.classList.add("obnd");
+         let style = obnd.style;
+         style.setProperty("--obnd-x-min", x_span.min);
+         style.setProperty("--obnd-x-max", x_span.max);
+         style.setProperty("--obnd-y-min", y_span.min);
+         style.setProperty("--obnd-y-max", y_span.max);
       }
       
       return node;
@@ -146,18 +152,9 @@ class AWPAMapElement extends HTMLElement {
       }
       
       {
-         let style = this.#svg.style;
-         style.setProperty("--grid-x-min", this.grid.min.x);
-         style.setProperty("--grid-x-max", this.grid.max.x);
-         style.setProperty("--grid-y-min", this.grid.min.y);
-         style.setProperty("--grid-y-max", this.grid.max.y);
-         
-         let min_x_px = this.grid.min.x * 4096;
-         let min_y_px = this.grid.min.y * 4096;
-         let w_px     = (this.grid.max.x - this.grid.min.x + 1) * 4096;
-         let h_px     = (this.grid.max.y - this.grid.min.y + 1) * 4096;
+         let w_px = (this.grid.max.x - this.grid.min.x + 1) * 4096;
+         let h_px = (this.grid.max.y - this.grid.min.y + 1) * 4096;
          this.view_place("");
-         
          {
             let path = document.createElementNS(SVG_NAMESPACE, "path");
             this.#svg.append(path);
@@ -330,7 +327,7 @@ class AWPAMapElement extends HTMLElement {
          }
       }
       this.#svg.setAttribute("viewBox", `${min.x*4096} ${min.y*4096} ${(max.x-min.x+1)*4096} ${(max.y-min.y+1)*4096}`);
-      this.#svg.setAttribute("viewBox", `${min.x*4096} ${-max.y*4096} ${(max.x-min.x+1)*4096} ${-(min.y-max.y-1)*4096}`);
+      //this.#svg.setAttribute("viewBox", `${min.x*4096} ${-max.y*4096} ${(max.x-min.x+1)*4096} ${-(min.y-max.y-1)*4096}`);
    }
    
    #load(template_node) {

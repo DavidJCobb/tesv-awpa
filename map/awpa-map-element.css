@@ -1,0 +1,147 @@
+:host {
+   display: grid;
+   grid-template:
+      "map    sidebar" 1fr
+      "status status"
+      / 1fr 200px
+   ;
+}
+
+svg {
+   display:      block;
+   grid-area:    map;
+   align-self:   center;
+   justify-self: center;
+   max-width:    100%;
+   max-height:   100%;
+   
+   --cell-size: 4096;
+   
+   --map-x-min:  calc(var(--grid-x-min) * var(--cell-size));
+   --map-x-max:  calc(var(--grid-x-max) * var(--cell-size));
+   --map-y-min:  calc(var(--grid-y-min) * var(--cell-size));
+   --map-y-max:  calc(var(--grid-y-max) * var(--cell-size));
+   --map-size-w: calc(var(--map-x-max) - var(--map-x-min) + 1);
+   --map-size-h: calc(var(--map-y-max) - var(--map-y-min) + 1);
+   
+   --north-wu: calc((var(--grid-y-max) + 1) * var(--cell-size));
+   --south-wu: calc(var(--grid-y-min) * var(--cell-size));
+   
+   --north-px: calc(-var(--north-wu));
+   --south-px: calc(-var(--south-wu));
+   --map-size-h: calc(var(--south-px) - var(--north-px));
+   
+   .gridlines {
+      vector-effect: non-scaling-stroke;
+      fill:          none;
+      stroke:        transparent;
+      stroke-width:  1px;
+      
+      svg.show-grid & {
+         stroke: #A0A0A0;
+      }
+   }
+   
+   #cells {
+      rect {
+         width:  calc(1px * var(--cell-size));
+         height: calc(1px * var(--cell-size));
+         transform: translate(
+            calc( 1px * var(--cell-size) * var(--x)),
+            calc(-1px * var(--cell-size) * var(--y))
+         );
+         fill: rgba(0, 255, 255, 0.2);
+      }
+   }
+   
+   rect.ref.with-bounds {
+      vector-effect: non-scaling-stroke;
+      stroke:        red;
+      stroke-width:  1px;
+      fill:          rgba(255, 0, 0, 0.2);
+      
+      width:  calc((var(--obnd-x-max) - var(--obnd-x-min)) * 1px);
+      height: calc((var(--obnd-y-max) - var(--obnd-y-min)) * 1px);
+      
+      --final-x: calc(var(--x) - var(--obnd-x-min));
+      --final-y: calc(var(--y) - var(--obnd-y-max));
+      
+      --distance-from-south: calc(var(--final-y) - var(--map-y-min));
+      --distance-from-north: calc(var(--map-y-max) + 4096 - var(--distance-from-south));
+      
+      transform-box:    fill-box;
+      transform-origin: center;
+      transform:
+         translate(
+            calc(1px * var(--final-x)),
+            calc(1px * var(--distance-from-north))
+         )
+         rotate(calc(1deg * var(--yaw,0)))
+      ;
+      /*
+         This transform is wrong, and will break if min != -max for either axis. 
+         I've been screwing around with it for probably an hour by now and can't 
+         figure out how to translate the various reference frame transformations 
+         into CSS coordinates.
+      */
+   }
+}
+
+.sidebar {
+   grid-area:   sidebar;
+   border-left: 1px solid #000;
+   padding:     1em;
+   
+   &>header {
+      font-weight: bold;
+   }
+   
+   section {
+      border: 1px solid #808080;
+      margin: 1em 0;
+      
+      &.rows {
+         &>* {
+            padding:    .25em .5em;
+            border-top: 1px solid #C0C0C0;
+            &:first-child {
+               border-top: none;
+            }
+         }
+      }
+      
+      &>header {
+         padding:     .25em .5em;
+         font-weight: bold;
+         background:  #A0A0A0;
+      }
+      &>.body {
+         list-style: none;
+         margin:     0;
+         padding:    .25em .5em;
+         &:is(ol, ul) {
+            padding: 0;
+            &>li {
+               padding: .25em .5em;
+               margin:  0;
+            }
+         }
+      }
+   }
+}
+
+.status-bar {
+   grid-area: status;
+   border-top: 1px solid #000;
+   padding:    .25em;
+   
+   display:   flex;
+   flex-flow: row nowrap;
+   justify-content: start;
+   gap: .5em;
+   
+   &>div {
+      padding: .25em;
+      border:  1px solid #909090;
+   }
+}

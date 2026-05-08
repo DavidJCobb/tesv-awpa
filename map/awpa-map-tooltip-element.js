@@ -1,4 +1,5 @@
 
+import * as coords from "./utils/map-coordinate-spaces.js";
 import svg_viewbox_rect from "./utils/svg_viewbox_rect.js";
 
 export default class AWPAMapTooltipElement extends HTMLElement {
@@ -63,18 +64,7 @@ export default class AWPAMapTooltipElement extends HTMLElement {
       if (isNaN(canvas_pos.x) || isNaN(canvas_pos.y))
          return;
       
-      let viewbox = svg_viewbox_rect(canvas);
-      let display = canvas.getBoundingClientRect();
-      let ratio_x = viewbox.width  / display.width;
-      let ratio_y = viewbox.height / display.height;
-      
-      let screen_x =  canvas_pos.x;
-      let screen_y = -canvas_pos.y;
-      screen_x -= viewbox.left;
-      screen_y -= viewbox.top;
-      screen_x /= ratio_x;
-      screen_y /= ratio_y;
-      
+      let [screen_x, screen_y] = coords.world_units_to_pixels(canvas_pos.x, canvas_pos.y, canvas);
       screen_x += 32; // ensure it doesn't block the cursor
       
       let style = this.style;

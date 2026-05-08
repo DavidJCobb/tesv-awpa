@@ -1,0 +1,12 @@
+:host {
+   position: fixed;
+   left:     calc(anchor(left) + var(--x));
+   top:      calc(anchor(top)  + var(--y));
+}
+
+.name {
+   background:    #FFF;
+   border-radius: .25em;
+   padding:       .25em;
+   box-shadow:    .125em .125em .25em .25em rgba(0, 0, 0, 0.2);
+}

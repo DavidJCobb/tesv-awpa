@@ -3,6 +3,10 @@ import { Cell, CellMap } from "./data-cells.js";
 import Ref   from "./data-ref.js";
 import Place from "./data-place.js";
 
+import svg_viewbox_rect from "./utils/svg_viewbox_rect.js";
+
+import "./awpa-map-tooltip-element.js";
+
 const CELL_SIZE_WU  = 4096;
 const SVG_NAMESPACE = "http://www.w3.org/2000/svg";
 
@@ -16,6 +20,7 @@ class AWPAMapElement extends HTMLElement {
       refs:   null,
       groups: null,
    };
+   #tooltip;
    
    #base_forms = {};
    #cells      = new CellMap();
@@ -40,9 +45,9 @@ class AWPAMapElement extends HTMLElement {
    </defs>
    <g id="cells">
    </g>
-   <g id="refs">
-   </g>
    <g id="groups">
+   </g>
+   <g id="refs">
    </g>
 </svg>
 <div class="sidebar">
@@ -73,6 +78,7 @@ class AWPAMapElement extends HTMLElement {
    <div class="segment" id="grid-coords">&lt;no cell&gt;</div>
    <div class="segment" id="current-ref">&lt;no ref&gt;</div>
 </div>
+<awpa-map-tooltip></awpa-map-tooltip>
       `;
       this.#svg = this.#shadow.querySelector("svg");
       this.#svg_container_nodes.cells  = this.#svg.querySelector("#cells");
@@ -98,6 +104,9 @@ class AWPAMapElement extends HTMLElement {
             path.setAttribute("d", d);
          }
       }
+      
+      this.#tooltip = this.#shadow.querySelector("awpa-map-tooltip");
+      this.#tooltip.style.display = "none";
       
       this.#sidebar    = this.#shadow.querySelector(".sidebar");
       this.#status_bar = this.#shadow.querySelector(".status-bar");
@@ -195,13 +204,7 @@ class AWPAMapElement extends HTMLElement {
    }
    
    #canvas_rect() {
-      let view_box = this.#svg.getAttribute("viewBox").split(" ");
-      return new DOMRect(
-         +view_box[0],
-         +view_box[1],
-         +view_box[2],
-         +view_box[3]
-      );
+      return svg_viewbox_rect(this.#svg);
    }
    
    pixels_to_world_units(x, y, viewport_relative) {
@@ -220,13 +223,7 @@ class AWPAMapElement extends HTMLElement {
    }
    pixels_to_grid_units(x, y, viewport_relative) {
       let wu = this.pixels_to_world_units(x, y, viewport_relative);
-      let grid_x = Math.floor(wu[0]);
-      let grid_y = Math.floor(wu[1]) + (CELL_SIZE_WU - 1);
-      grid_x /= CELL_SIZE_WU;
-      grid_y /= CELL_SIZE_WU;
-      grid_x = Math.floor(grid_x);
-      grid_y = Math.floor(grid_y);
-      return [grid_x, grid_y];
+      return this.world_units_to_grid_units(wu[0], wu[1]);
    }
    world_units_to_pixels(x, y, viewport_relative) {
       let disp_rect = this.#svg.getBoundingClientRect();
@@ -243,6 +240,15 @@ class AWPAMapElement extends HTMLElement {
       }
       return [x, y];
    }
+   world_units_to_grid_units(x, y) {
+      let grid_x = Math.floor(x);
+      let grid_y = Math.floor(y) + (CELL_SIZE_WU - 1);
+      grid_x /= CELL_SIZE_WU;
+      grid_y /= CELL_SIZE_WU;
+      grid_x = Math.floor(grid_x);
+      grid_y = Math.floor(grid_y);
+      return [grid_x, grid_y];
+   }
    grid_units_to_pixels(x, y, viewport_relative) {
       x *= CELL_SIZE_WU;
       y *= CELL_SIZE_WU;
@@ -250,21 +256,41 @@ class AWPAMapElement extends HTMLElement {
    }
    
    #on_svg_mouseover(e) {
-      let display = this.#shadow.querySelector("#current-ref");
-      let subject = e.target.closest(".ref");
-      if (subject) {
-         let name = subject.getAttribute("data-name");
-         if (name) {
-            display.textContent = name;
-            return;
+      {  // ref name
+         let display = this.#shadow.querySelector("#current-ref");
+         let subject = e.target.closest(".ref");
+         if (subject) {
+            let name = subject.getAttribute("data-name");
+            if (name) {
+               display.textContent = name;
+               return;
+            }
          }
+         display.textContent = "<no ref>";
       }
-      display.textContent = "<no ref>";
    }
    #on_svg_mousemove(e) {
-      let [grid_x, grid_y] = this.pixels_to_grid_units(e.clientX, e.clientY, true);
-      let node = this.#shadow.querySelector("#grid-coords");
-      node.textContent = `(${grid_x}, ${grid_y})`;
+      let [world_x, world_y] = this.pixels_to_world_units(e.clientX, e.clientY, true);
+      let [grid_x,  grid_y]  = this.world_units_to_grid_units(world_x, world_y);
+      {
+         let node = this.#shadow.querySelector("#grid-coords");
+         node.textContent = `(${grid_x}, ${grid_y})`;
+      }
+      
+      let   is_over_group = false;
+      const elements      = this.#shadow.elementsFromPoint(e.clientX, e.clientY);
+      for(const element of elements) {
+         if (element.matches("#groups [data-name]")) {
+            this.#tooltip.set_position(this.#svg, new DOMPoint(world_x, world_y));
+            this.#tooltip.set_current_group(element.source_data);
+            this.#tooltip.style.display = "";
+            is_over_group = true;
+            break;
+         }
+      }
+      if (!is_over_group) {
+         this.#tooltip.style.display = "none";
+      }
    }
    #on_svg_mouseout(e) {
       this.#shadow.querySelector("#grid-coords").textContent = "<no cell>";

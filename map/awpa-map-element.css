@@ -7,7 +7,12 @@
    ;
 }
 
+awpa-map-tooltip {
+   position-anchor: --awpa-map-svg;
+}
 svg {
+   anchor-name: --awpa-map-svg;
+   
    display:      block;
    grid-area:    map;
    align-self:   center;

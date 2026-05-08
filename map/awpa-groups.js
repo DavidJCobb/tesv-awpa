@@ -174,6 +174,7 @@ export class Group {
       }
       if (bounds instanceof BoundingCircle) {
          let node = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+         node.source_data = this;
          node.setAttribute("cx", bounds.center.x);
          node.setAttribute("cy", bounds.center.y);
          node.setAttribute("r",  bounds.radius);
@@ -181,6 +182,7 @@ export class Group {
          return node;
       }
       let node = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      node.source_data = this;
       node.style.setProperty("--x-min", bounds.min.x);
       node.style.setProperty("--y-min", bounds.min.y);
       node.style.setProperty("--x-max", bounds.max.x);

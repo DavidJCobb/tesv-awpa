@@ -212,6 +212,7 @@ export class GroupCollection {
       
       const self = this;
       function walk(g, parent, exterior) {
+         let parent_exterior = exterior;
          if (exterior !== false) {
             if (g.conditions.confirmed_interior) {
                exterior = false;
@@ -220,7 +221,15 @@ export class GroupCollection {
             }
          }
          if (exterior && g.lines.length) {
-            self.groups.flat_exterior.push(g);
+            let store = true;
+            if (parent_exterior) {
+               //
+               // Don't store a group if it has the exact same bounds as its parent.
+               //
+               store = !g.computed_bounds.equals(parent.computed_bounds);
+            }
+            if (store)
+               self.groups.flat_exterior.push(g);
          }
          
          for(let child of g.children) {

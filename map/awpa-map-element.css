@@ -42,26 +42,41 @@ svg {
          fill: rgba(0, 255, 255, 0.2);
       }
    }
-   
-   .ref {
-      stroke:        red;
-      stroke-width:  1px;
-      fill:          rgba(255, 0, 0, 0.2);
-      
-      transform:
-         translate(
-            calc(1px * var(--x)),
-            calc(1px * var(--y))
-         )
-         rotate(calc(-1deg * var(--yaw,0)))
-      ;
-      
-      .obnd {
+   #refs {
+      .ref {
+         stroke:        red;
+         stroke-width:  1px;
+         fill:          rgba(255, 0, 0, 0.2);
+         
+         transform:
+            translate(
+               calc(1px * var(--x)),
+               calc(1px * var(--y))
+            )
+            rotate(calc(-1deg * var(--yaw,0)))
+         ;
+         
+         .obnd {
+            vector-effect: non-scaling-stroke;
+            x:      calc(1px * var(--obnd-x-min));
+            y:      calc(1px * var(--obnd-y-min));
+            width:  calc((var(--obnd-x-max) - var(--obnd-x-min)) * 1px);
+            height: calc((var(--obnd-y-max) - var(--obnd-y-min)) * 1px);
+         }
+      }
+   }
+   #groups {
+      :is(rect, circle) {
          vector-effect: non-scaling-stroke;
-         x:      calc(1px * var(--obnd-x-min));
-         y:      calc(1px * var(--obnd-y-min));
-         width:  calc((var(--obnd-x-max) - var(--obnd-x-min)) * 1px);
-         height: calc((var(--obnd-y-max) - var(--obnd-y-min)) * 1px);
+         stroke:        #808000;
+         stroke-width:  1px;
+         fill:          rgba(255, 255, 0, 0.5);
+      }
+      rect {
+         x:      calc(1px * var(--x-min));
+         y:      calc(1px * var(--y-min));
+         width:  calc((var(--x-max) - var(--x-min)) * 1px);
+         height: calc((var(--y-max) - var(--y-min)) * 1px);
       }
    }
 }

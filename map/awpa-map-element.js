@@ -1,107 +1,10 @@
 
+import { Cell, CellMap } from "./data-cells.js";
+import Ref   from "./data-ref.js";
+import Place from "./data-place.js";
+
+const CELL_SIZE_WU  = 4096;
 const SVG_NAMESPACE = "http://www.w3.org/2000/svg";
-
-class AWPARef {
-   constructor(node) {
-      this.owner  = null; // AWPAPlace
-      this.name   = node?.getAttribute("name") || "";
-      this.pos    = { x: 0, y: 0 };
-      this.base   = null;
-      this.bounds = null;
-      if (node) {
-         this.name = node.getAttribute("label") || "";
-         let src_pos = node.getAttribute("pos")?.split(",");
-         this.pos   = {
-            x: +src_pos[0],
-            y: +src_pos[1],
-         };
-         this.yaw = +node.getAttribute("yaw") || 0;
-         
-         let base = node.getAttribute("base");
-         if (base)
-            this.base = base;
-         else {
-            let obnd = node.querySelector("obnd");
-            if (obnd) {
-               let x = obnd.getAttribute("x").split(",");
-               let y = obnd.getAttribute("y").split(",");
-               this.bounds = {
-                  x: { min: +x[0], max: +x[1] },
-                  y: { min: +y[0], max: +y[1] },
-               };
-            }
-         }
-      }
-   }
-   
-   /*Element*/ render() {
-      let node = document.createElementNS(SVG_NAMESPACE, "g");
-      //let node = document.createElement("rect");
-      node.classList.add("ref");
-      if (this.name)
-         node.setAttribute("data-name", this.name);
-      let style = node.style;
-      style.setProperty("--x",   this.pos.x);
-      style.setProperty("--y",   this.pos.y);
-      style.setProperty("--yaw", this.yaw);
-      
-      let x_span;
-      let y_span;
-      if (this.base) {
-         if (this.owner?.owner) {
-            let base = this.owner.owner.base_form_by_id(this.base);
-            if (base) {
-               x_span = base.x;
-               y_span = base.y;
-            }
-         }
-      } else if (this.bounds) {
-         x_span = this.bounds.x;
-         y_span = this.bounds.y;
-      }
-      if (x_span && y_span) {
-         let obnd = document.createElementNS(SVG_NAMESPACE, "rect");
-         node.append(obnd);
-         obnd.classList.add("obnd");
-         let style = obnd.style;
-         style.setProperty("--obnd-x-min", x_span.min);
-         style.setProperty("--obnd-x-max", x_span.max);
-         style.setProperty("--obnd-y-min", y_span.min);
-         style.setProperty("--obnd-y-max", y_span.max);
-      }
-      
-      return node;
-   }
-};
-
-class AWPAPlace {
-   constructor(node) {
-      this.owner     = null; // AWPAMap
-      this.name      = "";
-      this.grid_rect = null;
-      this.refs      = [];
-      if (node) {
-         this.name = node.getAttribute("name") || "";
-         node.querySelectorAll("ref").forEach((function(src) {
-            let ref = new AWPARef(src);
-            ref.owner = this;
-            this.refs.push(ref);
-         }).bind(this));
-         
-         let grid = node.querySelector("grid-rect");
-         if (grid) {
-            let min = grid.getAttribute("min").split(",");
-            let max = grid.getAttribute("max").split(",");
-            this.grid_rect = new DOMRect(
-               +min[0],
-               +min[1],
-               (+max[0] - min[0]),
-               (+max[1] - min[1])
-            );
-         }
-      }
-   }
-};
 
 class AWPAMapElement extends HTMLElement {
    #shadow;
@@ -109,13 +12,14 @@ class AWPAMapElement extends HTMLElement {
    #status_bar;
    #svg;
    #svg_container_nodes = {
-      cells: null,
+      cells:  null,
+      refs:   null,
+      groups: null,
    };
    
-   #data_observer;
-   
    #base_forms = {};
-   #cells      = {};
+   #cells      = new CellMap();
+   #groups     = null; // Optional<GroupCollection>
    #places     = {};
    
    constructor() {
@@ -129,113 +33,165 @@ class AWPAMapElement extends HTMLElement {
       };
       
       this.#shadow = this.attachShadow({ mode: "open" });
+      this.#shadow.innerHTML = `
+<link rel="stylesheet" href="./awpa-map-element.css" />
+<svg xmlns="http://www.w3.org/2000/svg">
+   <defs>
+   </defs>
+   <g id="cells">
+   </g>
+   <g id="refs">
+   </g>
+   <g id="groups">
+   </g>
+</svg>
+<div class="sidebar">
+   <header>Map</header>
+   <section class="rows">
+      <div>
+         <label><input id="show-grid" type="checkbox" /> Show grid</label>
+      </div>
+   </section>
+   <section>
+      <header>
+         Views
+      </header>
+      <ul class="body" id="view-list">
+         <li data-view-name="">All</li>
+      </ul>
+   </section>
+   <section>
+      <header>
+         AWPA payloads
+      </header>
+      <div class="body">
+         <slot name="payload-uploads"></slot>
+      </div>
+   </section>
+</div>
+<div class="status-bar">
+   <div class="segment" id="grid-coords">&lt;no cell&gt;</div>
+   <div class="segment" id="current-ref">&lt;no ref&gt;</div>
+</div>
+      `;
+      this.#svg = this.#shadow.querySelector("svg");
+      this.#svg_container_nodes.cells  = this.#svg.querySelector("#cells");
+      this.#svg_container_nodes.refs   = this.#svg.querySelector("#refs");
+      this.#svg_container_nodes.groups = this.#svg.querySelector("#groups");
       {
-         let link = document.createElement("link");
-         link.setAttribute("rel", "stylesheet");
-         link.setAttribute("href", "awpa-map-element.css");
-         this.#shadow.append(link);
-      }
-      
-      this.#svg = document.createElementNS(SVG_NAMESPACE, "svg");
-      this.#shadow.append(this.#svg);
-      this.#svg.append(document.createElementNS(SVG_NAMESPACE, "defs"));
-      
-      this.#on_mutated_bound = this.#on_mutated.bind(this);
-      this.#data_observer = new MutationObserver(this.#on_mutated_bound);
-      this.#data_observer.observe(this, { childList: true });
-      
-      {
-         let node = document.createElementNS(SVG_NAMESPACE, "g");
-         node.id = "cells";
-         this.#svg.append(node);
-         this.#svg_container_nodes.cells = node;
-      }
-      
-      {
-         let w_px = (this.grid.max.x - this.grid.min.x + 1) * 4096;
-         let h_px = (this.grid.max.y - this.grid.min.y + 1) * 4096;
+         let w_px = (this.grid.max.x - this.grid.min.x + 1) * CELL_SIZE_WU;
+         let h_px = (this.grid.max.y - this.grid.min.y + 1) * CELL_SIZE_WU;
          this.view_place("");
          {
             let path = document.createElementNS(SVG_NAMESPACE, "path");
             this.#svg.append(path);
             path.classList.add("gridlines");
             
-            let d = `M ${this.grid.min.x*4096} ${-this.grid.max.y*4096} l0,${h_px} `;
+            let d = `M ${this.grid.min.x*CELL_SIZE_WU} ${-this.grid.max.y*CELL_SIZE_WU} l0,${h_px} `;
             for(let x = this.grid.min.x + 1; x <= this.grid.max.x + 1; ++x) {
-               d += `m 4096,${-h_px} l0,${h_px} `;
+               d += `m ${CELL_SIZE_WU},${-h_px} l0,${h_px} `;
             }
-            d += `M ${this.grid.min.x*4096} ${-this.grid.max.y*4096} l${w_px},0 `;
+            d += `M ${this.grid.min.x*CELL_SIZE_WU} ${-this.grid.max.y*CELL_SIZE_WU} l${w_px},0 `;
             for(let y = this.grid.min.y + 1; y <= this.grid.max.y + 1; ++y) {
-               d += `m ${-w_px},4096 l${w_px},0 `;
+               d += `m ${-w_px},${CELL_SIZE_WU} l${w_px},0 `;
             }
             path.setAttribute("d", d);
          }
       }
       
-      this.#sidebar = document.createElement("div");
-      this.#shadow.append(this.#sidebar);
-      this.#sidebar.classList.add("sidebar");
-      this.#sidebar.innerHTML = `
-<header>
-   Map
-</header>
-<section class="rows">
-   <div>
-      <label><input id="show-grid" type="checkbox" /> Show grid</label>
-   </div>
-</section>
-<section>
-   <header>
-      Views
-   </header>
-   <ul class="body" id="view-list">
-      <li data-view-name="">All</li>
-   </ul>
-</section>
-      `;
+      this.#sidebar    = this.#shadow.querySelector(".sidebar");
+      this.#status_bar = this.#shadow.querySelector(".status-bar");
       
-      this.#status_bar = document.createElement("div");
-      this.#shadow.append(this.#status_bar);
-      this.#status_bar.classList.add("status-bar");
-      this.#status_bar.innerHTML = `
-<div class="segment" id="grid-coords">
-   &lt;no cell&gt;
-</div>
-<div class="segment" id="current-ref">
-   &lt;no ref&gt;
-</div>
-      `;
-      
-      this.#sidebar.querySelector("#show-grid").addEventListener("change", (function(e) {
-         this.#svg.classList.toggle("show-grid");
-      }).bind(this));
-      this.#sidebar.querySelector("#view-list").addEventListener("click", (function(e) {
+      this.#sidebar.querySelector("#show-grid").addEventListener("change", (e) => {
+         this.set_show_grid(e.target.checked);
+      });
+      this.#sidebar.querySelector("#view-list").addEventListener("click", (e) => {
          let item = e.target.closest("#view-list li");
          if (!item)
             return;
          this.view_place(item.getAttribute("data-view-name"));
-      }).bind(this));
+      });
       
       this.#svg.addEventListener("mouseover",  this.#on_svg_mouseover.bind(this));
       this.#svg.addEventListener("mousemove",  this.#on_svg_mousemove.bind(this));
       this.#svg.addEventListener("mouseout",   this.#on_svg_mouseout.bind(this));
+      
+      this.set_show_grid(true);
+   }
+   
+   set_show_grid(v) {
+      this.#sidebar.querySelector("#show-grid").checked = v;
+      this.#svg.classList[v ? "add" : "remove"]("show-grid");
+   }
+   
+   set_group_collection(coll) {
+      if (this.#groups === coll)
+         return;
+      this.#groups = coll;
+      
+      this.#svg_container_nodes.groups.replaceChildren();
+      
+      let list = coll.groups.flat_exterior;
+      for(let i = list.length - 1; i >= 0; --i) {
+         let group = list[i];
+         let node  = group.render();
+         this.#svg_container_nodes.groups.append(node);
+      }
+   }
+   
+   async connectedCallback() {
+      let response = await fetch("./data.xml");
+      let text     = await response.text();
+      let dom      = (new DOMParser()).parseFromString(text, "application/xml");
+      
+      let root = dom.documentElement;
+      root.querySelectorAll("bounds>bound[id]").forEach((node) => {
+         let id   = node.getAttribute("id");
+         let x    = node.getAttribute("x").split(",");
+         let y    = node.getAttribute("y").split(",");
+         let base = this.#base_forms[id];
+         if (!base)
+            base = this.#base_forms[id] = { id: id };
+         base.x = { min: +x[0], max: +x[1] };
+         base.y = { min: +y[0], max: +y[1] };
+      });
+      this.#cells.load(root);
+      root.querySelectorAll("places>place").forEach((node) => {
+         let place = new Place(node);
+         place.owner = this;
+         this.#places[place.name] = place;
+         if (place.grid_rect) {
+            let li = document.createElement("li");
+            li.textContent = place.name;
+            li.setAttribute("data-view-name", place.name);
+            this.#sidebar.querySelector("#view-list").append(li);
+         }
+      });
+      
+      //
+      // Render:
+      //
+      
+      this.#cells.for_each_cell((cell) => {
+         let node = document.createElementNS(SVG_NAMESPACE, "rect");
+         node.style.setProperty("--x", cell.grid_pos.x);
+         node.style.setProperty("--y", cell.grid_pos.y);
+         node.setAttribute("data-form-id",       cell.form_id);
+         node.setAttribute("data-location-name", cell.location);
+         this.#svg_container_nodes.cells.append(node);
+      });
+      
+      for(let key in this.#places) {
+         let place = this.#places[key];
+         for(let ref of place.refs) {
+            let node = ref.render();
+            this.#svg_container_nodes.refs.append(node);
+         }
+      }
    }
    
    base_form_by_id(id) {
       return this.#base_forms[id];
-   }
-   
-   #on_mutated_bound;
-   #on_mutated(records) {
-      for(let record of records) {
-         for(let node of record.addedNodes) {
-            if (node.nodeName.toLowerCase() == "template") {
-               this.#load(node);
-               this.#data_observer.disconnect();
-               return;
-            }
-         }
-      }
    }
    
    #canvas_rect() {
@@ -265,9 +221,9 @@ class AWPAMapElement extends HTMLElement {
    pixels_to_grid_units(x, y, viewport_relative) {
       let wu = this.pixels_to_world_units(x, y, viewport_relative);
       let grid_x = Math.floor(wu[0]);
-      let grid_y = Math.floor(wu[1]) + 4095;
-      grid_x /= 4096;
-      grid_y /= 4096;
+      let grid_y = Math.floor(wu[1]) + (CELL_SIZE_WU - 1);
+      grid_x /= CELL_SIZE_WU;
+      grid_y /= CELL_SIZE_WU;
       grid_x = Math.floor(grid_x);
       grid_y = Math.floor(grid_y);
       return [grid_x, grid_y];
@@ -288,8 +244,8 @@ class AWPAMapElement extends HTMLElement {
       return [x, y];
    }
    grid_units_to_pixels(x, y, viewport_relative) {
-      x *= 4096;
-      y *= 4096;
+      x *= CELL_SIZE_WU;
+      y *= CELL_SIZE_WU;
       return this.world_units_to_pixels(x, y, viewport_relative);
    }
    
@@ -326,67 +282,7 @@ class AWPAMapElement extends HTMLElement {
             max = new DOMPoint(rect.right, rect.bottom);
          }
       }
-      this.#svg.setAttribute("viewBox", `${min.x*4096} ${min.y*4096} ${(max.x-min.x+1)*4096} ${(max.y-min.y+1)*4096}`);
-   }
-   
-   #load(template_node) {
-      let root = document.importNode(template_node.content, true);
-      root.querySelectorAll("bounds>bound[id]").forEach((function (node) {
-         let id   = node.getAttribute("id");
-         let x    = node.getAttribute("x").split(",");
-         let y    = node.getAttribute("y").split(",");
-         let base = this.#base_forms[id];
-         if (!base)
-            base = this.#base_forms[id] = { id: id };
-         base.x = { min: +x[0], max: +x[1] };
-         base.y = { min: +y[0], max: +y[1] };
-      }).bind(this));
-      root.querySelectorAll("cells>location").forEach((function(node) {
-         let location = node.getAttribute("editor-id");
-         node.querySelectorAll("cell").forEach((function(node) {
-            let pos  = node.getAttribute("coords").split(",");
-            let cell = {
-               x:        +pos[0],
-               y:        +pos[1],
-               form_id:  parseInt(node.getAttribute("form-id"),16),
-               location: location,
-            };
-            this.#cells[cell.form_id] = cell;
-         }).bind(this));
-      }).bind(this));
-      root.querySelectorAll("places>place").forEach((function(node) {
-         let place = new AWPAPlace(node);
-         place.owner = this;
-         this.#places[place.name] = place;
-         if (place.grid_rect) {
-            let li = document.createElement("li");
-            li.textContent = place.name;
-            li.setAttribute("data-view-name", place.name);
-            this.#sidebar.querySelector("#view-list").append(li);
-         }
-      }).bind(this));
-      
-      //
-      // Render:
-      //
-      
-      for(let form_id in this.#cells) {
-         let cell = this.#cells[form_id];
-         let node = document.createElementNS(SVG_NAMESPACE, "rect");
-         node.style.setProperty("--x", cell.x);
-         node.style.setProperty("--y", cell.y);
-         node.setAttribute("data-form-id", cell.form_id);
-         node.setAttribute("data-location-name", cell.location);
-         this.#svg_container_nodes.cells.append(node);
-      }
-      
-      for(let key in this.#places) {
-         let place = this.#places[key];
-         for(let ref of place.refs) {
-            let node = ref.render();
-            this.#svg.append(node);
-         }
-      }
+      this.#svg.setAttribute("viewBox", `${min.x*CELL_SIZE_WU} ${min.y*CELL_SIZE_WU} ${(max.x-min.x+1)*CELL_SIZE_WU} ${(max.y-min.y+1)*CELL_SIZE_WU}`);
    }
 };
 window.customElements.define("awpa-map", AWPAMapElement);

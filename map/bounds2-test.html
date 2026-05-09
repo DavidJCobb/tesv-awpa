@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+   <head>
+      <title>boundstest</title>
+      <script type="module" src="./bounds2.js"></script>
+      <style>
+circle, path, rect {
+   fill:   none;
+   stroke: black;
+   stroke-width: 1px;
+}
+
+.result {
+   fill: rgba(255, 0, 0, 0.5);
+   stroke: rgba(255, 0, 255, 0.75);
+   stroke-width: 1px;
+}
+
+line {
+   vector-effect: non-scaling-stroke;
+   stroke-width: 1;
+   stroke: #A0A0A0;
+   
+   &.ten {
+      stroke: #FF6060;
+   }
+}
+      </style>
+   </head>
+   <body>
+      <svg viewBox="0 0 50 50" width="500" height="500">
+      </svg>
+      <section>
+         <input type="button" value="Randomize" data-testcase="random" />
+      </section>
+      <script type="module" src="./bounds2-test.js"></script>
+   </body>
+</html>

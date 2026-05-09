@@ -2,182 +2,14 @@
 import get_circle_arc_by_endpoints from "./utils/get_circle_arc_by_endpoints.js";
 import intersections_of_circles    from "./utils/intersections-of-circles.js";
 
-import * as __vector_ops from "./utils/vector-ops.js";
-const {distance, dot, len, midpoint, sub} = __vector_ops;
+import { clamp_radians } from "./utils/angle-ops.js";
+import { add_in_place, angle_between, distance, div_in_place, dot, len, midpoint, sub } from "./utils/vector-ops.js";
 
-export /*bool*/ function overlaps(/*const Shape*/ a, /*const Shape*/ b) {
-   if (a instanceof Circle && b instanceof AABB) {
-      [a, b] = [b, a];
-   }
-   if (a instanceof Circle) {
-      if (b instanceof Circle) {
-         return distance(a.center, b.center) <= Math.max(a.radius, b.radius);
-      }
-   } else if (a instanceof AABB) {
-      if (b instanceof AABB) {
-         return (
-            (a.min.x <= b.max.x && a.max.x >= b.min.x) &&
-            (a.min.y <= b.max.y && a.max.y >= b.min.y) &&
-            (a.min.z <= b.max.z && a.max.z >= b.min.z)
-         );
-      }
-      if (b instanceof Circle) {
-         const radius = b.radius;
-         const center = b.center;
-         if (distance(center, a.min) < radius)
-            return true;
-         if (distance(center, a.max) < radius)
-            return true;
-         if (distance(center, new DOMPoint(a.min.x, a.max.y)) < radius)
-            return true;
-         if (distance(center, new DOMPoint(a.max.x, a.min.y)) < radius)
-            return true;
-         
-         if (center.x > a.min.x && center.x < a.max.x) {
-            if (center.y > a.min.y - radius && center.y < a.max.y + radius)
-               return true;
-            return false;
-         }
-         if (center.y > a.min.y && center.y < a.max.y) {
-            if (center.x > a.min.x - radius && center.x < a.max.x + radius)
-               return true;
-            return false;
-         }
-      }
-   }
-   return false;
-}
+import AABB from "./utils/aabb.js";
+import Circle from "./utils/circle.js";
+export { AABB, Circle };
 
-export class AABB {
-   constructor() {
-      this.min = new DOMPoint(-Infinity, -Infinity, -Infinity);
-      this.max = new DOMPoint( Infinity,  Infinity,  Infinity);
-   }
-   
-   get x() { return this.min.x; }
-   get y() { return this.min.y; }
-   get z() { return this.min.z; }
-   get width() { return this.max.x - this.min.x; }
-   get height() { return this.max.y - this.min.y; }
-   get depth() { return this.max.z - this.min.z; }
-   
-   get center() {
-      return new DOMPoint(this.x + this.width / 2, this.y + this.height / 2);
-   }
-   
-   /*bool*/ empty() /*const*/ {
-      for(const axis of ["x", "y", "z"]) {
-         if (this.min[axis] < this.max[axis])
-            return false;
-      }
-      return true;
-   }
-   /*bool*/ equals(/*const AABB*/ other) /*const*/ {
-      if (!(other instanceof AABB))
-         return false;
-      for(const u of ["min", "max"]) {
-         const a = this[u];
-         const b = other[u];
-         for(const v of ["x", "y", "z"])
-            if (a[v] != b[v])
-               return false;
-      }
-      return true;
-   }
-   
-   /*DOMRect*/ toDOMRect() /*const*/ {
-      return new DOMRect(this.min.x, this.min.y, this.width, this.height);
-   }
-   
-   /*bool*/ isOpen2D() /*const*/ {
-      return !isFinite(this.width) || !isFinite(this.height);
-   }
-   /*bool*/ isClosed2D() /*const*/ {
-      return isFinite(this.width) && isFinite(this.height);
-   }
-   
-   /*AABB*/ clone() /*const*/ {
-      let copy = new AABB();
-      for(const u of ["min", "max"]) {
-         const src = this[u];
-         const dst = copy[u];
-         for(const v of ["x", "y", "z"])
-            dst[v] = src[b];
-      }
-      return copy;
-   }
-   intersect(/*const AABB*/ other) {
-      if (!(other instanceof AABB))
-         return;
-      this.min.x = Math.max(this.min.x, other.min.x);
-      this.min.y = Math.max(this.min.y, other.min.y);
-      this.min.z = Math.max(this.min.z, other.min.z);
-      this.max.x = Math.min(this.max.x, other.max.x);
-      this.max.y = Math.min(this.max.y, other.max.y);
-      this.max.z = Math.min(this.max.z, other.max.z);
-   }
-};
-
-export class Circle {
-   constructor(params) {
-      this.center = new DOMPoint(0, 0);
-      this.radius = 0;
-      
-      if (params) {
-         this.radius   = params.radius;
-         this.center.x = params.cx || params.center.x;
-         this.center.y = params.cy || params.center.y;
-      }
-   }
-   
-   get cx() { return this.center.x; }
-   get cy() { return this.center.y; }
-   
-   /*bool*/ contains(/*const Variant<Circle, DOMPoint>*/ other) /*const*/ {
-      if (other instanceof Circle) {
-         if (this.radius < other.radius)
-            return false;
-         let d = distance(this.center, other.center);
-         return d <= this.radius - other.radius;
-      }
-      let gap = distance(other, this.center) - this.radius;
-      return (gap < 0.0001);
-   }
-   /*bool*/ empty() /*const*/ {
-      return this.radius <= 0;
-   }
-   /*bool*/ equals(other) /*const*/ {
-      if (!(other instanceof Circle))
-         return false;
-      for(let k of ["radius", "cx", "cy"]) {
-         let a  = this[k];
-         let b  = other[k];
-         let na = isNaN(a);
-         let nb = isNaN(b);
-         if (na != nb)
-            return false;
-         if (!na)
-            if (a != b)
-               return false;
-      }
-      return true;
-   }
-   
-   /*bool*/ isOpen2D() /*const*/ {
-      return isNaN(this.center.x) || isNaN(this.center.y) || isNaN(this.radius);
-   }
-   /*bool*/ isClosed2D() /*const*/ {
-      return !this.isOpen2D();
-   }
-   
-   /*Circle*/ clone() /*const*/ {
-      let copy = new Circle();
-      copy.center.x = this.center.x;
-      copy.center.y = this.center.y;
-      copy.radius   = this.radius;
-      return copy;
-   }
-};
+import overlaps from "./utils/shapes-overlap.js";
 
 // Either a single bounding shape, or a union of multiple bounding shapes.
 export class Bounds {
@@ -230,15 +62,7 @@ export class Bounds {
             box.intersect(src);
          copy.boxes.push(box);
       }
-      copy.circles = this.circles.filter((circle) => {
-         for(let other of this.circles) {
-            if (other == circle)
-               continue;
-            if (circle.contains(other))
-               return false;
-         }
-         return true;
-      });
+      copy.circles = Circle.filter_wholly_enveloped_circles(this.circles);
       if (copy.empty()) {
          copy.boxes   = [];
          copy.circles = [];
@@ -250,33 +74,15 @@ export class Bounds {
       if (!this.boxes.length && !this.circles.length)
          return null;
       
-      let coalesced_circles = this.circles.filter((circle) => {
-         for(let other of this.circles) {
-            if (other == circle)
-               continue;
-            if (circle.contains(other))
-               return false;
-         }
-         return true;
-      });
+      const coalesced_circles = Circle.filter_wholly_enveloped_circles(this.circles);
       
       let box = this.coalesced_box();
       if (box && !coalesced_circles.length) {
-         const node = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-         node.style.setProperty("--x-min", box.min.x);
-         node.style.setProperty("--y-min", box.min.y);
-         node.style.setProperty("--x-max", box.max.x);
-         node.style.setProperty("--y-max", box.max.y);
-         return node;
+         return box.render();
       }
       if (coalesced_circles.length) {
          if (coalesced_circles.length == 1 && !box) {
-            const src  = coalesced_circles[0];
-            const node = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-            node.setAttribute("cx", src.cx);
-            node.setAttribute("cy", src.cy);
-            node.setAttribute("r",  src.radius);
-            return node;
+            return coalesced_circles[0].render();
          }
          
          // Compute intersection of all circles, per:
@@ -340,25 +146,13 @@ export class Bounds {
                }
             }
             
-            function _get_angle(u, v) {
-               // <https://www.w3.org/TR/SVG2/implnote.html#ArcConversionEndpointToCenter>
-               let sign = u.x*v.y - u.y*v.x < 0 ? -1 : 1;
-               return sign * Math.acos(
-                  dot(u, v)
-                  /
-                  (len(u) * len(v))
-               );
-            }
-            
             // The StackOverflow source above is wrong about never needing the large-arc-flag.
-            let large_a = _get_angle(sub(a, circle_a.center), sub(b, circle_a.center)) % (2 * Math.PI);
-            if (large_a > 0)
-               large_a += 2 * Math.PI;
-            large_a = (large_a < Math.PI);
-            let large_b = _get_angle(sub(a, circle_b.center), sub(b, circle_b.center)) % (2 * Math.PI);
-            if (large_b > 0)
-               large_b += 2 * Math.PI;
-            large_b = (large_b > Math.PI);
+            // Strangely, though, these calculations here are what you'd do to get the sweep 
+            // flag, but we have to pass it as the large-angle flag for it to work.
+            let large_a = angle_between(sub(a, circle_a.center), sub(b, circle_a.center));
+            large_a = (large_a < 0);
+            let large_b = angle_between(sub(a, circle_b.center), sub(b, circle_b.center));
+            large_b = (large_b > 0);
             
             path = `
                M${a.x},${a.y}
@@ -371,11 +165,9 @@ export class Bounds {
             {
                let center = new DOMPoint(0, 0);
                for(let point of points) {
-                  center.x += point.x;
-                  center.y += point.y;
+                  add_in_place(center, point);
                }
-               center.x /= points.length;
-               center.y /= points.length;
+               div_in_place(center, points.length);
                
                for(let point of points)
                   point.angle = Math.atan2(point.x - center.x, point.y - center.y);
@@ -408,6 +200,8 @@ export class Bounds {
          path += 'Z';
          node.setAttribute("d", path);
          return node;
+         
+         // TODO: box/circle intersections not yet implemented
       }
       return null;
    }

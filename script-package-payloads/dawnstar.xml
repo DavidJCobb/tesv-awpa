@@ -114,7 +114,45 @@
             <parent-cell of="speaker" same-as="subject" />
          </conditions>
          
-         <!-- TODO -->
+         <g name="different-floors">
+            <g name="mortar-and-pestle">
+               <conditions>
+                  <parent-cell of="subject" is="DawnstarMortarAndPestle" />
+               </conditions>
+               <constant name="height-coordinate-2f" value="240" />
+               <g name="upstairs">
+                  <conditions>
+                     <z of="subject" gte="height-coordinate-2f" />
+                     <z of="player"  lt="height-coordinate-2f" />
+                  </conditions>
+                  <shared-info id="shared-upstairs" />
+               </g>
+               <g name="downstairs">
+                  <conditions>
+                     <z of="subject" lt="height-coordinate-2f" />
+                     <z of="player"  gte="height-coordinate-2f" />
+                  </conditions>
+                  <shared-info id="shared-downstairs" />
+               </g>
+               <shared-info id="shared-same-floor" />
+            </g>
+         </g>
+         
+         <!--
+            TODO: per-room checks for The White Hall and Windpeak Inn
+         -->
+         
+         <g name="mine-interior">
+            <conditions>
+               <or>
+                  <parent-cell of="subject" is="DawnstarIronBreakerMine" />
+                  <parent-cell of="subject" is="DawnstarQuicksilverMine" />
+               </or>
+            </conditions>
+            <line>He's somewhere here in the mine.</line>
+            <line>He's down in here with us. Look around; you'll find him.</line>
+         </g>
+         <shared-info id="shared-same-building" />
       </top-g>
       <top-g slug="Interiors">
          <conditions>

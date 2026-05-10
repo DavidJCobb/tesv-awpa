@@ -9,21 +9,21 @@ This is an open city in vanilla. We will need to define a perimeter of some sort
 
 | Location | Exterior | Interior | Interior Rooms | Misc. To-Do Notes |
 | :- | :-: | :-: | :-: | :- |
-| Betild's House | ⬜ | ⬜ | ⬜ |
-| Brina's House | ⬜ | ⬜ | ⬜ |
-| Dawnstar Barracks | ⬜ | ⬜ | ⬜ |
-| Docks | ⬜ |   |   |
-| Irgnir's House | ⬜ | ⬜ | ⬜ |
-| Iron-Breaker Mine | ⬜ | ⬜ | ⬜ |
-| Leigelf's House | ⬜ | ⬜ | ⬜ |
-| Mortar and Pestle | ⬜ | ⬜ | ⬜ |
-| Quicksilver Mine | ⬜ | ⬜ | ⬜ |
-| Rustleif's House | ⬜ | ⬜ | ⬜ |
-| Sea Squall (boat) | ⬜ | ⬜ | ⬜ |
-| Silus Vesuius's House | ⬜ | ⬜ | ⬜ |
-| White Hall | ⬜ | ⬜ | ⬜ |
-| Windpeak Inn | ⬜ | ⬜ | ⬜ |
-| Outside the City | ⬜ |   |   |
+| Betild's House | ✅ | ✅ |   |
+| Brina's House | ✅ | ✅ |   |
+| Dawnstar Barracks | ✅ | ✅ |   |
+| Docks | ✅ |   |   |
+| Irgnir's House | ✅ | ✅ |   |
+| Iron-Breaker Mine | ✅ | ✅ |   |
+| Leigelf's House | ✅ | ✅ |   |
+| Mortar and Pestle | ✅ | ✅ | ✅ |
+| Quicksilver Mine | ✅ | ✅ |   |
+| Rustleif's House | ✅ | ✅ |   |
+| Sea Squall (boat) | ✅ |   |   |
+| Silus Vesuius's House | ✅ | ✅ |   |
+| White Hall | ✅ | ✅ | ⬜ |
+| Windpeak Inn | ✅ | ✅ | ⬜ |
+| Outside the City | ✅ |   |   |
 
 ### Falkreath
 

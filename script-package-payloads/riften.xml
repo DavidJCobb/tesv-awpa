@@ -2040,7 +2040,7 @@
             <conditions>
                <parent-cell of="subject" is="RiftenMariseAravelsHouse" />
             </conditions>
-            <invoke name="owned-room">
+            <invoke name="owned-house">
                <parameter name="OWNER" value="Marise" />
             </invoke>
          </g> <!-- /residence-marise -->
@@ -2048,7 +2048,7 @@
             <conditions>
                <parent-cell of="subject" is="RiftenRomlynDrethsHouse" />
             </conditions>
-            <invoke name="owned-room">
+            <invoke name="owned-house">
                <parameter name="OWNER" value="Romlyn" />
             </invoke>
          </g> <!-- /residence-romlyn -->
@@ -2056,7 +2056,7 @@
             <conditions>
                <parent-cell of="subject" is="RiftenValindorsHouse" />
             </conditions>
-            <invoke name="owned-room">
+            <invoke name="owned-house">
                <parameter name="OWNER" value="Valindor" />
             </invoke>
          </g> <!-- /residence-valindor -->

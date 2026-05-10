@@ -60,6 +60,48 @@
          <actor editor-id="Thoring" />
       </actors>
       
+      <!-- Content macros: -->
+      <macro name="owned-house">
+         <parameter name="OWNER" />
+         <parameter name="OWNER-PRINTABLE" default-value="%OWNER%" />
+         <data>
+            <g>
+               <conditions>
+                  <actor-base of="subject" is="%OWNER%" />
+               </conditions>
+               <shared-info id="shared-at-own-home" />
+            </g>
+            <g>
+               <conditions>
+                  <actor-base of="speaker" is="%OWNER%" />
+               </conditions>
+               <shared-info id="shared-at-my-home" />
+            </g>
+            <line>He's at %OWNER-PRINTABLE%'s house.</line>
+            <line>I think he's visiting %OWNER-PRINTABLE% right now.</line>
+            <line>I think I saw him on his way to %OWNER-PRINTABLE%'s house.</line>
+         </data>
+      </macro>
+      <macro name="owned-room">
+         <parameter name="OWNER" />
+         <parameter name="OWNER-PRINTABLE" default-value="%OWNER%" />
+         <data>
+            <g>
+               <conditions>
+                  <actor-base of="subject" is="%OWNER%" />
+               </conditions>
+               <shared-info id="shared-in-own-room" />
+            </g>
+            <g>
+               <conditions>
+                  <actor-base of="speaker" is="%OWNER%" />
+               </conditions>
+               <shared-info id="shared-in-my-room" />
+            </g>
+            <line>He's in %OWNER-PRINTABLE%'s room.</line>
+         </data>
+      </macro>
+      
       <top-g slug="SuperNearPlayer">
          <conditions>
             <distance of="player" to="subject" lte="128" />
@@ -79,7 +121,227 @@
             <is-in-interior of="subject" />
          </conditions>
          
-         <!-- TODO -->
+         <g name="barracks-or-jail">
+            <conditions>
+               <or>
+                  <parent-cell of="subject" is="DawnstarBarracks" />
+                  <parent-cell of="subject" is="DawnstarBarracksJail" />
+               </or>
+               <parent-cell of="speaker" is-not="DawnstarBarracks" />
+               <parent-cell of="speaker" is-not="DawnstarBarracksJail" />
+            </conditions>
+            <line>I think he's at the barracks. Or the jail. One of those.</line>
+            <line>Try checking the city barracks.</line>
+            <line>I think I saw him headed for the barracks.</line>
+         </g> <!-- /barracks-or-jail -->
+         <g name="barracks-to-jail">
+            <conditions>
+               <parent-cell of="subject" is="DawnstarBarracksJail" />
+               <parent-cell of="speaker" is="DawnstarBarracks" />
+            </conditions>
+            <line>He's downstairs.</line>
+            <line>Head down the stairs, to the city jail. You'll find him in there.</line>
+         </g> <!-- /barracks-to-jail -->
+         <g name="barracks-per-jail">
+            <conditions>
+               <parent-cell of="subject" is="DawnstarBarracks" />
+               <parent-cell of="speaker" is="DawnstarBarracksJail" />
+            </conditions>
+            <line>He's upstairs.</line>
+            <line>Head out to the barracks.</line>
+         </g> <!-- /barracks-per-jail -->
+         <g name="beitild-house">
+            <conditions>
+               <parent-cell of="subject" is="DawnstarBeitildsHouse" />
+            </conditions>
+            <invoke name="owned-house">
+               <parameter name="OWNER" value="Beitild" />
+            </invoke>
+         </g> <!-- /beitild-house -->
+         <g name="brina-house">
+            <conditions>
+               <parent-cell of="subject" is="DawnstarBrinasHouse" />
+            </conditions>
+            <g name="asking-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="speaker" is="BrinaMerilis" />
+                     <actor-base of="speaker" is="HorikHalfhand" />
+                  </or>
+               </conditions>
+               <g name="asking-resident-about-resident">
+                  <conditions>
+                     <or>
+                        <actor-base of="subject" is="BrinaMerilis" />
+                        <actor-base of="subject" is="HorikHalfhand" />
+                     </or>
+                  </conditions>
+                  <shared-info id="shared-at-our-home" />
+               </g>
+               <shared-info id="shared-at-my-home" />
+            </g>
+            <g name="asking-about-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="BrinaMerilis" />
+                     <actor-base of="subject" is="HorikHalfhand" />
+                  </or>
+               </conditions>
+               <shared-info id="shared-at-own-home" />
+            </g>
+            <line>I believe he's at Brina's house right now.</line>
+            <line>I think I saw him heading toward Brina Merilis's house.</line>
+            <line>Try checking Brina Merilis's house.</line>
+         </g> <!-- /brina-house -->
+         <g name="fruki-house">
+            <conditions>
+               <parent-cell of="subject" is="DawnstarFrukisHouse" />
+            </conditions>
+            <invoke name="owned-house">
+               <parameter name="OWNER" value="Fruki" />
+            </invoke>
+         </g> <!-- /fruki-house -->
+         <g name="irgnir-house">
+            <conditions>
+               <parent-cell of="subject" is="DawnstarIrgnirsHouse" />
+            </conditions>
+            <invoke name="owned-house">
+               <parameter name="OWNER" value="Irgnir" />
+            </invoke>
+         </g> <!-- /irgnir-house -->
+         <g name="iron-breaker-mine">
+            <conditions>
+               <parent-cell of="subject" is="DawnstarIronBreakerMine" />
+            </conditions>
+            <g non-exclusive="true">
+               <conditions>
+                  <faction-membership of="subject" includes="DawnstarIronBreakerMinersFaction" />
+               </conditions>
+               <line>He works at Iron-Breaker Mine. Try looking in there.</line>
+               <line>The miner? Iron-Breaker Mine would be a good place to check.</line>
+            </g>
+            <line>I saw him walking into Iron-Breaker Mine not too long ago.</line>
+            <line>Check Iron-Breaker Mine.</line>
+         </g> <!-- /iron-breaker-mine -->
+         <g name="leigelf-house">
+            <conditions>
+               <parent-cell of="subject" is="DawnstarLeigelfsHouse" />
+            </conditions>
+            <invoke name="owned-house">
+               <parameter name="OWNER" value="Leigelf" />
+            </invoke>
+         </g> <!-- /leigelf-house -->
+         <g name="mortar-and-pestle">
+            <conditions>
+               <parent-cell of="subject" is="DawnstarMortarAndPestle" />
+            </conditions>
+            <g name="asking-about-resident">
+               <conditions>
+                  <actor-base of="subject" is="Frida" />
+               </conditions>
+               <line>He works at the Mortar and Pestle. Have you looked there?</line>
+               <line>Try looking for him at the Mortar and Pestle.</line>
+               <line>He runs the Mortar and Pestle. That might be a good place to check.</line>
+            </g>
+            <line>I believe he's at the Mortar and Pestle.</line>
+            <line>Try checking the Mortar and Pestle, down by the bay.</line>
+            <line>He might be headed to the Mortar and Pestle right now.</line>
+         </g> <!-- /mortar-and-pestle -->
+         <g name="quicksilver-mine">
+            <conditions>
+               <parent-cell of="subject" is="DawnstarQuicksilverMine" />
+            </conditions>
+            <g non-exclusive="true">
+               <conditions>
+                  <faction-membership of="subject" includes="DawnstarQuicksilverMinerFaction" />
+               </conditions>
+               <line>He works at Quicksilver Mine. Try looking in there.</line>
+               <line>The miner? Quicksilver Mine would be a good place to check.</line>
+            </g>
+            <line>I saw him walking into Quicksilver Mine not too long ago.</line>
+            <line>Check Quicksilver Mine.</line>
+         </g> <!-- /quicksilver-mine -->
+         <g name="rustleif-house">
+            <conditions>
+               <parent-cell of="subject" is="DawnstarRustleifsHouse" />
+            </conditions>
+            <g name="asking-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="speaker" is="Rustleif" />
+                     <actor-base of="speaker" is="Seren" />
+                  </or>
+               </conditions>
+               <g name="asking-resident-about-resident">
+                  <conditions>
+                     <or>
+                        <actor-base of="subject" is="Rustleif" />
+                        <actor-base of="subject" is="Seren" />
+                     </or>
+                  </conditions>
+                  <shared-info id="shared-at-our-home" />
+               </g>
+               <shared-info id="shared-at-my-home" />
+            </g>
+            <g name="asking-about-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Rustleif" />
+                     <actor-base of="subject" is="Seren" />
+                  </or>
+               </conditions>
+               <shared-info id="shared-at-own-home" />
+            </g>
+            <line>I believe he's at Rustleif's house right now.</line>
+            <line>I think I saw him heading toward Rustleif's house.</line>
+            <line>Try checking Rustleif and Seren's house.</line>
+         </g> <!-- /rustleif-house -->
+         <g name="silus-house">
+            <conditions>
+               <parent-cell of="subject" is="DawnstarSilussHouse" />
+            </conditions>
+            <invoke name="owned-house">
+               <parameter name="OWNER" value="SilusVesuius" />
+            </invoke>
+         </g> <!-- /silus-house -->
+         <g name="white-hall">
+            <conditions>
+               <parent-cell of="subject" is="DawnstarTheWhiteHall" />
+            </conditions>
+            <g non-exclusive="true" name="worker">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Bulfrek" />
+                     <actor-base of="subject" is="Jod" />
+                     <actor-base of="subject" is="Madena" />
+                  </or>
+               </conditions>
+               <line>He works at the White Hall. Might be a good place to check.</line>
+               <line>You'll probably find him at work at the White Hall right now.</line>
+            </g>
+            <line>I'm pretty sure he's at the White Hall right now.</line>
+            <line>Try checking around the White Hall.</line>
+            <line>Hmm... Maybe he's at the White Hall.</line>
+         </g> <!-- /white-hall -->
+         <g name="windpeak-inn">
+            <conditions>
+               <parent-cell of="subject" is="DawnstarWindpeakInn" />
+            </conditions>
+            <g non-exclusive="true" name="worker">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Abelone" />
+                     <actor-base of="subject" is="Karita" />
+                     <actor-base of="subject" is="Thoring" />
+                  </or>
+               </conditions>
+               <line>He works at the Windpeak Inn. Might be a good place to check.</line>
+               <line>You'll probably find him at work at the Windpeak Inn right now.</line>
+            </g>
+            <line>I'm pretty sure he's at the Windpeak Inn right now.</line>
+            <line>Try checking around the Windpeak Inn.</line>
+            <line>Hmm... Maybe he's at the Windpeak Inn.</line>
+         </g> <!-- /windpeak-inn -->
       </top-g>
       
       <top-g slug="Exterior">

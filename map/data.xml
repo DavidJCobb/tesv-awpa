@@ -20,6 +20,13 @@
       <bound id="WalkwayCWallGate02" x="-534,512" y="-182,182" />
    </bounds>
    <cells>
+      <location editor-id="DarkwaterCrossingLocation">
+         <cell coords="29,-8" form-id="969D" />
+         <cell coords="28,-8" form-id="969E" />
+         <cell coords="30,-9" form-id="96BB" />
+         <cell coords="29,-9" form-id="96BC" />
+         <cell coords="28,-9" form-id="96BD" />
+      </location>
       <location editor-id="DawnstarLocation">
          <cell coords="8,27" form-id="8E76" />
          <cell coords="7,27" form-id="8E77" />
@@ -34,6 +41,106 @@
          <cell coords="6,24" form-id="8ED5" />
          <cell coords="6,23" form-id="8EF4" />
       </location>
+      <location editor-id="DragonBridgeLocation">
+         <cell coords="-25,20" form-id="9328" />
+         <cell coords="-26,20" form-id="9329" />
+         <cell coords="-26,19" form-id="964A" />
+         <cell coords="-25,19" form-id="9349" /> <!-- via child DragonBridgeFarmLocation -->
+      </location>
+      <location editor-id="DragonBridgeOverlookLocation">
+         <cell coords="-26,17" form-id="938C" />
+         <cell coords="-26,16" form-id="93AD" />
+      </location>
+      <location editor-id="DushnikYalLocation">
+         <cell coords="-35,-6" form-id="765F" />
+         <cell coords="-36,-6" form-id="7660" />
+         <cell coords="-36,-7" form-id="767F" />
+      </location>
+      <location editor-id="FalkreathLocation">
+         <cell coords="-6,-21" form-id="9C5D" />
+         <cell coords="-7,-21" form-id="9C5E" />
+         <cell coords="-8,-21" form-id="9C5F" />
+         <cell coords="-9,-21" form-id="9C60" />
+         <cell coords="-7,-22" form-id="9C7F" />
+         <cell coords="-8,-22" form-id="9C80" />
+         <cell coords="-9,-22" form-id="9C81" />
+         <cell coords="-8,-23" form-id="9CA1" />
+         <cell coords="-9,-23" form-id="9CA2" />
+         <cell coords="-10,-23" form-id="9CA3" />
+      </location>
+      <location editor-id="IvarsteadLocation">
+         <cell coords="18,-15" form-id="9781" />
+         <cell coords="18,-16" form-id="97A0" />
+         <cell coords="17,-16" form-id="97A1" />
+         <cell coords="19,-17" form-id="97BE" />
+         <cell coords="18,-17" form-id="97BF" />
+         <cell coords="19,-18" form-id="97DD" />
+      </location>
+      <location editor-id="KarthwastenLocation">
+         <cell coords="-33,10" form-id="705A" />
+         <cell coords="-33,9" form-id="7079" />
+         <cell coords="-34,9" form-id="707A" />
+         <cell coords="-31,9" form-id="9499" />
+         <cell coords="-32,9" form-id="949A" />
+      </location>
+      <location editor-id="KynesgroveLocation">
+         <cell coords="32,4" form-id="B53F" />
+         <cell coords="33,3" form-id="B55F" />
+         <cell coords="32,3" form-id="B560" />
+         <cell coords="33,2" form-id="B580" />
+         <cell coords="32,2" form-id="B581" />
+         <cell coords="34,1" form-id="B5A0" />
+         <cell coords="33,1" form-id="B5A1" />
+      </location>
+      <location editor-id="KynesgroveBurialMoundLocation">
+         <cell coords="36,4" form-id="B53B" />
+         <cell coords="35,4" form-id="B53C" />
+         <cell coords="34,4" form-id="B53D" />
+         <cell coords="36,3" form-id="B55C" />
+         <cell coords="35,3" form-id="B55D" />
+         <cell coords="34,3" form-id="B55E" />
+         <cell coords="36,2" form-id="B57D" />
+         <cell coords="35,2" form-id="B57E" />
+         <cell coords="34,2" form-id="B57F" />
+      </location>
+      <location editor-id="LargashburLocation">
+         <cell coords="33,-27" form-id="BD3C" />
+         <cell coords="32,-27" form-id="BD3D" />
+         <cell coords="33,-28" form-id="BD5D" />
+         <cell coords="32,-28" form-id="BD5E" />
+      </location>
+      <location editor-id="MarkarthLocation">
+         <cell coords="-39,2" form-id="7158" />
+         <cell coords="-41,1" form-id="7179" />
+         <cell coords="-42,1" form-id="717A" />
+         <cell coords="-43,1" form-id="717B" />
+         <cell coords="-39,0" form-id="75A9" />
+         <cell coords="-40,0" form-id="75AA" />
+         <cell coords="-42,0" form-id="75AC" />
+         <cell coords="-43,0" form-id="75AD" />
+      </location>
+      <location editor-id="MorKhazgurLocation">
+         <cell coords="-37,20" form-id="6F28" />
+         <cell coords="-38,20" form-id="6F29" />
+         <cell coords="-37,19" form-id="6F47" />
+         <cell coords="-38,19" form-id="6F48" />
+         <cell coords="-37,16" form-id="6FA4" />
+      </location>
+      <location editor-id="MorthalLocation">
+         <cell coords="-10,18" form-id="935B" />
+         <cell coords="-10,17" form-id="937C" />
+         <cell coords="-9,16" form-id="939C" />
+         <cell coords="-10,16" form-id="939D" />
+         <cell coords="-11,16" form-id="939E" />
+         <cell coords="-8,15" form-id="93BC" />
+         <cell coords="-9,15" form-id="93BD" />
+         <cell coords="-10,15" form-id="93BE" />
+         <cell coords="-11,15" form-id="93BF" />
+      </location>
+      <location editor-id="NarzulburLocation">
+         <cell coords="38,2" form-id="B57B" />
+         <cell coords="38,1" form-id="B59C" />
+      </location>
       <location editor-id="RiftenLocation">
          <cell coords="43,-20" form-id="BC4B" />
          <cell coords="42,-20" form-id="BC4C" />
@@ -46,6 +153,107 @@
       </location>
       <location editor-id="RiftenMistveilKeepLocation">
          <cell coords="41,-24" form-id="BCD1" />
+      </location>
+      <location editor-id="RiverwoodLocation">
+         <cell coords="6,-10" form-id="96F2" />
+         <cell coords="5,-10" form-id="96F3" />
+         <cell coords="6,-11" form-id="9711" />
+         <cell coords="5,-11" form-id="9712" />
+         <cell coords="4,-11" form-id="9713" />
+         <cell coords="6,-12" form-id="9730" />
+         <cell coords="5,-12" form-id="9731" />
+         <cell coords="4,-12" form-id="9732" />
+         <cell coords="3,-12" form-id="9733" />
+      </location>
+      <location editor-id="RoriksteadLocation">
+         <cell coords="-21,2" form-id="9576" />
+         <cell coords="-22,2" form-id="9577" />
+         <cell coords="-20,1" form-id="9596" />
+         <cell coords="-21,1" form-id="9597" />
+      </location>
+      <location editor-id="ShorsStoneLocation">
+         <cell coords="40,-15" form-id="BBA9" />
+         <cell coords="39,-15" form-id="BBAA" />
+         <cell coords="40,-16" form-id="BBCA" />
+         <cell coords="39,-16" form-id="BBCB" />
+      </location>
+      <location editor-id="SolitudeLocation">
+         <cell coords="-16,25" form-id="927A" />
+         <cell coords="-17,25" form-id="927B" />
+         <cell coords="-18,25" form-id="927C" />
+         <cell coords="-17,24" form-id="929C" />
+         <cell coords="-18,24" form-id="929D" />
+         <cell coords="-19,24" form-id="929E" />
+         <cell coords="-20,24" form-id="929F" />
+         <cell coords="-18,23" form-id="92BE" />
+         <cell coords="-20,23" form-id="92C0" />
+         <cell coords="-21,23" form-id="92C1" />
+         <cell coords="-21,22" form-id="92E2" />
+         <cell coords="-15,25" form-id="9279" /> <!-- via child SolitudeDocksLocation -->
+         <cell coords="-16,24" form-id="929B" /> <!-- via child SolitudeDocksLocation -->
+         <cell coords="-16,23" form-id="92BC" /> <!-- via child SolitudeDocksLocation -->
+         <cell coords="-17,23" form-id="92BD" /> <!-- via child SolitudeDocksLocation -->
+         <cell coords="-12,31" form-id="91B0" /> <!-- via child SolitudeLighthouseExteriorLocation -->
+      </location>
+      <location editor-id="SolitudeSawmillLocation">
+         <cell coords="-15,27" form-id="9237" />
+         <cell coords="-19,22" form-id="92E0" />
+         <cell coords="-20,22" form-id="92E1" />
+      </location>
+      <location editor-id="WhiterunLocation">
+         <cell coords="7,0" form-id="95BB" />
+         <cell coords="6,0" form-id="95BC" />
+         <cell coords="7,-1" form-id="95DA" />
+         <cell coords="6,-1" form-id="95DB" />
+         <cell coords="5,-1" form-id="95DC" />
+         <cell coords="4,-1" form-id="95DD" />
+         <cell coords="3,-1" form-id="95DE" />
+         <cell coords="6,-2" form-id="95FA" />
+         <cell coords="5,-2" form-id="95FB" />
+         <cell coords="4,-2" form-id="95FC" />
+         <cell coords="3,-2" form-id="95FD" />
+         <cell coords="6,-3" form-id="9619" />
+         <cell coords="5,-3" form-id="961A" />
+         <cell coords="4,-3" form-id="961B" />
+         <cell coords="3,-3" form-id="961C" />
+         <cell coords="5,-4" form-id="9639" />
+         <cell coords="4,-4" form-id="963A" />
+         <cell coords="3,-4" form-id="963B" />
+         <cell coords="8,-5" form-id="9655" />
+         <cell coords="7,-5" form-id="9656" /> <!-- via child WhiterunHonningbrewMeaderyLocation -->
+         <cell coords="6,-5" form-id="9657" />
+         <cell coords="5,-5" form-id="9658" />
+         <cell coords="6,-6" form-id="9676" />
+      </location>
+      <location editor-id="WindhelmLocation">
+         <cell coords="34,8" form-id="B4B9" />
+         <cell coords="33,8" form-id="B4BA" />
+         <cell coords="32,8" form-id="B4BB" />
+         <cell coords="33,7" form-id="B4DB" />
+         <cell coords="32,7" form-id="B4DC" />
+         <cell coords="36,6" form-id="B4F9" />
+         <cell coords="35,6" form-id="B4FA" />
+         <cell coords="33,6" form-id="B4FC" />
+         <cell coords="32,6" form-id="B4FD" />
+         <cell coords="36,5" form-id="B51A" />
+         <cell coords="35,5" form-id="B51B" />
+         <cell coords="33,5" form-id="B51D" />
+      </location>
+      <location editor-id="WinterholdLocation">
+         <cell coords="26,26" form-id="8E83" />
+         <cell coords="27,25" form-id="8EA1" />
+         <cell coords="26,25" form-id="8EA2" />
+         <cell coords="27,24" form-id="8EC0" />
+         <cell coords="26,24" form-id="8EC1" />
+         <cell coords="28,23" form-id="8EDE" />
+         <cell coords="27,23" form-id="8EDF" />
+         <cell coords="26,23" form-id="8EE0" />
+      </location>
+      <location editor-id="WindhelmCollegeLocation">
+         <cell coords="28,27" form-id="8E62" />
+         <cell coords="27,27" form-id="8E63" />
+         <cell coords="28,26" form-id="8E81" />
+         <cell coords="27,26" form-id="8E82" />
       </location>
    </cells>
    <places>

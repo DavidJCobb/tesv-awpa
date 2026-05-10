@@ -10,7 +10,7 @@
 awpa-map-tooltip {
    position-anchor: --awpa-map-svg;
 }
-svg {
+.map {
    anchor-name: --awpa-map-svg;
    
    display:      block;
@@ -84,6 +84,16 @@ svg {
          height: calc((var(--y-max) - var(--y-min)) * 1px);
       }
    }
+}
+
+.axes {
+   position:        fixed;
+   position-anchor: --awpa-map-svg;
+   left:   calc(anchor(left) + 1em);
+   bottom: calc(anchor(bottom) + 1em);
+   
+   width: 100px;
+   height: 100px;
 }
 
 .sidebar {

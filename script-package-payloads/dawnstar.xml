@@ -92,16 +92,16 @@
          <constant name="main-street-z-min" value="-13568" />
          
          <g name="bay">
-            <g>
+            <g name="bay-innermost">
                <conditions>
-                  <x of="subject" gte="29248" />
+                  <x of="subject" gte="28736" />
                   <x of="subject" lte="31376" />
                   <y of="subject" gte="105328" />
                   <y of="subject" lte="106656" />
                </conditions>
                <shared-info id="dawnstar-bay" />
             </g>
-            <g>
+            <g name="bay-mid">
                <conditions>
                   <x of="subject" gte="28736" />
                   <x of="subject" lte="30080" />
@@ -110,7 +110,7 @@
                </conditions>
                <shared-info id="dawnstar-bay" />
             </g>
-            <g>
+            <g name="bay-outermost">
                <conditions>
                   <x of="subject" gte="25952" />
                   <x of="subject" lte="30080" />
@@ -138,12 +138,46 @@
                <x of="subject" gte="30768" />
                <x of="subject" lte="32032" />
                <y of="subject" gte="main-street-y-min" />
-               <y of="subject" lte="main-street-y-max" />
+               <y of="subject" lte="103568" />
                <z of="subject" gte="main-street-z-min" />
             </conditions>
             <line>I remember seeing him by the Barracks not too long ago.</line>
             <line>I saw him walking past the Barracks next to the White Hall a little while ago.</line>
             <line>I'm pretty sure he's around the Barracks right now.</line>
+         </g>
+         <g name="beitild-house">
+            <conditions>
+               <x of="subject" gte="31392" />
+               <x of="subject" lte="32768" />
+               <y of="subject" gte="106976" />
+               <y of="subject" lte="109088" />
+            </conditions>
+            <g name="resident">
+               <conditions>
+                  <actor-base of="subject" is="Beitild" />
+               </conditions>
+               <shared-info id="shared-exterior-near-own-home" />
+            </g>
+            <line>He's over by Beitild's house.</line>
+            <line>I saw him around Beitild's home a little while ago.</line>
+            <line>I think I remember seeing him near Beitild's house, toward the north.</line>
+         </g>
+         <g name="fruki-house">
+            <conditions>
+               <x of="subject" gte="26320" />
+               <x of="subject" lte="28736" />
+               <y of="subject" gte="106112" />
+               <y of="subject" lte="107632" />
+            </conditions>
+            <g name="resident">
+               <conditions>
+                  <actor-base of="subject" is="Fruki" />
+               </conditions>
+               <shared-info id="shared-exterior-near-own-home" />
+            </g>
+            <line>He's over by Fruki's house.</line>
+            <line>I saw him walking past Fruki's house not too long ago.</line>
+            <line>Try looking near Fruki's house, next to Quicksilver Mine.</line>
          </g>
          <g name="irgnir-house">
             <conditions>
@@ -162,6 +196,24 @@
             <line>I saw him walking past Irgnir's house not too long ago.</line>
             <line>Try looking near Irgnir's house, over by Iron-Breaker Mine.</line>
          </g>
+         <g name="leigelf-house">
+            <conditions>
+               <x of="subject" gte="31072" />
+               <x of="subject" lte="32272" />
+               <y of="subject" gte="103264" />
+               <y of="subject" lte="105328" />
+               <z of="subject" lt="main-street-z-min" />
+            </conditions>
+            <g name="resident">
+               <conditions>
+                  <actor-base of="subject" is="Leigelf" />
+               </conditions>
+               <shared-info id="shared-exterior-near-own-home" />
+            </g>
+            <line>He might be at Leigelf's house right now.</line>
+            <line>I think I saw him around Leigelf's house. It's in front of the White Hall, past the ridge.</line>
+            <line>Hmm... Try looking near Leigelf's house.</line>
+         </g>
          <g name="mortar-and-pestle">
             <conditions>
                <x of="subject" gte="31376" />
@@ -173,12 +225,81 @@
             <line>He might be around the Mortar and Pestle.</line>
             <line>He was passing by the town's apothecary not too long ago. <verbatim>Her</verbatim> shop's by the water.</line>
          </g>
+         <g name="quicksilver-mine">
+            <conditions>
+               <x of="subject" gte="26208" />
+               <x of="subject" lte="29024" />
+               <y of="subject" gte="104800" />
+               <y of="subject" lte="106112" />
+            </conditions>
+            <line>I think he's over by by Quicksilver Mine.</line>
+            <line>I saw him walking toward Quicksilver Mine a little while ago.</line>
+            <line>You might want to check around Quicksilver Mine.</line>
+         </g>
+         <g name="rustleif-house">
+            <conditions>
+               <x of="subject" gte="28672" />
+               <x of="subject" lte="31072" />
+               <y of="subject" gte="103024" />
+               <y of="subject" lte="105328" />
+               <z of="subject" lt="main-street-z-min" />
+            </conditions>
+            <g name="resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Rustleif" />
+                     <actor-base of="subject" is="Seren" />
+                  </or>
+               </conditions>
+               <shared-info id="shared-exterior-near-own-home" />
+            </g>
+            <g non-exclusive="true" name="both-alive">
+               <conditions>
+                  <death-count of="Rustleif" lte="0" />
+                  <death-count of="Seren" lte="0" />
+               </conditions>
+               <line>He might've been headed to Rustleif and Seren's home. They're the local blacksmiths.</line>
+            </g>
+            <g non-exclusive="true" name="rustleif-dead-seren-alive">
+               <conditions>
+                  <death-count of="Rustleif" gt="0" />
+                  <death-count of="Seren" lte="0" />
+               </conditions>
+               <line>He might've been headed to Seren's home. <verbatim>She's</verbatim> the local blacksmith.</line>
+            </g>
+            <g non-exclusive="true" name="seren-dead-rustleif-alive">
+               <conditions>
+                  <death-count of="Seren" gt="0" />
+                  <death-count of="Rustleif" lte="0" />
+               </conditions>
+               <line>He might've been headed to Rustleif's home. <verbatim>He's</verbatim> the local blacksmith.</line>
+            </g>
+            <line>I'm pretty sure I saw him around Rustleif's house.</line>
+            <line>Hmm... Try looking near Rustleif's house, at the edge of the bay.</line>
+         </g>
+         <g name="silus-vesuius-house">
+            <conditions>
+               <x of="subject" gte="30080" />
+               <x of="subject" lte="31392" />
+               <y of="subject" gte="106656" />
+               <y of="subject" lte="109088" />
+            </conditions>
+            <g name="resident">
+               <conditions>
+                  <actor-base of="subject" is="SilusVesuius" />
+               </conditions>
+               <shared-info id="shared-exterior-near-own-home" />
+            </g>
+            <line>He's over by Silus's house.</line>
+            <line>I saw him walking past Silus's house not too long ago.</line>
+            <line>Try looking near Silus's house. It's the furthest out to the north.</line>
+         </g>
          <g name="white-hall">
             <conditions>
-               <x of="subject" gte="30768" />
+               <x of="subject" gte="32032" />
                <x of="subject" lte="34688" />
                <y of="subject" gte="main-street-y-min" />
-               <y of="subject" lte="103568" />
+               <y of="subject" lte="103808" />
                <z of="subject" gte="main-street-z-min" />
             </conditions>
             <line>Try checking the White Hall.</line>
@@ -198,6 +319,116 @@
             <line>He might be at Windpeak Inn.</line>
             <line>Have you looked around Windpeak Inn? Might be a good place to start.</line>
             <line>I think I saw him headed toward Windpeak Inn a while ago.</line>
+         </g>
+         
+         <g name="brina-house">
+            <conditions>
+               <x of="subject" gte="32272" />
+               <x of="subject" lte="34144" />
+               <y of="subject" gte="103808" />
+               <y of="subject" lte="105328" />
+               <z of="subject" lte="-13408" />
+            </conditions>
+            <g name="resident">
+               <conditions>
+                  <actor-base of="subject" is="Brina" />
+               </conditions>
+               <shared-info id="shared-exterior-near-own-home" />
+            </g>
+            <line>He might be at Brina's house right now.</line>
+            <line>I think I saw him around Brina Merilis's house. It's in front of the White Hall, past the ridge.</line>
+            <line>Hmm... Try looking near Brina's house.</line>
+         </g>
+         
+         <g name="low-detail">
+            <g name="west-ridge">
+               <conditions>
+                  <x of="subject" gte="21808" />
+                  <x of="subject" lte="26752" />
+                  <y of="subject" gte="102400" />
+                  <y of="subject" lte="108784" />
+               </conditions>
+               <line>I think I saw him up on the ridge west of the city.</line>
+               <line>I'm pretty sure I remember seeing him wandering the city's outskirts, to the west.</line>
+               <line>Try checking the ridge above Quicksilver Mine.</line>
+            </g>
+            
+            <g name="main-road-junction">
+               <conditions>
+                  <x of="subject" gte="26352" />
+                  <x of="subject" lte="28672" />
+                  <y of="subject" gte="101936" />
+                  <y of="subject" lte="104800" />
+               </conditions>
+               <line>He's at the entrance to the city.</line>
+               <line>I saw him walking around near Dawnstar's entrance.</line>
+               <line>Try looking around Dawnstar's entrance. If he's not there, you'll at least have a pretty good view of the city's main roads.</line>
+            </g>
+            
+            <g name="the-road">
+               <conditions>
+                  <x of="subject" gte="24576" />
+                  <x of="subject" lte="28672" />
+                  <y of="subject" gte="98304" />
+                  <y of="subject" lte="102400" />
+               </conditions>
+               <line>I saw him on the road into the city.</line>
+               <line>Check the road leading out of Dawnstar.</line>
+            </g>
+            <g name="south-outskirts">
+               <conditions>
+                  <x of="subject" gte="28672" />
+                  <x of="subject" lte="34512" />
+                  <y of="subject" gte="98304" />
+                  <y of="subject" lte="main-street-y-min" />
+               </conditions>
+               <line>I think he was wandering the outskirts to the south, not too long ago.</line>
+               <line>I saw him headed behind the city's southern buildings.</line>
+            </g>
+            
+            <g name="northeast-ridge">
+               <conditions>
+                  <x of="subject" gte="30080" />
+                  <x of="subject" lte="36896" />
+                  <y of="subject" gte="106976" />
+                  <y of="subject" lte="109840" />
+               </conditions>
+               <line>Hmm... I thought I saw him up on the ridgeline to the northeast.</line>
+               <line>Did I see him climbing the northeast ridge? Strange...</line>
+            </g>
+            <g name="lighthouse">
+               <conditions>
+                  <x of="subject" gte="32880" />
+                  <x of="subject" lte="36800" />
+                  <y of="subject" gte="109840" />
+                  <y of="subject" lte="113840" />
+               </conditions>
+               <line>I think I saw him up on the ridge to the northeast. Probably visiting the lighthouse.</line>
+               <line>See the mountain to the northeast? There's a lighthouse up there. I think he was headed there.</line>
+               <line>If I remember right, he was headed to Dawnstar's lighthouse. It's northeast of the city, up on the ridge.</line>
+            </g>
+         </g>
+         
+         <g name="directional-fallbacks">
+            <g name="north">
+               <conditions>
+                  <x of="subject" gte="24576" />
+                  <x of="subject" lte="45056" />
+                  <y of="subject" gte="108784" />
+                  <y of="subject" lte="122880" />
+               </conditions>
+               <shared-info id="beyond-city-limits-north" />
+            </g>
+            <g name="south">
+               <conditions>
+                  <x of="subject" gte="24576" />
+                  <x of="subject" lte="45056" />
+                  <y of="subject" gte="90112" />
+                  <y of="subject" lte="102624" />
+               </conditions>
+               <shared-info id="beyond-city-limits-south" />
+            </g>
+            
          </g>
          <!-- TODO -->
       </top-g>

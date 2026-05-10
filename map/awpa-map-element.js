@@ -41,7 +41,7 @@ class AWPAMapElement extends HTMLElement {
       this.#shadow = this.attachShadow({ mode: "open" });
       this.#shadow.innerHTML = `
 <link rel="stylesheet" href="./awpa-map-element.css" />
-<svg xmlns="http://www.w3.org/2000/svg">
+<svg class="map" xmlns="http://www.w3.org/2000/svg">
    <defs>
    </defs>
    <g id="cells">
@@ -79,6 +79,7 @@ class AWPAMapElement extends HTMLElement {
    <div class="segment" id="grid-coords">&lt;no cell&gt;</div>
    <div class="segment" id="current-ref">&lt;no ref&gt;</div>
 </div>
+<img class="axes" src="axis-display.svg" />
 <awpa-map-tooltip></awpa-map-tooltip>
       `;
       this.#svg = this.#shadow.querySelector("svg");
@@ -119,7 +120,9 @@ class AWPAMapElement extends HTMLElement {
          let item = e.target.closest("#view-list li");
          if (!item)
             return;
-         this.view_place(item.getAttribute("data-view-name"));
+         let name = item.getAttribute("data-view-name");
+         window.location.hash = '#' + name;
+         this.view_place(name);
       });
       
       this.#svg.addEventListener("mouseover",  this.#on_svg_mouseover.bind(this));
@@ -198,6 +201,9 @@ class AWPAMapElement extends HTMLElement {
             this.#svg_container_nodes.refs.append(node);
          }
       }
+      
+      if (window.location.hash)
+         this.view_place(window.location.hash.substring(1));
    }
    
    base_form_by_id(id) {

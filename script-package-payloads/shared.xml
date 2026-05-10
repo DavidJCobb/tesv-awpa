@@ -118,5 +118,22 @@
       <shared-info id="shared-in-my-room" editor-id-slug="RoomMy">
          <line>He's in my room.</line>
       </shared-info>
+      
+      <shared-info id="shared-beyond-city-limits-north" editor-id-slug="BeyondCityLimitsNorth">
+         <line>He's somewhere north of the city.</line>
+         <line>I think I saw him walking out of the city, to the north.</line>
+      </shared-info>
+      <shared-info id="shared-beyond-city-limits-south" editor-id-slug="BeyondCityLimitsSouth">
+         <line>He's somewhere south of the city.</line>
+         <line>I think I saw him walking out of the city, to the south.</line>
+      </shared-info>
+      <shared-info id="shared-beyond-city-limits-east" editor-id-slug="BeyondCityLimitsEast">
+         <line>He's somewhere east of the city.</line>
+         <line>I think I saw him walking out of the city, to the east.</line>
+      </shared-info>
+      <shared-info id="shared-beyond-city-limits-west" editor-id-slug="BeyondCityLimitsWest">
+         <line>He's somewhere west of the city.</line>
+         <line>I think I saw him walking out of the city, to the west.</line>
+      </shared-info>
    </shared-infos>
 </payload>

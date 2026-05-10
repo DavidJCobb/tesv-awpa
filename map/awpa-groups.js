@@ -14,8 +14,9 @@ export class Group {
       this.lines     = []; // Array<String>
    }
    
-   static from_node(node) {
+   static from_node(node, parent) {
       let g = new Group();
+      g.parent = parent || null;
       g.#load(node);
       return g;
    }
@@ -140,7 +141,7 @@ export class Group {
             case "g":
             case "top-g":
                {
-                  let g = Group.from_node(child);
+                  let g = Group.from_node(child, this);
                   g.parent = this;
                   this.children.push(g);
                }

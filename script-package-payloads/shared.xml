@@ -78,6 +78,10 @@
          <line>I saw him around his house not too long ago.</line>
          <line>I think he's over by his house right now.</line>
       </shared-info>
+      <shared-info id="shared-exterior-lumber-mill" editor-id-slug="ExtLumberMill">
+         <line>He's over by the lumber mill.</line>
+         <line>I saw him hanging around the lumber mill a little while ago.</line>
+      </shared-info>
       <shared-info id="shared-exterior-market" editor-id-slug="ExtMarket">
          <line>He's in the market.</line>
          <line>I saw him heading toward the market.</line>

@@ -45,6 +45,27 @@ do
          --
          -- Therefore this function's result depends on the invocation site.
          --
+         local substitutes_in_permanent_elements = false
+         invocation:for_each_child_element(function(node)
+            if node.node_name == "parameter" and not node.attributes["value"] then
+               node:for_each_child_element(function(child)
+                  if not xml.element.is(child) then
+                     return
+                  end
+                  if child.node_name == "top-g"
+                  or child.node_name == "g"
+                  or child.node_name == "line"
+                  or child.node_name == "shared-info" then
+                     substitutes_in_permanent_elements = true
+                     return false
+                  end
+               end)
+            end
+         end)
+         if substitutes_in_permanent_elements then
+            return true
+         end
+         
          local is_in_quest = false
          do
             local node = invocation.parent
@@ -102,13 +123,19 @@ do
             xml.comment(" macro substitution end "):place_after(invocation)
          end
          
-         local param_values = {}
+         local param_values   = {}
+         local param_subtrees = {}
          invocation:for_each_child_element(function(node)
             if node.node_name == "parameter" then
                local n = node.attributes["name"]
                local v = node.attributes["value"]
-               if n and v then
+               if not n then
+                  return
+               end
+               if v then
                   param_values[n] = v
+               else
+                  param_subtrees[n] = node.children
                end
             end
          end)
@@ -129,6 +156,9 @@ do
                   local name = text:sub(i + 1, j - 1)
                   local val  = param_values[name]
                   if not val then
+                     if param_subtrees[name] then
+                        error("Subtree substitutions are not permitted here.");
+                     end
                      from = j + 1
                      goto continue
                   end
@@ -137,6 +167,52 @@ do
                   ::continue::
                until true
                return text
+            end
+            
+            local function subst_text_node(node)
+               local parts = {}
+               local text = node.data
+               local from  = 1
+               repeat
+                  local i = text:find("%", from, true)
+                  if not i then
+                     break
+                  end
+                  local j = text:find("%", i + 1, true)
+                  if not j then
+                     break
+                  end
+                  local name = text:sub(i + 1, j - 1)
+                  local val  = param_values[name]
+                  if not val then
+                     val = param_subtrees[name]
+                     if not val then
+                        goto continue
+                     end
+                  end
+                  parts[#parts + 1] = text:sub(from, i - 1)
+                  parts[#parts + 1] = val
+                  ::continue::
+                  from = j + 1
+               until true
+               if from < #text then
+                  parts[#parts + 1] = text:sub(from)
+               end
+               if #parts == 1 and parts[1] == text then
+                  return
+               end
+               
+               local nodes = {}
+               for _, part in ipairs(parts) do
+                  if type(part) == "string" then
+                     nodes[#nodes + 1} = xml.text(part)
+                  else
+                     for _, src in ipairs(part) do
+                        nodes[#nodes + 1] = src:clone(true)
+                     end
+                  end
+               end
+               node:replace_with(nodes)
             end
             
             for k, v in pairs(self.parameters) do
@@ -150,8 +226,11 @@ do
             end
          
             local function walk(node)
-               if xml.comment.is(node) or xml.text.is(node) then
+               if xml.comment.is(node) then
                   node.data = subst(node.data)
+               end
+               if xml.text.is(node) then
+                  node = subst_text_node(node)
                end
                if xml.element.is(node) then
                   for k, v in pairs(node.attributes) do

@@ -12,6 +12,7 @@ export class Group {
       this.name      = "";
       this.parent    = null;
       this.lines     = []; // Array<String>
+      this.invokes   = false;
    }
    
    static from_node(node, parent) {
@@ -29,6 +30,19 @@ export class Group {
          parent = parent.parent;
       }
       return bounds;
+   }
+   get computed_name() {
+      if (this.name)
+         return this.name;
+      if (!this.parent)
+         return "";
+      let i = this.parent.children.indexOf(this);
+      if (i < 0) // should never happen
+         return "";
+      let pn = this.parent.computed_name;
+      if (pn)
+         return pn + `[${i}]`;
+      return "";
    }
    
    resolve_constant(v) {
@@ -160,6 +174,7 @@ export class Group {
                this.lines.push(`<shared-info id="${child.getAttribute("id")}" />`);
                break;
             case "invoke":
+               this.invokes = true;
                // TODO
                break;
          }
@@ -221,7 +236,7 @@ export class GroupCollection {
                exterior = true;
             }
          }
-         if (exterior && g.lines.length) {
+         if (exterior && (g.lines.length || g.invokes)) {
             let store = true;
             if (parent_exterior) {
                //

@@ -289,13 +289,7 @@ do -- xml.element
          if not node or node.parent ~= self then
             error("Can only remove our own child nodes.")
          end
-         local i = nil
-         for k, v in ipairs(self.children) do
-            if v == node then
-               i = k
-               break
-            end
-         end
+         local i = self:index_of_child(node)
          assert(i, "A node must be present in its parent's child list.")
          table.remove(self.children, i)
          node.parent = nil

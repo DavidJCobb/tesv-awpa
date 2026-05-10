@@ -37,7 +37,7 @@ export default class AWPAMapTooltipElement extends HTMLElement {
       this.#current_group = g;
       if (g) {
          this.classList.add("has-group");
-         this.#shadow.querySelector(".name").innerText = g.name || "<unnamed>";
+         this.#shadow.querySelector(".name").innerText = g.computed_name || "<unnamed>";
       } else {
          this.classList.remove("has-group");
       }

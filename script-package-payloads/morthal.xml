@@ -129,6 +129,12 @@
                   <actor-base of="speaker" is="Alva" />
                </conditions>
                <shared-info id="shared-at-my-home" />
+               <!--
+                  It is intentional that I don't define lines for asking Alva 
+                  about Hroggar's location, when Hroggar is at her home. I like 
+                  the subtle nuance of her replying with "He's at *my* house" 
+                  (emphasis mine) rather than "He's at *our* house."
+               -->
             </g>
             <g name="asking-about-alva">
                <conditions>
@@ -139,6 +145,11 @@
                      <actor-base of="speaker" is="Hroggar" />
                   </conditions>
                   <shared-info id="shared-at-our-home" />
+                  <!--
+                     I've gone out of my way to make Hroggar use the "She's at 
+                     *our* house" lines as part of the same nuance: their 
+                     relationship is asymmetrical; she's using him.
+                  -->
                </g>
                <shared-info id="shared-at-own-home" />
             </g>
@@ -161,7 +172,7 @@
                </conditions>
                <line>I think he's at Hroggar's home right now. The place used to belong to Alva, but...</line>
                <line>Pretty sure I saw him walk into Hroggar's house recently.</line>
-               <line>He's visiting Hroggar's house, at the southeast edge of town.</line>
+               <line>He's visiting Hroggar's new house, at the southeast edge of town.</line>
             </g>
             <line>I think he's at Alva's home right now.</line>
             <line>Pretty sure I saw him walk into Alva's house recently.</line>
@@ -268,13 +279,35 @@
                <y of="subject" gte="63056" />
                <y of="subject" lte="65040" />
             </conditions>
-            <g>
+            <!--
+               See comments on the "interior" version of these checks for design 
+               notes.
+            -->
+            <g name="asking-alva">
+               <conditions>
+                  <actor-base of="speaker" is="Alva" />
+               </conditions>
+               <shared-info id="shared-exterior-near-my-home" />
+            </g>
+            <g name="asking-hroggar">
+               <conditions>
+                  <actor-base of="speaker" is="Hroggar" />
+               </conditions>
+               <g name="asking-about-alva">
+                  <conditions>
+                     <actor-base of="subject" is="Alva" />
+                  </conditions>
+                  <shared-info id="shared-exterior-near-our-home" />
+               </g>
+               <shared-info id="shared-exterior-near-my-home" />
+            </g>
+            <g name="asking-about-alva">
                <conditions>
                   <actor-base of="subject" is="Alva" />
                </conditions>
                <shared-info id="shared-exterior-near-own-home" />
             </g>
-            <g>
+            <g name="asking-about-hroggar">
                <conditions>
                   <actor-base of="subject" is="Hroggar" />
                </conditions>
@@ -286,6 +319,14 @@
                </g>
                <line><verbatim>He's</verbatim> over by Alva's house. <verbatim>He's</verbatim> been staying there since <verbatim>his</verbatim> place got destroyed by a fire.</line>
                <line><verbatim>He's</verbatim> been living with Alva ever since <verbatim>his</verbatim> home burned down.</line>
+            </g>
+            <g name="alva-slain">
+               <conditions>
+                  <death-count of="Alva" gt="0" />
+               </conditions>
+               <line>I think he's somewhere near Hroggar's house. The place used to belong to Alva, but...</line>
+               <line>Pretty sure I saw him around Hroggar's new home recently.</line>
+               <line>Try looking around Hroggar's new house, at the southeast edge of town.</line>
             </g>
             <line>I think he's somewhere near Alva's home right now.</line>
             <line>Pretty sure I saw him around Alva's house recently.</line>

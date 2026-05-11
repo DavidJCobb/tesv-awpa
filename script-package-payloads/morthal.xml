@@ -527,6 +527,8 @@
                <shared-info id="beyond-city-limits-south" />
             </g>
          </g>
+
+         <invoke name="common-exterior-fallbacks" />
       </top-g>
       
       <!-- final fallback lines -->

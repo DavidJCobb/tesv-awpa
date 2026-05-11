@@ -843,27 +843,6 @@
          <actor editor-id="Wylandriah" />
       </actors>
       
-      <!-- Content macros: -->
-      <macro name="owned-room">
-         <parameter name="OWNER" />
-         <parameter name="OWNER-PRINTABLE" default-value="%OWNER%" />
-         <data>
-            <g>
-               <conditions>
-                  <actor-base of="subject" is="%OWNER%" />
-               </conditions>
-               <shared-info id="shared-in-own-room" />
-            </g>
-            <g>
-               <conditions>
-                  <actor-base of="speaker" is="%OWNER%" />
-               </conditions>
-               <shared-info id="shared-in-my-room" />
-            </g>
-            <line>He's in %OWNER-PRINTABLE%'s room.</line>
-         </data>
-      </macro>
-      
       <top-g slug="SuperNearPlayer">
          <conditions>
             <distance of="player" to="subject" lte="128" />
@@ -916,7 +895,7 @@
                      <conditions>
                         <x of="subject" gte="320" />
                      </conditions>
-                     <invoke name="owned-room">
+                     <invoke name="mixin-owned-room">
                         <parameter name="OWNER" value="Talen-Jei" />
                      </invoke>
                   </g>
@@ -924,7 +903,7 @@
                      <conditions>
                         <y of="subject" lte="-576" />
                      </conditions>
-                     <invoke name="owned-room">
+                     <invoke name="mixin-owned-room">
                         <parameter name="OWNER" value="Keerava" />
                      </invoke>
                   </g>
@@ -950,7 +929,7 @@
                      <conditions>
                         <x of="subject" lte="-1984" />
                      </conditions>
-                     <invoke name="owned-room">
+                     <invoke name="mixin-owned-room">
                         <parameter name="OWNER" value="Ingun" />
                      </invoke>
                   </g>
@@ -959,7 +938,7 @@
                         <x of="subject" gte="-1472" />
                         <y of="subject" lte="-128" />
                      </conditions>
-                     <invoke name="owned-room">
+                     <invoke name="mixin-owned-room">
                         <parameter name="OWNER" value="Maul" />
                      </invoke>
                   </g>
@@ -998,7 +977,7 @@
                         <x of="subject" gte="-1712" />
                         <y of="subject" gte="256" />
                      </conditions>
-                     <invoke name="owned-room">
+                     <invoke name="mixin-owned-room">
                         <parameter name="OWNER" value="Hemming" />
                      </invoke>
                   </g>
@@ -1008,7 +987,7 @@
                         <x of="subject" lte="-720" />
                         <y of="subject" lte="-48" />
                      </conditions>
-                     <invoke name="owned-room">
+                     <invoke name="mixin-owned-room">
                         <parameter name="OWNER" value="Maven" />
                      </invoke>
                   </g>
@@ -1017,7 +996,7 @@
                         <x of="subject" lte="-1200" />
                         <y of="subject" gte="256" />
                      </conditions>
-                     <invoke name="owned-room">
+                     <invoke name="mixin-owned-room">
                         <parameter name="OWNER" value="Sibbi" />
                      </invoke>
                   </g>
@@ -1054,7 +1033,7 @@
                      <x of="subject" lte="768" />
                      <y of="subject" lte="-4416" />
                   </conditions>
-                  <invoke name="owned-room">
+                  <invoke name="mixin-owned-room">
                      <parameter name="OWNER" value="Indaryn" />
                   </invoke>
                </g>
@@ -1115,7 +1094,7 @@
                      <z of="subject" gte="64" />
                      <z of="subject" lt="320" />
                   </conditions>
-                  <invoke name="owned-room">
+                  <invoke name="mixin-owned-room">
                      <parameter name="OWNER" value="Haelga" />
                   </invoke>
                </g>
@@ -1125,7 +1104,7 @@
                      <y of="subject" lte="-448" />
                      <z of="subject" gte="320" />
                   </conditions>
-                  <invoke name="owned-room">
+                  <invoke name="mixin-owned-room">
                      <parameter name="OWNER" value="Svana" />
                   </invoke>
                </g>
@@ -1159,7 +1138,7 @@
                         <x of="subject" lte="-448" />
                         <y of="subject" gte="192" />
                      </conditions>
-                     <invoke name="owned-room">
+                     <invoke name="mixin-owned-room">
                         <parameter name="OWNER" value="Asgeir" />
                      </invoke>
                   </g>
@@ -1168,7 +1147,7 @@
                         <x of="subject" gte="-448" />
                         <y of="subject" gte="192" />
                      </conditions>
-                     <invoke name="owned-room">
+                     <invoke name="mixin-owned-room">
                         <parameter name="OWNER" value="Nura" />
                      </invoke>
                   </g>
@@ -1177,7 +1156,7 @@
                         <x of="subject" gte="-448" />
                         <y of="subject" lte="-64" />
                      </conditions>
-                     <invoke name="owned-room">
+                     <invoke name="mixin-owned-room">
                         <parameter name="OWNER" value="Vulwulf" />
                      </invoke>
                   </g>
@@ -1195,7 +1174,7 @@
                      <y of="subject" gte="-64" />
                      <y of="subject" lte="192" />
                   </conditions>
-                  <invoke name="owned-room">
+                  <invoke name="mixin-owned-room">
                      <parameter name="OWNER" value="Aerin" />
                   </invoke>
                </g>
@@ -1203,7 +1182,7 @@
                   <conditions>
                      <y of="subject" lte="-64" />
                   </conditions>
-                  <invoke name="owned-room">
+                  <invoke name="mixin-owned-room">
                      <parameter name="OWNER" value="Mjoll" />
                   </invoke>
                </g>
@@ -1936,33 +1915,10 @@
             <conditions>
                <parent-cell of="subject" is="RiftenBollisHouse" />
             </conditions>
-            <g name="asking-resident">
-               <conditions>
-                  <or>
-                     <actor-base of="speaker" is="Bolli" />
-                     <actor-base of="speaker" is="Nivenor" />
-                  </or>
-               </conditions>
-               <g name="asking-resident-about-resident">
-                  <conditions>
-                     <or>
-                        <actor-base of="subject" is="Bolli" />
-                        <actor-base of="subject" is="Nivenor" />
-                     </or>
-                  </conditions>
-                  <shared-info id="shared-at-our-home" />
-               </g>
-               <shared-info id="shared-at-my-home" />
-            </g>
-            <g name="asking-about-resident">
-               <conditions>
-                  <or>
-                     <actor-base of="subject" is="Bolli" />
-                     <actor-base of="subject" is="Nivenor" />
-                  </or>
-               </conditions>
-               <shared-info id="shared-at-own-home" />
-            </g>
+            <invoke name="mixin-house-two-residents-int">
+               <parameter name="OWNER-1" value="Bolli" />
+               <parameter name="OWNER-2" value="Nivenor" />
+            </invoke>
             <line>I believe he's at Bolli's house right now.</line>
             <line>I think I saw him heading toward Bolli's house, by the north gate.</line>
             <line>Try checking Bolli's house.</line>
@@ -1995,26 +1951,11 @@
             <conditions>
                <parent-cell of="subject" is="RiftenHouseofClanSnowShod" />
             </conditions>
-            <g name="resident">
-               <conditions>
-                  <or>
-                     <actor-base of="subject" is="Asgeir" />
-                     <actor-base of="subject" is="Nura" />
-                     <actor-base of="subject" is="Vulwulf" />
-                  </or>
-               </conditions>
-               <g name="resident-about-resident">
-                  <conditions>
-                     <or>
-                        <actor-base of="speaker" is="Asgeir" />
-                        <actor-base of="speaker" is="Nura" />
-                        <actor-base of="speaker" is="Vulwulf" />
-                     </or>
-                  </conditions>
-                  <shared-info id="shared-at-our-home" />
-               </g>
-               <shared-info id="shared-at-own-home" />
-            </g>
+            <invoke name="mixin-house-three-residents-int">
+               <parameter name="OWNER-1" value="Asgeir" />
+               <parameter name="OWNER-2" value="Nura" />
+               <parameter name="OWNER-3" value="Vulwulf" />
+            </invoke>
             <line>I believe I saw him on his way to Snow-Shod Manor not too long ago.</line>
             <line>I think I saw him over by Snow-Shod Manor.</line>
             <line>Try checking around Clan Snow-Shod's mansion.</line>
@@ -2091,24 +2032,10 @@
             <conditions>
                <parent-cell of="subject" is="RiftenBlacksmith" />
             </conditions>
-            <g name="asking-resident">
-               <conditions>
-                  <or>
-                     <actor-base of="speaker" is="Asbjorn" />
-                     <actor-base of="speaker" is="Balimund" />
-                  </or>
-               </conditions>
-               <shared-info id="shared-at-my-home" />
-            </g>
-            <g name="asking-about-resident">
-               <conditions>
-                  <or>
-                     <actor-base of="subject" is="Asbjorn" />
-                     <actor-base of="subject" is="Balimund" />
-                  </or>
-               </conditions>
-               <shared-info id="shared-at-own-home" />
-            </g>
+            <invoke name="mixin-house-two-residents-int">
+               <parameter name="OWNER-1" value="Asbjorn" />
+               <parameter name="OWNER-2" value="Balimund" />
+            </invoke>
             <line>He's at the blacksmith's house.</line>
             <line>He's at The Scorched Hammer. Check inside.</line>
          </g> <!-- /scorched-hammer -->
@@ -2693,14 +2620,7 @@
             <line>He might be out by the lake.</line>
          </g>
          
-         <!-- final fallback lines for this top-group -->
-         <g name="me-inside-they-outside">
-            <conditions>
-               <is-in-interior of="speaker" />
-            </conditions>
-            <line>I don't know. I'm in here, and he's out there, somewhere.</line>
-         </g>
-         <line>Somewhere outside. I'm not sure where.</line>
+         <invoke name="common-exterior-fallbacks" />
       </top-g> <!-- /ExteriorWithinWalls -->
       
       <!-- final fallback lines -->

@@ -10,6 +10,12 @@
       <shared-info id="shared-unknown-me-outside-they-inside" editor-id-slug="UnknownInteriorSpeakerOutside">
          <line>I don't know where he is. I haven't seen him walking around, though, so he must be indoors.</line>
       </shared-info>
+      <shared-info id="shared-unknown-exterior" editor-id-slug="UnknownExterior">
+         <line>Somewhere outside. I'm not sure where.</line>
+      </shared-info>
+      <shared-info id="shared-unknown-me-inside-they-outside" editor-id-slug="UnknownExteriorSpeakerInside">
+         <line>I don't know. I'm in here, and he's out there, somewhere.</line>
+      </shared-info>
       
       <shared-info id="shared-angry-inmate-doesnt-know" editor-id-slug="InmateCantTellYouAngry">
          <line emotion="anger:60" script-notes="emphasis on &quot;I&quot;">How would I know where they are? I'm stuck in this cell!</line>
@@ -169,6 +175,15 @@
             <shared-info id="shared-unknown-me-outside-they-inside" />
          </g>
       </macro>
+      <macro name="common-exterior-fallbacks">
+         <g name="me-inside-they-outside">
+            <conditions>
+               <is-in-interior of="speaker" />
+            </conditions>
+            <shared-info id="shared-unknown-me-inside-they-outside" />
+         </g>
+         <shared-info id="shared-unknown-exterior" />
+      </macro>
       
       <macro name="mixin-house-one-resident-int">
          <parameter name="OWNER" />
@@ -198,6 +213,10 @@
             "Alice's house" that Bob also lives at), handles asking a non-
             resident about another non-resident, provided at least one of 
             the residents is alive.
+            
+            The "notes" are spliced into specific lines used when only one 
+            owner is alive. You can use them for sentence fragments that 
+            characterize the surviving owner, e.g. ", the local alchemist".
          -->
          <parameter name="OWNER-1" />
          <parameter name="OWNER-2" />
@@ -235,6 +254,16 @@
          </data>
       </macro>
       <macro name="mixin-co-owned-house-int">
+         <!--
+            For a co-owned house (i.e. "Alice and Bob's house," rather than 
+            "Alice's house" that Bob also lives at), handles asking a non-
+            resident about another non-resident, provided at least one of 
+            the residents is alive.
+            
+            The house "note" is spliced into specific lines. You can use it 
+            as a sentence fragment to describe the location of the house, 
+            e.g. ", over by the lumber mill".
+         -->
          <parameter name="OWNER-1" />
          <parameter name="OWNER-2" />
          <parameter name="HOUSE-LOCATION-NOTE-1" default-value="" />
@@ -338,6 +367,48 @@
                   <or>
                      <actor-base of="subject" is="%OWNER-1%" />
                      <actor-base of="subject" is="%OWNER-2%" />
+                  </or>
+               </conditions>
+               <shared-info id="shared-at-own-home" />
+            </g>
+         </data>
+      </macro>
+      
+      <macro name="mixin-house-three-residents-int">
+         <!--
+            For a house with three residents, generates the content 
+            for asking a resident, and asking about a resident.
+         -->
+         <parameter name="OWNER-1" />
+         <parameter name="OWNER-2" />
+         <parameter name="OWNER-3" />
+         <data>
+            <g name="asking-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="speaker" is="%OWNER-1%" />
+                     <actor-base of="speaker" is="%OWNER-2%" />
+                     <actor-base of="speaker" is="%OWNER-3%" />
+                  </or>
+               </conditions>
+               <g name="asking-resident-about-resident">
+                  <conditions>
+                     <or>
+                        <actor-base of="subject" is="%OWNER-1%" />
+                        <actor-base of="subject" is="%OWNER-2%" />
+                        <actor-base of="subject" is="%OWNER-3%" />
+                     </or>
+                  </conditions>
+                  <shared-info id="shared-at-our-home" />
+               </g>
+               <shared-info id="shared-at-my-home" />
+            </g>
+            <g name="asking-about-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="%OWNER-1%" />
+                     <actor-base of="subject" is="%OWNER-2%" />
+                     <actor-base of="subject" is="%OWNER-3%" />
                   </or>
                </conditions>
                <shared-info id="shared-at-own-home" />
@@ -462,6 +533,26 @@
                </conditions>
                <shared-info id="shared-same-floor" />
             </g>
+         </data>
+      </macro>
+      
+      <macro name="mixin-owned-room">
+         <parameter name="OWNER" />
+         <parameter name="OWNER-PRINTABLE" default-value="%OWNER%" />
+         <data>
+            <g>
+               <conditions>
+                  <actor-base of="subject" is="%OWNER%" />
+               </conditions>
+               <shared-info id="shared-in-own-room" />
+            </g>
+            <g>
+               <conditions>
+                  <actor-base of="speaker" is="%OWNER%" />
+               </conditions>
+               <shared-info id="shared-in-my-room" />
+            </g>
+            <line>He's in %OWNER-PRINTABLE%'s room.</line>
          </data>
       </macro>
       

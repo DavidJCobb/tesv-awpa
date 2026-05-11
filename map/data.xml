@@ -8,14 +8,17 @@
       <bound id="Farmhouse03" x="-576,576" y="-459,459" />
       <bound id="Farmhouse04" x="-832,843" y="-960,459" />
       <bound id="Farmhouse05" x="-452,451" y="-512,343" />
+      <bound id="Farmhouse05Destroyed01" x="-452,407" y="-512,343" />
       <bound id="Farmhouse05Destroyed02" x="-406,407" y="-517,343" />
       <bound id="Farmhouse06" x="-580,579" y="-536,343" />
       <bound id="FarmhouseSmith01" x="-964,707" y="-556,343" />
       <bound id="FarmInn01" x="-972,972" y="-836,836" />
       <bound id="FarmLonghouse01" x="-1100,1100" y="-928,779" />
       <bound id="FarmLumbermill01" x="-403,418" y="-582,1151" />
+      <bound id="NorDwelling03ExtBaseA" x="-1022,1022" y="-791,1021" />
       <bound id="RockCaveEntrance01" x="-428,974" y="-800,727" />
       <bound id="RockCaveMineEntrance" x="-856,740" y="-188,1086" />
+      <bound id="RockCaveMineEntrance02" x="-764,1012" y="-809,804" />
       <bound id="WalkwayCWallGate01" x="-534,662" y="-182,182" />
       <bound id="WalkwayCWallGate02" x="-534,512" y="-182,182" />
    </bounds>
@@ -258,7 +261,11 @@
    </cells>
    <places>
       <place name="Darkwater Crossing">
-         <grid-rect min="28,-8" max="30,-9" />
+         <grid-rect min="28,-8" max="30,-10" />
+         
+         <ref label="Bridge" base="Bridge01" pos="116984.4531,-35218.4805" yaw="222" />
+         <ref label="Mine Entrance" base="RockCaveMineEntrance" pos="123920.0234,-35658.2539" yaw="211.0314" />
+         <ref label="Verner's House" base="Farmhouse03" pos="121525.4766,-33593.7852" yaw="19.5861" />
       </place>
       <place name="Dawnstar">
          <grid-rect min="5,27" max="9,23"></grid-rect>
@@ -306,7 +313,14 @@
          </ref>
       </place>
       <place name="Dragon Bridge">
-         <grid-rect min="-26,20" max="-25,16" />
+         <grid-rect min="-26,21" max="-25,16" />
+         
+         <ref label="Dragon Bridge Farm" base="Farmhouse05" pos="-101671.4688,85781.2109" yaw="296.9746" />
+         <ref label="Four Shields Tavern" base="FarmInn01" pos="-100331.8203,83983.1250" yaw="118.6479" />
+         <ref label="Horgeir's House" base="Farmhouse06" pos="-102323.5938,84678.6016" yaw="305.5690" />
+         <ref label="Lumber Camp" base="Farmhouse05" pos="-102320.2813,81551.9844" yaw="334.2169" />
+         <ref label="Lumber Mill" base="FarmLumbermill01" pos="-103593.7266,80252.2500" yaw="85.9438" />
+         <ref label="Penitus Oculatus Outpost" base="FarmhouseSmith01" pos="-103198.2656,83287.2656" yaw="264.2704" />
       </place>
       <place name="Dushnikh Yal">
          <grid-rect min="-36,-6" max="-35,-7" />
@@ -328,6 +342,14 @@
       </place>
       <place name="Ivarstead">
          <grid-rect min="17,-15" max="19,-18" />
+         <ref label="Bridge" base="Bridge01" pos="78706.7031,-67682.7969" yaw="325.6227" />
+         <ref label="Bridge to High Hrothgar" base="Bridge01" pos="74534.3984,-58272.5508" yaw="307.8382" />
+         <ref label="Fellstar Farm" base="Farmhouse01" pos="76688.8281,-62233.1484" yaw="87.1888" />
+         <ref label="Klimmek's House" base="Farmhouse04" pos="78369.6484,-64551.7539" yaw="50" />
+         <ref label="Lumber Mill" base="FarmLumbermill01" pos="75322.9453,-61539.9805" yaw="177.1352" />
+         <ref label="Narfi's Destroyed House" base="Farmhouse05Destroyed01" pos="73301.1719,-62828.5547" yaw="93.1059" />
+         <ref label="Shroud Hearth Barrow" base="NorDwelling03ExtBaseA" pos="79488,-62320" yaw="49.2972" />
+         <ref label="Vilemyr Inn" base="FarmInn01" pos="76368.0391,-66141.4766" yaw="230" />
       </place>
       <place name="Karthwasten">
          <grid-rect min="-34,10" max="-31,8"></grid-rect>
@@ -456,9 +478,18 @@
       </place>
       <place name="Rorikstead">
          <grid-rect min="-22,2" max="-20,1" />
+         
+         <ref label="Cowflop Farm" base="Farmhouse03" pos="-82754.0625,6775.7397" yaw="46" />
+         <ref label="Frostfruit Inn" base="FarmInn01" pos="-83211.4531,9048.4590" yaw="42" />
+         <ref label="Lemkil's Farm" base="Farmhouse01" pos="-85024.4375,6122.9795" yaw="218" />
+         <ref label="Rorik's Manor" base="Farmhouse04" pos="-85667.1563,9950.2744" yaw="2.8651" />
       </place>
       <place name="Shor's Stone">
          <grid-rect min="39,-15" max="40,-16" />
+         <ref label="Filnjar's House" base="FarmhouseSmith01" pos="162035.3906,-61851.6406" yaw="202" />
+         <ref label="Odfel and Grogmar's House" base="Farmhouse01" pos="164321.9219,-62220.4180" yaw="117.9077" />
+         <ref label="Redbelly Mine" base="RockCaveMineEntrance02" pos="160328.9844,-60744.4180" yaw="355.0681" />
+         <ref label="Sylgja's House" base="Farmhouse04" pos="162736.2031,-59018.5820" yaw="312.7313" />
       </place>
       <place name="Solitude">
          <grid-rect min="-18,26" max="-11,21" />

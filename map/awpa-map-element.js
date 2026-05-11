@@ -203,7 +203,7 @@ class AWPAMapElement extends HTMLElement {
       }
       
       if (window.location.hash)
-         this.view_place(window.location.hash.substring(1));
+         this.view_place(decodeURIComponent(window.location.hash.substring(1)));
    }
    
    base_form_by_id(id) {

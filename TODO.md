@@ -66,6 +66,26 @@ The Shrine of Talos is located beneath the Temple of Dibella. Be careful with Ge
 
 This is an open city in vanilla. We will need to define a perimeter of some sort (ideally something easily testable, e.g. an AABB) around the city, and have generic lines for actors anywhere in that perimeter.
 
+| Location | Exterior | Interior | Interior Rooms | Misc. To-Do Notes |
+| :- | :-: | :-: | :-: | :- |
+| Alva's House | ✅ | ✅ | ⬜ | Becomes Hroggar's house if he survives Laid To Rest. |
+| Burned House | ✅ |   |   |
+| Falion's House | ✅ | ✅ |   |
+| Guardhouse | ✅ | ✅ | ⬜ |
+| Guardhouse Jail |   | ✅ | ⬜ |
+| Highmoon Hall | ✅ | ✅ | ⬜ |
+| Jorgen and Lami's House | ✅ | ✅ |   |
+| Lumber Mill | ✅ |   |   |
+| Moorside Inn | ✅ | ✅ | ⬜ |
+| Thaumaturgist's Hut | ✅ | ✅ | ✅ |
+| Thonnir's House | ✅ | ✅ |   |
+| Exterior: bridge | ✅ |   |   |
+| Exterior: catwalks | ✅ |   |   |
+| Exterior: main street | ✅ |   |   |
+| Exterior: river | ✅ |   |   |
+| Exterior: south entrance | ✅ |   |   |
+| Exterior: west trail | ✅ |   |   |
+
 ### Riften
 
 I have a lot of content already set up for Riften, but it needs to be adapted to the new content structure before I mark it as completed below.

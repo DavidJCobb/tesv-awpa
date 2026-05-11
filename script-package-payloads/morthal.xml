@@ -146,6 +146,56 @@
             <line>I saw him headed toward the burned house next to the inn, where Hroggar used to live.</line>
             <line>He was walking around the burned-down house to the west not too long ago.</line>
          </g>
+         <g name="house-alva">
+            <conditions>
+               <x of="subject" gte="-35952" />
+               <x of="subject" lte="-34096" />
+               <y of="subject" gte="63056" />
+               <y of="subject" lte="65040" />
+            </conditions>
+            <g>
+               <conditions>
+                  <actor-base of="subject" is="Alva" />
+               </conditions>
+               <shared-info id="shared-exterior-near-own-home" />
+            </g>
+            <g>
+               <conditions>
+                  <actor-base of="subject" is="Hroggar" />
+               </conditions>
+               <g name="alva-slain">
+                  <conditions>
+                     <death-count of="Alva" gt="0" />
+                  </conditions>
+                  <shared-info id="shared-exterior-near-own-home" />
+               </g>
+               <line><verbatim>He's</verbatim> over by Alva's house. <verbatim>He's</verbatim> been staying there since <verbatim>his</verbatim> place got destroyed by a fire.</line>
+               <line><verbatim>He's</verbatim> been living with Alva ever since <verbatim>his</verbatim> home burned down.</line>
+            </g>
+            <line>I think he's somewhere near Alva's home right now.</line>
+            <line>Pretty sure I saw him around Alva's house recently.</line>
+            <line>Try looking around Alva's house.</line>
+         </g>
+         <g name="house-falion">
+            <conditions>
+               <x of="subject" gte="-36384" />
+               <x of="subject" lte="-34096" />
+               <y of="subject" gte="65040" />
+               <y of="subject" lte="68672" />
+            </conditions>
+            <g name="resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Falion" />
+                     <actor-base of="subject" is="Agni" />
+                  </or>
+               </conditions>
+               <shared-info id="shared-exterior-near-own-home" />
+            </g>
+            <line>He passed by Falion's house a little while ago.</line>
+            <line>I spotted him over around Falion's home earlier. He might still be there.</line>
+            <line>I saw him near Falion's house, on the east edge of town.</line>
+         </g>
          <g name="house-jorgen-lami">  
             <conditions>
                <x of="subject" gte="-41712" />
@@ -163,6 +213,26 @@
                   <line>I think I saw him headed toward the abandoned house by the lumber mill.</line>
                </parameter>
             </invoke>
+         </g>
+         <g name="house-thonnir">
+            <conditions>
+               <x of="subject" gte="-38912" />
+               <x of="subject" lte="-36384" />
+               <y of="subject" gte="65648" />
+               <y of="subject" lte="67056" />
+            </conditions>
+            <g name="resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Thonnir" />
+                     <actor-base of="subject" is="Virkmund" />
+                  </or>
+               </conditions>
+               <shared-info id="shared-exterior-near-own-home" />
+            </g>
+            <line>He was hanging around Thonnir's house a little while ago.</line>
+            <line>I saw him by Thonnir's house recently.</line>
+            <line>I'm fairly sure he's near Thonnir's house right now.</line>
          </g>
          <g name="lumber-mill">  
             <conditions>
@@ -195,6 +265,17 @@
             <line>I think he might've been on his way to the Thaumaturgist's Hut?</line>
          </g>
          
+         <g name="guardhouse">  
+            <conditions>
+               <x of="subject" gte="-37568" />
+               <x of="subject" lte="-35440" />
+               <y of="subject" gte="62016" />
+               <y of="subject" lte="64144" />
+            </conditions>
+            <line>I saw him hanging around the Guardhouse, near Morthal's south entrance.</line>
+            <line>I'm pretty sure he's by the Guardhouse.</line>
+            <line>I'd try checking the Guardhouse.</line>
+         </g>
          <g name="highmoon-hall">  
             <conditions>
                <x of="subject" gte="-39856" />
@@ -209,6 +290,16 @@
          <!-- TODO -->
          
          <g name="low-detail">
+            <g name="main-street">  
+               <conditions>
+                  <x of="subject" gte="-40000" />
+                  <x of="subject" lte="-38848" />
+                  <y of="subject" gte="64688" />
+                  <y of="subject" lte="67488" />
+               </conditions>
+               <line>He's out on the main street running through town.</line>
+               <line>He's on Morthal's main road, between the town hall and the inn.</line>
+            </g>
             <g name="west-trail">  
                <conditions>
                   <x of="subject" gte="-45056" />
@@ -218,6 +309,74 @@
                </conditions>
                <line>I think he was headed toward one of the trails to the west.</line>
                <line>There's a hiking trail to the west that people occasionally follow. I saw him headed that way.</line>
+            </g>
+            <g name="river">  
+               <conditions>
+                  <x of="subject" gte="-43312" />
+                  <x of="subject" lte="-35312" />
+                  <y of="subject" gte="67056" />
+                  <y of="subject" lte="69328" />
+               </conditions>
+               <line>He's out on the river that runs through town -- the one with a bridge across it.</line>
+            </g>
+            <g name="southeast-walkways">  
+               <conditions>
+                  <x of="subject" gte="-37872" />
+                  <x of="subject" lte="-35952" />
+                  <y of="subject" gte="63536" />
+                  <y of="subject" lte="65648" />
+               </conditions>
+               <line>I saw him out on the walkways, in the southeast part of town.</line>
+               <line>I'm pretty sure he's on the walkways and piers on the eastern half of town... or maybe in the water.</line>
+            </g>
+            <g name="south-entrance">  
+               <conditions>
+                  <x of="subject" gte="-38816" />
+                  <x of="subject" lte="-35808" />
+                  <y of="subject" gte="61440" />
+                  <y of="subject" lte="63536" />
+               </conditions>
+               <line>He's over by the southern road into town.</line>
+               <line>Check by the south road out of Morthal.</line>
+               <line>I'm pretty sure he's around the town's main entrance, south of Highmoon Hall.</line>
+            </g>
+         </g>
+         <g name="directional-fallbacks">
+            <g name="north">  
+               <conditions>
+                  <x of="subject" gte="-45056" />
+                  <x of="subject" lte="-32768" />
+                  <y of="subject" gte="69328" />
+                  <y of="subject" lte="77824" />
+               </conditions>
+               <shared-info id="beyond-city-limits-north" />
+            </g>
+            <g name="east">  
+               <conditions>
+                  <x of="subject" gte="-35312" />
+                  <x of="subject" lte="-28672" />
+                  <y of="subject" gte="57344" />
+                  <y of="subject" lte="77824" />
+               </conditions>
+               <shared-info id="beyond-city-limits-east" />
+            </g>
+            <g name="west">  
+               <conditions>
+                  <x of="subject" gte="-53248" />
+                  <x of="subject" lte="-38816" />
+                  <y of="subject" gte="57344" />
+                  <y of="subject" lte="77824" />
+               </conditions>
+               <shared-info id="beyond-city-limits-west" />
+            </g>
+            <g name="south">  
+               <conditions>
+                  <x of="subject" gte="-38816" />
+                  <x of="subject" lte="-35312" />
+                  <y of="subject" gte="57344" />
+                  <y of="subject" lte="63056" />
+               </conditions>
+               <shared-info id="beyond-city-limits-south" />
             </g>
          </g>
       </top-g>

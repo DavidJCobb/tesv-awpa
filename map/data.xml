@@ -351,7 +351,7 @@
       </place>
       <place name="Morthal">
          <grid-rect min="-11,17" max="-8,14"></grid-rect>
-         <ref label="Thaumaturgist's Hut" base="FarmhouseSmith01" pos="-36476.7031,62927.0977" yaw="148" />
+         <ref label="Guardhouse" base="FarmhouseSmith01" pos="-36476.7031,62927.0977" yaw="148" />
          <ref label="Moorside Inn" base="FarmInn01" pos="-40618.6406,65687.3516" yaw="330" />
          <ref label="Highmoon Hall" base="FarmLonghouse01" pos="-39517.1563,62932.9766" yaw="240" />
          <ref label="Lumber Mill" base="FarmLumbermill01" pos="-38358.2500,70407.0703" yaw="90" />

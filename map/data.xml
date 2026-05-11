@@ -249,7 +249,7 @@
          <cell coords="27,23" form-id="8EDF" />
          <cell coords="26,23" form-id="8EE0" />
       </location>
-      <location editor-id="WindhelmCollegeLocation">
+      <location editor-id="WinterholdCollegeLocation">
          <cell coords="28,27" form-id="8E62" />
          <cell coords="27,27" form-id="8E63" />
          <cell coords="28,26" form-id="8E81" />
@@ -257,6 +257,9 @@
       </location>
    </cells>
    <places>
+      <place name="Darkwater Crossing">
+         <grid-rect min="28,-8" max="30,-9" />
+      </place>
       <place name="Dawnstar">
          <grid-rect min="5,27" max="9,23"></grid-rect>
          <ref label="Dawnstar Barracks" pos="31257.2617,101600.2266" yaw="176">
@@ -302,8 +305,14 @@
             <obnd x="-1100,1100" y="-948,844" />
          </ref>
       </place>
+      <place name="Dragon Bridge">
+         <grid-rect min="-26,20" max="-25,16" />
+      </place>
+      <place name="Dushnikh Yal">
+         <grid-rect min="-36,-6" max="-35,-7" />
+      </place>
       <place name="Falkreath">
-         <grid-rect min="-9,-21" max="-6,-23"></grid-rect>
+         <grid-rect min="-10,-21" max="-6,-23"></grid-rect>
          <ref label="Falkreath Barracks" base="Farmhouse02" pos="-27674.3496,-88197.8828" yaw="-121" />
          <ref label="Lod's House (Blacksmith)" base="FarmhouseSmith01" pos="-30596.3242,-88602.5078" yaw="-175" />
          <ref label="Corpselight Farm" base="Farmhouse03" pos="-31381.8008,-86371.9609" yaw="305.5709" />
@@ -317,8 +326,11 @@
          <ref label="East Gate" base="WalkwayCWallGate01" pos="-27384.0078,-85020.1719" yaw="267.6170" />
          <ref label="West Gate" base="WalkwayCWallGate02" pos="-33417.1406,-89072.9219" yaw="235" />
       </place>
+      <place name="Ivarstead">
+         <grid-rect min="17,-15" max="19,-18" />
+      </place>
       <place name="Karthwasten">
-         <grid-rect min="-34,10" max="-32,8"></grid-rect>
+         <grid-rect min="-34,10" max="-31,8"></grid-rect>
          <ref label="Miner's Barracks" base="Farmhouse01" pos="-134800.6406,38894.2734" yaw="268.8986" />
          <ref label="Enmon's House" base="Farmhouse02" pos="-133992.6406,37280.0898" yaw="201.0039" />
          <ref label="Karthwasten Hall" base="FarmhouseSmith01" pos="-131872.2656,37684.3008" yaw="160" />
@@ -330,6 +342,9 @@
          <ref label="Braidwood Inn" base="FarmInn01" pos="136358.9531,11202.0830" yaw="90.7469" />
          <ref label="Steamscorch Mine" base="RockCaveMineEntrance" pos="138048.6563,13965.3936" yaw="42.9718" />
          <ref label="Dragon Mound" base="DragonMoundBase" pos="146095.0781,13652.4727" yaw="357.9718" />
+      </place>
+      <place name="Largashbur">
+         <grid-rect min="32,-27" max="33,-28" />
       </place>
       <place name="Markarth">
          <grid-rect min="-46,2" max="-41,-1"></grid-rect>
@@ -349,8 +364,11 @@
             <obnd x="-414,363" y="-372,587" />
          </ref>
       </place>
+      <place name="Mor Khazgur">
+         <grid-rect min="-38,20" max="-37,16" />
+      </place>
       <place name="Morthal">
-         <grid-rect min="-11,17" max="-8,14"></grid-rect>
+         <grid-rect min="-11,18" max="-8,14"></grid-rect>
          <ref label="Guardhouse" base="FarmhouseSmith01" pos="-36476.7031,62927.0977" yaw="148" />
          <ref label="Moorside Inn" base="FarmInn01" pos="-40618.6406,65687.3516" yaw="330" />
          <ref label="Highmoon Hall" base="FarmLonghouse01" pos="-39517.1563,62932.9766" yaw="240" />
@@ -361,6 +379,9 @@
          <ref label="Thonnir's House" base="Farmhouse06" pos="-38415.7813,66643.7422" yaw="354" />
          <ref label="Thaumaturgist's Hut" base="Farmhouse02" pos="-37685.9336,65005.2930" yaw="84" />
          <ref label="Burned House" base="Farmhouse05Destroyed02" pos="-41184.9648,63829.9531" yaw="237" />
+      </place>
+      <place name="Narzulbur">
+         <grid-rect min="38,2" max="38,1" />
       </place>
       <place name="Riften">
          <grid-rect min="39,-20" max="44,-25"></grid-rect>
@@ -423,7 +444,7 @@
          </ref>
       </place>
       <place name="Riverwood">
-         <grid-rect min="4,-10" max="6,-13"></grid-rect>
+         <grid-rect min="3,-10" max="6,-13"></grid-rect>
          <ref label="Alvor's House (Blacksmith)" base="FarmhouseSmith01" pos="21002.3906,-44734.1680" yaw="315" />
          <ref label="Sleeping Giant Inn" base="FarmInn01" pos="23863.5645,-44502.5508" yaw="132" />
          <ref label="Lumber Mill" base="FarmLumbermill01" pos="19277.2676,-44311.2500" yaw="45.2412" />
@@ -432,6 +453,12 @@
          <ref label="Sven's House" base="Farmhouse06" pos="20906.0098,-46558.1602" yaw="151.1352" />
          <ref label="Riverwood Trader" base="Farmhouse04" pos="22176.3594,-45866.6797" yaw="135" />
          <ref label="North Bridge" base="Bridge01" pos="24282.6563,-39516.7305" yaw="149.4594" />
+      </place>
+      <place name="Rorikstead">
+         <grid-rect min="-22,2" max="-20,1" />
+      </place>
+      <place name="Shor's Stone">
+         <grid-rect min="39,-15" max="40,-16" />
       </place>
       <place name="Solitude">
          <grid-rect min="-18,26" max="-11,21" />
@@ -485,10 +512,13 @@
          </ref>
       </place>
       <place name="Whiterun">
+         <grid-rect min="3,0" max="8,-6" />
       </place>
       <place name="Windhelm">
+         <grid-rect min="32,8" max="36,5" />
       </place>
       <place name="Winterhold">
+         <grid-rect min="26,28" max="29,23" />
          <ref label="The Frozen Hearth" base="FarmInn01" pos="110534.5625,102141.4688" yaw="68" />
          <ref label="Jarl's Longhouse" base="FarmLonghouse01" pos="108893.0156,100651.5938" yaw="247" />
          <ref label="Kraldar's House" base="Farmhouse01" pos="108494.1875,104247.0781" yaw="287.7846" />

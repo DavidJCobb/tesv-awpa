@@ -257,7 +257,29 @@ end
 
 macros = {}
 
-function macros.transform(root)
+function macros.gather_global_macros(root, dst_set)
+   root:for_each_child_element(function(node)
+      if node.node_name ~= "global-macros" then
+         return
+      end
+      node:for_each_child_element(function(node)
+         if node.node_name ~= "macro" then
+            return
+         end
+         local name = node.attributes["name"]
+         if not name or name == "" then
+            error("nameless macro")
+         end
+         if dst_set[name] then
+            error("redefinition of global macro `" .. name .. "`")
+         end
+         local item = macro(name, node)
+         dst_set[name] = item
+      end)
+   end)
+end
+
+function macros.transform(root, global_macros)
    local macro_definitions = {} -- vector<macro>
    local macros_in_scope   = {} -- vector<macro>
    
@@ -280,11 +302,15 @@ function macros.transform(root)
          if not name or name == "" then
             error("nameless macro invocation")
          end
-         local list = macro_definitions[name]
-         if not list then
-            error("macro not found: " .. name)
+         local dfn
+         do
+            local list = macro_definitions[name]
+            if list then
+               dfn = list[#list]
+            else
+               dfn = (global_macros or {})[name]
+            end
          end
-         local dfn = list[#list]
          if not dfn then
             error("macro not found: " .. name)
          end

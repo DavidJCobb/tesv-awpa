@@ -12,7 +12,19 @@
       <actors>
          <actor editor-id="Agni" />
          <actor editor-id="Alva">
-            <!-- TODO: Don't allow asking about her when she's outed as a vampire -->
+            <begin-asking-about>
+               <filter-conditions>
+                  <!--
+                     Don't allow asking about Alva once she's outed as a vampire.
+                  -->
+                  <quest-not-completed name="MS14" />
+                  <papyrus-quest-variable
+                     for="MS14"
+                     var="::PCFoundAlvasCoffin_var"
+                     eq="0"
+                  />
+               </filter-conditions>
+            </begin-asking-about>
          </actor>
          <actor editor-id="Aslfur" />
          <actor editor-id="Benor" />
@@ -29,97 +41,22 @@
          <actor editor-id="Virkmund" />
       </actors>
       
-      <!-- Content macros: -->
-      <macro name="owned-house">
-         <parameter name="OWNER" />
-         <parameter name="OWNER-PRINTABLE" default-value="%OWNER%" />
-         <data>
-            <g>
-               <conditions>
-                  <actor-base of="subject" is="%OWNER%" />
-               </conditions>
-               <shared-info id="shared-at-own-home" />
-            </g>
-            <g>
-               <conditions>
-                  <actor-base of="speaker" is="%OWNER%" />
-               </conditions>
-               <shared-info id="shared-at-my-home" />
-            </g>
-            <line>He's at %OWNER-PRINTABLE%'s house.</line>
-            <line>I think he's visiting %OWNER-PRINTABLE% right now.</line>
-            <line>I think I saw him on his way to %OWNER-PRINTABLE%'s house.</line>
-         </data>
-      </macro>
-      <macro name="co-owned-house-ext">
-         <parameter name="OWNER-PRIMARY" />
-         <parameter name="OWNER-SECONDARY" />
-         <parameter name="OWNER-PRIMARY-NOTE" default-value="" />
-         <parameter name="OWNER-SECONDARY-NOTE" default-value="" />
-         <parameter name="CONTENT-IF-BOTH-DEAD" />
-         <data>
-            <g> <!-- asking resident about resident -->
-               <conditions>
-                  <or>
-                     <actor-base of="subject" is="%OWNER-PRIMARY%" />
-                     <actor-base of="subject" is="%OWNER-SECONDARY%" />
-                  </or>
-                  <or>
-                     <actor-base of="speaker" is="%OWNER-PRIMARY%" />
-                     <actor-base of="speaker" is="%OWNER-SECONDARY%" />
-                  </or>
-               </conditions>
-               <shared-info id="shared-exterior-near-our-home" />
-            </g>
-            <g> <!-- asking about resident -->
-               <conditions>
-                  <or>
-                     <actor-base of="subject" is="%OWNER-PRIMARY%" />
-                     <actor-base of="subject" is="%OWNER-SECONDARY%" />
-                  </or>
-               </conditions>
-               <shared-info id="shared-exterior-near-own-home" />
-            </g>
-            <g> <!-- asking about non-resident; both homeowners alive -->
-               <conditions>
-                  <death-count of="%OWNER-PRIMARY%" lte="0" />
-                  <death-count of="%OWNER-SECONDARY%" lte="0" />
-               </conditions>
-               <line>He might've been headed to %OWNER-PRIMARY% and %OWNER-SECONDARY%'s house.</line>
-               <line>I think I saw him over by %OWNER-PRIMARY% and %OWNER-SECONDARY%'s home.</line>
-            </g>
-            <g> <!-- asking about non-resident; primary homeowner dead -->
-               <conditions>
-                  <death-count of="%OWNER-PRIMARY%" gt="0" />
-                  <death-count of="%OWNER-SECONDARY%" lte="0" />
-               </conditions>
-               <line>He might've been headed to %OWNER-SECONDARY%'s house.</line>
-               <line>I think I saw him over by %OWNER-SECONDARY%'s home.%OWNER-SECONDARY-NOTE%</line>
-            </g>
-            <g> <!-- asking about non-resident; secondary homeowner dead -->
-               <conditions>
-                  <death-count of="%OWNER-PRIMARY%" lte="0" />
-                  <death-count of="%OWNER-SECONDARY%" gt="0" />
-               </conditions>
-               <line>He might've been headed to %OWNER-PRIMARY%'s house.</line>
-               <line>I think I saw him over by %OWNER-PRIMARY%'s home.%OWNER-PRIMARY-NOTE%</line>
-            </g>
-            <!-- else both homeowners dead -->
-            %CONTENT-IF-BOTH-DEAD%
-         </data>
-      </macro>
-      
-      <top-g slug="SuperNearPlayer">
-         <conditions>
-            <distance of="player" to="subject" lte="128" />
-         </conditions>
-         <shared-info id="shared-near-player" />
-      </top-g>
+      <invoke name="common-super-near-player" />
       <top-g slug="SameInterior">
          <conditions>
             <is-in-interior of="subject" />
             <parent-cell of="speaker" same-as="subject" />
          </conditions>
+         
+         <g name="different-floors">
+            <g name="thaumaturgist">
+               <conditions>
+                  <parent-cell of="subject" is="MorthalThaumaturgistsHut" />
+               </conditions>
+               <constant name="height-coordinate-2f" value="240" />
+               <invoke name="mixin-interior-1f-2f-no-rooms" />
+            </g>
+         </g>
          
          <!--
             TODO: per-room checks for Highmoon Hall and Moorside Inn
@@ -193,15 +130,10 @@
             <conditions>
                <parent-cell of="subject" is="MorthalFalionsHouse" />
             </conditions>
-            <g name="asking-about-resident">
-               <conditions>
-                  <or>
-                     <actor-base of="subject" is="Falion" />
-                     <actor-base of="subject" is="Agni" />
-                  </or>
-               </conditions>
-               <shared-info id="shared-at-own-home" />
-            </g>
+            <invoke name="mixin-house-two-residents-int">
+               <parameter name="OWNER-1" value="Falion" />
+               <parameter name="OWNER-2" value="Agni" />
+            </invoke>
             <line>He was headed to Falion's house earlier.</line>
             <line>I saw him walk into Falion's house a while ago.</line>
             <line>I think he was at Falion's house.</line>
@@ -210,67 +142,27 @@
             <conditions>
                <parent-cell of="subject" is="MorthalJorgenandLamisHouse" />
             </conditions>
-            <g name="asking-resident">
-               <conditions>
-                  <or>
-                     <actor-base of="speaker" is="Jorgen" />
-                     <actor-base of="speaker" is="Lami" />
-                  </or>
-               </conditions>
-               <g name="asking-resident-about-resident">
-                  <conditions>
-                     <or>
-                        <actor-base of="subject" is="Jorgen" />
-                        <actor-base of="subject" is="Lami" />
-                     </or>
-                  </conditions>
-                  <shared-info id="shared-at-our-home" />
-               </g>
-               <shared-info id="shared-at-my-home" />
-            </g>
-            <g name="asking-about-resident">
-               <conditions>
-                  <or>
-                     <actor-base of="subject" is="Jorgen" />
-                     <actor-base of="subject" is="Lami" />
-                  </or>
-               </conditions>
-               <shared-info id="shared-at-own-home" />
-            </g>
-            <line>He's visiting Jorgen and Lami right now.</line>
-            <line>He's at Jorgen and Lami's house, on the north edge of town.</line>
+            <invoke name="mixin-house-two-residents-int">
+               <parameter name="OWNER-1" value="Jorgen" />
+               <parameter name="OWNER-2" value="Lami" />
+            </invoke>
+            <invoke name="mixin-co-owned-house-int">
+               <parameter name="OWNER-1" value="Jorgen" />
+               <parameter name="OWNER-2" value="Lami" />
+               <parameter name="HOUSE-LOCATION-NOTE-1" value=", on the north edge of town" />
+               <parameter name="BOTH-DEAD-ADDITIONAL-LINES">
+                  <line>He's at the abandoned house on the north edge of town.</line>
+               </parameter>
+            </invoke>
          </g>
          <g name="house-thonnir">
             <conditions>
                <parent-cell of="subject" is="MorthalThonnirsHouse" />
             </conditions>
-            <g name="asking-resident">
-               <conditions>
-                  <or>
-                     <actor-base of="speaker" is="Thonnir" />
-                     <actor-base of="speaker" is="Vikmund" />
-                  </or>
-               </conditions>
-               <g name="asking-resident-about-resident">
-                  <conditions>
-                     <or>
-                        <actor-base of="subject" is="Thonnir" />
-                        <actor-base of="subject" is="Vikmund" />
-                     </or>
-                  </conditions>
-                  <shared-info id="shared-at-our-home" />
-               </g>
-               <shared-info id="shared-at-my-home" />
-            </g>
-            <g name="asking-about-resident">
-               <conditions>
-                  <or>
-                     <actor-base of="subject" is="Thonnir" />
-                     <actor-base of="subject" is="Vikmund" />
-                  </or>
-               </conditions>
-               <shared-info id="shared-at-own-home" />
-            </g>
+            <invoke name="mixin-house-two-residents-int">
+               <parameter name="OWNER-1" value="Thonnir" />
+               <parameter name="OWNER-2" value="Vikmund" />
+            </invoke>
             <line>I saw him on his way to Thonnir's house.</line>
             <line>I'm pretty sure he's stopping by Thonnir's house right now.</line>
          </g>
@@ -297,12 +189,7 @@
             <line>Check the Thaumaturgist's Hut. Two-story building at the center of town.</line>
          </g>
          
-         <g name="me-outside-they-inside">
-            <conditions>
-               <is-in-exterior of="speaker" />
-            </conditions>
-            <shared-info id="shared-unknown-me-outside-they-inside" />
-         </g>
+         <invoke name="common-me-outside-they-inside" />
       </top-g>
       <top-g slug="Exterior">
          <conditions>
@@ -370,15 +257,10 @@
                <y of="subject" gte="65040" />
                <y of="subject" lte="68672" />
             </conditions>
-            <g name="resident">
-               <conditions>
-                  <or>
-                     <actor-base of="subject" is="Falion" />
-                     <actor-base of="subject" is="Agni" />
-                  </or>
-               </conditions>
-               <shared-info id="shared-exterior-near-own-home" />
-            </g>
+            <invoke name="mixin-house-two-residents-ext">
+               <parameter name="OWNER-1" value="Falion" />
+               <parameter name="OWNER-2" value="Agni" />
+            </invoke>
             <line>He passed by Falion's house a little while ago.</line>
             <line>I spotted him over around Falion's home earlier. He might still be there.</line>
             <line>I saw him near Falion's house, on the east edge of town.</line>
@@ -390,13 +272,17 @@
                <y of="subject" gte="69328" />
                <y of="subject" lte="71568" />
             </conditions>
-            <invoke name="co-owned-house-ext">
-               <parameter name="OWNER-PRIMARY" value="Jorgen" />
-               <parameter name="OWNER-SECONDARY" value="Lami" />
-               <parameter name="OWNER-PRIMARY-NOTE"> <verbatim>He</verbatim> runs the lumber mill right next to it.</parameter>
-               <parameter name="OWNER-SECONDARY-NOTE"> <verbatim>She</verbatim> runs the alchemy shop at the center of town, but <verbatim>she</verbatim> lives over by the lumber mill.</parameter>
-               <parameter name="CONTENT-IF-BOTH-DEAD">
-                  <line>I think I saw him across around the house across the bridge.</line>
+            <invoke name="mixin-house-two-residents-ext">
+               <parameter name="OWNER-1" value="Jorgen" />
+               <parameter name="OWNER-2" value="Lami" />
+            </invoke>
+            <invoke name="mixin-co-owned-house-ext">
+               <parameter name="OWNER-1" value="Jorgen" />
+               <parameter name="OWNER-2" value="Lami" />
+               <parameter name="OWNER-1-NOTE"> <verbatim>He</verbatim> runs the lumber mill right next to it.</parameter>
+               <parameter name="OWNER-2-NOTE"> <verbatim>She</verbatim> runs the alchemy shop at the center of town, but <verbatim>she</verbatim> lives over by the lumber mill.</parameter>
+               <parameter name="BOTH-DEAD-ADDITIONAL-LINES">
+                  <line>He's over by the house across the bridge.</line>
                   <line>I think I saw him headed toward the abandoned house by the lumber mill.</line>
                </parameter>
             </invoke>
@@ -408,15 +294,10 @@
                <y of="subject" gte="65648" />
                <y of="subject" lte="67056" />
             </conditions>
-            <g name="resident">
-               <conditions>
-                  <or>
-                     <actor-base of="subject" is="Thonnir" />
-                     <actor-base of="subject" is="Virkmund" />
-                  </or>
-               </conditions>
-               <shared-info id="shared-exterior-near-own-home" />
-            </g>
+            <invoke name="mixin-house-two-residents-ext">
+               <parameter name="OWNER-1" value="Thonnir" />
+               <parameter name="OWNER-2" value="Virkmund" />
+            </invoke>
             <line>He was hanging around Thonnir's house a little while ago.</line>
             <line>I saw him by Thonnir's house recently.</line>
             <line>I'm fairly sure he's near Thonnir's house right now.</line>
@@ -473,8 +354,6 @@
             <line>I saw him around Highmoon Hall not too long ago.</line>
             <line>Have you looked near the town hall?</line>
          </g>
-         
-         <!-- TODO -->
          
          <g name="low-detail">
             <g name="main-street">  

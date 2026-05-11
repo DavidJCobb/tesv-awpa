@@ -844,27 +844,6 @@
       </actors>
       
       <!-- Content macros: -->
-      <macro name="owned-house">
-         <parameter name="OWNER" />
-         <parameter name="OWNER-PRINTABLE" default-value="%OWNER%" />
-         <data>
-            <g>
-               <conditions>
-                  <actor-base of="subject" is="%OWNER%" />
-               </conditions>
-               <shared-info id="shared-at-own-home" />
-            </g>
-            <g>
-               <conditions>
-                  <actor-base of="speaker" is="%OWNER%" />
-               </conditions>
-               <shared-info id="shared-at-my-home" />
-            </g>
-            <line>He's at %OWNER-PRINTABLE%'s house.</line>
-            <line>I think he's visiting %OWNER-PRINTABLE% right now.</line>
-            <line>I think I saw him on his way to %OWNER-PRINTABLE%'s house.</line>
-         </data>
-      </macro>
       <macro name="owned-room">
          <parameter name="OWNER" />
          <parameter name="OWNER-PRINTABLE" default-value="%OWNER%" />
@@ -895,6 +874,7 @@
          <conditions>
             <is-in-interior of="subject" />
             <parent-cell of="speaker" same-as="subject" />
+            <parent-cell of="player" same-as="subject" />
          </conditions>
          
          <constant name="height-coordinate-b1f" value="-192" />
@@ -916,38 +896,11 @@
          </condition-set>
          
          <g name="different-floors">
-            <g name="upstairs">
-               <conditions>
-                  <parent-cell of="player" same-as="subject" />
-                  <!-- subject not on lowest floor; player not on highest floor -->
-                  <z of="subject" gte="height-coordinate-1f" />
-                  <z of="player"  lt="height-coordinate-2f" />
-                  <or>
-                     <!-- player on lowest floor or subject on highest floor -->
-                     <!-- if we had more than 3 floors, the logic here would be more complex -->
-                     <z of="subject" gte="height-coordinate-2f" />
-                     <z of="player"  lt="height-coordinate-1f" />
-                  </or>
+            <invoke name="common-interior-different-floors-b1f-1f-2f">
+               <parameter name="ADDITIONAL-CONDITIONS">
                   <condition-set of="subject" name="subject-in-multifloor-interior" />
-               </conditions>
-               <shared-info id="shared-upstairs" />
-            </g>
-            <g name="downstairs">
-               <conditions>
-                  <!--
-                     downstairs is opposite of upstairs; just switch around who we run each coordinate check on
-                  -->
-                  <parent-cell of="player" same-as="subject" />
-                  <z of="player" gte="height-coordinate-1f" />
-                  <z of="subject"  lt="height-coordinate-2f" />
-                  <or>
-                     <z of="player" gte="height-coordinate-2f" />
-                     <z of="subject"  lt="height-coordinate-1f" />
-                  </or>
-                  <condition-set of="subject" name="subject-in-multifloor-interior" />
-               </conditions>
-               <shared-info id="shared-downstairs" />
-            </g>
+               </parameter>
+            </invoke>
          </g>
          <g name="specific-rooms">
             <g name="bee-and-barb">
@@ -1314,33 +1267,11 @@
                </g>
             </g> <!-- /mistveil-keep-main -->
          </g>
-         <g name="same-floor">
-            <conditions>
-               <parent-cell of="player" same-as="subject" />
-               <or>
-                  <z of="subject" lt="height-coordinate-1f" />
-                  <z of="subject" lt="height-coordinate-2f" />
-                  <z of="player" gte="height-coordinate-2f" />
-               </or>
-               <or>
-                  <z of="subject" lt="height-coordinate-1f" />
-                  <z of="player" lt="height-coordinate-2f" />
-                  <z of="subject" gte="height-coordinate-2f" />
-               </or>
-               <or>
-                  <z of="player" lt="height-coordinate-1f" />
-                  <z of="subject" lt="height-coordinate-2f" />
-                  <z of="player" gte="height-coordinate-2f" />
-               </or>
-               <or>
-                  <z of="player" lt="height-coordinate-1f" />
-                  <z of="player" lt="height-coordinate-2f" />
-                  <z of="subject" gte="height-coordinate-2f" />
-               </or>
+         <invoke name="common-interior-same-floor-b1f-1f-2f">
+            <parameter name="ADDITIONAL-CONDITIONS">
                <condition-set of="subject" name="subject-in-multifloor-interior" />
-            </conditions>
-            <shared-info id="shared-same-floor" />
-         </g>
+            </parameter>
+         </invoke>
          
          <shared-info id="shared-same-building" />
       </top-g> <!-- /SameInterior -->
@@ -2040,7 +1971,7 @@
             <conditions>
                <parent-cell of="subject" is="RiftenMariseAravelsHouse" />
             </conditions>
-            <invoke name="owned-house">
+            <invoke name="mixin-house-one-resident-int">
                <parameter name="OWNER" value="Marise" />
             </invoke>
          </g> <!-- /residence-marise -->
@@ -2048,7 +1979,7 @@
             <conditions>
                <parent-cell of="subject" is="RiftenRomlynDrethsHouse" />
             </conditions>
-            <invoke name="owned-house">
+            <invoke name="mixin-house-one-resident-int">
                <parameter name="OWNER" value="Romlyn" />
             </invoke>
          </g> <!-- /residence-romlyn -->
@@ -2056,7 +1987,7 @@
             <conditions>
                <parent-cell of="subject" is="RiftenValindorsHouse" />
             </conditions>
-            <invoke name="owned-house">
+            <invoke name="mixin-house-one-resident-int">
                <parameter name="OWNER" value="Valindor" />
             </invoke>
          </g> <!-- /residence-valindor -->
@@ -2182,13 +2113,7 @@
             <line>He's at The Scorched Hammer. Check inside.</line>
          </g> <!-- /scorched-hammer -->
       
-         <!-- final fallback lines for this top-group -->
-         <g name="me-outside-they-inside">
-            <conditions>
-               <is-in-exterior of="speaker" />
-            </conditions>
-            <shared-info id="shared-unknown-me-outside-they-inside" />
-         </g>
+         <invoke name="common-me-outside-they-inside" />
       </top-g> <!-- /Interiors -->
       
       <top-g slug="Exterior">

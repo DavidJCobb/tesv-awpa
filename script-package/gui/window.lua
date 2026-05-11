@@ -176,7 +176,8 @@ do
          local payload_count <const> = #self.tabs
       
          self:progress_start("Parsing XML payloads... (%v/%m)", payload_count)
-         local payloads = {}
+         local payloads      = {}
+         local global_macros = {}
          for i = 1, payload_count do
             local tab     = self.tabs[i]
             local payload = {
@@ -196,6 +197,7 @@ do
             end
 local bench_a = benchmark.new()
 local bench_b = benchmark.new()
+            macros.gather_global_macros(payload.xml_root_src, global_macros)
             macros.transform(payload.xml_root_src)
 bench_a:stop()
             process_xml(payload.xml_root_src)

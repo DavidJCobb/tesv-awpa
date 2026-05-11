@@ -61,27 +61,6 @@
       </actors>
       
       <!-- Content macros: -->
-      <macro name="owned-house">
-         <parameter name="OWNER" />
-         <parameter name="OWNER-PRINTABLE" default-value="%OWNER%" />
-         <data>
-            <g>
-               <conditions>
-                  <actor-base of="subject" is="%OWNER%" />
-               </conditions>
-               <shared-info id="shared-at-own-home" />
-            </g>
-            <g>
-               <conditions>
-                  <actor-base of="speaker" is="%OWNER%" />
-               </conditions>
-               <shared-info id="shared-at-my-home" />
-            </g>
-            <line>He's at %OWNER-PRINTABLE%'s house.</line>
-            <line>I think he's visiting %OWNER-PRINTABLE% right now.</line>
-            <line>I think I saw him on his way to %OWNER-PRINTABLE%'s house.</line>
-         </data>
-      </macro>
       <macro name="owned-room">
          <parameter name="OWNER" />
          <parameter name="OWNER-PRINTABLE" default-value="%OWNER%" />
@@ -102,12 +81,7 @@
          </data>
       </macro>
       
-      <top-g slug="SuperNearPlayer">
-         <conditions>
-            <distance of="player" to="subject" lte="128" />
-         </conditions>
-         <shared-info id="shared-near-player" />
-      </top-g>
+      <invoke name="common-super-near-player" />
       <top-g slug="SameInterior">
          <conditions>
             <is-in-interior of="subject" />
@@ -120,21 +94,7 @@
                   <parent-cell of="subject" is="DawnstarMortarAndPestle" />
                </conditions>
                <constant name="height-coordinate-2f" value="240" />
-               <g name="upstairs">
-                  <conditions>
-                     <z of="subject" gte="height-coordinate-2f" />
-                     <z of="player"  lt="height-coordinate-2f" />
-                  </conditions>
-                  <shared-info id="shared-upstairs" />
-               </g>
-               <g name="downstairs">
-                  <conditions>
-                     <z of="subject" lt="height-coordinate-2f" />
-                     <z of="player"  gte="height-coordinate-2f" />
-                  </conditions>
-                  <shared-info id="shared-downstairs" />
-               </g>
-               <shared-info id="shared-same-floor" />
+               <invoke name="mixin-interior-1f-2f-no-rooms" />
             </g>
          </g>
          
@@ -192,7 +152,7 @@
             <conditions>
                <parent-cell of="subject" is="DawnstarBeitildsHouse" />
             </conditions>
-            <invoke name="owned-house">
+            <invoke name="mixin-house-one-resident-int">
                <parameter name="OWNER" value="Beitild" />
             </invoke>
          </g> <!-- /beitild-house -->
@@ -235,7 +195,7 @@
             <conditions>
                <parent-cell of="subject" is="DawnstarFrukisHouse" />
             </conditions>
-            <invoke name="owned-house">
+            <invoke name="mixin-house-one-resident-int">
                <parameter name="OWNER" value="Fruki" />
             </invoke>
          </g> <!-- /fruki-house -->
@@ -243,7 +203,7 @@
             <conditions>
                <parent-cell of="subject" is="DawnstarIrgnirsHouse" />
             </conditions>
-            <invoke name="owned-house">
+            <invoke name="mixin-house-one-resident-int">
                <parameter name="OWNER" value="Irgnir" />
             </invoke>
          </g> <!-- /irgnir-house -->
@@ -265,7 +225,7 @@
             <conditions>
                <parent-cell of="subject" is="DawnstarLeigelfsHouse" />
             </conditions>
-            <invoke name="owned-house">
+            <invoke name="mixin-house-one-resident-int">
                <parameter name="OWNER" value="Leigelf" />
             </invoke>
          </g> <!-- /leigelf-house -->
@@ -303,33 +263,10 @@
             <conditions>
                <parent-cell of="subject" is="DawnstarRustleifsHouse" />
             </conditions>
-            <g name="asking-resident">
-               <conditions>
-                  <or>
-                     <actor-base of="speaker" is="Rustleif" />
-                     <actor-base of="speaker" is="Seren" />
-                  </or>
-               </conditions>
-               <g name="asking-resident-about-resident">
-                  <conditions>
-                     <or>
-                        <actor-base of="subject" is="Rustleif" />
-                        <actor-base of="subject" is="Seren" />
-                     </or>
-                  </conditions>
-                  <shared-info id="shared-at-our-home" />
-               </g>
-               <shared-info id="shared-at-my-home" />
-            </g>
-            <g name="asking-about-resident">
-               <conditions>
-                  <or>
-                     <actor-base of="subject" is="Rustleif" />
-                     <actor-base of="subject" is="Seren" />
-                  </or>
-               </conditions>
-               <shared-info id="shared-at-own-home" />
-            </g>
+            <invoke name="mixin-house-two-residents-int">
+               <parameter name="OWNER-1" value="Rustleif" />
+               <parameter name="OWNER-2" value="Seren" />
+            </invoke>
             <line>I believe he's at Rustleif's house right now.</line>
             <line>I think I saw him heading toward Rustleif's house.</line>
             <line>Try checking Rustleif and Seren's house.</line>
@@ -338,7 +275,7 @@
             <conditions>
                <parent-cell of="subject" is="DawnstarSilussHouse" />
             </conditions>
-            <invoke name="owned-house">
+            <invoke name="mixin-house-one-resident-int">
                <parameter name="OWNER" value="SilusVesuius" />
             </invoke>
          </g> <!-- /silus-house -->
@@ -381,12 +318,7 @@
             <line>Hmm... Maybe he's at the Windpeak Inn.</line>
          </g> <!-- /windpeak-inn -->
          
-         <g name="me-outside-they-inside">
-            <conditions>
-               <is-in-exterior of="speaker" />
-            </conditions>
-            <shared-info id="shared-unknown-me-outside-they-inside" />
-         </g>
+         <invoke name="common-me-outside-they-inside" />
       </top-g>
       
       <top-g slug="Exterior">

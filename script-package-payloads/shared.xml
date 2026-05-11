@@ -7,6 +7,9 @@
          <line>I haven't seen him around.</line>
          <line>No clue, honestly.</line>
       </shared-info>
+      <shared-info id="shared-unknown-me-outside-they-inside" editor-id-slug="UnknownInteriorSpeakerOutside">
+         <line>I don't know where he is. I haven't seen him walking around, though, so he must be indoors.</line>
+      </shared-info>
       
       <shared-info id="shared-angry-inmate-doesnt-know" editor-id-slug="InmateCantTellYouAngry">
          <line emotion="anger:60" script-notes="emphasis on &quot;I&quot;">How would I know where they are? I'm stuck in this cell!</line>
@@ -77,6 +80,10 @@
       <shared-info id="shared-exterior-near-own-home" editor-id-slug="ExtNearOwnHome">
          <line>I saw him around his house not too long ago.</line>
          <line>I think he's over by his house right now.</line>
+      </shared-info>
+      <shared-info id="shared-exterior-near-our-home" editor-id-slug="ExtNearOurHome">
+         <line>I'm pretty sure he's hanging around our house right now.</line>
+         <line>He's at home, or somewhere around there.</line>
       </shared-info>
       <shared-info id="shared-exterior-lumber-mill" editor-id-slug="ExtLumberMill">
          <line>He's over by the lumber mill.</line>

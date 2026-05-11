@@ -2187,9 +2187,8 @@
             <conditions>
                <is-in-exterior of="speaker" />
             </conditions>
-            <line>I don't know where he is. I haven't seen him walking around, though, so he must be indoors.</line>
+            <shared-info id="shared-unknown-me-outside-they-inside" />
          </g>
-         <shared-info id="shared-unknown" />
       </top-g> <!-- /Interiors -->
       
       <top-g slug="Exterior">

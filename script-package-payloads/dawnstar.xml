@@ -380,6 +380,13 @@
             <line>Try checking around the Windpeak Inn.</line>
             <line>Hmm... Maybe he's at the Windpeak Inn.</line>
          </g> <!-- /windpeak-inn -->
+         
+         <g name="me-outside-they-inside">
+            <conditions>
+               <is-in-exterior of="speaker" />
+            </conditions>
+            <shared-info id="shared-unknown-me-outside-they-inside" />
+         </g>
       </top-g>
       
       <top-g slug="Exterior">
@@ -728,9 +735,7 @@
                </conditions>
                <shared-info id="beyond-city-limits-south" />
             </g>
-            
          </g>
-         <!-- TODO -->
       </top-g>
       
       <!-- final fallback lines -->

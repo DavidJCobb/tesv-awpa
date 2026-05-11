@@ -58,6 +58,19 @@
          <parameter name="OWNER-SECONDARY-NOTE" default-value="" />
          <parameter name="CONTENT-IF-BOTH-DEAD" />
          <data>
+            <g> <!-- asking resident about resident -->
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="%OWNER-PRIMARY%" />
+                     <actor-base of="subject" is="%OWNER-SECONDARY%" />
+                  </or>
+                  <or>
+                     <actor-base of="speaker" is="%OWNER-PRIMARY%" />
+                     <actor-base of="speaker" is="%OWNER-SECONDARY%" />
+                  </or>
+               </conditions>
+               <shared-info id="shared-exterior-near-our-home" />
+            </g>
             <g> <!-- asking about resident -->
                <conditions>
                   <or>
@@ -108,14 +121,188 @@
             <parent-cell of="speaker" same-as="subject" />
          </conditions>
          
-         <!-- TODO -->
+         <!--
+            TODO: per-room checks for Highmoon Hall and Moorside Inn
+         -->
+         
+         <shared-info id="shared-same-building" />
       </top-g>
       <top-g slug="Interiors">
          <conditions>
             <is-in-interior of="subject" />
          </conditions>
          
-         <!-- TODO -->
+         <g name="guardhouse">
+            <conditions>
+               <or>
+                  <parent-cell of="subject" is="MorthalGuardhouse" />
+                  <parent-cell of="subject" is="MorthalGuardhouseJail" />
+               </or>
+            </conditions>
+            <line>I think he's stopping by the Guardhouse.</line>
+            <line>Check the Guardhouse. I saw him walk in there earlier.</line>
+            <line>He might be in the Guardhouse right now.</line>
+         </g>
+         <g name="highmoon-hall">
+            <conditions>
+               <parent-cell of="subject" is="MorthalHighmoonHall" />
+            </conditions>
+            <line>I believe he's visiting Highmoon Hall right now.</line>
+            <line>Pretty sure he's at the town hall.</line>
+            <line>Highmoon Hall would be a good place to check, if you haven't already.</line>
+         </g>
+         <g name="house-alva">
+            <conditions>
+               <or>
+                  <parent-cell of="subject" is="MorthalAlvasHouse" />
+                  <parent-cell of="subject" is="MorthalAlvasHouseCellar" />
+               </or>
+            </conditions>
+            <g>
+               <conditions>
+                  <actor-base of="subject" is="Alva" />
+               </conditions>
+               <shared-info id="shared-at-own-home" />
+            </g>
+            <g>
+               <conditions>
+                  <actor-base of="subject" is="Hroggar" />
+               </conditions>
+               <g name="alva-slain">
+                  <conditions>
+                     <death-count of="Alva" gt="0" />
+                  </conditions>
+                  <shared-info id="shared-at-own-home" />
+               </g>
+               <line><verbatim>He's</verbatim> at Alva's house. <verbatim>He's</verbatim> been staying there since <verbatim>his</verbatim> place got destroyed by a fire.</line>
+               <line><verbatim>He's</verbatim> been living with Alva ever since <verbatim>his</verbatim> home burned down.</line>
+            </g>
+            <g name="alva-slain">
+               <conditions>
+                  <death-count of="Alva" gt="0" />
+               </conditions>
+               <line>I think he's at Hroggar's home right now. The place used to belong to Alva, but...</line>
+               <line>Pretty sure I saw him walk into Hroggar's house recently.</line>
+               <line>He's visiting Hroggar's house, at the southeast edge of town.</line>
+            </g>
+            <line>I think he's at Alva's home right now.</line>
+            <line>Pretty sure I saw him walk into Alva's house recently.</line>
+            <line>He's visiting Alva's house.</line>
+         </g>
+         <g name="house-falion">
+            <conditions>
+               <parent-cell of="subject" is="MorthalFalionsHouse" />
+            </conditions>
+            <g name="asking-about-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Falion" />
+                     <actor-base of="subject" is="Agni" />
+                  </or>
+               </conditions>
+               <shared-info id="shared-at-own-home" />
+            </g>
+            <line>He was headed to Falion's house earlier.</line>
+            <line>I saw him walk into Falion's house a while ago.</line>
+            <line>I think he was at Falion's house.</line>
+         </g>
+         <g name="house-jorgen-lami">
+            <conditions>
+               <parent-cell of="subject" is="MorthalJorgenandLamisHouse" />
+            </conditions>
+            <g name="asking-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="speaker" is="Jorgen" />
+                     <actor-base of="speaker" is="Lami" />
+                  </or>
+               </conditions>
+               <g name="asking-resident-about-resident">
+                  <conditions>
+                     <or>
+                        <actor-base of="subject" is="Jorgen" />
+                        <actor-base of="subject" is="Lami" />
+                     </or>
+                  </conditions>
+                  <shared-info id="shared-at-our-home" />
+               </g>
+               <shared-info id="shared-at-my-home" />
+            </g>
+            <g name="asking-about-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Jorgen" />
+                     <actor-base of="subject" is="Lami" />
+                  </or>
+               </conditions>
+               <shared-info id="shared-at-own-home" />
+            </g>
+            <line>He's visiting Jorgen and Lami right now.</line>
+            <line>He's at Jorgen and Lami's house, on the north edge of town.</line>
+         </g>
+         <g name="house-thonnir">
+            <conditions>
+               <parent-cell of="subject" is="MorthalThonnirsHouse" />
+            </conditions>
+            <g name="asking-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="speaker" is="Thonnir" />
+                     <actor-base of="speaker" is="Vikmund" />
+                  </or>
+               </conditions>
+               <g name="asking-resident-about-resident">
+                  <conditions>
+                     <or>
+                        <actor-base of="subject" is="Thonnir" />
+                        <actor-base of="subject" is="Vikmund" />
+                     </or>
+                  </conditions>
+                  <shared-info id="shared-at-our-home" />
+               </g>
+               <shared-info id="shared-at-my-home" />
+            </g>
+            <g name="asking-about-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Thonnir" />
+                     <actor-base of="subject" is="Vikmund" />
+                  </or>
+               </conditions>
+               <shared-info id="shared-at-own-home" />
+            </g>
+            <line>I saw him on his way to Thonnir's house.</line>
+            <line>I'm pretty sure he's stopping by Thonnir's house right now.</line>
+         </g>
+         <g name="moorside-inn">
+            <conditions>
+               <parent-cell of="subject" is="MorthalMoorsideInn" />
+            </conditions>
+            <line>He's at Moorside Inn right now.</line>
+            <line>He's over at the local inn.</line>
+         </g>
+         <g name="thaumaturgist">
+            <conditions>
+               <parent-cell of="subject" is="MorthalThaumaturgistsHut" />
+            </conditions>
+            <g>
+               <conditions>
+                  <actor-base of="subject" is="Lami" />
+               </conditions>
+               <line>The alchemist? He's at work right now, at the Thaumaturgist's Hut.</line>
+               <line>He's tending to his potion shop in the middle of town.</line>
+            </g>
+            <line>He's at the Thaumaturgist's Hut.</line>
+            <line>He's visiting the local alchemist right now.</line>
+            <line>Check the Thaumaturgist's Hut. Two-story building at the center of town.</line>
+         </g>
+         
+         <g name="me-outside-they-inside">
+            <conditions>
+               <is-in-exterior of="speaker" />
+            </conditions>
+            <shared-info id="shared-unknown-me-outside-they-inside" />
+         </g>
       </top-g>
       <top-g slug="Exterior">
          <conditions>

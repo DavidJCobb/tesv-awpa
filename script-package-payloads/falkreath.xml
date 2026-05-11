@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<payload>
+   <shared-infos>
+      <shared-info id="falkreath-graveyard-trail" editor-id-slug="FalkreathGraveyardTrail">
+         <line>He's out on the trail that leads behind Corpselight Farm, to the graveyard.</line>
+         <line>He's halfway down to the graveyard.</line>
+         <line>I'm pretty sure he's on the path from the main street to the graveyard.</line>
+      </shared-info>
+   </shared-infos>
+   
+   <quest id="AWPAFalkreath"
+      locations="FalkreathLocation"
+   >
+      <dialogue-conditions>
+         <faction-membership of="speaker" includes="TownFalkreathFaction" />
+         <faction-membership of="speaker" excludes="GuardFactionFalkreath" />
+         
+         <location of="speaker" is="FalkreathLocation" />
+      </dialogue-conditions>
+      
+      <condition-set name="steward-is-nenya">
+         <faction-membership of="Nenya" includes="JobStewardFaction" />
+      </condition-set>
+      <condition-set name="steward-is-not-nenya">
+         <faction-membership of="Nenya" excludes="JobStewardFaction" />
+      </condition-set>
+      <condition-set name="steward-is-tekla">
+         <faction-membership of="Tekla" includes="JobStewardFaction" />
+      </condition-set>
+      <condition-set name="steward-is-not-tekla">
+         <faction-membership of="Tekla" excludes="JobStewardFaction" />
+      </condition-set>
+      
+      <actors>
+         <actor editor-id="Tekla">
+            <begin-asking-about>
+               <filter-conditions>
+                  <!-- Can't ask about her if she's been exiled. -->
+                  <faction-membership of="subject" excludes="GovExiled" />
+               </filter-conditions>
+            </begin-asking-about>
+         </actor>
+         <!-- TODO -->
+      </actors>
+      
+      <invoke name="common-super-near-player" />
+      <top-g slug="SameInterior">
+         <conditions>
+            <is-in-interior of="subject" />
+            <parent-cell of="speaker" same-as="subject" />
+         </conditions>
+         
+         <!--
+            TODO: different-floors checks
+         -->
+         
+         <!--
+            TODO: per-room checks for the city hall and inn
+         -->
+         
+         <shared-info id="shared-same-building" />
+      </top-g>
+      <top-g slug="Interiors">
+         <conditions>
+            <is-in-interior of="subject" />
+         </conditions>
+         
+         <!-- TODO -->
+         <invoke name="common-me-outside-they-inside" />
+      </top-g>
+      <top-g slug="Exterior">
+         <conditions>
+            <parent-world of="subject" is="Tamriel" />
+         </conditions>
+         
+         <g name="graveyard-trail">  
+            <g>  
+               <conditions>
+                  <x of="subject" gte="-33408" />
+                  <x of="subject" lte="-31424" />
+                  <y of="subject" gte="-84368" />
+                  <y of="subject" lte="-83600" />
+               </conditions>
+               <shared-info id="falkreath-graveyard-trail" />
+            </g>
+            <g>  
+               <conditions>
+                  <x of="subject" gte="-31824" />
+                  <x of="subject" lte="-31328" />
+                  <y of="subject" gte="-85376" />
+                  <y of="subject" lte="-84368" />
+               </conditions>
+               <shared-info id="falkreath-graveyard-trail" />
+            </g>
+         </g>
+         
+         <g name="corpselight-farm">  
+            <conditions>
+               <x of="subject" gte="-32816" />
+               <x of="subject" lte="-30544" />
+               <y of="subject" gte="-87072" />
+               <y of="subject" lte="-84720" />
+            </conditions>
+            <line>I remember seeing him around Corpselight Farm not too long ago.</line>
+            <line>Try checking around Corpselight, the farm next to the inn.</line>
+         </g>
+         <g name="dead-mans-drink">  
+            <conditions>
+               <x of="subject" gte="-33312" />
+               <x of="subject" lte="-31472" />
+               <y of="subject" gte="-88592" />
+               <y of="subject" lte="-87072" />
+            </conditions>
+            <line>He's over by Dead Man's Drink.</line>
+            <line>I think he was headed toward Dead Man's Drink, the inn by the south gate.</line>
+         </g>
+         <g name="graveyard">  
+            <conditions>
+               <x of="subject" gte="-36288" />
+               <x of="subject" lte="-33408" />
+               <y of="subject" gte="-86512" />
+               <y of="subject" lte="-82912" />
+            </conditions>
+            <line>I saw him visiting the graveyard not too long ago.</line>
+            <line>He's out by the graveyard and the Hall of the Dead.</line>
+            <line>Check the graveyard on the west side of town.</line>
+         </g>
+         <g name="house-dengeir">  
+            <conditions>
+               <x of="subject" gte="-30848" />
+               <x of="subject" lte="-29376" />
+               <y of="subject" gte="-86176" />
+               <y of="subject" lte="-84976" />
+            </conditions>
+            <invoke name="mixin-house-two-residents-ext">
+               <parameter name="OWNER-1" value="Dengeir" />
+               <parameter name="OWNER-2" value="Thadgeir" />
+            </invoke>
+            <g name="asking-about-the-maid">
+               <!--
+                  Initially, Tekla works as a maid at Dengeir's house. If the Stormcloaks 
+                  take Falkreath Hold, Dengeir becomes Jarl and Tekla becomes the Steward; 
+                  both relocate to the Jarl's Longhouse.
+                  
+                  The `DialogueFalkreath` quest hosts quest aliases for the current court 
+                  members, assigning them factions and packages as appropriate.
+               -->
+               <conditions>
+                  <actor-base of="subject" is="Tekla" />
+                  <faction-membership of="subject" excludes="JobStewardFaction" />
+               </conditions>
+               <line>Dengeir's maid. He's probably by <verbatim>his</verbatim> house right now.</line>
+               <line>He's probably tending to Dengeir's house right now.</line>
+            </g>
+            <line>He's over by Dengeir's house.</line>
+            <line>I think you'll find him in front of Dengeir's house.</line>
+            <line>Pretty sure I saw him passing by Dengeir's house.</line>
+         </g>
+         <!-- TODO -->
+         
+         <g name="lumber-mill">  
+            <conditions>
+               <x of="subject" gte="-31520" />
+               <x of="subject" lte="-27504" />
+               <y of="subject" gte="-84976" />
+               <y of="subject" lte="-82704" />
+            </conditions>
+            <line>He's over by the lumber camp, on the north side of town.</line>
+            <line>I saw him at the lumber mill a little while ago.</line>
+            <line>I believe he's hanging around the lumber camp right now.</line>
+         </g>
+         
+         <invoke name="common-exterior-fallbacks" />
+      </top-g>
+      
+      <!-- final fallback lines -->
+      <shared-info id="shared-unknown" />
+   </quest>
+</payload>

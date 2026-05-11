@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <payload>
-   <quest id="AWPADawnstar"
+   <quest id="AWPAMorthal"
       locations="MorthalLocation"
    >
       <dialogue-conditions>

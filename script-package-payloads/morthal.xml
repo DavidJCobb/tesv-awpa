@@ -69,7 +69,7 @@
             <is-in-interior of="subject" />
          </conditions>
          
-         <g name="guardhouse">
+         <g name="guardhouse-or-jail">
             <conditions>
                <or>
                   <parent-cell of="subject" is="MorthalGuardhouse" />
@@ -79,6 +79,21 @@
             <line>I think he's stopping by the Guardhouse.</line>
             <line>Check the Guardhouse. I saw him walk in there earlier.</line>
             <line>He might be in the Guardhouse right now.</line>
+         </g>
+         <g name="guardhouse-to-jail">
+            <conditions>
+               <parent-cell of="subject" is="MorthalGuardhouseJail" />
+               <parent-cell of="speaker" is="MorthalGuardhouse" />
+            </conditions>
+            <line>He's downstairs.</line>
+            <line>Head down the stairs, to the town jail. You'll find him in there.</line>
+         </g>
+         <g name="guardhouse-per-jail">
+            <conditions>
+               <parent-cell of="subject" is="MorthalGuardhouse" />
+               <parent-cell of="speaker" is="MorthalGuardhouseJail" />
+            </conditions>
+            <line>He's upstairs.</line>
          </g>
          <g name="highmoon-hall">
             <conditions>
@@ -95,13 +110,39 @@
                   <parent-cell of="subject" is="MorthalAlvasHouseCellar" />
                </or>
             </conditions>
-            <g>
+            <g name="subject-downstairs-speaker-upstairs">
+               <conditions>
+                  <parent-cell of="subject" is="MorthalAlvasHouseCellar" />
+                  <parent-cell of="speaker" is="MorthalAlvasHouse" />
+               </conditions>
+               <shared-info id="shared-downstairs" />
+            </g>
+            <g name="subject-upstairs-speaker-downstairs">
+               <conditions>
+                  <parent-cell of="subject" is="MorthalAlvasHouse" />
+                  <parent-cell of="speaker" is="MorthalAlvasHouseCellar" />
+               </conditions>
+               <shared-info id="shared-upstairs" />
+            </g>
+            <g name="asking-alva">
+               <conditions>
+                  <actor-base of="speaker" is="Alva" />
+               </conditions>
+               <shared-info id="shared-at-my-home" />
+            </g>
+            <g name="asking-about-alva">
                <conditions>
                   <actor-base of="subject" is="Alva" />
                </conditions>
+               <g name="asking-hroggar-about-alva">
+                  <conditions>
+                     <actor-base of="speaker" is="Hroggar" />
+                  </conditions>
+                  <shared-info id="shared-at-our-home" />
+               </g>
                <shared-info id="shared-at-own-home" />
             </g>
-            <g>
+            <g name="asking-about-hroggar">
                <conditions>
                   <actor-base of="subject" is="Hroggar" />
                </conditions>

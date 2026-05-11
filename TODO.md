@@ -68,11 +68,11 @@ This is an open city in vanilla. We will need to define a perimeter of some sort
 
 | Location | Exterior | Interior | Interior Rooms | Misc. To-Do Notes |
 | :- | :-: | :-: | :-: | :- |
-| Alva's House | ✅ | ✅ | ⬜ | Becomes Hroggar's house if he survives Laid To Rest. |
+| Alva's House | ✅ | ✅ | ✅ | Becomes Hroggar's house if he survives Laid To Rest. |
 | Burned House | ✅ |   |   |
 | Falion's House | ✅ | ✅ |   |
-| Guardhouse | ✅ | ✅ | ⬜ |
-| Guardhouse Jail |   | ✅ | ⬜ |
+| Guardhouse | ✅ | ✅ | ✅ |
+| Guardhouse Jail |   | ✅ | ✅ |
 | Highmoon Hall | ✅ | ✅ | ⬜ |
 | Jorgen and Lami's House | ✅ | ✅ |   |
 | Lumber Mill | ✅ |   |   |

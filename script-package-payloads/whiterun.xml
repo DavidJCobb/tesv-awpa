@@ -4,6 +4,13 @@
       <shared-info id="whiterun-drunken-huntsman-ext" editor-id-slug="WhiterunDrunkenHuntsmanExt">
          <line>He's over by the Drunken Huntsman right now.</line>
       </shared-info>
+      <shared-info id="whiterun-plains-district-south" editor-id-slug="WhiterunPlainsDistrictSouth">
+         <line>He's hanging around the Plains District's south wall.</line>
+      </shared-info>
+      <shared-info id="whiterun-stairs-to-dragonsreach" editor-id-slug="WhiterunStairsToDragonsreach">
+         <line>He's on the stairs to Dragonsreach.</line>
+         <line>He's on the path up to Dragonsreach.</line>
+      </shared-info>
    </shared-infos>
    
    <quest id="AWPAWhiterun"
@@ -198,11 +205,29 @@
                   <y of="subject" lte="-176" />
                   <z of="subject" gte="-2592" />
                </conditions>
-               <line>He's on the stairwells up to Dragonsreach.</line>
+               <shared-info id="whiterun-stairs-to-dragonsreach" />
+            </g>
+            <g>
+               <conditions>
+                  <x of="subject" gte="23808" />
+                  <x of="subject" lte="25248" />
+                  <y of="subject" gte="-2960" />
+                  <y of="subject" lte="-2064" />
+               </conditions>
+               <shared-info id="whiterun-stairs-to-dragonsreach" />
             </g>
          </g>
          
          <g name="plains-district">
+            <g name="breezehome">
+               <conditions>
+                  <x of="subject" gte="21568" />
+                  <x of="subject" lte="23136" />
+                  <y of="subject" gte="-8896" />
+                  <y of="subject" lte="-8048" />
+               </conditions>
+               <line>He's near Breezehome.</line>
+            </g>
             <g name="drunken-huntsman">
                <g>
                   <conditions>
@@ -231,6 +256,15 @@
                   <y of="subject" lte="-7104" />
                </conditions>
                <line>He's near Whiterun's gate.</line>
+            </g>
+            <g name="house-olava">
+               <conditions>
+                  <x of="subject" gte="21568" />
+                  <x of="subject" lte="23136" />
+                  <y of="subject" gte="-10176" />
+                  <y of="subject" lte="-8896" />
+               </conditions>
+               <line>He's near Olava's house.</line>
             </g>
             <g name="house-severio">
                <conditions>
@@ -313,6 +347,15 @@
                   </conditions>
                   <line>He's in the Plains District, by the east wall.</line>
                </g>
+               <g name="plains-to-wind-district-minor-road">
+                  <conditions>
+                     <x of="subject" gte="20848" />
+                     <x of="subject" lte="21360" />
+                     <y of="subject" gte="-7312" />
+                     <y of="subject" lte="-5280" />
+                  </conditions>
+                  <line>He's on the side road to the Wind District, near the Drunken Huntsman and the city gate.</line>
+               </g>
                <g name="plains-district-main-street">
                   <conditions>
                      <x of="subject" gte="21136" />
@@ -332,6 +375,28 @@
                   <line>He's hanging around the Plains District's north wall.</line>
                </g>
                <g name="plains-district-south">
+                  <g>
+                     <conditions>
+                        <x of="subject" gte="23136" />
+                        <x of="subject" lte="24032" />
+                        <y of="subject" gte="-11056" />
+                        <y of="subject" lte="-9296" />
+                        <z of="subject" gte="-3584" />
+                     </conditions>
+                     <shared-info id="whiterun-plains-district-south" />
+                  </g>
+                  <g>
+                     <conditions>
+                        <x of="subject" gte="22288" />
+                        <x of="subject" lte="23136" />
+                        <y of="subject" gte="-10624" />
+                        <y of="subject" lte="-10176" />
+                        <z of="subject" gte="-3584" />
+                     </conditions>
+                     <shared-info id="whiterun-plains-district-south" />
+                  </g>
+               </g>
+               <g name="plains-district-southeast">
                   <conditions>
                      <x of="subject" gte="23648" />
                      <x of="subject" lte="25616" />
@@ -339,7 +404,17 @@
                      <y of="subject" lte="-10608" />
                      <z of="subject" gte="-3440" />
                   </conditions>
-                  <line>He's in the Plains District, by the south wall.</line>
+                  <line>He's in the Plains District, by the southeast wall.</line>
+               </g>
+               <g name="plains-distict-southwest">
+                  <conditions>
+                     <x of="subject" gte="19312" />
+                     <x of="subject" lte="21584" />
+                     <y of="subject" gte="-10320" />
+                     <y of="subject" lte="-8240" />
+                     <z of="subject" gte="-3664" />
+                  </conditions>
+                  <line>He's hanging around the Plains District's southwest wall.</line>
                </g>
                <g name="plains-district-west">
                   <conditions>
@@ -352,6 +427,15 @@
                </g>
             </g>
             <g name="wind-district">
+               <g name="wind-district-companions-generic">
+                  <conditions>
+                     <x of="subject" gte="25248" />
+                     <x of="subject" lte="30688" />
+                     <y of="subject" gte="-4400" />
+                     <y of="subject" lte="-1216" />
+                  </conditions>
+                  <line>He's over by Jorrvaskr.</line>
+               </g>
                <g name="wind-district-residential">
                   <conditions>
                      <x of="subject" gte="21120" />

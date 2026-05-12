@@ -120,8 +120,170 @@
             <is-in-interior of="subject" />
          </conditions>
          
-         <!-- TODO -->
+         <g name="arcadia-cauldron">
+            <conditions>
+               <parent-cell of="subject" is="WhiterunArcadiasCauldron" />
+            </conditions>
+            <g name="asking-proprietor">
+               <conditions>
+                  <actor-base of="speaker" is="Arcadia" />
+               </conditions>
+               <line>He's at my store right now.</line>
+               <line>He's visiting my alchemy shop: Arcadia's Cauldron.</line>
+            </g>
+            <g name="asking-about-proprietor">
+               <conditions>
+                  <actor-base of="subject" is="Arcadia" />
+               </conditions>
+               <g>
+                  <conditions>
+                     <offers-services for="Arcadia" />
+                  </conditions>
+                  <line>He's at work right now, running Arcadia's Cauldron in the market.</line>
+                  <line>He runs the alchemy shop. He should be there now.</line>
+               </g>
+               <line>He's at home. He runs Arcadia's Cauldron out of his house.</line>
+               <line>He's at Arcadia's Cauldron right now, but the place isn't open for business.</line>
+            </g>
+            <line>He's at Arcadia's Cauldron right now.</line>
+            <line>I think he's at the alchemist's shop right now.</line>
+            <line>I think I saw him walk into Arcadia's Cauldron.</line>
+         </g>
+         <g name="bannered-mare">
+            <conditions>
+               <parent-cell of="subject" is="WhiterunBanneredMare" />
+            </conditions>
+            <g name="asking-about-employee" non-exclusive="true">
+               <conditions>
+                  <faction-membership of="subject" includes="WhiterunBanneredMareFaction" />
+               </conditions>
+               <line>He's probably at work, at the Bannered Mare.</line>
+            </g>
+            <line>He's at the Bannered Mare right now.</line>
+            <line>Have you checked inside the Bannered Mare? I think he's there.</line>
+            <line>I believe he's at the Bannered Mare.</line>
+         </g>
+         <g name="belethor-store">
+            <conditions>
+               <parent-cell of="subject" is="WhiterunBelethorsGeneralGoods" />
+            </conditions>
+            <g name="asking-owner">
+               <conditions>
+                  <actor-base of="speaker" is="Belethor" />
+               </conditions>
+               <line>He's at my shop right now. Feel free to head down there yourself!</line>
+               <line>I'm pretty sure he's at my store.</line>
+               <line>Try checking my store. If you don't find him, you'll at least find good prices!</line>
+            </g>
+            <g name="asking-about-employee" non-exclusive="true">
+               <conditions>
+                  <faction-membership of="subject" includes="WhiterunBelethorsGoodsFaction" />
+               </conditions>
+               <line>He's probably at work, at the general goods store.</line>
+            </g>
+            <line>He's at Belethor's shop.</line>
+            <line>I'd look in Belethor's General Goods if I were you.</line>
+            <line>I think I saw him walk into Belethor's store.</line>
+         </g>
+         <g name="breezehome">
+            <conditions>
+               <parent-cell of="subject" is="WhiterunBreezehome" />
+            </conditions>
+            <line>He's at Breezehome.</line>
+            <line>He stopped by Breezehome earlier.</line>
+         </g>
+         <g name="dragonsreach-from-outside">
+            <conditions>
+               <or>
+                  <parent-cell of="subject" is="WhiterunDragonsreach" />
+                  <parent-cell of="subject" is="WhiterunDragonsreachBasement" />
+                  <parent-cell of="subject" is="WhiterunDragonsreachJarlsQuarters" />
+               </or>
+               <parent-cell of="speaker" is-not="WhiterunDragonsreach" />
+               <parent-cell of="speaker" is-not="WhiterunDragonsreachBasement" />
+               <parent-cell of="speaker" is-not="WhiterunDragonsreachJarlsQuarters" />
+            </conditions>
+            <line>He's at Dragonsreach.</line>
+            <line>You'll probably find him at Dragonsreach, the city castle.</line>
+            <line>Head up to Dragonsreach. You'll find him there.</line>
+         </g>
+         <g name="dragonsreach-basement">
+            <conditions>
+               <parent-cell of="subject" is="WhiterunDragonsreachBasement" />
+            </conditions>
+            <line>He's down in the castle basement.</line>
+            <line>I think I saw him heading down into Dragonsreach's basement.</line>
+         </g>
+         <g name="dragonsreach-bedrooms">
+            <conditions>
+               <parent-cell of="subject" is="WhiterunDragonsreachJarlsQuarters" />
+            </conditions>
+            <line>He's in the Jarl's quarters.</line>
+         </g>
+         <g name="dragonsreach-main">
+            <conditions>
+               <parent-cell of="subject" is="WhiterunDragonsreach" />
+            </conditions>
+            <line>He's in the castle's main hall.</line>
+            <line>Head out to the main hall. He should be out there.</line>
+         </g>
+         <!-- TODO: WhiterunDrunkenHuntsman -->
+         <!-- TODO: WhiterunGuardHouse -->
+         <!-- TODO: WhiterunHalloftheDead + WhiterunHalloftheDeadCatacombs -->
+         <g name="house-amren">
+            <conditions>
+               <parent-cell of="subject" is="WhiterunAmrensHouse" />
+            </conditions>
+            <invoke name="mixin-house-three-residents-int">
+               <parameter name="OWNER-1" value="Amren" />
+               <parameter name="OWNER-2" value="Saffir" />
+               <parameter name="OWNER-3" value="Braith" />
+            </invoke>
+            <g name="visiting-family" non-exclusive="true">
+               <!-- only use these lines if Amren has a surviving family -->
+               <conditions>
+                  <or>
+                     <death-count for="Amren" lte="0" />
+                     <death-count for="Saffir" lte="0" />
+                  </or>
+               </conditions>
+               <line>He's visiting Amren's family.</line>
+            </g>
+            <line>He's at Amren's house right now.</line>
+            <line>I think I saw him walk into Amren's house a while ago.</line>
+         </g>
+         <!-- TODO: WhiterunHouseBattleBorn -->
+         <g name="house-carlotta">
+            <conditions>
+               <parent-cell of="subject" is="WhiterunCarlottaValentiasHouse" />
+            </conditions>
+            <invoke name="mixin-house-two-residents-int">
+               <parameter name="OWNER-1" value="CarlottaValentia" />
+               <parameter name="OWNER-2" value="MilaValentia" />
+            </invoke>
+            <line>He's at Carlotta's house right now.</line>
+            <line>I think I saw him walk into Carlotta Valentia's house a while ago.</line>
+         </g>
+         <!-- TODO: WhiterunHouseGrayMane -->
+         <!-- TODO: WhiterunHeimskrsHouse -->
+         <!-- TODO: WhiterunOlavatheFeeblesHouse -->
+         <!-- TODO: WhiterunSeverioPelagiasHouse -->
+         <!-- TODO: WhiterunYsoldasHouse -->
+         <!-- TODO: WhiterunJail02 -->
+         <!-- TODO: WhiterunJorrvaskr + WhiterunJorrvaskrBasement -->
+         <!-- TODO: WhiterunStables -->
+         <!-- TODO: WhiterunTempleofKynareth -->
+         <!-- TODO: WhiterunUnderforge -->
+         <!-- TODO: WhiterunWarmaidens -->
+         
          <invoke name="common-me-outside-they-inside" />
+      </top-g>
+      <top-g name="ExteriorOutsideWalls">
+         <conditions>
+            <parent-world of="subject" is="Tamriel" />
+         </conditions>
+         
+         <!-- TODO -->
       </top-g>
       <top-g slug="Exterior">
          <conditions>

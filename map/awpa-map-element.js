@@ -200,6 +200,9 @@ class AWPAMapElement extends HTMLElement {
             let node = ref.render();
             this.#svg_container_nodes.refs.append(node);
          }
+         for(let src of place.svg_paths) {
+            this.#svg_container_nodes.refs.append(src.cloneNode(true));
+         }
       }
       
       if (window.location.hash)

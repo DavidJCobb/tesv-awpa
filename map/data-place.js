@@ -6,6 +6,9 @@ export default class Place {
       this.name      = "";
       this.grid_rect = null;
       this.refs      = [];
+      
+      this.svg_paths = [];
+      
       if (node) {
          this.#from_data_node(node);
       }
@@ -13,11 +16,18 @@ export default class Place {
    
    #from_data_node(node) {
       this.name = node.getAttribute("name") || "";
-      node.querySelectorAll("ref").forEach((function(src) {
+      node.querySelectorAll("ref").forEach((src) => {
          let ref = new Ref(src);
          ref.owner = this;
          this.refs.push(ref);
-      }).bind(this));
+      });
+      
+      node.querySelectorAll("wall[d]").forEach((src) => {
+         let path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+         path.classList.add("wall");
+         path.setAttribute("d", src.getAttribute("d"));
+         this.svg_paths.push(path);
+      });
       
       let grid = node.querySelector("grid-rect");
       if (grid) {

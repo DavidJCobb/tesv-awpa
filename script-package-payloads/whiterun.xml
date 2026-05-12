@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<payload>
+   <quest id="AWPAWhiterun"
+      locations="WhiterunLocation"
+   >
+      <dialogue-conditions>
+         <faction-membership of="speaker" includes="TownWhiterunFaction" />
+         <faction-membership of="speaker" excludes="GuardFactionWhiterun" />
+         
+         <location of="speaker" is="WhiterunLocation" />
+      </dialogue-conditions>
+      <actors>
+         <!-- TODO -->
+      </actors>
+      
+      <invoke name="common-super-near-player" />
+      <top-g slug="SameInterior">
+         <conditions>
+            <is-in-interior of="subject" />
+            <parent-cell of="speaker" same-as="subject" />
+         </conditions>
+         
+         <!--
+            TODO: different-floors checks
+         -->
+         
+         <!--
+            TODO: per-room checks for the city hall and inn
+         -->
+         
+         <shared-info id="shared-same-building" />
+      </top-g>
+      <top-g slug="Interiors">
+         <conditions>
+            <is-in-interior of="subject" />
+         </conditions>
+         
+         <!-- TODO -->
+         <invoke name="common-me-outside-they-inside" />
+      </top-g>
+      <top-g slug="Exterior">
+         <conditions>
+            <or>
+               <parent-world of="subject" is="WhiterunWorld" />
+               <parent-world of="subject" is="Tamriel" />
+            </or>
+         </conditions>
+         
+         <g name="house-battle-born">
+            <conditions>
+               <x of="subject" gte="20512" />
+               <x of="subject" lte="22080" />
+               <y of="subject" gte="-3648" />
+               <y of="subject" lte="-2304" />
+            </conditions>
+            <line>He's over by the Battle-Borns' house.</line>
+         </g>
+         <g name="hall-of-the-dead">
+            <conditions>
+               <x of="subject" gte="21264" />
+               <x of="subject" lte="23824" />
+               <y of="subject" gte="-3040" />
+               <y of="subject" lte="-1136" />
+            </conditions>
+            <line>He's over by the Hall of the Dead.</line>
+         </g>
+         <g name="temple-of-kynareth">
+            <conditions>
+               <x of="subject" gte="22976" />
+               <x of="subject" lte="24368" />
+               <y of="subject" gte="-3840" />
+               <y of="subject" lte="-2960" />
+            </conditions>
+            <line>He's hanging around the Temple of Kynareth.</line>
+         </g>
+         
+         <g name="northwest-corner">
+            <conditions>
+               <x of="subject" gte="19936" />
+               <x of="subject" lte="21264" />
+               <y of="subject" gte="-2592" />
+               <y of="subject" lte="-1136" />
+            </conditions>
+            <line>He's in the Wind District, near the northwest wall.</line>
+            <line>He's in the Wind District, behind the Battle-Borns' house.</line>
+         </g>
+         <g name="house-amren">
+            <conditions>
+               <x of="subject" gte="21120" />
+               <x of="subject" lte="22160" />
+               <y of="subject" gte="-5280" />
+               <y of="subject" lte="-3648" />
+            </conditions>
+            <line>He's hanging around Amren's house.</line>
+         </g>
+         <g name="house-carlotta">
+            <conditions>
+               <x of="subject" gte="19648" />
+               <x of="subject" lte="21120" />
+               <y of="subject" gte="-5280" />
+               <y of="subject" lte="-3680" />
+            </conditions>
+            <line>He's over by Carlotta Venetia's house.</line>
+         </g>
+         <g name="wind-district-west-canal">
+            <conditions>
+               <x of="subject" gte="19296" />
+               <x of="subject" lte="20912" />
+               <y of="subject" gte="-5248" />
+               <y of="subject" lte="-1088" />
+               <z of="subject" gte="-2912" />
+            </conditions>
+            <line>He's in the Wind District, near the west wall.</line>
+         </g>
+         
+         <g name="skyforge">
+            <conditions>
+               <x of="subject" gte="27776" />
+               <x of="subject" lte="30080" />
+               <y of="subject" gte="-3312" />
+               <y of="subject" lte="-1440" />
+               <z of="subject" gte="-2416" />
+            </conditions>
+            <line>He's at the Skyforge.</line>
+         </g>
+         <g name="jorrvaskr">
+            <conditions>
+               <x of="subject" gte="27008" />
+               <x of="subject" lte="30080" />
+               <y of="subject" gte="-5824" />
+               <y of="subject" lte="-1536" />
+            </conditions>
+            <line>He's over by Jorrvaskr, the hall of the Companions.</line>
+         </g>
+         <g name="dragonsreach">
+            <conditions>
+               <x of="subject" gte="25280" />
+               <x of="subject" lte="30688" />
+               <y of="subject" gte="-1216" />
+               <y of="subject" lte="4080" />
+               <z of="subject" gte="-1952" />
+            </conditions>
+            <line>He's headed up to Dragonsreach.</line>
+         </g>
+         <g name="stairs-to-dragonsreach">
+            <g name="exclude-northwest">
+               <conditions>
+                  <x of="subject" gte="23808" />
+                  <x of="subject" lte="24512" />
+                  <y of="subject" gte="-544" />
+                  <y of="subject" lte="-176" />
+               </conditions>
+               <shared-info id="beyond-city-limits-north" />
+            </g>
+            <g>
+               <conditions>
+                  <x of="subject" gte="23808" />
+                  <x of="subject" lte="26096" />
+                  <y of="subject" gte="-2064" />
+                  <y of="subject" lte="-176" />
+                  <z of="subject" gte="-2592" />
+               </conditions>
+               <line>He's on the stairwells up to Dragonsreach.</line>
+            </g>
+         </g>
+         <g name="plains-district-to-wind-district">
+            <conditions>
+               <x of="subject" gte="24368" />
+               <x of="subject" lte="25264" />
+               <y of="subject" gte="-6912" />
+               <y of="subject" lte="-4944" />
+            </conditions>
+            <line>He's on the main path between the Plains District and the Wind District.</line>
+         </g>
+         <g name="house-heimskr">
+            <conditions>
+               <x of="subject" gte="25264" />
+               <x of="subject" lte="27008" />
+               <y of="subject" gte="-5760" />
+               <y of="subject" lte="-4400" />
+            </conditions>
+            <line>He's over by Heimskr's house.</line>
+         </g>
+         
+         <g name="gate">
+            <conditions>
+               <x of="subject" gte="19312" />
+               <x of="subject" lte="21136" />
+               <y of="subject" gte="-7808" />
+               <y of="subject" lte="-7104" />
+            </conditions>
+            <line>He's near Whiterun's gate.</line>
+         </g>
+         <g name="warmaidens">
+            <conditions>
+               <x of="subject" gte="19712" />
+               <x of="subject" lte="21568" />
+               <y of="subject" gte="-9184" />
+               <y of="subject" lte="-7552" />
+            </conditions>
+            <line>He's over by Warmaiden's.</line>
+         </g>
+         <g name="plains-district-market">
+            <conditions>
+               <x of="subject" gte="24128" />
+               <x of="subject" lte="25440" />
+               <y of="subject" gte="-7952" />
+               <y of="subject" lte="-6688" />
+            </conditions>
+            <line>He's in the Plains District market right now.</line>
+         </g>
+         <g name="belethor-store">
+            <conditions>
+               <x of="subject" gte="23136" />
+               <x of="subject" lte="24608" />
+               <y of="subject" gte="-9136" />
+               <y of="subject" lte="-7824" />
+            </conditions>
+            <line>He's over by Belethor's store.</line>
+         </g>
+         <g name="arcadia-cauldron">
+            <conditions>
+               <x of="subject" gte="24608" />
+               <x of="subject" lte="25344" />
+               <y of="subject" gte="-9312" />
+               <y of="subject" lte="-7824" />
+            </conditions>
+            <line>He's over by Arcadia's Cauldron.</line>
+         </g>
+         <g name="bannered-mare">
+            <conditions>
+               <x of="subject" gte="25264" />
+               <x of="subject" lte="26448" />
+               <y of="subject" gte="-9312" />
+               <y of="subject" lte="-5760" />
+            </conditions>
+            <line>He's near the Bannered Mare.</line>
+         </g>
+         
+         <g name="house-ysolda">
+            <conditions>
+               <x of="subject" gte="24032" />
+               <x of="subject" lte="26752" />
+               <y of="subject" gte="-10608" />
+               <y of="subject" lte="-9296" />
+               <z of="subject" gte="-3456" />
+            </conditions>
+            <line>He's hanging around Ysolda's house in the Plains District.</line>
+         </g>
+         <g name="plains-district-south">
+            <conditions>
+               <x of="subject" gte="23648" />
+               <x of="subject" lte="25616" />
+               <y of="subject" gte="-11376" />
+               <y of="subject" lte="-10608" />
+               <z of="subject" gte="-3440" />
+            </conditions>
+            <line>He's in the Plains District, by the south wall.</line>
+         </g>
+         <g name="plains-district-northeast-wall">
+            <conditions>
+               <x of="subject" gte="26048" />
+               <x of="subject" lte="27648" />
+               <y of="subject" gte="-10048" />
+               <y of="subject" lte="-5760" />
+               <z of="subject" gte="-3280" />
+            </conditions>
+            <line>He's in the Plains District, by the east wall.</line>
+         </g>
+         
+         <g name="low-detail">
+            <g name="plains-district-west">
+               <conditions>
+                  <x of="subject" gte="19312" />
+                  <x of="subject" lte="20848" />
+                  <y of="subject" gte="-8240" />
+                  <y of="subject" lte="-5248" />
+               </conditions>
+               <line>He's in the Plains District, near the west wall.</line>
+            </g>
+            <g name="plains-district-main-street">
+               <conditions>
+                  <x of="subject" gte="21136" />
+                  <x of="subject" lte="24096" />
+                  <y of="subject" gte="-8048" />
+                  <y of="subject" lte="-7312" />
+               </conditions>
+               <line>He's in the Plains District, on its main street.</line>
+            </g>
+         </g>
+         
+         <invoke name="common-exterior-fallbacks" />
+      </top-g>
+      
+      <!-- final fallback lines -->
+      <shared-info id="shared-unknown" />
+   </quest>
+</payload>

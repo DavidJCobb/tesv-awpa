@@ -69,6 +69,12 @@ awpa-map-tooltip {
             height: calc((var(--obnd-y-max) - var(--obnd-y-min)) * 1px);
          }
       }
+      .wall {
+         fill:          none;
+         stroke:        #666;
+         stroke-width:  3px;
+         vector-effect: non-scaling-stroke;
+      }
    }
    #groups {
       :is(rect, circle) {

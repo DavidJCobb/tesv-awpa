@@ -15,6 +15,11 @@ load.addEventListener("click", async (e) => {
    for(let file of files) {
       let text = await file.text();
       let dom  = (new DOMParser()).parseFromString(text, "application/xml");
+      if (dom.querySelector("parsererror")) {
+         console.log(dom.querySelector("parsererror"));
+         alert("Parse error; check the console.");
+         return;
+      }
       
       collection.load_from_payload(dom.documentElement);
    }

@@ -415,6 +415,47 @@
          </data>
       </macro>
       
+      <macro name="mixin-house-three-residents-ext">
+         <!--
+            For a house with three residents, generates the content 
+            for asking a resident, and asking about a resident.
+         -->
+         <parameter name="OWNER-1" />
+         <parameter name="OWNER-2" />
+         <parameter name="OWNER-3" />
+         <data>
+            <g name="asking-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="speaker" is="%OWNER-1%" />
+                     <actor-base of="speaker" is="%OWNER-2%" />
+                     <actor-base of="speaker" is="%OWNER-3%" />
+                  </or>
+               </conditions>
+               <g name="asking-resident-about-resident">
+                  <conditions>
+                     <or>
+                        <actor-base of="subject" is="%OWNER-1%" />
+                        <actor-base of="subject" is="%OWNER-2%" />
+                        <actor-base of="subject" is="%OWNER-3%" />
+                     </or>
+                  </conditions>
+                  <shared-info id="shared-exterior-near-our-home" />
+               </g>
+               <shared-info id="shared-exterior-near-my-home" />
+            </g>
+            <g name="asking-about-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="%OWNER-1%" />
+                     <actor-base of="subject" is="%OWNER-2%" />
+                     <actor-base of="subject" is="%OWNER-3%" />
+                  </or>
+               </conditions>
+               <shared-info id="shared-exterior-near-own-home" />
+            </g>
+         </data>
+      </macro>
       <macro name="mixin-house-three-residents-int">
          <!--
             For a house with three residents, generates the content 

@@ -107,6 +107,11 @@
       <shared-info id="shared-exterior-market-with-us" editor-id-slug="ExtMarketHere">
          <line>He's here in the market.</line>
       </shared-info>
+      <shared-info id="shared-exterior-hall-of-the-dead" editor-id-slug="ExtHallOfTheDead">
+         <line>He's over by the Hall of the Dead.</line>
+         <line>He was headed toward the Hall of the Dead not too long ago.</line>
+         <line>I think you might find him around the Hall of the Dead.</line>
+      </shared-info>
       
       <shared-info id="shared-alchemy-table" editor-id-slug="AlchemyTable">
          <line>He's at the alchemy table.</line>

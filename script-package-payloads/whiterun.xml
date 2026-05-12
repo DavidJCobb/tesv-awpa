@@ -23,7 +23,79 @@
          <location of="speaker" is="WhiterunLocation" />
       </dialogue-conditions>
       <actors>
-         <!-- TODO -->
+         <actor editor-id="AcolyteJenssen" name="Acolyte Jenssen" />
+         <actor editor-id="AdrianneAvenicci" name="Adrianne Avenicci" />
+         <actor editor-id="AelaTheHuntress" name="Aela the Huntress" />
+         <actor editor-id="Ahlam" />
+         <actor editor-id="AlfhildBattleBorn" name="Alfhild Battle-Born" />
+         <actor editor-id="Amren" />
+         <actor editor-id="Andurs" />
+         <actor editor-id="Anoriath" />
+         <actor editor-id="Arcadia" />
+         <actor editor-id="Athis" />
+         <actor editor-id="AvulsteinGrayMane" name="Avulstein Gray-Mane" />
+         <actor editor-id="BalgruuftheGreater" name="Balgruuf the Greater" />
+         <actor editor-id="Belethor" />
+         <actor editor-id="BergritteBattleBorn" name="Bergritte Battle-Born" />
+         <actor editor-id="Braith" />
+         <actor editor-id="Brenuin" />
+         <actor editor-id="Brill" />
+         <actor editor-id="CarlottaValentia" name="Carlotta Valentia" />
+         <actor editor-id="CommanderCaius" name="Commander Caius" />
+         <actor editor-id="Dagny" />
+         <actor editor-id="DanicaPureSpring" name="Danica Pure-Spring" />
+         <actor editor-id="Elrindir" />
+         <actor editor-id="EorlundGrayMane" name="Eorlund Gray-Mane" />
+         <actor editor-id="FarengarSecretFire" name="Farengar Secret-Fire" />
+         <actor editor-id="Farkas" />
+         <actor editor-id="Fianna" />
+         <actor editor-id="FraliaGrayMane" name="Fralia Gray-Mane" />
+         <actor editor-id="Frothar" />
+         <actor editor-id="Gerda" />
+         <actor editor-id="Gloth" />
+         <actor editor-id="Heimskr" />
+         <actor editor-id="HousecarlWhiterun" name="Lydia">
+            <!-- TODO: only after player has become Thane -->
+         </actor>
+         <actor editor-id="Hulda" />
+         <actor editor-id="Hrongar" />
+         <actor editor-id="Irileth" />
+         <actor editor-id="IdolafBattleBorn" name="Idolaf Battle-Born" />
+         <actor editor-id="Jervar" />
+         <actor editor-id="JonBattleBorn" name="Jon Battle-Born" />
+         <actor editor-id="KodlakWhitemane" name="Kodlak Whitemane" />
+         <actor editor-id="LarsBattleBorn" name="Lars Battle-Born" />
+         <actor editor-id="LilithMaidenLoom" name="Lilith Maiden-Loom" />
+         <actor editor-id="Mikael" />
+         <actor editor-id="MilaValentia" name="Mila Valentia" />
+         <actor editor-id="Nazeem" />
+         <actor editor-id="Nelkir" />
+         <actor editor-id="HjadaStonearm" name="Hjada Stonearm" />
+         <actor editor-id="OlavatheFeeble" name="Olava the Feeble" />
+         <actor editor-id="OlfinaGrayMane" name="Olfina Gray-Mane" />
+         <actor editor-id="OlfridBattleBorn" name="Olfrid Battle-Born" />
+         <actor editor-id="ProventusAvenicci" name="Proventus Avenicci" />
+         <actor editor-id="Ria" />
+         <actor editor-id="Saadia">
+            <!-- TODO: Not after taken by the Alik'r -->
+         </actor>
+         <actor editor-id="Saffir" />
+         <actor editor-id="SeverioPelagia" name="Severio Pelagia" />
+         <actor editor-id="Sigurd" />
+         <actor editor-id="Sinmir" />
+         <actor editor-id="Skjor" />
+         <actor editor-id="SkulvarSableHilt" name="Skulvar Sable-Hilt" />
+         <actor editor-id="Terek" />
+         <actor editor-id="ThoraldGrayMane" name="Thorald Gray-Mane">
+            <!-- TODO: say "he's missing" until the player rescues him -->
+         </actor>
+         <actor editor-id="Tilma" name="Tilma the Haggard" />
+         <actor editor-id="Torvar" />
+         <actor editor-id="Ulfberth" name="Ulfberth War-Bear" />
+         <actor editor-id="Uthgerd" name="Uthgerd the Unbroken" />
+         <actor editor-id="VignarGrayMane" name="Vignar Gray-Mane" />
+         <actor editor-id="Vilkas" />
+         <actor editor-id="Ysolda" />
       </actors>
       
       <invoke name="common-super-near-player" />
@@ -67,6 +139,7 @@
                <y of="subject" lte="-4800" />
             </conditions>
             <line>He's on the main path between the Plains District and the Wind District.</line>
+            <line>He's between the Plains District market and the Wind District's main square.</line>
          </g>
          
          <g name="wind-district">
@@ -77,7 +150,27 @@
                   <y of="subject" gte="-3648" />
                   <y of="subject" lte="-2304" />
                </conditions>
+               <g name="asking-resident">
+                  <conditions>
+                     <faction-membership of="speaker" includes="WhiterunHouseBattleBornFaction" />
+                  </conditions>
+                  <g name="asking-about-resident">
+                     <conditions>
+                        <faction-membership of="subject" includes="WhiterunHouseBattleBornFaction" />
+                     </conditions>
+                     <shared-info id="shared-exterior-near-our-home" />
+                  </g>
+                  <shared-info id="shared-exterior-near-my-home" />
+               </g>
+               <g name="asking-about-resident">
+                  <conditions>
+                     <faction-membership of="subject" includes="WhiterunHouseBattleBornFaction" />
+                  </conditions>
+                  <shared-info id="shared-exterior-near-own-home" />
+               </g>
                <line>He's over by the Battle-Borns' house.</line>
+               <line>I saw him passing by the Battle-Borns' mansion a minute ago.</line>
+               <line>Check over by the Battle-Born family mansion, at the northwest corner of the Wind District.</line>
             </g>
             
             <g name="companions-area">
@@ -89,7 +182,20 @@
                      <y of="subject" lte="-1440" />
                      <z of="subject" gte="-2416" />
                   </conditions>
+                  <g name="eorlund" non-exclusive="true">
+                     <conditions>
+                        <actor-base of="subject" is="EorlundGrayMane" />
+                     </conditions>
+                     <line>He's working the Skyforge right now.</line>
+                  </g>
+                  <g name="not-eorlund" non-exclusive="true">
+                     <conditions>
+                        <actor-base of="subject" is-not="EorlundGrayMane" />
+                     </conditions>
+                     <line>He's visiting the Skyforge.</line>
+                  </g>
                   <line>He's at the Skyforge.</line>
+                  <line>I think I saw him up at the Skyforge earlier.</line>
                </g>
                <g name="jorrvaskr">
                   <conditions>
@@ -99,6 +205,8 @@
                      <y of="subject" lte="-1536" />
                   </conditions>
                   <line>He's over by Jorrvaskr, the hall of the Companions.</line>
+                  <line>I saw him by Jorrvaskr a little while ago.</line>
+                  <line>Try checking around Jorrvaskr.</line>
                </g>
             </g>
             <g name="hall-of-the-dead">
@@ -109,7 +217,7 @@
                   <y of="subject" gte="-3040" />
                   <y of="subject" lte="-1136" />
                </conditions>
-               <line>He's over by the Hall of the Dead.</line>
+               <shared-info id="shared-exterior-hall-of-the-dead" />
             </g>
             <g name="house-amren">
                <conditions>
@@ -118,7 +226,14 @@
                   <y of="subject" gte="-5280" />
                   <y of="subject" lte="-3648" />
                </conditions>
+               <invoke name="mixin-house-three-residents-int">
+                  <parameter name="OWNER-1" value="Amren" />
+                  <parameter name="OWNER-2" value="Saffir" />
+                  <parameter name="OWNER-3" value="Braith" />
+               </invoke>
                <line>He's hanging around Amren's house.</line>
+               <line>I saw him over by Amren's house earlier.</line>
+               <line>I'm pretty sure he's near Amren's house right now.</line>
             </g>
             <g name="house-carlotta">
                <conditions>
@@ -127,16 +242,42 @@
                   <y of="subject" gte="-5280" />
                   <y of="subject" lte="-3680" />
                </conditions>
-               <line>He's over by Carlotta Venetia's house.</line>
+               <invoke name="mixin-house-two-residents-int">
+                  <parameter name="OWNER-1" value="CarlottaValentia" />
+                  <parameter name="OWNER-2" value="MilaValentia" />
+               </invoke>
+               <line>He's over by Carlotta Valentia's house.</line>
+               <line>He's hanging around Carlotta Valentia's house.</line>
+               <line>I saw him in the Wind District, near Carlotta's house.</line>
             </g>
-            <g name="house-grey-mane">
+            <g name="house-gray-mane">
                <conditions>
                   <x of="subject" gte="22480" />
                   <x of="subject" lte="24368" />
                   <y of="subject" gte="-5632" />
                   <y of="subject" lte="-4192" />
                </conditions>
-               <line>He's hanging around the Grey-Manes' house.</line>
+               <g name="asking-resident">
+                  <conditions>
+                     <faction-membership of="speaker" includes="WhiterunHouseGrayManeFaction" />
+                  </conditions>
+                  <g name="asking-about-resident">
+                     <conditions>
+                        <faction-membership of="subject" includes="WhiterunHouseGrayManeFaction" />
+                     </conditions>
+                     <shared-info id="shared-exterior-near-our-home" />
+                  </g>
+                  <shared-info id="shared-exterior-near-my-home" />
+               </g>
+               <g name="asking-about-resident">
+                  <conditions>
+                     <faction-membership of="subject" includes="WhiterunHouseGrayManeFaction" />
+                  </conditions>
+                  <shared-info id="shared-exterior-near-own-home" />
+               </g>
+               <line>He's hanging around the Gray-Manes' house.</line>
+               <line>He was passing by the Gray-Mane family home earlier.</line>
+               <line>He's over by the Gray-Mane mansion. It's in the Wind District, near the Gildergreen.</line>
             </g>
             <g name="temple-of-kynareth">
                <conditions>
@@ -146,14 +287,31 @@
                   <y of="subject" lte="-2960" />
                </conditions>
                <line>He's hanging around the Temple of Kynareth.</line>
+               <line>I spotted him by the Temple of Kynareth earlier.</line>
+               <line>He's over by the Temple of Kynareth.</line>
             </g>
             
             <g name="gildergreen">
-               <!-- lower-prio than `house-grey-mane` and `temple-of-kynareth` -->
+               <!-- lower-prio than `house-gray-mane` and `temple-of-kynareth` -->
                <conditions>
                   <distance of="subject" to="[REFR:001062A5]WhiterunTreeAreaMarker" lte="1024" />
                </conditions>
+               <g name="asking-kynareth-worshipper-while-in-temple">
+                  <conditions>
+                     <faction-membership of="speaker" includes="WhiterunTempleofKynarethFaction" />
+                     <parent-cell of="speaker" is="WhiterunTempleofKynareth" />
+                  </conditions>
+                  <line>He's over the by the Gildergreen, the holy tree in front of the Temple.</line>
+                  <line>He's just outside, by the Gildergreen.</line>
+               </g>
+               <g name="asking-kynareth-worshipper" non-exclusive="true">
+                  <conditions>
+                     <faction-membership of="speaker" includes="WhiterunTempleofKynarethFaction" />
+                  </conditions>
+                  <line>He's over the by the Gildergreen, the holy tree in front of the Temple of Kynareth.</line>
+               </g>
                <line>He's standing by the Gildergreen.</line>
+               <line>He's over by the Gildergreen, the giant tree in the Wind District.</line>
             </g>
             
             <!-- lower-prio than `gildergreen` -->
@@ -164,16 +322,36 @@
                   <y of="subject" gte="-5760" />
                   <y of="subject" lte="-4400" />
                </conditions>
+               <invoke name="mixin-house-one-resident-int">
+                  <parameter name="OWNER" value="Heimskr" />
+               </invoke>
                <line>He's over by Heimskr's house.</line>
+               <line>He passed by Heimskr's house earlier. The place is easy to miss; it's in the Wind District, against the wall between that and the Plains District.</line>
+               <line>He's around Heimskr's house, on the south edge of the Wind District.</line>
             </g>
             <g name="shrine-of-talos">
+               <!--
+                  TODO: Per UESP the Unofficial Patch "removes" the shrine after the 
+                  Imperials take Whiterun during the Civil War. I need to look into 
+                  how that's done; if the shrine is disabled, then I'll need to write 
+                  conditions to check that, and write alternate dialogue for that 
+                  scenario.
+               -->
                <conditions>
                   <x of="subject" gte="25248" />
                   <x of="subject" lte="26784" />
                   <y of="subject" gte="-3520" />
                   <y of="subject" lte="-2096" />
                </conditions>
+               <g name="asking-about-heimskr">
+                  <conditions>
+                     <actor-base of="subject" is="Heimskr" />
+                  </conditions>
+                  <line>He's delivering a sermon by the Shrine of Talos.</line>
+                  <line>He's preaching at the Shrine of Talos.</line>
+               </g>
                <line>He's over by the Shrine of Talos.</line>
+               <line>He's hanging around the Shrine of Talos.</line>
             </g>
          </g>
          
@@ -186,6 +364,8 @@
                <z of="subject" gte="-1952" />
             </conditions>
             <line>He's headed up to Dragonsreach.</line>
+            <line>He's up at Dragonsreach.</line>
+            <line>Try checking Dragonsreach.</line>
          </g>
          <g name="stairs-to-dragonsreach">
             <g name="exclude-northwest">
@@ -227,6 +407,8 @@
                   <y of="subject" lte="-8048" />
                </conditions>
                <line>He's near Breezehome.</line>
+               <line>He was passing by Breezehome earlier.</line>
+               <line>I saw him around Breezehome, across from the Drunken Huntsman.</line>
             </g>
             <g name="drunken-huntsman">
                <g>
@@ -256,6 +438,8 @@
                   <y of="subject" lte="-7104" />
                </conditions>
                <line>He's near Whiterun's gate.</line>
+               <line>He's near the city's main gate.</line>
+               <line>He's near Whiterun's entrance.</line>
             </g>
             <g name="house-olava">
                <conditions>
@@ -264,7 +448,11 @@
                   <y of="subject" gte="-10176" />
                   <y of="subject" lte="-8896" />
                </conditions>
+               <invoke name="mixin-house-one-resident-int">
+                  <parameter name="OWNER" value="OlavatheFeeble" />
+               </invoke>
                <line>He's near Olava's house.</line>
+               <line>He was headed toward Olava's house in the Plains District.</line>
             </g>
             <g name="house-severio">
                <conditions>
@@ -273,7 +461,12 @@
                   <y of="subject" gte="-7456" />
                   <y of="subject" lte="-6432" />
                </conditions>
+               <invoke name="mixin-house-one-resident-int">
+                  <parameter name="OWNER" value="SeverioPelagia" />
+               </invoke>
                <line>He's near Severio Pelagia's house.</line>
+               <line>He was headed up to Severio Pelagia's house, I think.</line>
+               <line>I think he's over by Severio Pelagia's house.</line>
             </g>
             <g name="house-ysolda">
                <conditions>
@@ -283,7 +476,12 @@
                   <y of="subject" lte="-9296" />
                   <z of="subject" gte="-3456" />
                </conditions>
+               <invoke name="mixin-house-one-resident-int">
+                  <parameter name="OWNER" value="Ysolda" />
+               </invoke>
                <line>He's hanging around Ysolda's house in the Plains District.</line>
+               <line>He's over by Ysolda's house, in the southeast part of the city.</line>
+               <line>I saw him heading toward Ysolda's house a little while ago.</line>
             </g>
             <g name="plains-district-market">
                <conditions>
@@ -293,6 +491,7 @@
                   <y of="subject" lte="-6688" />
                </conditions>
                <line>He's in the Plains District market right now.</line>
+               <shared-info id="shared-exterior-market" />
             </g>
             <g name="warmaidens">
                <!-- must be lower-prio than `gate` -->
@@ -302,7 +501,33 @@
                   <y of="subject" gte="-9184" />
                   <y of="subject" lte="-7552" />
                </conditions>
+               <g name="asking-adrianne" non-exclusive="true">
+                  <conditions>
+                     <actor-base of="speaker" is="AdrianneAvenicci" />
+                  </conditions>
+                  <line>He's over by Warmaiden's. I'm one of the blacksmiths there.</line>
+               </g>
+               <g name="asking-ulfberth" non-exclusive="true">
+                  <conditions>
+                     <actor-base of="speaker" is="Ulfberth" />
+                  </conditions>
+                  <line>He's over by Warmaiden's. I help run the place.</line>
+               </g>
+               <g name="asking-about-proprietor">
+                  <conditions>
+                     <or>
+                        <actor-base of="subject" is="AdrianneAvenicci" />
+                        <actor-base of="subject" is="Ulfberth" />
+                     </or>
+                     <actor-base of="speaker" is-not="AdrianneAvenicci" />
+                     <actor-base of="speaker" is-not="Ulfberth" />
+                  </conditions>
+                  <line>You'll find him working at the smithy by the gate.</line>
+                  <line>Check over by Warmaiden's. He works there.</line>
+               </g>
                <line>He's over by Warmaiden's.</line>
+               <line>He's near the blacksmith's shop by the city gate.</line>
+               <line>Try looking around Warmaiden's, the smithy by the gate.</line>
             </g>
             
             <!-- must be lower-prio than `plains-district-market` -->
@@ -313,6 +538,13 @@
                   <y of="subject" gte="-9312" />
                   <y of="subject" lte="-7824" />
                </conditions>
+               <g name="asking-about-proprietor">
+                  <conditions>
+                     <actor-base of="subject" is="Arcadia" />
+                  </conditions>
+                  <line>He's around his shop in the Plains District. Arcadia's Cauldron.</line>
+                  <line>Have you checked by Arcadia's Cauldron?</line>
+               </g>
                <line>He's over by Arcadia's Cauldron.</line>
             </g>
             <g name="bannered-mare">
@@ -323,6 +555,8 @@
                   <y of="subject" lte="-5760" />
                </conditions>
                <line>He's near the Bannered Mare.</line>
+               <line>He's hanging around Whiterun's inn, the Bannered Mare.</line>
+               <line>Try looking around the Bannered Mare, at the east edge of the city.</line>
             </g>
             <g name="belethor-store">
                <conditions>
@@ -331,7 +565,15 @@
                   <y of="subject" gte="-9296" />
                   <y of="subject" lte="-7824" />
                </conditions>
+               <g name="asking-about-proprietor">
+                  <conditions>
+                     <actor-base of="subject" is="Belethor" />
+                  </conditions>
+                  <line>Have you checked around his store in the Plains District?</line>
+                  <line>I'm pretty sure he's by his shop.</line>
+               </g>
                <line>He's over by Belethor's store.</line>
+               <line>He's hanging around the general store.</line>
             </g>
          </g>
          
@@ -355,6 +597,7 @@
                      <y of="subject" lte="-5280" />
                   </conditions>
                   <line>He's on the side road to the Wind District, near the Drunken Huntsman and the city gate.</line>
+                  <line>He's not far from the city entrance. Check the street between the Wind District and Plains District.</line>
                </g>
                <g name="plains-district-main-street">
                   <conditions>
@@ -364,6 +607,7 @@
                      <y of="subject" lte="-7312" />
                   </conditions>
                   <line>He's in the Plains District, on its main street.</line>
+                  <line>He's out on the main street in the Plains District.</line>
                </g>
                <g name="plains-distict-north">
                   <conditions>
@@ -444,6 +688,7 @@
                      <y of="subject" lte="-3040" />
                   </conditions>
                   <line>He's over in the Wind District's residential area.</line>
+                  <line>Check the Wind District. He's probably on the west side.</line>
                </g>
                <g name="wind-district-northwest">
                   <conditions>
@@ -454,6 +699,7 @@
                   </conditions>
                   <line>He's in the Wind District, near the northwest wall.</line>
                   <line>He's in the Wind District, behind the Battle-Borns' house.</line>
+                  <line>I think I saw him in the Battle-Born family's backyard.</line>
                </g>
                <g name="wind-district-west-canal">
                   <!-- must be lower-prio than `wind-district-northwest` -->

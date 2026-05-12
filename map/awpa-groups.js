@@ -4,6 +4,10 @@ export class Group {
    constructor() {
       this.conditions = {
          bounds:             new Bounds(),
+         distance: {
+            ref:    null, // Optional<int form_id>
+            radius: 0,
+         },
          confirmed_exterior: false,
          confirmed_interior: false,
       };
@@ -110,6 +114,17 @@ export class Group {
                      radius = this.resolve_constant(radius);
                      if (radius === null)
                         break;
+                     {
+                        let to = child.getAttribute("to");
+                        let match = to.match(/^\[....:([0-9A-Fa-f]{1,8})\]/);
+                        if (!match)
+                           break;
+                        let id = parseInt(match[1],16);
+                        if (id) {
+                           this.conditions.distance.ref    = id;
+                           this.conditions.distance.radius = radius;
+                        }
+                     }
                      //
                      // TODO: attr `to` is of the form "[REFR:00123456]EditorID"
                      //

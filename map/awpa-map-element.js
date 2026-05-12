@@ -137,6 +137,16 @@ class AWPAMapElement extends HTMLElement {
       this.#svg.classList[v ? "add" : "remove"]("show-grid");
    }
    
+   get_ref_by_form_id(id) {
+      for(let name in this.#places) {
+         let place = this.#places[name]; 
+         let ref   = place.refs_by_id.get(id);
+         if (ref)
+            return ref;
+      }
+      return null;
+   }
+   
    set_group_collection(coll) {
       if (this.#groups === coll)
          return;
@@ -148,6 +158,21 @@ class AWPAMapElement extends HTMLElement {
       for(let i = list.length - 1; i >= 0; --i) {
          let group = list[i];
          let node  = group.render();
+         if (!node) {
+            if (group.conditions.distance.ref) { // HACK HACK HACK doing this here is a HACK
+               let ref = this.get_ref_by_form_id(group.conditions.distance.ref);
+               if (ref) {
+                  node = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                  node.source_data = group;
+                  node.setAttribute("cx", ref.pos.x);
+                  node.setAttribute("cy", ref.pos.y);
+                  node.setAttribute("r",  group.conditions.distance.radius);
+                  node.setAttribute("data-name", group.name);
+               }
+            }
+            if (!node)
+               continue;
+         }
          this.#svg_container_nodes.groups.append(node);
       }
    }
@@ -198,6 +223,8 @@ class AWPAMapElement extends HTMLElement {
          let place = this.#places[key];
          for(let ref of place.refs) {
             let node = ref.render();
+            if (!node)
+               continue;
             this.#svg_container_nodes.refs.append(node);
          }
          for(let src of place.svg_paths) {

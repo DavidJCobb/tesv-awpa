@@ -2,10 +2,11 @@ import Ref from "./data-ref.js"
 
 export default class Place {
    constructor(node) {
-      this.owner     = null; // AWPAMap
-      this.name      = "";
-      this.grid_rect = null;
-      this.refs      = [];
+      this.owner      = null; // AWPAMap
+      this.name       = "";
+      this.grid_rect  = null;
+      this.refs       = [];
+      this.refs_by_id = new Map(); // Map<int form_id, Ref>
       
       this.svg_paths = [];
       
@@ -20,6 +21,8 @@ export default class Place {
          let ref = new Ref(src);
          ref.owner = this;
          this.refs.push(ref);
+         if (ref.form_id)
+            this.refs_by_id.set(ref.form_id, ref);
       });
       
       node.querySelectorAll("wall[d]").forEach((src) => {

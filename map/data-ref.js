@@ -1,11 +1,12 @@
 
 export default class Ref {
    constructor(node) {
-      this.owner  = null; // AWPAPlace
-      this.name   = node?.getAttribute("name") || "";
-      this.pos    = { x: 0, y: 0 };
-      this.base   = null;
-      this.bounds = null;
+      this.owner   = null; // AWPAPlace
+      this.name    = node?.getAttribute("name") || "";
+      this.pos     = { x: 0, y: 0 };
+      this.base    = null;
+      this.bounds  = null;
+      this.form_id = null; // Optional<int>
       if (node) {
          this.#from_data_node(node);
       }
@@ -17,6 +18,15 @@ export default class Ref {
       this.name = node.getAttribute("label") || "";
       this.pos  = new DOMPoint(+src_pos[0], +src_pos[1]);
       this.yaw  = +node.getAttribute("yaw") || 0;
+      
+      {
+         let id = node.getAttribute("form-id");
+         if (id) {
+            id = parseInt(id, 16);
+            if (id)
+               this.form_id = id;
+         }
+      }
       
       let base = node.getAttribute("base");
       if (base)

@@ -614,9 +614,12 @@
             L 29984,-4512
             L 30128,-3840
             L 30160,-2816
-            
-            
          " />
+         
+         <!-- GetDistance refs -->
+         <ref editor-id="WhiterunTreeAreaMarker" form-id="001062A5" pos="24768.0234,-3909.9331" />
+         
+         
       </place>
       <place name="Windhelm">
          <grid-rect min="32,8" max="36,5" />

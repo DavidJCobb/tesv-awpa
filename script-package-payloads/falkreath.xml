@@ -32,6 +32,26 @@
       </condition-set>
       
       <actors>
+         <actor editor-id="Bolund" />
+         <actor editor-id="Delacourt" />
+         <actor editor-id="Dengeir" name="Dengeir of Stuhn" />
+         <actor editor-id="Helvard" />
+         <actor editor-id="IndaraCaerellia" name="Indara Caerellia" />
+         <actor editor-id="Kust" />
+         <actor editor-id="Lod" />
+         <actor editor-id="Mathies" />
+         <actor editor-id="Narri" />
+         <actor editor-id="Nenya">
+            <begin-asking-about>
+               <filter-conditions>
+                  <!-- Can't ask about her if she's been exiled. -->
+                  <faction-membership of="subject" excludes="GovExiled" />
+               </filter-conditions>
+            </begin-asking-about>
+         </actor>
+         <actor editor-id="Runil" />
+         <actor editor-id="Siddgeir" />
+         <actor editor-id="Solaf" />
          <actor editor-id="Tekla">
             <begin-asking-about>
                <filter-conditions>
@@ -40,7 +60,23 @@
                </filter-conditions>
             </begin-asking-about>
          </actor>
-         <!-- TODO -->
+         <actor editor-id="Thadgeir" />
+         <actor editor-id="Valdr">
+            <begin-asking-to>
+               <topic>
+                  <!--
+                     If he hasn't been rescued yet, then people are worried about him.
+                  -->
+                  <conditions>
+                     <quest-not-completed name="dunMossMotherQST" />
+                  </conditions>
+                  <line emotion="sad:70">He's one of the local bear hunters. He's been missing for a while.</line>
+                  <line emotion="fear:60">He went out hunting a while ago, but he hasn't returned. I think he went westward.</line>
+               </topic>
+            </begin-asking-to>
+         </actor>
+         <actor editor-id="ValgaVinicia" name="Valga Vinicia" />
+         <actor editor-id="Zaria" />
       </actors>
       
       <invoke name="common-super-near-player" />
@@ -65,7 +101,172 @@
             <is-in-interior of="subject" />
          </conditions>
          
-         <!-- TODO -->
+         <invoke name="common-barracks-with-jail-downstairs-int">
+            <parameter name="BARRACKS-EDITOR-ID" value="FalkreathBarracks" />
+            <parameter name="JAIL-EDITOR-ID" value="FalkreathBarracksJail" />
+         </invoke>
+         <g name="corpselight-farm">
+            <conditions>
+               <parent-cell of="subject" is="FalkreathCorpselightFarm" />
+            </conditions>
+            <invoke name="mixin-house-two-residents-int">
+               <parameter name="OWNER-1" value="IndaraCaerellia" />
+               <parameter name="OWNER-2" value="Mathies" />
+            </invoke>
+            <line>He's visiting Corpselight Farm right now.</line>
+            <line>He's at Corpselight Farm right now, at the owners' house.</line>
+         </g>
+         <g name="dead-mans-drink">
+            <conditions>
+               <parent-cell of="subject" is="FalkreathDeadMansDrink" />
+            </conditions>
+            <g name="asking-about-employee" non-exclusive="true">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Delacourt" />
+                     <actor-base of="subject" is="Narri" />
+                     <actor-base of="subject" is="ValgaVinicia" />
+                  </or>
+               </conditions>
+               <line>He works at Dead Man's Drink. He should be there now.</line>
+            </g>
+            <line>He's at Dead Man's Drink right now.</line>
+            <line>He's at Dead Man's Drink, the local inn.</line>
+            <line>He walked into Dead Man's Drink not too long ago.</line>
+         </g>
+         <g name="house-dengeir">
+            <conditions>
+               <parent-cell of="subject" is="FalkreathDengeirsHall" />
+            </conditions>
+            <invoke name="mixin-house-two-residents-int">
+               <parameter name="OWNER-1" value="Dengeir" />
+               <parameter name="OWNER-2" value="Thadgeir" />
+            </invoke>
+            <g name="asking-about-tekla">
+               <conditions>
+                  <actor-base of="subject" is="Tekla" />
+                  <faction-membership of="subject" excludes="JobStewardFaction" />
+               </conditions>
+               <line>He's probably tending to Dengeir's house right now.</line>
+            </g>
+            <line>He's at Dengeir's house.</line>
+            <line>He's visiting Dengeir's house.</line>
+            <line>I believe you'll find him at Dengeir's house right now.</line>
+         </g>
+         <g name="house-lod">
+            <conditions>
+               <parent-cell of="subject" is="FalkreathLodsHouse" />
+            </conditions>
+            <invoke name="mixin-house-one-resident-int">
+               <parameter name="OWNER" value="Lod" />
+            </invoke>
+            <line>He's at Lod's house.</line>
+            <line>He's visiting Lod's house.</line>
+            <line>I believe you'll find him at Lod's house right now.</line>
+         </g>
+         <g name="grave-concoctions">
+            <conditions>
+               <parent-cell of="subject" is="FalkreathGraveConcoctions" />
+            </conditions>
+            <g name="asking-resident">
+               <conditions>
+                  <actor-base of="speaker" is="Zaria" />
+               </conditions>
+               <line>He's at my shop, Grave Concoctions.</line>
+               <line>He's at my shop. I run the alchemy shop at the south edge of town.</line>
+            </g>
+            <g name="asking-about-resident">
+               <conditions>
+                  <actor-base of="subject" is="Zaria" />
+               </conditions>
+               <line>He works at Grave Concoctions. He should be there now.</line>
+               <line>The alchemist. You'll find him at Grave Concoctions. He runs the shop out of his home.</line>
+            </g>
+            <line>He's at Grave Concoctions right now.</line>
+            <line>He walked into Grave Concoctions just a minute ago.</line>
+         </g>
+         <g name="gray-pine-goods">
+            <conditions>
+               <parent-cell of="subject" is="FalkreathGrayPineGoods" />
+            </conditions>
+            <g name="asking-owner">
+               <conditions>
+                  <actor-base of="speaker" is="Solaf" />
+               </conditions>
+               <g name="asking-about-roomate">
+                  <conditions>
+                     <actor-base of="subject" is="Bolund" />
+                  </conditions>
+                  <line>My brother's at home. He lives with me at my shop, Gray Pine Goods.</line>
+                  <line>He's at home right now. He lives at my place. I run Gray Pine Goods out of there.</line>
+               </g>
+               <line>He's at my shop, Gray Pine Goods.</line>
+               <line>He's visiting Gray Pine Goods, my store.</line>
+            </g>
+            <g name="asking-roomate">
+               <conditions>
+                  <actor-base of="speaker" is="Bolund" />
+               </conditions>
+               <g name="asking-about-owner">
+                  <conditions>
+                     <actor-base of="subject" is="Solaf" />
+                  </conditions>
+                  <line>My brother runs Gray Pine Goods. He should be there right now.</line>
+                  <line>You're looking for my brother? Check Gray Pine Goods, the general store. He runs the place.</line>
+               </g>
+               <line>He's at my place. I live with my brother in his shop, Gray Pine Goods.</line>
+               <line>He's at my brother's store right now. Gray Pine Goods.</line>
+            </g>
+            <g name="asking-about-owner">
+               <conditions>
+                  <actor-base of="subject" is="Solaf" />
+               </conditions>
+               <line>He owns the general store, Gray Pine Goods. He should be there right now.</line>
+               <line>He runs Gray Pine Goods. Have you checked there?</line>
+               <line>Try checking Gray Pine Goods.</line>
+            </g>
+            <g name="asking-about-roomate">
+               <conditions>
+                  <actor-base of="subject" is="Bolund" />
+               </conditions>
+               <line>Solaf's brother. They live together in Solaf's shop, Gray Pine Goods.</line>
+               <line>He's at Gray Pine Goods. He's the owner's brother.</line>
+            </g>
+            <line>He's at Gray Pine Goods right now.</line>
+            <line>He walked into Gray Pine Goods just a minute ago.</line>
+         </g>
+         <g name="hall-of-the-dead">
+            <conditions>
+               <parent-cell of="subject" is="FalkreathHouseofArkay" />
+            </conditions>
+            <line>He's at the Hall of the Dead right now. It's the building out in the graveyard.</line>
+            <line>He's in the Hall of the Dead, tucked into the western corner of the city.</line>
+            <line>Check the Hall of the Dead, in the middle of the graveyard.</line>
+         </g>
+         <g name="jarl-longhouse">
+            <conditions>
+               <parent-cell of="subject" is="FalkreathJarlsLonghouse" />
+            </conditions>
+            <g name="jarl">
+               <conditions>
+                  <faction-membershop of="subject" includes="JobJarlFaction" />
+               </conditions>
+               <line>Falkreath's Jarl. Check the town hall. If he's not on the throne, he won't be far from it.</line>
+               <line>The Jarl? Check his longhouse at the center of town.</line>
+            </g>
+            <g name="employee">
+               <conditions>
+                  <or>
+                     <faction-membershop of="subject" includes="JobHousecarlFaction" />
+                     <faction-membershop of="subject" includes="JobStewardFaction" />
+                  </or>
+               </conditions>
+               <line>He's at work at the Jarl's Longhouse.</line>
+               <line>He's a member of the Jarl's court. You'll find him at the longhouse.</line>
+            </g>
+            <line>He's at the Jarl's Longhouse right now.</line>
+            <line>I think you'll find him in the Jarl's Longhouse.</line>
+         </g>
          <invoke name="common-me-outside-they-inside" />
       </top-g>
       <top-g slug="Exterior">
@@ -101,6 +302,26 @@
                <y of="subject" gte="-87072" />
                <y of="subject" lte="-84720" />
             </conditions>
+            <g name="asking-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="speaker" is="IndaraCaerellia" />
+                     <actor-base of="speaker" is="Mathies" />
+                  </or>
+               </conditions>
+               <g name="asking-resident-about-resident">
+                  <conditions>
+                     <or>
+                        <actor-base of="subject" is="IndaraCaerellia" />
+                        <actor-base of="subject" is="Mathies" />
+                     </or>
+                  </conditions>
+                  <line>We run Corpselight Farm together. You'll find him there.</line>
+                  <line>He's tending to Corpselight, our farm.</line>
+               </g>
+               <line>He's over by our farm, Corpselight, near the middle of town.</line>
+               <line>I saw him over by Corpselight Farm a little while ago. I'm one of the owners.</line>
+            </g>
             <line>I remember seeing him around Corpselight Farm not too long ago.</line>
             <line>Try checking around Corpselight, the farm next to the inn.</line>
          </g>
@@ -121,7 +342,22 @@
                <y of="subject" gte="-86512" />
                <y of="subject" lte="-82912" />
             </conditions>
-            <line>I saw him visiting the graveyard not too long ago.</line>
+            <g non-exclusive="true" name="non-employee">
+               <conditions>
+                  <actor-base of="subject" is-not="Kust" />
+                  <actor-base of="subject" is-not="Runil" />
+               </conditions>
+               <line>I saw him visiting the graveyard not too long ago.</line>
+            </g>
+            <g non-exclusive="true" name="employee">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Kust" />
+                     <actor-base of="subject" is="Runil" />
+                  </or>
+               </conditions>
+               <line>I saw him tending to the graveyard not too long ago.</line>
+            </g>
             <line>He's out by the graveyard and the Hall of the Dead.</line>
             <line>Check the graveyard on the west side of town.</line>
          </g>
@@ -167,7 +403,6 @@
             <line>He's standing out in front of the town hall.</line>
             <line>Check in front of the Jarl's longhouse.</line>
          </g>
-         <!-- TODO -->
          
          <g name="grave-concoctions-and-barracks">  
             <conditions>
@@ -221,6 +456,12 @@
                <y of="subject" gte="-89968" />
                <y of="subject" lte="-87680" />
             </conditions>
+            <g name="asking-about-resident">
+               <conditions>
+                  <actor-base of="subject" is="Lod" />
+               </conditions>
+               <shared-info id="shared-exterior-near-own-home" />
+            </g>
             <line>I saw him passing by Lod's house earlier.</line>
             <line>I think you'll find him over around Lod's house.</line>
             <line>He's hanging around Lod's house right now.</line>

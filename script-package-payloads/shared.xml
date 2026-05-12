@@ -185,6 +185,42 @@
          <shared-info id="shared-unknown-exterior" />
       </macro>
       
+      <macro name="common-barracks-with-jail-downstairs-int">
+         <parameter name="BARRACKS-EDITOR-ID" />
+         <parameter name="JAIL-EDITOR-ID" />
+         <data>
+            <g name="barracks-or-jail">
+               <conditions>
+                  <or>
+                     <parent-cell of="subject" is="%BARRACKS-EDITOR-ID%" />
+                     <parent-cell of="subject" is="%JAIL-EDITOR-ID%" />
+                  </or>
+                  <parent-cell of="speaker" is-not="%BARRACKS-EDITOR-ID%" />
+                  <parent-cell of="speaker" is-not="%JAIL-EDITOR-ID%" />
+               </conditions>
+               <line>I think he's at the barracks. Or the jail. One of those.</line>
+               <line>Try checking the city barracks.</line>
+               <line>I think I saw him headed for the barracks.</line>
+            </g>
+            <g name="barracks-to-jail">
+               <conditions>
+                  <parent-cell of="subject" is="%JAIL-EDITOR-ID%" />
+                  <parent-cell of="speaker" is="%BARRACKS-EDITOR-ID%" />
+               </conditions>
+               <line>He's downstairs.</line>
+               <line>Head down the stairs, to the city jail. You'll find him in there.</line>
+            </g>
+            <g name="barracks-per-jail">
+               <conditions>
+                  <parent-cell of="subject" is="%BARRACKS-EDITOR-ID%" />
+                  <parent-cell of="speaker" is="%JAIL-EDITOR-ID%" />
+               </conditions>
+               <line>He's upstairs.</line>
+               <line>Head out to the barracks.</line>
+            </g>
+         </data>
+      </macro>
+      
       <macro name="mixin-house-one-resident-int">
          <parameter name="OWNER" />
          <parameter name="OWNER-PRINTABLE" default-value="%OWNER%" />

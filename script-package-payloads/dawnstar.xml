@@ -119,35 +119,10 @@
             <is-in-interior of="subject" />
          </conditions>
          
-         <g name="barracks-or-jail">
-            <conditions>
-               <or>
-                  <parent-cell of="subject" is="DawnstarBarracks" />
-                  <parent-cell of="subject" is="DawnstarBarracksJail" />
-               </or>
-               <parent-cell of="speaker" is-not="DawnstarBarracks" />
-               <parent-cell of="speaker" is-not="DawnstarBarracksJail" />
-            </conditions>
-            <line>I think he's at the barracks. Or the jail. One of those.</line>
-            <line>Try checking the city barracks.</line>
-            <line>I think I saw him headed for the barracks.</line>
-         </g> <!-- /barracks-or-jail -->
-         <g name="barracks-to-jail">
-            <conditions>
-               <parent-cell of="subject" is="DawnstarBarracksJail" />
-               <parent-cell of="speaker" is="DawnstarBarracks" />
-            </conditions>
-            <line>He's downstairs.</line>
-            <line>Head down the stairs, to the city jail. You'll find him in there.</line>
-         </g> <!-- /barracks-to-jail -->
-         <g name="barracks-per-jail">
-            <conditions>
-               <parent-cell of="subject" is="DawnstarBarracks" />
-               <parent-cell of="speaker" is="DawnstarBarracksJail" />
-            </conditions>
-            <line>He's upstairs.</line>
-            <line>Head out to the barracks.</line>
-         </g> <!-- /barracks-per-jail -->
+         <invoke name="common-barracks-with-jail-downstairs-int">
+            <parameter name="BARRACKS-EDITOR-ID" value="DawnstarBarracks" />
+            <parameter name="JAIL-EDITOR-ID" value="DawnstarBarracksJail" />
+         </invoke>
          <g name="beitild-house">
             <conditions>
                <parent-cell of="subject" is="DawnstarBeitildsHouse" />

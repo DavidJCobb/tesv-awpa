@@ -156,18 +156,171 @@
             <line>I think you'll find him in front of Dengeir's house.</line>
             <line>Pretty sure I saw him passing by Dengeir's house.</line>
          </g>
+         <g name="jarl-longhouse">  
+            <conditions>
+               <x of="subject" gte="-30320" />
+               <x of="subject" lte="-28992" />
+               <y of="subject" gte="-87968" />
+               <y of="subject" lte="-86544" />
+            </conditions>
+            <line>He's in front of the Jarl's longhouse right now.</line>
+            <line>He's standing out in front of the town hall.</line>
+            <line>Check in front of the Jarl's longhouse.</line>
+         </g>
          <!-- TODO -->
          
+         <g name="grave-concoctions-and-barracks">  
+            <conditions>
+               <x of="subject" gte="-28992" />
+               <x of="subject" lte="-27840" />
+               <y of="subject" gte="-89728" />
+               <y of="subject" lte="-87360" />
+            </conditions>
+            <line>He's over by Grave Concoctions and the guard barracks.</line>
+            <line>Check around the alchemy shop and the barracks, on the southeast corner of town.</line>
+            <line>He was headed down toward Grave Concoctions not too long ago.</line>
+         </g>
+         <g name="guard-training-area">  
+            <conditions>
+               <x of="subject" gte="-28944" />
+               <x of="subject" lte="-25776" />
+               <y of="subject" gte="-89728" />
+               <y of="subject" lte="-85840" />
+            </conditions>
+            <line>He's hanging around the barracks to the east, where the guards train.</line>
+            <line>The guards have a little spot next to their barracks, where they like to train. I think he's over there. It's not far from the east gate.</line>
+            <line>Check around the guard barracks to the east.</line>
+         </g>
          <g name="lumber-mill">  
             <conditions>
                <x of="subject" gte="-31520" />
-               <x of="subject" lte="-27504" />
+               <x of="subject" lte="-26608" />
                <y of="subject" gte="-84976" />
                <y of="subject" lte="-82704" />
             </conditions>
             <line>He's over by the lumber camp, on the north side of town.</line>
             <line>I saw him at the lumber mill a little while ago.</line>
             <line>I believe he's hanging around the lumber camp right now.</line>
+         </g>
+         <g name="entrance-east">  
+            <conditions>
+               <x of="subject" gte="-29488" />
+               <x of="subject" lte="-27056" />
+               <y of="subject" gte="-85840" />
+               <y of="subject" lte="-84736" />
+            </conditions>
+            <line>He's over by the east entrance into town.</line>
+            <line>I spotted him around the east gate a little while ago.</line>
+            <line>He's somewhere around the east gate right now.</line>
+         </g>
+         
+         <g name="house-lod">  
+            <conditions>
+               <x of="subject" gte="-31168" />
+               <x of="subject" lte="-28992" />
+               <y of="subject" gte="-89968" />
+               <y of="subject" lte="-87680" />
+            </conditions>
+            <line>I saw him passing by Lod's house earlier.</line>
+            <line>I think you'll find him over around Lod's house.</line>
+            <line>He's hanging around Lod's house right now.</line>
+         </g>
+         <g name="gray-pine-goods">  
+            <conditions>
+               <x of="subject" gte="-32768" />
+               <x of="subject" lte="-31168" />
+               <y of="subject" gte="-89728" />
+               <y of="subject" lte="-88592" />
+            </conditions>
+            <line>He's over by Gray Pine Goods.</line>
+            <line>You'll find him around Gray Pine Goods.</line>
+            <line>You should check by the general store, Gray Pine Goods, near the west gate.</line>
+         </g>
+         
+         <g name="entrance-west">  
+            <conditions>
+               <x of="subject" gte="-34688" />
+               <x of="subject" lte="-32768" />
+               <y of="subject" gte="-90320" />
+               <y of="subject" lte="-88160" />
+            </conditions>
+            <line>He's over by the west entrance into town.</line>
+            <line>I spotted him around the west gate a little while ago.</line>
+            <line>He's somewhere around the west gate right now.</line>
+         </g>
+         
+         <g name="low-detail">
+            <g name="main-street">  
+               <conditions>
+                  <x of="subject" gte="-31472" />
+                  <x of="subject" lte="-28944" />
+                  <y of="subject" gte="-88592" />
+                  <y of="subject" lte="-85840" />
+               </conditions>
+               <line>You'll find him along the main road through town.</line>
+               <line>Pretty sure I saw him on Falkreath's main street.</line>
+               <line>He's on the street that runs through the middle of town.</line>
+            </g>
+            <g name="west-woods">  
+               <conditions>
+                  <x of="subject" gte="-37200" />
+                  <x of="subject" lte="-31520" />
+                  <y of="subject" gte="-88160" />
+                  <y of="subject" lte="-82736" />
+               </conditions>
+               <line>He's walking around the west woods in town.</line>
+               <line>I saw him walking through the woods on the west side of town.</line>
+            </g>
+            
+            <g name="east-road">  
+               <conditions>
+                  <x of="subject" gte="-27056" />
+                  <x of="subject" lte="-23056" />
+                  <y of="subject" gte="-85056" />
+                  <y of="subject" lte="-83024" />
+               </conditions>
+               <line>He's on the east road out of town.</line>
+               <line>I saw him walking out of town to the east, but I don't think he's gone far.</line>
+            </g>
+         </g>
+         
+         <g name="directional-fallbacks">
+            <g name="north">  
+               <conditions>
+                  <x of="subject" gte="-40960" />
+                  <x of="subject" lte="-16384" />
+                  <y of="subject" gte="-83024" />
+                  <y of="subject" lte="-77824" />
+               </conditions>
+               <shared-info id="beyond-city-limits-north" />
+            </g>
+            <g name="east">  
+               <conditions>
+                  <x of="subject" gte="-27056" />
+                  <x of="subject" lte="-16384" />
+                  <y of="subject" gte="-87360" />
+                  <y of="subject" lte="-77824" />
+               </conditions>
+               <shared-info id="beyond-city-limits-east" />
+            </g>
+            <g name="west">  
+               <conditions>
+                  <x of="subject" gte="-40960" />
+                  <x of="subject" lte="-34688" />
+                  <y of="subject" gte="-94208" />
+                  <y of="subject" lte="-77824" />
+               </conditions>
+               <shared-info id="beyond-city-limits-west" />
+            </g>
+            <g name="south">  
+               <conditions>
+                  <x of="subject" gte="-34688" />
+                  <x of="subject" lte="-16384" />
+                  <y of="subject" gte="-94208" />
+                  <y of="subject" lte="-87360" />
+               </conditions>
+               <shared-info id="beyond-city-limits-west" />
+            </g>
          </g>
          
          <invoke name="common-exterior-fallbacks" />

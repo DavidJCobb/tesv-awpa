@@ -98,6 +98,45 @@
          <actor editor-id="Ysolda" />
       </actors>
       
+      <macro name="condition-entity-inside-city-walls">
+         <!--
+            Defined in case I need it. Unfortunately, I think it'd be more 
+            useful to check whether an actor is *outside* the walls, and 
+            doing that based on coordinates requires 16 OR-groups with 
+            four conditions each, so... maybe won't be using this.
+         -->
+         <parameter name="OF" />
+         <data>
+            <!-- Approximation. -->
+            <x of="%OF%" gte="19312" />
+            <x of="%OF%" lte="30080" />
+            <y of="%OF%" gte="-11376" />
+            <y of="%OF%" lte="4080" />
+            <!--
+               Carve out northwest corner:
+            -->
+            <or>
+               <x of="%OF%" gte="23808" />
+               <y of="%OF%" lte="-1136" />
+            </or>
+            <or>
+               <x of="%OF%" gte="25280" />
+               <y of="%OF%" lte="-176" />
+            </or>
+            <!--
+               Carve out southeast corner:
+            -->
+            <or>
+               <x of="%OF%" lte="27648" />
+               <y of="%OF%" gte="-5824" />
+            </or>
+            <or>
+               <x of="%OF%" lte="26048" />
+               <y of="%OF%" gte="-10048" />
+            </or>
+         </data>
+      </macro>
+      
       <invoke name="common-super-near-player" />
       <top-g slug="SameInterior">
          <conditions>
@@ -227,9 +266,71 @@
             <line>He's in the castle's main hall.</line>
             <line>Head out to the main hall. He should be out there.</line>
          </g>
-         <!-- TODO: WhiterunDrunkenHuntsman -->
-         <!-- TODO: WhiterunGuardHouse -->
-         <!-- TODO: WhiterunHalloftheDead + WhiterunHalloftheDeadCatacombs -->
+         <g name="drunken-huntsman">
+            <conditions>
+               <parent-cell of="subject" is="WhiterunDrunkenHuntsman" />
+            </conditions>
+            <g>
+               <conditions>
+                  <actor-base of="subject" is="Elrindir" />
+                  <offers-services of="subject" />
+               </conditions>
+               <line>He's at work, at the Drunken Huntsman.</line>
+               <line>He's working the bar at the Drunken Huntsman.</line>
+               <line>He runs the Drunken Huntsman. He should be behind the counter right now.</line>
+            </g>
+            <g>
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Anoriath" />
+                     <actor-base of="subject" is="Elrindir" />
+                  </or>
+               </conditions>
+               <line>He's at home. He and his brother own the Drunken Huntsman.</line>
+               <shared-info id="shared-at-own-home" />
+            </g>
+            <line>He's at the Drunken Huntsman.</line>
+            <line>I think I saw him headed toward Drunken Huntsman.</line>
+            <line>Check the Drunken Huntsman, the tavern near Whiterun's gate.</line>
+            <line>Have you looked in the tavern in the Plains District? The Drunken Huntsman, it's called.</line>
+         </g>
+         <g name="barracks-gate">
+            <conditions>
+               <parent-cell of="subject" is="WhiterunGuardHouse" />
+            </conditions>
+            <line>He's at the guard barracks by the city gate.</line>
+            <line>The city has two barracks: one for gate guards, and one for the rest of the guards. He's at that first barracks. It's right by the gate.</line>
+         </g>
+         <g name="hall-of-the-dead">
+            <g name="from-outside">
+               <conditions>
+                  <or>
+                     <parent-cell of="subject" is="WhiterunHalloftheDead" />
+                     <parent-cell of="subject" is="WhiterunHalloftheDeadCatacombs" />
+                  </or>
+                  <parent-cell of="speaker" is-not="WhiterunHalloftheDead" />
+                  <parent-cell of="speaker" is-not="WhiterunHalloftheDeadCatacombs" />
+               </conditions>
+               <line>He's at the Hall of the Dead right now.</line>
+               <line>He was headed to the Hall of the Dead earlier.</line>
+               <line>Check the Hall of the Dead.</line>
+            </g>
+            <g name="basement-from-main">
+               <conditions>
+                  <parent-cell of="subject" is="WhiterunHalloftheDeadCatacombs" />
+                  <parent-cell of="speaker" is="WhiterunHalloftheDead" />
+               </conditions>
+               <line>He's down in the catacombs.</line>
+               <line>He went into the catacombs.</line>
+            </g>
+            <g name="main-from-basement">
+               <conditions>
+                  <parent-cell of="subject" is="WhiterunHalloftheDead" />
+                  <parent-cell of="speaker" is="WhiterunHalloftheDeadCatacombs" />
+               </conditions>
+               <shared-info id="shared-upstairs" />
+            </g>
+         </g>
          <g name="house-amren">
             <conditions>
                <parent-cell of="subject" is="WhiterunAmrensHouse" />
@@ -252,7 +353,26 @@
             <line>He's at Amren's house right now.</line>
             <line>I think I saw him walk into Amren's house a while ago.</line>
          </g>
-         <!-- TODO: WhiterunHouseBattleBorn -->
+         <g name="house-battle-born">
+            <conditions>
+               <parent-cell of="subject" is="WhiterunHouseBattleBorn" />
+            </conditions>
+            <g name="asking-resident">
+               <conditions>
+                  <faction-membership of="speaker" includes="WhiterunHouseBattleBornFaction" />
+               </conditions>
+               <shared-info id="shared-at-our-home" />
+            </g>
+            <g name="asking-about-resident">
+               <conditions>
+                  <faction-membership of="subject" includes="WhiterunHouseBattleBornFaction" />
+               </conditions>
+               <shared-info id="shared-at-own-home" />
+            </g>
+            <line>He's at the Battle-Born family home.</line>
+            <line>He's visiting the Battle-Borns.</line>
+            <line>He's at the Battle-Born mansion.</line>
+         </g>
          <g name="house-carlotta">
             <conditions>
                <parent-cell of="subject" is="WhiterunCarlottaValentiasHouse" />
@@ -264,17 +384,237 @@
             <line>He's at Carlotta's house right now.</line>
             <line>I think I saw him walk into Carlotta Valentia's house a while ago.</line>
          </g>
-         <!-- TODO: WhiterunHouseGrayMane -->
-         <!-- TODO: WhiterunHeimskrsHouse -->
-         <!-- TODO: WhiterunOlavatheFeeblesHouse -->
-         <!-- TODO: WhiterunSeverioPelagiasHouse -->
-         <!-- TODO: WhiterunYsoldasHouse -->
-         <!-- TODO: WhiterunJail02 -->
-         <!-- TODO: WhiterunJorrvaskr + WhiterunJorrvaskrBasement -->
-         <!-- TODO: WhiterunStables -->
-         <!-- TODO: WhiterunTempleofKynareth -->
-         <!-- TODO: WhiterunUnderforge -->
-         <!-- TODO: WhiterunWarmaidens -->
+         <g name="house-battle-born">
+            <conditions>
+               <parent-cell of="subject" is="WhiterunHouseGrayMane" />
+            </conditions>
+            <g name="asking-resident">
+               <conditions>
+                  <faction-membership of="speaker" includes="WhiterunHouseGrayManeFaction" />
+               </conditions>
+               <shared-info id="shared-at-our-home" />
+            </g>
+            <g name="asking-about-resident">
+               <conditions>
+                  <faction-membership of="subject" includes="WhiterunHouseGrayManeFaction" />
+               </conditions>
+               <shared-info id="shared-at-own-home" />
+            </g>
+            <line>He's at the Gray-Mane family home.</line>
+            <line>He's visiting the Gray-Manes.</line>
+            <line>He's at the Gray-Mane mansion.</line>
+         </g>
+         <g name="house-heimskr">
+            <conditions>
+               <parent-cell of="subject" is="WhiterunHeimskrsHouse" />
+            </conditions>
+            <g name="house-buried-in-rubble">
+               <!--
+                  The entrance to Heimskr's house is buried in rubble during the 
+                  Civil War's Battle for Whiterun.
+               -->
+               <conditions>
+                  <enable-state for="[REFR:0001A270]CWWhiterunIntEnableOnly" is="enabled" />
+               </conditions>
+               <line emotion="puzzled:70">It's strange... I thought I heard his voice coming from inside Heimskr's house. I hope he isn't trapped beneath the rubble.</line>
+               <line emotion="surprise:80">I thought I saw him around Heimskr's shack, but... No... He can't be in there, right?</line>
+            </g>
+            <invoke name="mixin-house-one-resident-int">
+               <parameter name="OWNER" value="Heimskr" />
+            </invoke>
+         </g>
+         <g name="house-olava">
+            <conditions>
+               <parent-cell of="subject" is="WhiterunOlavatheFeeblesHouse" />
+            </conditions>
+            <invoke name="mixin-house-one-resident-int">
+               <parameter name="OWNER" value="OlavatheFeeble" />
+            </invoke>
+         </g>
+         <g name="house-severio">
+            <conditions>
+               <parent-cell of="subject" is="WhiterunSeverioPelagiasHouse" />
+            </conditions>
+            <invoke name="mixin-house-one-resident-int">
+               <parameter name="OWNER" value="SeverioPelagia" />
+            </invoke>
+         </g>
+         <g name="house-ysolda">
+            <conditions>
+               <parent-cell of="subject" is="WhiterunYsoldasHouse" />
+            </conditions>
+            <invoke name="mixin-house-one-resident-int">
+               <parameter name="OWNER" value="Ysolda" />
+            </invoke>
+         </g>
+         <g name="barracks-main">
+            <conditions>
+               <parent-cell of="subject" is="WhiterunJail02" />
+            </conditions>
+            <line>He's at the guard barracks -- the one for most of the city guards, behind the Bannered Mare, not the one by the city gate.</line>
+            <line>The city has two barracks: one for gate guards, and one for the rest of the guards. He's at that second barracks, behind the Bannered Mare.</line>
+         </g>
+         <g name="jorrvaskr">
+            <g name="from-outside">
+               <conditions>
+                  <or>
+                     <parent-cell of="subject" is="WhiterunJorrvaskr" />
+                     <parent-cell of="subject" is="WhiterunJorrvaskrBasement" />
+                  </or>
+                  <parent-cell of="speaker" is-not="WhiterunJorrvaskr" />
+                  <parent-cell of="speaker" is-not="WhiterunJorrvaskrBasement" />
+               </conditions>
+               <line>He's in Jorrvaskr right now.</line>
+               <line>He's in the hall of the Companions.</line>
+            </g>
+            <g name="basement-from-main">
+               <conditions>
+                  <parent-cell of="subject" is="WhiterunJorrvaskrBasement" />
+                  <parent-cell of="speaker" is="WhiterunJorrvaskr" />
+               </conditions>
+               <line>He's down in the basement.</line>
+               <shared-info id="shared-downstairs" />
+            </g>
+            <g name="main-from-basement">
+               <conditions>
+                  <parent-cell of="subject" is="WhiterunJorrvaskr" />
+                  <parent-cell of="speaker" is="WhiterunJorrvaskrBasement" />
+               </conditions>
+               <shared-info id="shared-upstairs" />
+            </g>
+         </g>
+         <g name="stables">
+            <conditions>
+               <parent-cell of="subject" is="WhiterunStables" />
+            </conditions>
+            <g non-exclusive="true">
+               <conditions>
+                  <actor-base of="subject" is="LilithMaidenLoom" />
+               </conditions>
+               <line>He owns the stables. He should be there now.</line>
+               <line>He owns the stables, and lives in the main building. Check there.</line>
+            </g>
+            <g non-exclusive="true">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Skulvar" />
+                     <actor-base of="subject" is="Jervar" />
+                  </or>
+               </conditions>
+               <line>He helps run the stables. I'm pretty sure he's there now -- inside, I think.</line>
+               <line>One of the stablehands. You'll find him at the stables.</line>
+            </g>
+            <line>He's at the stables right now.</line>
+            <line>He's at Whiterun's stables.</line>
+         </g>
+         <g name="temple-of-kynareth">
+            <conditions>
+               <parent-cell of="subject" is="WhiterunTempleofKynareth" />
+            </conditions>
+            <line>He's at the Temple of Kynareth.</line>
+            <line>You'll find him at the Temple of Kynareth.</line>
+            <line>Check the Temple of Kynareth, in the Wind District.</line>
+         </g>
+         <g name="underforge">
+            <!--
+               Only the Circle, the upper echelons of the Companions, is 
+               aware of the Underforge.
+            -->
+            <conditions>
+               <parent-cell of="subject" is="WhiterunUnderforge" />
+               <quest-stage for="C03" gte="15" />
+               <faction-membership of="speaker" includes="CompanionsCirclePlusKodlak" />
+            </conditions>
+            <line>He's in the Underforge.</line>
+            <line>Check the Underforge.</line>
+         </g>
+         <g name="warmaidens">
+            <conditions>
+               <parent-cell of="subject" is="WhiterunWarmaidens" />
+            </conditions>
+            <g name="asking-adrianne">
+               <conditions>
+                  <actor-base of="speaker" is="AdrianneAvenicci" />
+               </conditions>
+               <g name="asking-about-ulfberth">
+                  <conditions>
+                     <actor-base of="subject" is="Ulfberth" />
+                  </conditions>
+                  <g name="ulfberth-at-work">
+                     <conditions>
+                        <offers-services of="subject" />
+                     </conditions>
+                     <line>He's at Warmaidens, manning the counter.</line>
+                     <line>Head inside Warmaidens. He'll be behind the counter.</line>
+                  </g>
+                  <line>My husband's at home right now.</line>
+                  <line>He's at home. We live upstairs at Warmaidens.</line>
+                  <shared-info id="shared-at-our-home" />
+               </g>
+               <g name="ulfberth-alive" non-exclusive="true">
+                  <conditions>
+                     <death-count of="Ulfberth" lte="0" />
+                  </conditions>
+                  <line emotion="happy:30">He's at my shop right now. My husband and I run Warmaidens, by the city gate.</line>
+               </g>
+               <g name="ulfberth-dead" non-exclusive="true">
+                  <conditions>
+                     <death-count of="Ulfberth" gte="1" />
+                  </conditions>
+                  <line emotion="sad:60" script-notes="Still getting used to his death. You were going to say &quot;my husband and I run the place,&quot; before you caught yourself.">He's at my shop right now. Warmaidens. My husband... used to help me run the place...</line>
+               </g>
+               <line>He's at Warmaidens, my smithy by the gate.</line>
+            </g>
+            <g name="asking-ulfberth">
+               <conditions>
+                  <actor-base of="speaker" is="Ulfberth" />
+               </conditions>
+               <g name="asking-about-adrianne">
+                  <conditions>
+                     <actor-base of="subject" is="AdrianneAvenicci" />
+                  </conditions>
+                  <g name="adrianne-at-work">
+                     <conditions>
+                        <offers-services of="subject" />
+                     </conditions>
+                     <line>He's at Warmaidens.</line>
+                     <line>Head inside Warmaidens. You'll find him there.</line>
+                  </g>
+                  <line>My wife's at home right now.</line>
+                  <shared-info id="shared-at-our-home" />
+               </g>
+               <g name="adrianne-alive">
+                  <conditions>
+                     <death-count of="AdrianneAvenicci" lte="0" />
+                  </conditions>
+                  <line emotion="happy:30">He's at Warmaidens. My wife and I run the place.</line>
+                  <line>He's at my family shop: Warmaidens, the smithy by the gate.</line>
+               </g>
+               <!-- else Adrianne dead -->
+               <line>He's at my shop, Warmaidens. It's over by Whiterun's gate.</line>
+               <line emotion="sad:60">I'm pretty sure he's at Warmaidens. My wife used to run the place with me, before...</line>
+            </g>
+            <g name="asking-about-employee" non-exclusive="true">
+               <conditions>
+                  <or>
+                     <actor-base of="speaker" is="AdrianneAvenicci" />
+                     <actor-base of="speaker" is="Ulfberth" />
+                  </or>
+               </conditions>
+               <g name="both-alive" non-exclusive="true">
+                  <conditions>
+                     <death-count of="AdrianneAvenicci" lte="0" />
+                     <death-count of="Ulfberth" lte="0" />
+                  </conditions>
+                  <line>He helps run Warmaidens, by the gate. Try checking there.</line>
+               </g>
+               <line>He's probably at work, at Warmaidens.</line>
+               <line>Can't think of a better place to look for him than Warmaidens.</line>
+            </g>
+            <line>He's at Warmaidens right now.</line>
+            <line>I saw him stopping by Warmaidens earlier.</line>
+            <line>He's over at Warmaidens.</line>
+         </g>
          
          <invoke name="common-me-outside-they-inside" />
       </top-g>
@@ -283,7 +623,48 @@
             <parent-world of="subject" is="Tamriel" />
          </conditions>
          
+         <g name="entrance-area">
+            <conditions>
+               <x of="subject" gte="14624" />
+               <x of="subject" lte="19344" />
+               <y of="subject" gte="-8576" />
+               <y of="subject" lte="-2992" />
+            </conditions>
+            <line>He's in front of Whiterun's gate.</line>
+            <line>He's on the path leading up to Whiterun's gate.</line>
+         </g>
+         <g name="honningbrew-meadery">
+            <conditions>
+               <x of="subject" gte="28672" />
+               <x of="subject" lte="33312" />
+               <y of="subject" gte="-19168" />
+               <y of="subject" lte="-15744" />
+            </conditions>
+            <line>He's over around Honningbrew Meadery.</line>
+            <line>I think he was passing by Honningbrew Meadery.</line>
+         </g>
+         <g name="pelagia-farm">
+            <conditions>
+               <x of="subject" gte="16336" />
+               <x of="subject" lte="23264" />
+               <y of="subject" gte="-19600" />
+               <y of="subject" lte="-15456" />
+            </conditions>
+            <line>He's at Pelagia Farm.</line>
+         </g>
+         <g name="stables">
+            <conditions>
+               <x of="subject" gte="16736" />
+               <x of="subject" lte="19344" />
+               <y of="subject" gte="-12288" />
+               <y of="subject" lte="-8576" />
+            </conditions>
+            <line>He's out by the stables.</line>
+            <line>He's hanging around the stables.</line>
+         </g>
          <!-- TODO -->
+         
+         <!-- else fall back to `Exterior` -->
       </top-g>
       <top-g slug="Exterior">
          <conditions>
@@ -874,6 +1255,45 @@
                   </conditions>
                   <line>He's in the Wind District, near the west wall.</line>
                </g>
+            </g>
+         </g>
+         
+         <g name="directional-fallbacks">
+            <g name="north">  
+               <conditions>
+                  <x of="subject" gte="12288" />
+                  <x of="subject" lte="40960" />
+                  <y of="subject" gte="-4096" />
+                  <y of="subject" lte="12288" />
+               </conditions>
+               <shared-info id="beyond-city-limits-north" />
+            </g>
+            <g name="east">  
+               <conditions>
+                  <x of="subject" gte="24576" />
+                  <x of="subject" lte="40960" />
+                  <y of="subject" gte="-24576" />
+                  <y of="subject" lte="12288" />
+               </conditions>
+               <shared-info id="beyond-city-limits-east" />
+            </g>
+            <g name="west">  
+               <conditions>
+                  <x of="subject" gte="8192" />
+                  <x of="subject" lte="20480" />
+                  <y of="subject" gte="-24576" />
+                  <y of="subject" lte="12288" />
+               </conditions>
+               <shared-info id="beyond-city-limits-west" />
+            </g>
+            <g name="south">  
+               <conditions>
+                  <x of="subject" gte="12288" />
+                  <x of="subject" lte="40960" />
+                  <y of="subject" gte="-24576" />
+                  <y of="subject" lte="-8576" />
+               </conditions>
+               <shared-info id="beyond-city-limits-south" />
             </g>
          </g>
          

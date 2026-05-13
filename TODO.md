@@ -184,39 +184,35 @@ There are some outdoor clearings, gathering places, and so on that I need to ins
 
 | Location | Exterior | Interior | Interior Rooms | Misc. To-Do Notes |
 | :- | :-: | :-: | :-: | :- |
-| Amren's House | ⬜ | ⬜ | ⬜ |
-| Arcadia's Cauldron | ⬜ | ⬜ | ⬜ |
-| Bannered Mare | ⬜ | ⬜ | ⬜ |
-| Belethor's General Goods | ⬜ | ⬜ | ⬜ |
-| Breezehome | ⬜ | ⬜ | ⬜ |
-| Carlotta Valentia's House | ⬜ | ⬜ | ⬜ |
-| Dragonsreach | ⬜ | ⬜ | ⬜ |
+| Amren's House | ✅ | ✅ | ⬜ |
+| Arcadia's Cauldron | ✅ | ✅ | ⬜ |
+| Bannered Mare | ✅ | ✅ | ⬜ |
+| Belethor's General Goods | ✅ | ✅ | ⬜ |
+| Breezehome | ✅ | ✅ | ⬜ |
+| Carlotta Valentia's House | ✅ | ✅ | ⬜ |
+| Dragonsreach | ✅ | ✅ | ⬜ |
 | Dragonsreach Dungeon | ⬜ | ⬜ | ⬜ |
 | Dragonsreach (balcony) | ⬜ |   |   |
-| Dragonsreach Jarl's Quarters |   | ⬜ | ⬜ |
-| Drunken Huntsman | ⬜ | ⬜ | ⬜ |
-| Guard Barracks | ⬜ | ⬜ | ⬜ |
-| Hall of the Dead | ⬜ | ⬜ | ⬜ |
-| Heimskr's House | ⬜ | ⬜ | ⬜ |
-| House Gray-Mane | ⬜ | ⬜ | ⬜ |
-| House of Clan Battle-Born | ⬜ | ⬜ | ⬜ |
-| Jorrvaskr | ⬜ | ⬜ | ⬜ |
-| Jorrvaskr (backyard) | ⬜ |   |   |
-| Olava the Feeble's House | ⬜ | ⬜ | ⬜ |
-| Severio Pelagia's House | ⬜ | ⬜ | ⬜ |
-| Skyforge | ⬜ |   |   |
-| Temple of Kynareth | ⬜ | ⬜ | ⬜ |
+| Dragonsreach Jarl's Quarters |   | ✅ | ⬜ |
+| Drunken Huntsman | ✅ | ✅ | ⬜ |
+| Guard Barracks (Gate) | ⬜ | ✅ | ⬜ |
+| Guard Barracks (Main) |   | ✅ | ⬜ |
+| Hall of the Dead | ✅ | ✅ | ⬜ |
+| Heimskr's House | ✅ | ✅ | ⬜ |
+| House Gray-Mane | ✅ | ✅ | ⬜ |
+| House of Clan Battle-Born | ✅ | ✅ | ⬜ |
+| Jorrvaskr | ✅ | ✅ | ⬜ |
+| Jorrvaskr (backyard) | ✅ |   |   |
+| Olava the Feeble's House | ✅ | ✅ | ⬜ |
+| Severio Pelagia's House | ✅ | ✅ | ⬜ |
+| Skyforge | ✅ |   |   |
+| Temple of Kynareth | ✅ | ✅ | ⬜ |
 | Uthgerd's House | ⬜ | ⬜ | ⬜ |
-| Warmaiden's | ⬜ | ⬜ | ⬜ |
-| Ysolda's House | ⬜ | ⬜ | ⬜ |
-| Secret werewolf cave |   | ⬜ |   | Only Companions should know about this. |
-| General: Cloud District | ⬜ |   |   |
-| General: Plains District: South Wall | ⬜ |   |   |
-| General: Plains District | ⬜ |   |   |
-| General: Wind District: Statue of Talos | ⬜ |   |   |
-| General: Wind District: West Wall | ⬜ |   |   |
-| General: Wind District | ⬜ |   |   |
-| Outside the Walls: Whiterun Stables | ⬜ | ⬜ | ⬜ |
+| Warmaiden's | ✅ | ✅ | ⬜ |
+| Ysolda's House | ✅ | ✅ | ⬜ |
+| Secret werewolf cave |   | ✅ |   | Only Companions should know about this. |
+| General: Wind District: Statue of Talos | ✅ |   |   |
+| Outside the Walls: Whiterun Stables | ✅ | ✅ | ⬜ |
 
 ### Windhelm
 

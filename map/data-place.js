@@ -31,6 +31,16 @@ export default class Place {
          path.setAttribute("d", src.getAttribute("d"));
          this.svg_paths.push(path);
       });
+      node.querySelectorAll("svg").forEach((src) => {
+         //
+         // For whatever reason, bringing in the `svg` node directly causes it to 
+         // fail to render when we zoom into Windhelm, in at least some situations.
+         //
+         let g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+         for(let child of src.children)
+            g.append(document.importNode(child, true));
+         this.svg_paths.push(g);
+      });
       
       let grid = node.querySelector("grid-rect");
       if (grid) {

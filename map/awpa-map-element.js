@@ -220,16 +220,23 @@ class AWPAMapElement extends HTMLElement {
       });
       
       for(let key in this.#places) {
-         let place = this.#places[key];
+         let place    = this.#places[key];
+         let deferred = [];
          for(let ref of place.refs) {
             let node = ref.render();
             if (!node)
                continue;
+            if (node.querySelector(".pin")) {
+               deferred.push(node);
+               continue;
+            }
             this.#svg_container_nodes.refs.append(node);
          }
          for(let src of place.svg_paths) {
             this.#svg_container_nodes.refs.append(src.cloneNode(true));
          }
+         for(let node of deferred) // we want these to show up on top of any indicated walls
+            this.#svg_container_nodes.refs.append(node);
       }
       
       if (window.location.hash)

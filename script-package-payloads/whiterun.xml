@@ -55,7 +55,20 @@
          <actor editor-id="Gloth" />
          <actor editor-id="Heimskr" />
          <actor editor-id="HousecarlWhiterun" name="Lydia">
-            <!-- TODO: only after player has become Thane -->
+            <begin-asking-about>
+               <filter-conditions>
+                  <!-- only after player has become Thane -->
+                  <or>
+                     <quest-stage of="MQ104" done="160" />
+                     <!--
+                        TODO: apparently if you somehow do CW before MQ, and 
+                        take Whiterun for the Stormcloaks, you have to earn 
+                        Lydia's service through some other means. How the 
+                        hell do I check for that?
+                     -->
+                  </or>
+               </filter-conditions>
+            </begin-asking-about>
          </actor>
          <actor editor-id="Hulda" />
          <actor editor-id="Hrongar" />
@@ -77,7 +90,24 @@
          <actor editor-id="ProventusAvenicci" name="Proventus Avenicci" />
          <actor editor-id="Ria" />
          <actor editor-id="Saadia">
-            <!-- TODO: Not after taken by the Alik'r -->
+            <begin-asking-about>
+               <filter-conditions>
+                  <!--
+                     Don't allow asking about Saadia once you begin leading her 
+                     to the Alik'r ambush.
+                  -->
+                  <papyrus-quest-variable
+                     for="MS08"
+                     var="::SaadiaFollow_var"
+                     eq="0"
+                  />
+                  <papyrus-quest-variable
+                     for="MS08"
+                     var="::SaadiaCaptured_var"
+                     eq="0"
+                  />
+               </filter-conditions>
+            </begin-asking-about>
          </actor>
          <actor editor-id="Saffir" />
          <actor editor-id="SeverioPelagia" name="Severio Pelagia" />
@@ -86,9 +116,6 @@
          <actor editor-id="Skjor" />
          <actor editor-id="SkulvarSableHilt" name="Skulvar Sable-Hilt" />
          <actor editor-id="Terek" />
-         <actor editor-id="ThoraldGrayMane" name="Thorald Gray-Mane">
-            <!-- TODO: say "he's missing" until the player rescues him -->
-         </actor>
          <actor editor-id="Tilma" name="Tilma the Haggard" />
          <actor editor-id="Torvar" />
          <actor editor-id="Ulfberth" name="Ulfberth War-Bear" />
@@ -662,7 +689,6 @@
             <line>He's out by the stables.</line>
             <line>He's hanging around the stables.</line>
          </g>
-         <!-- TODO -->
          
          <!-- else fall back to `Exterior` -->
       </top-g>

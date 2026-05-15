@@ -78,6 +78,10 @@ export default class Ref {
          style.setProperty("--obnd-x-max", x_span.max);
          style.setProperty("--obnd-y-min", y_span.min);
          style.setProperty("--obnd-y-max", y_span.max);
+      } else if (this.name) {
+         let placeholder = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+         node.append(placeholder);
+         placeholder.classList.add("pin");
       }
       
       return node;

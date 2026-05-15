@@ -68,12 +68,41 @@ awpa-map-tooltip {
             width:  calc((var(--obnd-x-max) - var(--obnd-x-min)) * 1px);
             height: calc((var(--obnd-y-max) - var(--obnd-y-min)) * 1px);
          }
+         
+         .pin {
+            stroke:        #808000;
+            stroke-width:  1px;
+            fill:          rgba(255, 255, 0, 0.2);
+            vector-effect: non-scaling-stroke;
+            r: 64px;
+         }
       }
+      .fence,
+      .ledge,
       .wall {
          fill:          none;
-         stroke:        #666;
-         stroke-width:  3px;
+         stroke:        var(--color);
+         stroke-width:  var(--width);
          vector-effect: non-scaling-stroke;
+      }
+      .wall {
+         --color: #666;
+         --width: 3px;
+         &.fill {
+            fill:   var(--color);
+            stroke: none;
+         }
+      }
+      .fence {
+         --color: #666;
+         --width: 1px;
+      }
+      .ledge {
+         --color: #999;
+         --width: 1px;
+      }
+      .floor {
+         fill: #FFF;
       }
    }
    #groups {

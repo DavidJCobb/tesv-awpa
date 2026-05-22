@@ -128,53 +128,115 @@
             </g>
          </g>
          <g name="stone-quarter">
-            <g name="house-aretino">
-               <conditions>
-                  <x of="subject" gte="136176" />
-                  <x of="subject" lte="137408" />
-                  <y of="subject" gte="37408" />
-                  <y of="subject" lte="38896" />
-                  <z of="subject" gte="-12176" />
-               </conditions>
-               <line>He's over by the Aretino residence.</line>
+            <g name="west">
+               <g name="alley">
+                  <conditions>
+                     <x of="subject" gte="133024" />
+                     <x of="subject" lte="133696" />
+                     <y of="subject" gte="35920" />
+                     <y of="subject" lte="37104" />
+                  </conditions>
+                  <line>I saw him duck into the alleyway between the market to the west, and the city center.</line>
+                  <line>He's in the alley connected to the city graveyard.</line>
+               </g>
+               <g name="graveyard">
+                  <conditions>
+                     <x of="subject" gte="129696" />
+                     <x of="subject" lte="133696" />
+                     <y of="subject" gte="37104" />
+                     <y of="subject" lte="40528" />
+                  </conditions>
+                  <line>He's at the graveyard.</line>
+               </g>
+               <g name="market">
+                  <conditions>
+                     <x of="subject" gte="130160" />
+                     <x of="subject" lte="132192" />
+                     <y of="subject" gte="35456" />
+                     <y of="subject" lte="37104" />
+                  </conditions>
+                  <shared-info id="shared-exterior-market" />
+               </g>
+               <g name="street-to-market">
+                  <conditions>
+                     <x of="subject" gte="132192" />
+                     <x of="subject" lte="133888" />
+                     <y of="subject" gte="35376" />
+                     <y of="subject" lte="35920" />
+                  </conditions>
+                  <line>He's on the street that connects the west market to the city entrance.</line>
+               </g>
             </g>
-            <g name="house-brunwulf">
-               <conditions>
-                  <x of="subject" gte="136176" />
-                  <x of="subject" lte="137312" />
-                  <y of="subject" gte="35664" />
-                  <y of="subject" lte="37408" />
-                  <z of="subject" gte="-12272" />
-               </conditions>
-               <line>He's over by Brunwulf Free-Winter's house.</line>
+            <g name="east">
+               <g name="house-aretino">
+                  <conditions>
+                     <x of="subject" gte="136176" />
+                     <x of="subject" lte="137408" />
+                     <y of="subject" gte="37408" />
+                     <y of="subject" lte="38896" />
+                     <z of="subject" gte="-12176" />
+                  </conditions>
+                  <line>He's over by the Aretino residence.</line>
+               </g>
+               <g name="house-brunwulf">
+                  <conditions>
+                     <x of="subject" gte="136176" />
+                     <x of="subject" lte="137312" />
+                     <y of="subject" gte="35664" />
+                     <y of="subject" lte="37408" />
+                     <z of="subject" gte="-12272" />
+                  </conditions>
+                  <line>He's over by Brunwulf Free-Winter's house.</line>
+               </g>
+               <g name="house-niranye">
+                  <conditions>
+                     <x of="subject" gte="136352" />
+                     <x of="subject" lte="137712" />
+                     <y of="subject" gte="34576" />
+                     <y of="subject" lte="35664" />
+                  </conditions>
+                  <line>He's over by Niranye house.</line>
+               </g>
+               <g name="house-calixto">
+                  <conditions>
+                     <x of="subject" gte="137312" />
+                     <x of="subject" lte="137952" />
+                     <y of="subject" gte="35664" />
+                     <y of="subject" lte="36304" />
+                  </conditions>
+                  <line>He's over by Calixto's House of Curiosities.</line>
+               </g>
+               <g name="walkway-to-castle">
+                  <conditions>
+                     <x of="subject" gte="136624" />
+                     <x of="subject" lte="137024" />
+                     <y of="subject" gte="38896" />
+                     <y of="subject" lte="40544" />
+                     <z of="subject" gte="-12064" />
+                  </conditions>
+                  <line>I saw him up on that walkway connecting the Stone Quarter to the castle.</line>
+               </g>
             </g>
-            <g name="house-niranye">
-               <conditions>
-                  <x of="subject" gte="136352" />
-                  <x of="subject" lte="137712" />
-                  <y of="subject" gte="34576" />
-                  <y of="subject" lte="35664" />
-               </conditions>
-               <line>He's over by Niranye house.</line>
-            </g>
-            <g name="house-calixto">
-               <conditions>
-                  <x of="subject" gte="137312" />
-                  <x of="subject" lte="137952" />
-                  <y of="subject" gte="35664" />
-                  <y of="subject" lte="36304" />
-               </conditions>
-               <line>He's over by Calixto's House of Curiosities.</line>
-            </g>
-            <g name="walkway-to-castle">
-               <conditions>
-                  <x of="subject" gte="136624" />
-                  <x of="subject" lte="137024" />
-                  <y of="subject" gte="38896" />
-                  <y of="subject" lte="40544" />
-                  <z of="subject" gte="-12064" />
-               </conditions>
-               <line>I saw him up on that walkway connecting the Stone Quarter to the castle.</line>
+            <g name="central">
+               <g name="entrance">
+                  <conditions>
+                     <x of="subject" gte="133888" />
+                     <x of="subject" lte="136352" />
+                     <y of="subject" gte="34656" />
+                     <y of="subject" lte="36752" />
+                  </conditions>
+                  <line>He's near the city's entrance, and the front doors to Candlehearth Hall.</line>
+               </g>
+               <g name="east-alley">
+                  <conditions>
+                     <x of="subject" gte="135760" />
+                     <x of="subject" lte="136240" />
+                     <y of="subject" gte="35744" />
+                     <y of="subject" lte="38656" />
+                  </conditions>
+                  <line>He's in the alley on the east side of Candlehearth Hall.</line>
+               </g>
+               
             </g>
          </g>
          <g name="gray-quarter">
@@ -228,6 +290,15 @@
                <line>I saw him passing through the Stone Quarter. Maybe he was headed to the Gray Quarter, or the docks?</line>
             </g>
             
+            <g name="stone-quarter-west">
+               <conditions>
+                  <x of="subject" gte="129696" />
+                  <x of="subject" lte="133888" />
+                  <y of="subject" gte="34656" />
+                  <y of="subject" lte="40528" />
+               </conditions>
+               <line>He's somewhere on the west side of the city.</line>
+            </g>
             <g name="valunstrad-residential">
                <conditions>
                   <x of="subject" gte="129056" />

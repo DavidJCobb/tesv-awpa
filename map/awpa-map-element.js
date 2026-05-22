@@ -77,6 +77,7 @@ class AWPAMapElement extends HTMLElement {
 </div>
 <div class="status-bar">
    <div class="segment" id="grid-coords">&lt;no cell&gt;</div>
+   <div class="segment" id="world-coords">&lt;?, ?&gt;</div>
    <div class="segment" id="current-ref">&lt;no ref&gt;</div>
 </div>
 <img class="axes" src="axis-display.svg" />
@@ -267,6 +268,10 @@ class AWPAMapElement extends HTMLElement {
       {
          let node = this.#shadow.querySelector("#grid-coords");
          node.textContent = `(${grid_x}, ${grid_y})`;
+      }
+      {
+         let node = this.#shadow.querySelector("#world-coords");
+         node.textContent = `(${Math.round(world_x)}, ${Math.round(world_y)})`;
       }
       
       let   is_over_group = false;

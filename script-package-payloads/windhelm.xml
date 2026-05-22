@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <payload>
    <shared-infos>
+      <shared-info id="windhelm-docks-across-river" editor-id-slug="WindhelmDocksAcrossRiver">
+         <line>He's across the river from the docks.</line>
+      </shared-info>
       <shared-info id="windhelm-docks-boat-south" editor-id-slug="WindhelmDocksBoatSouth">
          <line>He's on the large boat, docked at the southernmost pier.</line>
          <line>He's on the large boat anchored at docks' southernmost pier.</line>
@@ -19,6 +22,29 @@
       <actors>
          <!-- TODO -->
       </actors>
+      
+      <macro name="condition-entity-inside-city-walls">
+         <parameter name="OF" />
+         <data>
+            <!-- Approximation. -->
+            <x of="%OF%" gte="129056" />
+            <x of="%OF%" lte="142608" />
+            <y of="%OF%" gte="34700" />
+            <y of="%OF%" lte="43000" />
+            <or> <!-- carve out southwest corner -->
+               <x of="%OF%" gte="129536" />
+               <y of="%OF%" gte="40500" />
+            </or>
+            <or> <!-- carve out northeast corner -->
+               <x of="%OF%" lte="136656" />
+               <y of="%OF%" lte="41056" />
+            </or>
+            <or> <!-- carve out southeast corner -->
+               <x of="%OF%" lte="138784" />
+               <y of="%OF%" gte="37360" />
+            </or>
+         </data>
+      </macro>
       
       <invoke name="common-super-near-player" />
       <top-g slug="SameInterior">
@@ -334,6 +360,27 @@
                <line>He's out on the docks, by the door to the Argonians' living quarters.</line>
             </g>
             
+            <g name="across-river">
+               <g>
+                  <conditions>
+                     <x of="subject" gte="142800" />
+                     <x of="subject" lte="143360" />
+                     <y of="subject" gte="32768" />
+                     <y of="subject" lte="34656" />
+                  </conditions>
+                  <shared-info id="windhelm-docks-across-river" />
+               </g>
+               <g>
+                  <conditions>
+                     <x of="subject" gte="142224" />
+                     <x of="subject" lte="143360" />
+                     <y of="subject" gte="32768" />
+                     <y of="subject" lte="33712" />
+                  </conditions>
+                  <shared-info id="windhelm-docks-across-river" />
+               </g>
+            </g>
+            
             <g name="docks-boat-southernmost">
                <conditions>
                   <!--
@@ -378,7 +425,7 @@
                <conditions>
                   <x of="subject" gte="140240" />
                   <x of="subject" lte="143312" />
-                  <y of="subject" gte="35344" />
+                  <y of="subject" gte="33696" />
                   <y of="subject" lte="37392" />
                </conditions>
                <line>He's on the east side of the docks.</line>
@@ -392,9 +439,19 @@
                </conditions>
                <line>He's on the west side of the docks.</line>
             </g>
+            
+            <g name="docks-river">
+               <conditions>
+                  <x of="subject" gte="140240" />
+                  <x of="subject" lte="143360" />
+                  <y of="subject" gte="32768" />
+                  <y of="subject" lte="33696" />
+               </conditions>
+               <line>He's in the river by the docks.</line>
+            </g>
          </g>
          
-         <g name="generic">
+         <g name="generic-within-walls">
             <g name="gray-quarter">
                <conditions>
                   <x of="subject" gte="136960" />
@@ -423,7 +480,6 @@
                </conditions>
                <line>He's outside the city walls, in the alleyway that leads to the docks.</line>
             </g>
-            
             <g name="stone-quarter-west">
                <conditions>
                   <x of="subject" gte="129696" />
@@ -442,6 +498,26 @@
                </conditions>
                <line>He's somewhere in Valunstrad, the upperclass district to the northwest.</line>
             </g>
+         </g>
+         
+         <g name="bridge">
+            <conditions>
+               <x of="subject" gte="133840" />
+               <x of="subject" lte="136256" />
+               <y of="subject" gte="25408" />
+               <y of="subject" lte="34704" />
+               <z of="subject" gte="-12736" />
+            </conditions>
+            <line>He's on the bridge leading into the city.</line>
+         </g>
+         <g name="stables">
+            <conditions>
+               <x of="subject" gte="135440" />
+               <x of="subject" lte="136912" />
+               <y of="subject" gte="24128" />
+               <y of="subject" lte="26976" />
+            </conditions>
+            <line>He's hanging around the city stables.</line>
          </g>
          
          <invoke name="common-exterior-fallbacks" />

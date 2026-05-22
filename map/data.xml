@@ -1098,6 +1098,21 @@
          
          <ref label="door to the Windhelm Stables" pos="136141.6563,26678.0234" yaw="0" />
          
+         <svg xmlns="http://www.w3.org/2000/svg" name="is-within-walls check">
+            <path style="fill: none; stroke: red; vector-effect: non-scaling-stroke" d="
+               M 129056,40500
+               L 129536,40500
+               L 129536,34700
+               L 138784,34700
+               L 138784,37360
+               L 142608,37360
+               L 142608,41056
+               L 136656,41056
+               L 136656,43000
+               L 129056,43000
+               Z
+            " />
+         </svg>
       </place>
       <place name="Winterhold">
          <grid-rect min="26,28" max="29,23" />

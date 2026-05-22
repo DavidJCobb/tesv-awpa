@@ -236,7 +236,53 @@
                   </conditions>
                   <line>He's in the alley on the east side of Candlehearth Hall.</line>
                </g>
+               <g name="temple-of-talos">
+                  <conditions>
+                     <x of="subject" gte="133856" />
+                     <x of="subject" lte="134288" />
+                     <y of="subject" gte="38336" />
+                     <y of="subject" lte="39088" />
+                  </conditions>
+                  <line>He's by the entrance to the Temple of Talos.</line>
+               </g>
                
+               <g name="candlehearth-east">
+                  <conditions>
+                     <x of="subject" gte="135296" />
+                     <x of="subject" lte="135792" />
+                     <y of="subject" gte="36784" />
+                     <y of="subject" lte="38080" />
+                  </conditions>
+                  <line>He's on the east side of Candlehearth Hall.</line>
+               </g>
+               <g name="candlehearth-west">
+                  <conditions>
+                     <x of="subject" gte="133872" />
+                     <x of="subject" lte="134656" />
+                     <y of="subject" gte="36784" />
+                     <y of="subject" lte="38080" />
+                  </conditions>
+                  <line>He's on the west side of Candlehearth Hall.</line>
+               </g>
+               <g name="candlehearth-roof">
+                  <conditions>
+                     <x of="subject" gte="134656" />
+                     <x of="subject" lte="135296" />
+                     <y of="subject" gte="36784" />
+                     <y of="subject" lte="38080" />
+                  </conditions>
+                  <line>He's on the roof of Candlehearth Hall.</line>
+               </g>
+               
+               <g name="north-steps">
+                  <conditions>
+                     <x of="subject" gte="133856" />
+                     <x of="subject" lte="136960" />
+                     <y of="subject" gte="38080" />
+                     <y of="subject" lte="40032" />
+                  </conditions>
+                  <line>He's at the northern part of the city center, in front of the Palace of Kings.</line>
+               </g>
             </g>
          </g>
          <g name="gray-quarter">

@@ -3,9 +3,18 @@ import svg_viewbox_rect from "./svg_viewbox_rect.js";
 
 const CELL_SIZE_WU = 4096;
 
+function _v_flip_rect(rect) {
+   let top    = rect.top;
+   let bottom = rect.bottom;
+   let height = rect.height;
+   rect.y      = bottom;
+   rect.height = -height;
+}
+
 function _deconstruct(svg) {
    let disp_rect = svg.getBoundingClientRect();
    let real_rect = svg_viewbox_rect(svg);
+   _v_flip_rect(real_rect);
    let x_scale = disp_rect.width  / real_rect.width;
    let y_scale = disp_rect.height / real_rect.height;
    return [disp_rect, real_rect, x_scale, y_scale];

@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <payload>
+   <shared-infos>
+      <shared-info id="windhelm-docks-boat-south" editor-id-slug="WindhelmDocksBoatSouth">
+         <line>He's on the large boat, docked at the southernmost pier.</line>
+         <line>He's on the large boat anchored at docks' southernmost pier.</line>
+      </shared-info>
+   </shared-infos>
+   
    <quest id="AWPAWindhelm"
       locations="WindhelmLocation"
    >
@@ -315,6 +322,78 @@
             </g>
          </g>
          
+         <g name="docks">
+            <g name="argonian-assemblage">
+               <conditions>
+                  <x of="subject" gte="140112" />
+                  <x of="subject" lte="141472" />
+                  <y of="subject" gte="35024" />
+                  <y of="subject" lte="36064" />
+                  <z of="subject" gte="-13856" />
+               </conditions>
+               <line>He's out on the docks, by the door to the Argonians' living quarters.</line>
+            </g>
+            
+            <g name="docks-boat-southernmost">
+               <conditions>
+                  <!--
+                     TODO:
+                      - subject not in midair
+                      - subject not in water
+                  -->
+               </conditions>
+               <g name="docks-boat-southernmost-tip-w">
+                  <conditions>
+                     <x of="subject" gte="139392" />
+                     <x of="subject" lte="139936" />
+                     <y of="subject" gte="31696" />
+                     <y of="subject" lte="32304" />
+                     <z of="subject" gt="-13950" />
+                  </conditions>
+                  <shared-info id="windhelm-docks-boat-south" />
+               </g>
+               <g name="docks-boat-southernmost-tip-e">
+                  <conditions>
+                     <x of="subject" gte="140464" />
+                     <x of="subject" lte="140992" />
+                     <y of="subject" gte="32816" />
+                     <y of="subject" lte="33328" />
+                     <z of="subject" gt="-13950" />
+                  </conditions>
+                  <shared-info id="windhelm-docks-boat-south" />
+               </g>
+               <g name="docks-boat-southernmost-center">
+                  <conditions>
+                     <x of="subject" gte="139616" />
+                     <x of="subject" lte="140752" />
+                     <y of="subject" gte="31984" />
+                     <y of="subject" lte="33120" />
+                     <z of="subject" lte="-13950" />
+                  </conditions>
+                  <shared-info id="windhelm-docks-boat-south" />
+               </g>
+            </g>
+         
+            <g name="docks-east">
+               <conditions>
+                  <x of="subject" gte="140240" />
+                  <x of="subject" lte="143312" />
+                  <y of="subject" gte="35344" />
+                  <y of="subject" lte="37392" />
+               </conditions>
+               <line>He's on the east side of the docks.</line>
+            </g>
+            <g name="docks-west">
+               <conditions>
+                  <x of="subject" gte="137936" />
+                  <x of="subject" lte="140240" />
+                  <y of="subject" gte="32592" />
+                  <y of="subject" lte="35536" />
+               </conditions>
+               <line>He's on the west side of the docks.</line>
+            </g>
+         </g>
+         
          <g name="generic">
             <g name="gray-quarter">
                <conditions>
@@ -334,6 +413,15 @@
                   <z of="subject" lt="-12272" />
                </conditions>
                <line>I saw him passing through the Stone Quarter. Maybe he was headed to the Gray Quarter, or the docks?</line>
+            </g>
+            <g name="stone-quarter-path-to-docks">
+               <conditions>
+                  <x of="subject" gte="138064" />
+                  <x of="subject" lte="141008" />
+                  <y of="subject" gte="37024" />
+                  <y of="subject" lte="37888" />
+               </conditions>
+               <line>He's outside the city walls, in the alleyway that leads to the docks.</line>
             </g>
             
             <g name="stone-quarter-west">

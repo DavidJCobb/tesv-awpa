@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<payload>
+   <quest id="AWPAWindhelm"
+      locations="WindhelmLocation"
+   >
+      <dialogue-conditions>
+         <faction-membership of="speaker" includes="TownWindhelmFaction" />
+         <faction-membership of="speaker" excludes="GuardFactionWindhelm" />
+         
+         <location of="speaker" is="WindhelmLocation" />
+      </dialogue-conditions>
+      <actors>
+         <!-- TODO -->
+      </actors>
+      
+      <invoke name="common-super-near-player" />
+      <top-g slug="SameInterior">
+         <conditions>
+            <is-in-interior of="subject" />
+            <parent-cell of="speaker" same-as="subject" />
+         </conditions>
+         
+         <!--
+            TODO: different-floors checks
+         -->
+         
+         <!--
+            TODO: per-room checks for the city hall and inn
+         -->
+         
+         <shared-info id="shared-same-building" />
+      </top-g>
+      <top-g slug="Interiors">
+         <conditions>
+            <is-in-interior of="subject" />
+         </conditions>
+         
+         <!-- TODO -->
+         
+         <invoke name="common-me-outside-they-inside" />
+      </top-g>
+      <top-g name="ExteriorOutsideWalls">
+         <conditions>
+            <parent-world of="subject" is="Tamriel" />
+         </conditions>
+         
+         <!-- TODO -->
+         
+         <!-- else fall back to `Exterior` -->
+      </top-g>
+      <top-g slug="Exterior">
+         <conditions>
+            <or>
+               <parent-world of="subject" is="WindhelmWorld" />
+               <parent-world of="subject" is="Tamriel" />
+            </or>
+         </conditions>
+         
+         <!-- TODO -->
+         
+         <invoke name="common-exterior-fallbacks" />
+      </top-g>
+      
+      <!-- final fallback lines -->
+      <shared-info id="shared-unknown" />
+   </quest>
+</payload>

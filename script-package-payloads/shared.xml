@@ -17,6 +17,17 @@
          <line>I don't know. I'm in here, and he's out there, somewhere.</line>
       </shared-info>
       
+      <shared-info id="shared-me-inside-walls-they-outside-walls" editor-id-slug="UnknownSpeakerInsideWallsSubjectOutsideWalls">
+         <line>I don't know. Somewhere outside the city walls, is my guess.</line>
+         <line>I haven't seen them anywhere within the city walls.</line>
+         <line>I haven't seen them around. Try asking someone outside the city walls, maybe.</line>
+      </shared-info>
+      <shared-info id="shared-me-outside-walls-they-inside-walls" editor-id-slug="UnknownSpeakerOutsideWallsSubjectInsideWalls">
+         <line>I don't know. Somewhere inside the city walls, is my guess.</line>
+         <line>They're not out here. Have you checked anywhere inside the city walls?</line>
+         <line>I think I might've seen them headed inside the city walls earlier.</line>
+      </shared-info>
+      
       <shared-info id="shared-angry-inmate-doesnt-know" editor-id-slug="InmateCantTellYouAngry">
          <line emotion="anger:60" script-notes="emphasis on &quot;I&quot;">How would I know where they are? I'm stuck in this cell!</line>
          <line emotion="anger:50" script-notes="emphasis on &quot;here&quot;">I can't help you from in here.</line>

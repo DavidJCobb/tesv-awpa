@@ -14,19 +14,86 @@
       locations="WindhelmLocation"
    >
       <dialogue-conditions>
-         <faction-membership of="speaker" includes="TownWindhelmFaction" />
+         <or>
+            <faction-membership of="speaker" includes="TownWindhelmFaction" />
+            <!-- Belyn Hlaalu and Faryl Atheron aren't in TownWindhelmFaction, but are in...: -->
+            <faction-membership of="speaker" includes="WindhelmCornerclubPatrons" />
+            <!-- Malborn moves into Windhelm if you save him: -->
+            <actor-base of="speaker" is="Malborn" />
+         </or>
          <faction-membership of="speaker" excludes="GuardFactionWindhelm" />
          
          <location of="speaker" is="WindhelmLocation" />
       </dialogue-conditions>
       <actors>
-         <!-- TODO -->
+         <actor editor-id="Adelaisa" name="Adelaisa Vendicci" />
+         <actor editor-id="AdonatoLeotelli" name="Adonato Leotelli" />
+         <actor editor-id="AmbarysRendar" name="Ambarys Rendar" />
+         <actor editor-id="Angrenor" name="Angrenor Once-Honored" />
+         <actor editor-id="Arivanya" />
+         <actor editor-id="AvalAtheron" name="Aval Atheron" />
+         <actor editor-id="AventusAretino" name="Aventus Aretino" />
+         <actor editor-id="BelynHlaalu" name="Belyn Hlaalu" />
+         <actor editor-id="Benkum" />
+         <actor editor-id="Brond" />
+         <actor editor-id="Brunwulf" name="Brunwulf Free-Winter" />
+         <actor editor-id="Calixto" name="Calixto Corrium" />
+         <actor editor-id="CaptainLonelyGale" name="Captain Lonely-Gale" />
+         <actor editor-id="Edorfin" />
+         <actor editor-id="Elda" name="Elda Early-Dawn" />
+         <actor editor-id="FarylAtheron" name="Faryl Atheron" />
+         <actor editor-id="Galmar" name="Galmar Stone-Fist" />
+         <actor editor-id="GemmaUriel" name="Gemma Uriel" />
+         <actor editor-id="Grimvar" />
+         <actor editor-id="Helgird" />
+         <actor editor-id="Hermir" />
+         <actor editor-id="Hillevi" />
+         <actor editor-id="IdesaSadri" name="Idesa Sadri" />
+         <actor editor-id="Jora" />
+         <actor editor-id="Jorleif" />
+         <actor editor-id="Liesl" />
+         <actor editor-id="Lortheim" />
+         <actor editor-id="Luaffyn" />
+         <actor editor-id="HousecarlWindhelm" name="Calder">
+            <!-- TODO: Only after he becomes available -->
+         </actor>
+         <actor editor-id="Malborn">
+            <!-- TODO: Only after he hides in Windhelm after Diplomatic Immunity -->
+         </actor>
+         <actor editor-id="MalthyrElenil" name="Malthyr Elenil" />
+         <actor editor-id="Neetrenaza" />
+         <actor editor-id="Nils" />
+         <actor editor-id="Nilsine" name="Nilsine Shatter-Shield" />
+         <actor editor-id="Niranye" />
+         <actor editor-id="Nurelion" />
+         <actor editor-id="Oengul" name="Oengul War-Anvil" />
+         <actor editor-id="OrthusEndario" name="Orthus Endario" />
+         <actor editor-id="QuintusNavale" name="Quintus Navale" />
+         <actor editor-id="RevynSadri" name="Revyn Sadri" />
+         <actor editor-id="Rolff" name="Rolff Stone-Fist" />
+         <actor editor-id="ScoutsManyMarshes" name="Scouts-Many-Marshes" />
+         <actor editor-id="Shahvee" />
+         <actor editor-id="Sifnar" name="Sifnar Ironkettle" />
+         <actor editor-id="Silda" name="Silda the Unseen" />
+         <actor editor-id="StandsInShallows" name="Stands-In-Shallows" />
+         <actor editor-id="HirelingStenvar" name="Stenvar" />
+         <actor editor-id="Sulvar" />
+         <actor editor-id="Susanna" name="Susanna the Wicked" />
+         <actor editor-id="SuvarisAtheron" name="Suvaris Atheron" />
+         <actor editor-id="Torbjorn" name="Torbjorn Shatter-Shield" />
+         <actor editor-id="Tova" name="Tova Shatter-Shield" />
+         <actor editor-id="Ulfric" name="Ulfric Stormcloak" />
+         <actor editor-id="Ulundil" />
+         <actor editor-id="ViolaGiordano" name="Viola Giordano" />
+         <actor editor-id="Wuunferth" name="Wuunferth the Unliving">
+            <!-- TODO: overrides for when he's in jail -->
+         </actor>
       </actors>
       
-      <macro name="condition-entity-inside-city-walls">
+      <macro name="condition-entity-inside-city-walls-ext">
          <parameter name="OF" />
          <data>
-            <!-- Approximation. -->
+            <!-- bounding box -->
             <x of="%OF%" gte="129056" />
             <x of="%OF%" lte="142608" />
             <y of="%OF%" gte="34700" />
@@ -42,6 +109,61 @@
             <or> <!-- carve out southeast corner -->
                <x of="%OF%" lte="138784" />
                <y of="%OF%" gte="37360" />
+            </or>
+         </data>
+      </macro>
+      <macro name="condition-entity-inside-city-walls-int">
+         <parameter name="OF" />
+         <data>
+            <is-in-interior of="%OF%" />
+            <parent-cell of="%OF%" is-not="WindhelmArgonianAssemblage" />
+            <parent-cell of="%OF%" is-not="WindhelmClanShatterShieldOffice" />
+            <parent-cell of="%OF%" is-not="WindhelmEastEmpireCompany" />
+            <parent-cell of="%OF%" is-not="WindhelmStables" />
+            <parent-cell of="%OF%" is-not="WindhelmWarehouse" />
+         </data>
+      </macro>
+      <macro name="condition-entity-outside-city-walls-ext">
+         <parameter name="OF" />
+         <data>
+            <or> <!-- bounding box -->
+               <x of="%OF%" lt="129056" />
+               <x of="%OF%" gt="142608" />
+               <y of="%OF%" lt="34700" />
+               <y of="%OF%" gt="43000" />
+            </or>
+            <or>
+               <x of="%OF%" lt="129536" />
+               <x of="%OF%" gt="138784" />
+            </or>
+            <or>
+               <x of="%OF%" lt="129536" />
+               <y of="%OF%" lt="37360" />
+               <y of="%OF%" gt="41056" />
+            </or>
+            <or>
+               <x of="%OF%" gt="138784" />
+               <y of="%OF%" lt="40500" />
+            </or>
+            <or>
+               <x of="%OF%" gt="136656" />
+               <y of="%OF%" lt="37360" />
+            </or>
+            <or>
+               <y of="%OF%" lt="40500" />
+               <y of="%OF%" gt="41056" />
+            </or>
+         </data>
+      </macro>
+      <macro name="condition-entity-outside-city-walls-int">
+         <parameter name="OF" />
+         <data>
+            <or>
+               <parent-cell of="%OF%" is="WindhelmArgonianAssemblage" />
+               <parent-cell of="%OF%" is="WindhelmClanShatterShieldOffice" />
+               <parent-cell of="%OF%" is="WindhelmEastEmpireCompany" />
+               <parent-cell of="%OF%" is="WindhelmStables" />
+               <parent-cell of="%OF%" is="WindhelmWarehouse" />
             </or>
          </data>
       </macro>
@@ -68,18 +190,405 @@
             <is-in-interior of="subject" />
          </conditions>
          
-         <!-- TODO -->
+         <g name="speaker-outside-walls-subject-inside-walls">
+            <conditions>
+               <invoke name="condition-entity-inside-city-walls-int">
+                  <parameter name="%OF%" value="subject" />
+               </invoke>
+            </conditions>
+            <g name="speaker-interior">
+               <conditions>   
+                  <invoke name="condition-entity-outside-city-walls-int">
+                     <parameter name="%OF%" value="speaker" />
+                  </invoke>
+               </conditions>
+               <shared-info id="shared-me-outside-walls-they-inside-walls" />
+            </g>
+            <g name="speaker-exterior">
+               <conditions>   
+                  <invoke name="condition-entity-outside-city-walls-ext">
+                     <parameter name="%OF%" value="speaker" />
+                  </invoke>
+               </conditions>
+               <shared-info id="shared-me-outside-walls-they-inside-walls" />
+            </g>
+         </g>
+         <g name="speaker-inside-walls-subject-outside-walls">
+            <conditions>
+               <invoke name="condition-entity-outside-city-walls-int">
+                  <parameter name="%OF%" value="subject" />
+               </invoke>
+            </conditions>
+            <g name="speaker-interior">
+               <conditions>   
+                  <invoke name="condition-entity-inside-city-walls-int">
+                     <parameter name="%OF%" value="speaker" />
+                  </invoke>
+               </conditions>
+               <shared-info id="shared-me-inside-walls-they-outside-walls" />
+            </g>
+            <g name="speaker-exterior">
+               <conditions>   
+                  <invoke name="condition-entity-inside-city-walls-ext">
+                     <parameter name="%OF%" value="speaker" />
+                  </invoke>
+               </conditions>
+               <shared-info id="shared-me-inside-walls-they-outside-walls" />
+            </g>
+         </g>
+         
+         <g name="specific-interiors">
+            <g name="assemblage">
+               <conditions>
+                  <parent-cell of="subject" is="WindhelmArgonianAssemblage" />
+               </conditions>
+               <g name="asking-racist-about-resident">
+                  <conditions>
+                     <actor-base of="subject" is="SuvarisAtheron" />
+                     <or>
+                        <actor-base of="subject" is="Neetrenaza" />
+                        <actor-base of="subject" is="Scouts-Many-Marshes" />
+                        <actor-base of="subject" is="Shahvee" />
+                        <actor-base of="subject" is="Stands-In-Shallows" />
+                     </or>
+                  </conditions>
+                  <line emotion="disgust:30">He's probably slacking off down at the Argonian Assemblage.</line>
+                  <line emotion="anger:40">Wasting time at their quarters at the docks, no doubt.</line>
+               </g>
+               <g name="asking-about-resident" non-exclusive="true">
+                  <conditions>
+                     <or>
+                        <actor-base of="subject" is="Neetrenaza" />
+                        <actor-base of="subject" is="Scouts-Many-Marshes" />
+                        <actor-base of="subject" is="Shahvee" />
+                        <actor-base of="subject" is="Stands-In-Shallows" />
+                     </or>
+                  </conditions>
+                  <g name="otherwise-non-argonian" non-exclusive="true">
+                     <conditions>
+                        <race of="speaker" is-not="ArgonianRace" />
+                        <race of="speaker" is-not="ArgonianRaceVampire" />
+                     </conditions>
+                     <line>The Argonians share a living space down at the docks. You'll find him there.</line>
+                     <line>One of the Argonians? He's probably at the quarters they share, by the docks.</line>
+                  </g>
+               </g>
+               <g name="idesa">
+                  <conditions>
+                     <actor-base of="subject" is="IdesaSadri" />
+                  </conditions>
+                  <line>He visits the Argonian Assemblage every so often. He should be there now.</line>
+                  <line>Pretty sure he's visiting the Argonian Assemblage. He heads down there pretty often.</line>
+               </g>
+               <line>He's down at the Argonian Assemblage.</line>
+               <line>I believe I saw him around the Argonian Assemblage.</line>
+            </g>
+            <g name="barracks">
+               <conditions>
+                  <parent-cell of="subject" is="WindhelmBloodworks" />
+               </conditions>
+               <line>He's at the city barracks. When you first walk into the palace, turn right.</line>
+            </g>
+            <g name="blacksmith">
+               <conditions>
+                  <parent-cell of="subject" is="WindhelmBlacksmith" />
+               </conditions>
+               <group name="asking-about-resident">
+                  <conditions>
+                     <or>
+                        <actor-base of="subject" is="Hermir" />
+                        <actor-base of="subject" is="Oengul" />
+                     </or>
+                     <actor-base of="speaker" is-not="Hermir" />
+                     <actor-base of="speaker" is-not="Oengul" />
+                  </conditions>
+                  <line>The blacksmith? He's in the Blacksmith Quarters right now.</line>
+               </group>
+               <line>He's at the Blacksmith Quarters.</line>
+               <line>Have you checked the Blacksmith Quarters?</line>
+            </g>
+            <g name="calixto-museum">
+               <conditions>
+                  <parent-cell of="subject" is="WindhelmCalixtosHouseofCuriosities" />
+               </conditions>
+               <!--
+                  if Calixto has been outed as the murderer, responses mentioning his 
+                  home should have a scornful tone
+               -->
+               <group name="asking-about-resident">
+                  <conditions>
+                     <actor-base of="subject" is="Calixto" />
+                  </conditions>
+                  <line>He's at home. He lives by the south end of the Gray Quarter.</line>
+                  <line>Probably tending to his museum. Calixto's House of Curiosities. He runs it out of his home, not far from Windhelm's main entrance.</line>
+                  <line>If you're looking for Calixto, you should probably check Calixto's House of Curiosities.</line>
+               </group>
+               <line>He's at Calixto's House of Curiosities.</line>
+               <line>He's visiting Calixto's museum in the Stone Quarter.</line>
+            </g>
+            <g name="candlehearth">
+               <conditions>
+                  <parent-cell of="subject" is="WindhelmCandlehearthHall" />
+               </conditions>
+               <!--
+                  TODO: lines for asking about staff
+               -->
+               <line>He's at Candlehearth Hall.</line>
+               <line>Check Candlehearth Hall, at the heart of the city.</line>
+               <line>I saw him stop by Candlehearth Hall not too long ago. He might still be there.</line>
+            </g>
+            <g name="eec">
+               <conditions>
+                  <parent-cell of="subject" is="WindhelmEastEmpireCompany" />
+               </conditions>
+               <line>He's at the East Empire Company office, out on the docks.</line>
+            </g>
+            <g name="hall-of-the-dead">
+               <conditions>
+                  <parent-cell of="subject" is="WindhelmHalloftheDead" />
+               </conditions>
+               <!--
+                  TODO: lines for asking about staff
+               -->
+               <line>He's at the Hall of the Dead.</line>
+               <line>I think he was headed to the Hall of the Dead earlier.</line>
+            </g>
+            <g name="hjerim">
+               <conditions>
+                  <parent-cell of="subject" is="WindhelmHjerim" />
+               </conditions>
+               <line emotion="sad:40">He's at Hjerim. Friga Shatter-Shield lived there before...</line>
+               <line>He's in one of the mansions in the northwest part of the city. The place is called Hjerim.</line>
+            </g>
+            <g name="house-aretino">
+               <conditions>
+                  <parent-cell of="subject" is="WindhelmAretinoResidence" />
+               </conditions>
+               <!--
+                  TODO: lines for asking about Aventus Aretino
+               -->
+               <line>I saw him walk into the Aretino residence not too long ago.</line>
+            </g>
+            <g name="house-atheron">
+               <conditions>
+                  <parent-cell of="subject" is="WindhelmAtheronResidence" />
+               </conditions>
+               <group name="asking-about-resident">
+                  <conditions>
+                     <or>
+                        <actor-base of="subject" is="AvalAtheron" />
+                        <actor-base of="subject" is="FarylAtheron" />
+                        <actor-base of="subject" is="SuvarisAtheron" />
+                     </or>
+                  </conditions>
+                  <group name="asking-resident-about-resident">
+                     <conditions>
+                        <or>
+                           <actor-base of="speaker" is="AvalAtheron" />
+                           <actor-base of="speaker" is="FarylAtheron" />
+                           <actor-base of="speaker" is="SuvarisAtheron" />
+                        </or>
+                     </conditions>
+                     <shared-info id="shared-at-our-home" />
+                  </group>
+                  <shared-info id="shared-at-own-home" />
+               </group>
+               <group name="asking-resident">
+                  <conditions>
+                     <or>
+                        <actor-base of="speaker" is="AvalAtheron" />
+                        <actor-base of="speaker" is="FarylAtheron" />
+                        <actor-base of="speaker" is="SuvarisAtheron" />
+                     </or>
+                  </conditions>
+                  <shared-info id="shared-at-my-home" />
+               </group>
+               <line>He's at the Atherons' house.</line>
+               <line>I think he stopped by the Atheron family's home.</line>
+            </g>
+            <g name="house-belyn">
+               <conditions>
+                  <parent-cell of="subject" is="WindhelmBelynHlaalusHouse" />
+               </conditions>
+               <invoke name="mixin-house-one-resident-int">
+                  <parameter name="OWNER" value="Belyn Hlaalu" />
+               </invoke>
+            </g>
+            <g name="house-cruel-sea">
+               <conditions>
+                  <parent-cell of="subject" is="WindhelmHouseofClanCruelSea" />
+               </conditions>
+               <group name="asking-babysitter">
+                  <conditions>
+                     <actor-base of="subject" is="IdesaSadri" />
+                  </conditions>
+                  <line>He's at the Cruel-Sea family's house. He works for them, helping care for their boy, Grimvar.</line>
+                  <line>He works as a caregiver for Clan Cruel-Sea's little one. You'll find him at their house.</line>
+               </group>
+               <!--
+                  TODO: lines for asking about a member of the Cruel-Sea family
+               -->
+               <line>He's at the Cruel-Sea family's house.</line>
+            </g>
+            <g name="house-free-winter">
+               <conditions>
+                  <parent-cell of="subject" is="WindhelmBrunwulfFreeWintersHouse" />
+               </conditions>
+               <invoke name="mixin-house-one-resident-int">
+                  <parameter name="OWNER" value="Brunwulf Free-Winter" />
+               </invoke>
+            </g>
+            <g name="house-niranye">
+               <g name="basement-from-upstairs">
+                  <conditions>
+                     <parent-cell of="subject" is="WindhelmNiranhesHouseBasement" />
+                     <parent-cell of="speaker" is="WindhelmNiranyesHouse" />
+                  </conditions>
+                  <shared-info id="shared-downstairs" />
+               </g>
+               <g name="upstairs-from-basement">
+                  <conditions>
+                     <parent-cell of="speaker" is="WindhelmNiranyesHouseBasement" />
+                     <parent-cell of="subject" is="WindhelmNiranhesHouse" />
+                  </conditions>
+                  <shared-info id="shared-upstairs" />
+               </g>
+               <g name="either">
+                  <conditions>
+                     <or>
+                        <parent-cell of="subject" is="WindhelmNiranyesHouse" />
+                        <parent-cell of="subject" is="WindhelmNiranhesHouseBasement" />
+                     </or>
+                  </conditions>
+                  <invoke name="mixin-house-one-resident-int">
+                     <parameter name="OWNER" value="Niranye" />
+                  </invoke>
+               </g>
+            </g>
+            <g name="house-shatter-shield">
+               <conditions>
+                  <parent-cell of="subject" is="WindhelmHouseofClanShatterShield" />
+               </conditions>
+               <g name="asking-about-resident">
+                  <conditions>
+                     <or>
+                        <actor-base of="subject" is="Nilsine" />
+                        <actor-base of="subject" is="Torbjorn" />
+                        <actor-base of="subject" is="Tova" />
+                     </or>
+                  </conditions>
+                  <g name="asking-resident-about-resident">
+                     <conditions>
+                        <or>
+                           <actor-base of="speaker" is="Nilsine" />
+                           <actor-base of="speaker" is="Torbjorn" />
+                           <actor-base of="speaker" is="Tova" />
+                        </or>
+                     </conditions>
+                     <shared-info id="shared-at-our-home" />
+                  </g>
+                  <shared-info id="shared-at-own-home" />
+               </g>
+               <line>He's at the Shatter-Shield family's house.</line>
+            </g>
+            <g name="house-viola">
+               <conditions>
+                  <parent-cell of="subject" is="WindhelmViolaGiordanosHouse" />
+               </conditions>
+               <invoke name="mixin-house-one-resident-int">
+                  <parameter name="OWNER" value="Viola Giordano" />
+               </invoke>
+            </g>
+            <g name="new-gnisis-cornerclub">
+               <conditions>
+                  <parent-cell of="subject" is="WindhelmNewGnisisCornerclub" />
+               </conditions>
+               <line>He's at the New Gnisis Cornerclub.</line>
+            </g>
+            <g name="palace-of-the-kings">
+               <conditions>
+                  <or>
+                     <parent-cell of="subject" is="WindhelmPalaceoftheKings" />
+                     <parent-cell of="subject" is="WindhelmPalaceUpstairs01" />
+                     <parent-cell of="subject" is="WindhelmPalaceUpstairs02" />
+                  </or>
+               </conditions>
+               <!--
+                  TODO: lines for asking about one interior while in another interior
+               -->
+               <line>He's at the Palace of the Kings.</line>
+            </g>
+            <g name="sadri-shop">
+               <conditions>
+                  <parent-cell of="subject" is="WindhelmSadrisUsedWares" />
+               </conditions>
+               <!--
+                  TODO: lines for asking about staff
+               -->
+               <line>He's at Sadri's Used Wares.</line>
+            </g>
+            <g name="shatter-shield-office">
+               <conditions>
+                  <parent-cell of="subject" is="WindhelmClanShatterShieldOffice" />
+               </conditions>
+               <!--
+                  TODO: lines for asking about staff
+               -->
+               <line>He's at the Clan Shatter-Shield office, out on the docks.</line>
+            </g>
+            <g name="talos-temple">
+               <conditions>
+                  <parent-cell of="subject" is="WindhelmTempleofTalos" />
+               </conditions>
+               <g name="asking-priest-about-priest" non-exclusive="true">
+                  <conditions>
+                     <or>
+                        <actor-base of="subject" is="Jora" />
+                        <actor-base of="subject" is="Lortheim" />
+                     </or>
+                     <or>
+                        <actor-base of="speaker" is="Jora" />
+                        <actor-base of="speaker" is="Lortheim" />
+                     </or>
+                  </conditions>
+                  <line emotion="happy:60">He's a fellow priest of Talos. He's at the Temple right now.</line>
+               </g>
+               <g name="asking-about-priest" non-exclusive="true">
+                  <conditions>
+                     <or>
+                        <actor-base of="subject" is="Jora" />
+                        <actor-base of="subject" is="Lortheim" />
+                     </or>
+                  </conditions>
+                  <g name="asking-about-priest" non-exclusive="true">
+                     <conditions>
+                        <actor-base of="speaker" is-not="Jora" />
+                        <actor-base of="speaker" is-not="Lortheim" />
+                     </conditions>
+                     <line>One of the priests of Talos. You'll find him at the Temple of Talos.</line>
+                  </g>
+                  <line>Right now, he's tending to the Temple of Talos.</line>
+               </g>
+               <line>He's at the Temple of Talos.</line>
+            </g>
+            <g name="warehouse">
+               <conditions>
+                  <parent-cell of="subject" is="WindhelmWarehouse" />
+               </conditions>
+               <line>He's at the warehouse out on the docks.</line>
+            </g>
+            <g name="white-phial">
+               <conditions>
+                  <parent-cell of="subject" is="WindhelmWhitePhial" />
+               </conditions>
+               <!--
+                  TODO: lines for asking about staff
+               -->
+               <line>He's at the White Phial.</line>
+            </g>
+         </g>
          
          <invoke name="common-me-outside-they-inside" />
-      </top-g>
-      <top-g name="ExteriorOutsideWalls">
-         <conditions>
-            <parent-world of="subject" is="Tamriel" />
-         </conditions>
-         
-         <!-- TODO -->
-         
-         <!-- else fall back to `Exterior` -->
       </top-g>
       <top-g slug="Exterior">
          <conditions>
@@ -88,6 +597,74 @@
                <parent-world of="subject" is="Tamriel" />
             </or>
          </conditions>
+         
+         <g name="speaker-outside-walls-subject-inside-walls">
+            <conditions>
+               <invoke name="condition-entity-inside-city-walls-ext">
+                  <parameter name="%OF%" value="subject" />
+               </invoke>
+            </conditions>
+            <g name="speaker-interior">
+               <conditions>   
+                  <invoke name="condition-entity-outside-city-walls-int">
+                     <parameter name="%OF%" value="speaker" />
+                  </invoke>
+               </conditions>
+               <shared-info id="shared-me-outside-walls-they-inside-walls" />
+            </g>
+            <g name="speaker-exterior">
+               <conditions>   
+                  <invoke name="condition-entity-outside-city-walls-ext">
+                     <parameter name="%OF%" value="speaker" />
+                  </invoke>
+               </conditions>
+               <shared-info id="shared-me-outside-walls-they-inside-walls" />
+            </g>
+         </g>
+         <g name="speaker-inside-walls-subject-outside-walls">
+            <conditions>
+               <invoke name="condition-entity-outside-city-walls-ext">
+                  <parameter name="%OF%" value="subject" />
+               </invoke>
+            </conditions>
+            <!--
+               TODO: if subject is out at the docks, then have special lines for that 
+               specific case, since the Stone Quarter has a passage directly there.
+            -->
+            <g name="speaker-interior">
+               <conditions>   
+                  <invoke name="condition-entity-inside-city-walls-int">
+                     <parameter name="%OF%" value="speaker" />
+                  </invoke>
+               </conditions>
+               <shared-info id="shared-me-inside-walls-they-outside-walls" />
+            </g>
+            <g name="speaker-exterior">
+               <conditions>   
+                  <invoke name="condition-entity-inside-city-walls-ext">
+                     <parameter name="%OF%" value="speaker" />
+                  </invoke>
+               </conditions>
+               <shared-info id="shared-me-inside-walls-they-outside-walls" />
+            </g>
+         </g>
+         
+         <g name="ignorant-to-docks">
+            <!--
+               TODO: if speaker is not at the docks, and subject is at the docks, and 
+               speaker is not especially kind/attentive to Argonians, then have them 
+               dismissively fail to give a more specific location than "somewhere by 
+               the docks."
+            -->
+         </g>
+         <g name="ignorant-to-gray-quarter">
+            <!--
+               TODO: if speaker is not in Gray Quarter, and subject is in Gray Quarter, 
+               and speaker is not especially kind/attentive to Dunmer, then have them 
+               dismissively fail to give a more specific location than "somewhere in 
+               the Gray Quarter."
+            -->
+         </g>
          
          <!-- TODO -->
          <g name="valunstrad">

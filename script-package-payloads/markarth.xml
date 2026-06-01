@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<payload>
+   <quest id="AWPAMarkarth"
+      locations="MarkarthLocation"
+   >
+      <dialogue-conditions>
+         <faction-membership of="speaker" includes="TownMarkarthFaction" />
+         <faction-membership of="speaker" excludes="GuardFactionMarkarth" />
+         
+         <location of="speaker" is="MarkarthLocation" />
+      </dialogue-conditions>
+      <actors>
+         <!-- TODO -->
+      </actors>
+      
+      <invoke name="common-super-near-player" />
+      <top-g slug="SameInterior">
+         <conditions>
+            <is-in-interior of="subject" />
+            <parent-cell of="speaker" same-as="subject" />
+         </conditions>
+         
+         <!--
+            TODO: different-floors checks
+         -->
+         
+         <!--
+            TODO: per-room checks for the city hall and inn
+         -->
+         
+         <shared-info id="shared-same-building" />
+      </top-g>
+      <top-g slug="Interiors">
+         <conditions>
+            <is-in-interior of="subject" />
+         </conditions>
+         
+         <!-- TODO -->
+         
+         <invoke name="common-me-outside-they-inside" />
+      </top-g>
+      <top-g name="ExteriorOutsideWalls">
+         <conditions>
+            <parent-world of="subject" is="Tamriel" />
+         </conditions>
+         
+         <!-- TODO -->
+         
+         <!-- else fall back to `Exterior` -->
+      </top-g>
+      <top-g slug="Exterior">
+         <conditions>
+            <or>
+               <parent-world of="subject" is="MarkarthWorld" />
+               <parent-world of="subject" is="Tamriel" />
+            </or>
+         </conditions>
+         
+         <!--
+            Gonna be doing this a little differently from the other cities. Markarth 
+            has a lot of verticality, and the city center has a lot of areas that 
+            overlap laterally, so we'll be separating those out.
+         -->
+         <g name="north">
+            <g name="highest">
+               <g name="house-nepos">
+                  <conditions>
+                     <x of="subject" gte="-176480" />
+                     <x of="subject" lte="-174960" />
+                     <y of="subject" gte="6176" />
+                     <y of="subject" lte="7136" />
+                     <z of="subject" gte="-2128" />
+                  </conditions>
+                  <line>He's over by Nepos the Nose's house.</line>
+               </g>
+               <g name="vlindrel-hall">
+                  <conditions>
+                     <x of="subject" gte="-174960" />
+                     <x of="subject" lte="-174480" />
+                     <y of="subject" gte="6992" />
+                     <y of="subject" lte="7616" />
+                     <z of="subject" gte="-2128" />
+                  </conditions>
+                  <line>He's over by Vlindrel Hall.</line>
+               </g>
+            </g>
+            <g name="elevated">
+               <conditions>
+                  <z of="subject" gte="-2800" />
+                  <z of="subject" lt="-2400" />
+               </conditions>
+               <g name="treasury-house">
+                  <conditions>
+                     <x of="subject" gte="-177424" />
+                     <x of="subject" lte="-176448" />
+                     <y of="subject" gte="5744" />
+                     <y of="subject" lte="6480" />
+                  </conditions>
+                  <line>He's over by the Treasury House.</line>
+               </g>
+               <g name="house-endon">
+                  <conditions>
+                     <x of="subject" gte="-176448" />
+                     <x of="subject" lte="-175584" />
+                     <y of="subject" gte="5888" />
+                     <y of="subject" lte="6544" />
+                  </conditions>
+                  <line>He's over by Endon's house.</line>
+               </g>
+               <g name="house-ogmund">
+                  <conditions>
+                     <x of="subject" gte="-175584" />
+                     <x of="subject" lte="-174400" />
+                     <y of="subject" gte="5888" />
+                     <y of="subject" lte="6544" />
+                  </conditions>
+                  <line>He's over by Ogmund's house.</line>
+               </g>
+            </g>
+            <!--
+               General volumes. Must be higher-priority than the Guard Tower volume.
+            -->
+            <g name="north-uppermost-level">
+               <conditions>
+                  <x of="subject" gte="-177888" />
+                  <x of="subject" lte="-173184" />
+                  <y of="subject" gte="5504" />
+                  <y of="subject" lte="7968" />
+                  <z of="subject" gte="-2224" />
+               </conditions>
+               <line>He's on the north side of the city, on the uppermost walkways.</line>
+            </g>
+            <g name="north-general">
+               <conditions>
+                  <x of="subject" gte="-177888" />
+                  <x of="subject" lte="-173184" />
+                  <y of="subject" gte="4768" />
+                  <y of="subject" lte="7968" />
+                  <z of="subject" lt="-2224" />
+               </conditions>
+               <line>He's on the north side of the city.</line>
+            </g>
+         </g>
+         <g name="central">
+            <g name="temple-of-dibella">
+               <conditions>
+                  <x of="subject" gte="-177504" />
+                  <x of="subject" lte="-175248" />
+                  <y of="subject" gte="3968" />
+                  <y of="subject" lte="5344" />
+                  <z of="subject" gte="-2224" />
+               </conditions>
+               <line>He's near the Temple of Dibella.</line>
+            </g>
+            <g name="temple-arch-to-south">
+               <conditions>
+                  <x of="subject" gte="-177856" />
+                  <x of="subject" lte="-176464" />
+                  <y of="subject" gte="2368" />
+                  <y of="subject" lte="3968" />
+                  <z of="subject" gte="-2224" />
+               </conditions>
+               <line>He's climbing the rock arch, between the Temple of Dibella and the city's west edge.</line>
+            </g>
+            <g name="north-south-passageway">
+               <!--
+                  This volume also covers the stairwell leading up to the Temple of 
+                  Dibella, and some of the stairs leading up to that junction in 
+                  general.
+               -->
+               <conditions>
+                  <x of="subject" gte="-176272" />
+                  <x of="subject" lte="-175680" />
+                  <y of="subject" gte="3552" />
+                  <y of="subject" lte="5168" />
+                  <z of="subject" gte="-2960" />
+               </conditions>
+               <line>He's passing through the city center. There's a hallway that links the north and south halves of the city, and stairs leading to the mountaintop the city was built around.</line>
+            </g>
+            <g name="guard-tower">
+               <!--
+                  This volume overlaps the city's north-street upper walkway, so it 
+                  needs to be lower-priority than that.
+               -->
+               <conditions>
+                  <x of="subject" gte="-175680" />
+                  <x of="subject" lte="-173712" />
+                  <y of="subject" gte="3584" />
+                  <y of="subject" lte="5520" />
+                  <z of="subject" gte="-2960" />
+               </conditions>
+               <line>He's by the guard tower.</line>
+            </g>
+         </g>
+         
+         <g name="hall-of-the-dead">
+            <!--
+               (And also Cidhna Mine's secret exit.)
+            -->
+            <conditions>
+               <x of="subject" gte="-177952" />
+               <x of="subject" lte="-176272" />
+               <y of="subject" gte="656" />
+               <y of="subject" lte="2000" />
+               <z of="subject" gte="-2960" />
+            </conditions>
+            <line>He's by the Hall of the Dead's outdoor entrance.</line>
+         </g>
+         <g name="hags-cure">
+            <conditions>
+               <x of="subject" gte="-176416" />
+               <x of="subject" lte="-175728" />
+               <y of="subject" gte="880" />
+               <y of="subject" lte="1712" />
+               <z of="subject" gte="-3200" />
+            </conditions>
+            <line>He's by the Hag's Cure.</line>
+         </g>
+         <g name="ghorza-forge">
+            <conditions>
+               <x of="subject" gte="-176880" />
+               <x of="subject" lte="-175408" />
+               <y of="subject" gte="1440" />
+               <y of="subject" lte="2816" />
+               <z of="subject" gte="-3440" />
+            </conditions>
+            <line>He's by Ghorza's forge.</line>
+         </g>
+         <g name="junction--hall-of-dead--understone-keep--center">
+            <conditions>
+               <x of="subject" gte="-177600" />
+               <x of="subject" lte="-176656" />
+               <y of="subject" gte="2000" />
+               <y of="subject" lte="3088" />
+               <z of="subject" gte="-2960" />
+               <z of="subject" lte="-2224" />
+            </conditions>
+            <line>He's on the southwest walkways, somewhere between Understone Keep and the Hall of the Dead.</line>
+         </g>
+         <g name="southern-center-stairs">
+            <conditions>
+               <x of="subject" gte="-176656" />
+               <x of="subject" lte="-175040" />
+               <y of="subject" gte="2672" />
+               <y of="subject" lte="3968" />
+               <z of="subject" lte="-2960" />
+            </conditions>
+            <line>He's on the southern half of the city's central peak.</line>
+         </g>
+         <g name="southeast">
+            <conditions>
+               <x of="subject" gte="-175040" />
+               <x of="subject" lte="-172736" />
+               <y of="subject" gte="2672" />
+               <y of="subject" lte="4656" />
+               <z of="subject" lte="-2960" />
+            </conditions>
+            <line>He's on southeast side of the city, under the guard tower.</line>
+         </g>
+         <g name="understone-keep">
+            <conditions>
+               <x of="subject" gte="-179776" />
+               <x of="subject" lte="-177504" />
+               <y of="subject" gte="2528" />
+               <y of="subject" lte="5504" />
+               <z of="subject" lt="-800" />
+            </conditions>
+            <g>
+               <conditions>
+                  <z of="subject" gte="-800" />
+               </conditions>
+               <line>I saw him up on the walkway above Understone Keep.</line>
+            </g>
+            <line>He's over by Understone Keep.</line>
+         </g>
+         
+         <g name="mine-overseer-house">
+            <conditions>
+               <x of="subject" gte="-173632" />
+               <x of="subject" lte="-172944" />
+               <y of="subject" gte="752" />
+               <y of="subject" lte="1712" />
+               <z of="subject" gte="-3664" />
+            </conditions>
+            <line>He's by the mine overseer's house.</line>
+         </g>
+         <g name="cidhna-mine">
+            <conditions>
+               <x of="subject" gte="-175408" />
+               <x of="subject" lte="-173632" />
+               <y of="subject" gte="752" />
+               <y of="subject" lte="2464" />
+               <z of="subject" gte="-3664" />
+            </conditions>
+            <line>He's by the entrance to Cidhna Mine.</line>
+         </g>
+         <g name="smelter-area">
+            <conditions>
+               <x of="subject" gte="-175408" />
+               <x of="subject" lte="-172400" />
+               <y of="subject" gte="752" />
+               <y of="subject" lte="3584" />
+               <z of="subject" lt="-3664" />
+            </conditions>
+            <line>He's by the smelting operation set up near Cidhna Mine.</line>
+         </g>
+         
+         <g name="entrance-market">
+            <conditions>
+               <x of="subject" gte="-175040" />
+               <x of="subject" lte="-172736" />
+               <y of="subject" gte="4656" />
+               <y of="subject" lte="6320" />
+               <z of="subject" lte="-2960" />
+            </conditions>
+            <line>He's at the market near the city entrance.</line>
+            <line>He's by the city's main gate.</line>
+         </g>
+         
+         <!-- TODO -->
+         
+         <invoke name="common-exterior-fallbacks" />
+      </top-g>
+      
+      <!-- final fallback lines -->
+      <shared-info id="shared-unknown" />
+   </quest>
+</payload>

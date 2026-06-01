@@ -4,13 +4,85 @@
       locations="MarkarthLocation"
    >
       <dialogue-conditions>
-         <faction-membership of="speaker" includes="TownMarkarthFaction" />
+         <or>
+            <faction-membership of="speaker" includes="TownMarkarthFaction" />
+            <actor-base of="speaker" is="UrzogaGraShagurz" />
+         </or>
          <faction-membership of="speaker" excludes="GuardFactionMarkarth" />
          
          <location of="speaker" is="MarkarthLocation" />
       </dialogue-conditions>
       <actors>
-         <!-- TODO -->
+         <actor editor-id="Adara" />
+         <actor editor-id="Aicantar" />
+         <actor editor-id="Anton" name="Anton Virane" />
+         <actor editor-id="Anwen" />
+         <actor editor-id="Banning" />
+         <actor editor-id="Betrid" name="Betrid Silver-Blood" />
+         <actor editor-id="Bothela" />
+         <actor editor-id="BrotherVerulus" name="Brother Verulus" />
+         <actor editor-id="Cairine" />
+         <actor editor-id="Calcelmo" />
+         <actor editor-id="Cedran" />
+         <actor editor-id="Cosnach" />
+         <actor editor-id="Degaine" />
+         <actor editor-id="Donnel" />
+         <actor editor-id="Dryston" />
+         <actor editor-id="Endon" />
+         <actor editor-id="Eltrys">
+            <!--
+               TODO: Only allow asking about him before he arranges to meet 
+               you at the Talos shrine during The Forsworn Conspiracy. After 
+               that point, he's trying to avoid being noticed, so people 
+               should indeed not notice him.
+               
+               Plus, we don't allow asking about dead actors, so having his 
+               name disappear from the list at the wrong time could end up 
+               being a spoiler. Better to have it disappear once he starts 
+               hiding.
+            -->
+         </actor>
+         <actor editor-id="Faleen" />
+         <actor editor-id="Frabbi" />
+         <actor editor-id="Garvey" />
+         <actor editor-id="GhorzaGraBagol" name="Ghorza gra-Bagol" />
+         <actor editor-id="Hamal" />
+         <actor editor-id="Hathrasil" />
+         <actor editor-id="HirelingVorstag" name="Vorstag" />
+         <actor editor-id="HogniRedArm" name="Hogni Red-Arm" />
+         <actor editor-id="HousecarlMarkarth" name="Argis the Bulwark" />
+         <actor editor-id="Hreinn" />
+         <actor editor-id="Hroki" />
+         <actor editor-id="Igmund" />
+         <actor editor-id="Ildene" name="Nana Ildene" />
+         <actor editor-id="Imedhnain" />
+         <actor editor-id="Kerah" />
+         <actor editor-id="Kleppr" />
+         <actor editor-id="Lisbet" />
+         <actor editor-id="Morven" />
+         <actor editor-id="MothgroBagol" name="Moth gro-Bagol" />
+         <actor editor-id="MS01Margret" name="Margret" />
+         <actor editor-id="Muiri" />
+         <actor editor-id="MulushGroShugurz" name="Mulush gro-Shugurz" />
+         <actor editor-id="Nepos" name="Nepos the Nose" />
+         <actor editor-id="Ogmund" />
+         <actor editor-id="Omluag" />
+         <actor editor-id="Ondolemar" />
+         <actor editor-id="Orla" />
+         <actor editor-id="Raerek" />
+         <actor editor-id="Reburrus" name="Reburrus Quintilius" />
+         <actor editor-id="Rhiada" />
+         <actor editor-id="Rondach" />
+         <actor editor-id="Senna" />
+         <actor editor-id="TacitusSallustius" name="Tacitus Sallustius" />
+         <actor editor-id="Thonar" name="Thonar Silver-Blood" />
+         <actor editor-id="Thongvar" name="Thongvar Silver-Blood" />
+         <actor editor-id="Tynan" />
+         <actor editor-id="Tyranus" name="Vigilant Tyranus" />
+         <actor editor-id="Uaile" />
+         <actor editor-id="UrzogaGraShugurz" name="Urzoga gra-Shugurz" />
+         <actor editor-id="Voada" />
+         <actor editor-id="Yngvar" name="Yngvar the Singer" />
       </actors>
       
       <!--
@@ -68,11 +140,11 @@
          </conditions>
          
          <!--
-            TODO: different-floors checks
+            TODO: per-room checks (or placeholders for them)
          -->
          
          <!--
-            TODO: per-room checks for the city hall and inn
+            TODO: different-floors checks
          -->
          
          <shared-info id="shared-same-building" />
@@ -82,58 +154,273 @@
             <is-in-interior of="subject" />
          </conditions>
          
-         <!-- TODO -->
+         <g name="speaker-outside-walls-subject-inside-walls">
+            <conditions>
+               <parent-cell of="subject" is-not="MarkarthStableHouse" />
+            </conditions>
+            <g name="speaker-interior">
+               <conditions>
+                  <parent-cell of="speaker" is="MarkarthStableHouse" />
+               </conditions>
+               <shared-info id="shared-me-outside-walls-they-inside-walls" />
+            </g>
+            <g name="speaker-exterior">
+               <conditions>   
+                  <invoke name="condition-entity-outside-city-walls-ext">
+                     <parameter name="%OF%" value="speaker" />
+                  </invoke>
+               </conditions>
+               <shared-info id="shared-me-outside-walls-they-inside-walls" />
+            </g>
+         </g>
+         <g name="speaker-inside-walls-subject-outside-walls">
+            <conditions>
+               <parent-cell of="subject" is="MarkarthStableHouse" />
+            </conditions>
+            <g name="speaker-interior">
+               <conditions>   
+                  <is-in-interior of="speaker" />
+                  <parent-cell of="speaker" is-not="MarkarthStableHouse" />
+               </conditions>
+               <shared-info id="shared-me-inside-walls-they-outside-walls" />
+            </g>
+            <g name="speaker-exterior">
+               <conditions>   
+                  <invoke name="condition-entity-inside-city-walls-ext">
+                     <parameter name="%OF%" value="speaker" />
+                  </invoke>
+               </conditions>
+               <shared-info id="shared-me-inside-walls-they-outside-walls" />
+            </g>
+         </g>
+         
+         <g name="abandoned-house">
+            <conditions>
+               <parent-cell of="subject" is="MarkarthAbandonedHouse" />
+            </conditions>
+            <line>I saw him walk into an abandoned house on the north side of the city.</line>
+         </g>
+         <g name="arnleif-and-sons">
+            <conditions>
+               <parent-cell of="subject" is="MarkarthArnleifandSonsTradingCompany" />
+            </conditions>
+            <!--
+               TODO: employees
+            -->
+            <line>He's at Arnleif and Sons.</line>
+         </g>
+         <g name="guard-tower">
+            <conditions>
+               <parent-cell of="subject" is="MarkarthGuardTower" />
+            </conditions>
+            <line>He's at the guard tower.</line>
+         </g>
+         <g name="hags-cure">
+            <conditions>
+               <parent-cell of="subject" is="MarkarthHagsCure" />
+            </conditions>
+            <g name="asking-about-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Bothela" />
+                     <actor-base of="subject" is="Muiri" />
+                  </or>
+               </conditions>
+               <line>He lives and works at The Hag's Cure. You'll find him there now.</line>
+               <line>The alchemist? He's at The Hag's Cure.</line>
+            </g>
+            <line>He's at The Hag's Cure.</line>
+            <line>He's visiting the alchemy shop on the west side of town.</line>
+         </g>
+         <g name="hall-of-the-dead">
+            <conditions>
+               <parent-cell of="subject" is="MarkarthHalloftheDead" />
+            </conditions>
+            <!--
+               TODO: remarks on closure, if place is closed down due to cannibals
+            
+               TODO: employees
+            -->
+            <line>He's at the Hall of the Dead.</line>
+         </g>
+         <g name="house-endon">
+            <conditions>
+               <parent-cell of="subject" is="MarkarthEndonsHouse" />
+            </conditions>
+            <invoke name="mixin-house-three-residents-int">
+               <parameter name="OWNER-1" value="Endon" />
+               <parameter name="OWNER-2" value="Kerah" />
+               <parameter name="OWNER-3" value="Adara" />
+            </invoke>
+            <line>He's at Endon's house.</line>
+            <line>I saw him by Endon's house not too long ago.</line>
+         </g>
+         <g name="house-nepos">
+            <conditions>
+               <parent-cell of="subject" is="MarkarthNepossHouse" />
+            </conditions>
+            <!--
+               TODO: residents, employees
+            -->
+            <line>He's at Nepos's house.</line>
+         </g>
+         <g name="house-ogmund">
+            <conditions>
+               <parent-cell of="subject" is="MarkarthOgmundHouse" />
+            </conditions>
+            <invoke name="mixin-house-one-resident-int">
+               <parameter name="OWNER" value="Ogmund" />
+            </invoke>
+         </g>
+         <g name="shrine-of-talos">
+            <conditions>
+               <parent-cell of="subject" is="MarkarthShrineofTalos" />
+            </conditions>
+            <line>He's at the Shrine of Talos.</line>
+            <line>He's visiting the Shrine of Talos, beneath the Temple of Dibella.</line>
+         </g>
+         <g name="silver-blood-inn">
+            <conditions>
+               <parent-cell of="subject" is="MarkarthSilverBloodInn" />
+            </conditions>
+            <g name="asking-about-employee" non-exclusive="true">
+               <conditions>
+                  <or>
+                     <faction-membership of="subject" includes="ServicesMarkarthSilverFishInn" />
+                     <faction-membership of="subject" includes="MarkarthSilverBloodInnWorkerFaction" />
+                  </or>
+               </conditions>
+               <line>He works at the Silver-Blood Inn. You should be able to find him there.</line>
+               <line>He's an employee at the Silver-Blood Inn. He'll be in there.</line>
+               <line emotion="puzzled:20">He's part of the family that runs the Silver-Blood Inn. Not the Silver-Bloods; they just own the place. Anyway, he should be in there.</line>
+            </g>
+            <line>He's at the Silver-Blood Inn.</line>
+            <line>Check the Silver-Blood Inn, across from the city's main gate.</line>
+         </g>
+         <g name="smelter-overseer-house">
+            <conditions>
+               <parent-cell of="subject" is="MarkarthSmelterOverseersHouse" />
+            </conditions>
+            <invoke name="mixin-house-two-residents-int">
+               <parameter name="OWNER-1" value="MulushGroShugurz" />
+               <parameter name="OWNER-2" value="UrzogaGraShugurz" />
+            </invoke>
+            <line>He's at the smelter overseer's house.</line>
+            <line>He's at Mulush's house, next to Cidhna Mine.</line>
+         </g>
+         <g name="stables">
+            <conditions>
+               <parent-cell of="subject" is="MarkarthStableHouse" />
+            </conditions>
+            <line>He's at the stables.</line>
+         </g>
+         <g name="temple-of-dibella">
+            <g name="temple-from-outside">
+               <conditions>
+                  <or>
+                     <parent-cell of="subject" is="MarkarthTempleofDibella" />
+                     <parent-cell of="subject" is="MarkarthTempleInnerSanctum" />
+                  </or>
+                  <parent-cell of="speaker" is-not="MarkarthTempleofDibella" />
+                  <parent-cell of="speaker" is-not="MarkarthTempleInnerSanctum" />
+               </conditions>
+               <g name="asking-about-employee">
+                  <conditions>
+                     <faction-membership of="subject" includes="MarkarthTempleofDibellaFaction" />
+                     <faction-membership of="speaker" excludes="MarkarthTempleofDibellaFaction" />
+                  </conditions>
+                  <line>The priestess? You'll find her at the Temple of Dibella.</line>
+                  <line>She's a priestess of Dibella. You'll find her at the Temple.</line>
+                  <line>She's a priestess at the Temple of Dibella. I'd check there.</line>
+               </g>
+               <g>
+                  <conditions>
+                     <faction-membership of="subject" excludes="MarkarthTempleofDibellaFaction" />
+                  </conditions>
+                  <line>He's visiting the Temple of Dibella.</line>
+               </g>
+               <line>He's at the Temple of Dibella.</line>
+            </g>
+            <g name="temple-from-sanctum">
+               <conditions>
+                  <parent-cell of="subject" is="MarkarthTempleofDibella" />
+                  <parent-cell of="speaker" is="MarkarthTempleInnerSanctum" />
+               </conditions>
+               <shared-info id="shared-upstairs" />
+            </g>
+            <g name="sanctum-from-temple">
+               <conditions>
+                  <parent-cell of="subject" is="MarkarthTempleInnerSanctum" />
+                  <parent-cell of="speaker" is="MarkarthTempleofDibella" />
+               </conditions>
+               <line>He's down in the Inner Sanctum.</line>
+            </g>
+         </g>
+         <g name="treasury-house">
+            <conditions>
+               <parent-cell of="subject" is="MarkarthTreasuryHouse" />
+            </conditions>
+            <g name="asking-about-employee" non-exclusive="true">
+               <conditions>
+                  <faction-membership of="subject" includes="MarkarthTreasuryHouseFaction" />
+               </conditions>
+               <line>He works at the Treasury House. I think he's there now.</line>
+               <line>You'll probably find him at the Treasury House. He works there.</line>
+            </g>
+            <line>He's at the Treasury House.</line>
+         </g>
+         <g name="understone-keep">
+            <conditions>
+               <parent-cell of="subject" is="MarkarthUnderStoneKeep" />
+            </conditions>
+            <line>He's at Understone Keep.</line>
+         </g>
+         <g name="vlindrel-hall">
+            <conditions>
+               <parent-cell of="subject" is="MarkarthVlindrelHall" />
+            </conditions>
+            <line>He's at Vlindrel Hall.</line>
+         </g>
+         <g name="warrens">
+            <conditions>
+               <parent-cell of="subject" is="MarkarthWarrens" />
+            </conditions>
+            <g name="asking-non-tenant-about-tenant" non-exclusive="true">
+               <conditions>
+                  <faction-membership of="subject" includes="MarkarthWarrensTenantsFaction" />
+                  <faction-membership of="speaker" excludes="MarkarthWarrensTenantsFaction" />
+                  <!--
+                     Rhiada is grouped with these NPCs due to her involvement in unfinished 
+                     content. She's married to Eltrys, who lives in the Warrens, but she 
+                     lives in her workplace, the Treasury House. Exclude her.
+                  -->
+                  <actor-base of="subject" is-not="Rhiada" />
+               </conditions>
+               <line>He lives in the Warrens, with the rest of the city's homeless. He's probably there now.</line>
+            </g>
+            <line>He's at the Warrens.</line>
+            <line>He's down in the Warrens.</line>
+         </g>
+         <g name="calcelmo-dwemer-museum">
+            <conditions>
+               <parent-cell of="subject" is="MarkarthWizardsQuarters01" />
+            </conditions>
+            <line>He's at Calcelmo's Dwemer museum.</line>
+         </g>
+         <g name="calcelmo-lab">
+            <conditions>
+               <parent-cell of="subject" is="MarkarthWizardsQuarters02" />
+            </conditions>
+            <line>He's at Calcelmo's laboratory.</line>
+         </g>
+         <g name="calcelmo-tower">
+            <conditions>
+               <parent-cell of="subject" is="MarkarthWizardsQuarters03" />
+            </conditions>
+            <line>He's at Calcelmo's tower.</line>
+         </g>
          
          <invoke name="common-me-outside-they-inside" />
-      </top-g>
-      <top-g name="ExteriorOutsideWalls">
-         <conditions>
-            <parent-world of="subject" is="Tamriel" />
-         </conditions>
-         
-         <g name="main-gate">
-            <conditions>
-               <x of="subject" gte="-173280" />
-               <x of="subject" lte="-171728" />
-               <y of="subject" gte="4400" />
-               <y of="subject" lte="6944" />
-               <or>
-                  <x of="subject" gte="-172800" />
-                  <y of="subject" gte="5280" />
-               </or>
-            </conditions>
-            <line>He's over by the city's main gate.</line>
-         </g>
-         <g name="stable">
-            <conditions>
-               <x of="subject" gte="-171680" />
-               <x of="subject" lte="-170544" />
-               <y of="subject" gte="6528" />
-               <y of="subject" lte="7584" />
-            </conditions>
-            <line>He's over by the stables.</line>
-         </g>
-         <g name="in-front-of-gate">
-            <conditions>
-               <x of="subject" gte="-172832" />
-               <x of="subject" lte="-170112" />
-               <y of="subject" gte="4128" />
-               <y of="subject" lte="8304" />
-            </conditions>
-            <line>He's not far from the main gate.</line>
-         </g>
-         <g name="east-road">
-            <conditions>
-               <x of="subject" gte="-170112" />
-               <x of="subject" lte="-166528" />
-               <y of="subject" gte="4096" />
-               <y of="subject" lte="7088" />
-            </conditions>
-            <line>He's on the main road into the city.</line>
-         </g>
-         <!-- TODO -->
-         
-         <!-- else fall back to `Exterior` -->
       </top-g>
       <top-g slug="Exterior">
          <conditions>
@@ -185,6 +472,53 @@
                   </invoke>
                </conditions>
                <shared-info id="shared-me-inside-walls-they-outside-walls" />
+            </g>
+         </g>
+         
+         <g name="outside-walls">
+            <conditions>
+               <parent-world of="subject" is="Tamriel" />
+            </conditions>
+            
+            <g name="main-gate">
+               <conditions>
+                  <x of="subject" gte="-173280" />
+                  <x of="subject" lte="-171728" />
+                  <y of="subject" gte="4400" />
+                  <y of="subject" lte="6944" />
+                  <or>
+                     <x of="subject" gte="-172800" />
+                     <y of="subject" gte="5280" />
+                  </or>
+               </conditions>
+               <line>He's over by the city's main gate.</line>
+            </g>
+            <g name="stable">
+               <conditions>
+                  <x of="subject" gte="-171680" />
+                  <x of="subject" lte="-170544" />
+                  <y of="subject" gte="6528" />
+                  <y of="subject" lte="7584" />
+               </conditions>
+               <line>He's over by the stables.</line>
+            </g>
+            <g name="in-front-of-gate">
+               <conditions>
+                  <x of="subject" gte="-172832" />
+                  <x of="subject" lte="-170112" />
+                  <y of="subject" gte="4128" />
+                  <y of="subject" lte="8304" />
+               </conditions>
+               <line>He's not far from the main gate.</line>
+            </g>
+            <g name="east-road">
+               <conditions>
+                  <x of="subject" gte="-170112" />
+                  <x of="subject" lte="-166528" />
+                  <y of="subject" gte="4096" />
+                  <y of="subject" lte="7088" />
+               </conditions>
+               <line>He's on the main road into the city.</line>
             </g>
          </g>
          
@@ -448,8 +782,6 @@
             <line>He's at the market near the city entrance.</line>
             <line>He's by the city's main gate.</line>
          </g>
-         
-         <!-- TODO -->
          
          <invoke name="common-exterior-fallbacks" />
       </top-g>

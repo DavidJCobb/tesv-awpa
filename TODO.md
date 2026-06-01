@@ -39,7 +39,7 @@ The Shrine of Talos is located beneath the Temple of Dibella. Be careful with Ge
 | Arnleif and Sons Trading Company | ⬜ | ✅ | ⬜ |
 | Calcelmo's Laboratory |   | ✅ | ⬜ |
 | Calcelmo's Tower |   | ✅ | ⬜ |
-| Cidhna Mine | ⬜ | ⬜ | ⬜ |
+| Cidhna Mine | ✅ | ✅ | ⬜ |
 | City Entrance Market | ✅ |   |   |
 | Dwemer Museum |   | ✅ | ⬜ |
 | Endon's House | ✅ | ✅ | ⬜ |

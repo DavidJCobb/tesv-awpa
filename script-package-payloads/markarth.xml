@@ -13,6 +13,53 @@
          <!-- TODO -->
       </actors>
       
+      <!--
+         Condition macros to check whether an actor is inside or outside 
+         of the city walls, based on their coordinates (so, if they're in 
+         an exterior cell).
+      
+         In practice, the only cells that are tagged with MarkarthLocation 
+         outside of the city itself are in front of the main gate, so we 
+         really just have to check what side of the main gate an actor is 
+         on. We can represent the gate as a zig-zagged line.
+      -->
+      <macro name="condition-entity-outside-city-walls-ext">
+         <parameter name="OF" />
+         <data>
+            <x of="%OF%" gte="-173280" />
+            <or>
+               <y of="%OF%" lte="5856" />
+               <x of="%OF%" gte="-172656" />
+            </or>
+            <or>
+               <y of="%OF%" lte="5040" />
+               <x of="%OF%" gte="-172288" />
+            </or>
+            <or>
+               <y of="%OF%" lte="3808" />
+               <x of="%OF%" gte="-171728" />
+            </or>
+         </data>
+      </macro>
+      <macro name="condition-entity-inside-city-walls-ext">
+         <parameter name="OF" />
+         <data>
+            <x of="%OF%" lt="-171728" />
+            <or>
+               <y of="%OF%" gt="3808" />
+               <x of="%OF%" lt="-172288" />
+            </or>
+            <or>
+               <y of="%OF%" gt="5040" />
+               <x of="%OF%" lt="-172656" />
+            </or>
+            <or>
+               <y of="%OF%" gt="5856" />
+               <x of="%OF%" lt="-173280" />
+            </or>
+         </data>
+      </macro>
+      
       <invoke name="common-super-near-player" />
       <top-g slug="SameInterior">
          <conditions>
@@ -44,6 +91,46 @@
             <parent-world of="subject" is="Tamriel" />
          </conditions>
          
+         <g name="main-gate">
+            <conditions>
+               <x of="subject" gte="-173280" />
+               <x of="subject" lte="-171728" />
+               <y of="subject" gte="4400" />
+               <y of="subject" lte="6944" />
+               <or>
+                  <x of="subject" gte="-172800" />
+                  <y of="subject" gte="5280" />
+               </or>
+            </conditions>
+            <line>He's over by the city's main gate.</line>
+         </g>
+         <g name="stable">
+            <conditions>
+               <x of="subject" gte="-171680" />
+               <x of="subject" lte="-170544" />
+               <y of="subject" gte="6528" />
+               <y of="subject" lte="7584" />
+            </conditions>
+            <line>He's over by the stables.</line>
+         </g>
+         <g name="in-front-of-gate">
+            <conditions>
+               <x of="subject" gte="-172832" />
+               <x of="subject" lte="-170112" />
+               <y of="subject" gte="4128" />
+               <y of="subject" lte="8304" />
+            </conditions>
+            <line>He's not far from the main gate.</line>
+         </g>
+         <g name="east-road">
+            <conditions>
+               <x of="subject" gte="-170112" />
+               <x of="subject" lte="-166528" />
+               <y of="subject" gte="4096" />
+               <y of="subject" lte="7088" />
+            </conditions>
+            <line>He's on the main road into the city.</line>
+         </g>
          <!-- TODO -->
          
          <!-- else fall back to `Exterior` -->
@@ -122,7 +209,7 @@
             -->
             <g name="north-uppermost-level">
                <conditions>
-                  <x of="subject" gte="-177888" />
+                  <x of="subject" gte="-179040" />
                   <x of="subject" lte="-173184" />
                   <y of="subject" gte="5504" />
                   <y of="subject" lte="7968" />

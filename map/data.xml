@@ -385,6 +385,31 @@
          <ref label="Guard Tower" pos="-174272,4224" yaw="0">
             <obnd x="-414,363" y="-372,587" />
          </ref>
+         
+         <svg xmlns="http://www.w3.org/2000/svg" name="main-gate region (outside city walls)">
+            <path style="fill: none; stroke: red; vector-effect: non-scaling-stroke" d="
+               M -173280,6944
+               L -171728,6944
+               L -171728,4400
+               L -172800,4400
+               L -172800,5280
+               L -173280,5280
+               Z
+            " />
+         </svg>
+         <svg xmlns="http://www.w3.org/2000/svg" name="is-outside-walls area">
+            <path style="fill: none; stroke: blue; vector-effect: non-scaling-stroke" d="
+               M -171728,-1000
+               L -171728,2752
+               L -171728,3808
+               L -172288,3808
+               L -172288,5040
+               L -172656,5040
+               L -172656,5856
+               L -173280,5856
+               L -173280,9000
+            " />
+         </svg>
       </place>
       <place name="Mor Khazgur">
          <grid-rect min="-38,20" max="-37,16" />

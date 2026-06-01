@@ -143,6 +143,51 @@
             </or>
          </conditions>
          
+         <g name="speaker-outside-walls-subject-inside-walls">
+            <conditions>
+               <invoke name="condition-entity-inside-city-walls-ext">
+                  <parameter name="%OF%" value="subject" />
+               </invoke>
+            </conditions>
+            <g name="speaker-interior">
+               <conditions>
+                  <is-in-interior of="speaker" />
+                  <parent-cell of="speaker" is="MarkarthStables" />
+               </conditions>
+               <shared-info id="shared-me-outside-walls-they-inside-walls" />
+            </g>
+            <g name="speaker-exterior">
+               <conditions>   
+                  <invoke name="condition-entity-outside-city-walls-ext">
+                     <parameter name="%OF%" value="speaker" />
+                  </invoke>
+               </conditions>
+               <shared-info id="shared-me-outside-walls-they-inside-walls" />
+            </g>
+         </g>
+         <g name="speaker-inside-walls-subject-outside-walls">
+            <conditions>
+               <invoke name="condition-entity-outside-city-walls-ext">
+                  <parameter name="%OF%" value="subject" />
+               </invoke>
+            </conditions>
+            <g name="speaker-interior">
+               <conditions>
+                  <is-in-interior of="speaker" />
+                  <parent-cell of="speaker" is-not="MarkarthStables" />
+               </conditions>
+               <shared-info id="shared-me-inside-walls-they-outside-walls" />
+            </g>
+            <g name="speaker-exterior">
+               <conditions>   
+                  <invoke name="condition-entity-inside-city-walls-ext">
+                     <parameter name="%OF%" value="speaker" />
+                  </invoke>
+               </conditions>
+               <shared-info id="shared-me-inside-walls-they-outside-walls" />
+            </g>
+         </g>
+         
          <!--
             Gonna be doing this a little differently from the other cities. Markarth 
             has a lot of verticality, and the city center has a lot of areas that 

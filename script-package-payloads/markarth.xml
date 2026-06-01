@@ -268,13 +268,16 @@
          </g>
          <g name="hall-of-the-dead">
             <conditions>
+               <!--
+                  If the Hall of the Dead is closed due to cannibals (The Taste of 
+                  Death), then no one inside of it can be located, except Verulus.
+               -->
                <parent-cell of="subject" is="MarkarthHalloftheDead" />
+               <or>
+                  <actor-base of="speaker" is="Verulus" />
+                  <quest-completed name="DA11Intro" />
+               </or>
             </conditions>
-            <!--
-               TODO: remarks on closure, if place is closed down due to cannibals
-            
-               TODO: employees
-            -->
             <line>He's at the Hall of the Dead.</line>
          </g>
          <g name="house-endon">
@@ -572,6 +575,7 @@
                      <z of="subject" gte="-2128" />
                   </conditions>
                   <line>He's over by Nepos the Nose's house.</line>
+                  <line>He's near Nepos's house. It's one of the highest buildings on the northern cliffs.</line>
                </g>
                <g name="vlindrel-hall">
                   <conditions>
@@ -605,7 +609,13 @@
                      <y of="subject" gte="5888" />
                      <y of="subject" lte="6544" />
                   </conditions>
+                  <invoke name="mixin-house-three-residents-ext">
+                     <parameter name="OWNER-1" value="Endon" />
+                     <parameter name="OWNER-2" value="Kerah" />
+                     <parameter name="OWNER-3" value="Adara" />
+                  </invoke>
                   <line>He's over by Endon's house.</line>
+                  <line>He's near Endon's house, on the north side of the city.</line>
                </g>
                <g name="house-ogmund">
                   <conditions>
@@ -614,7 +624,21 @@
                      <y of="subject" gte="5888" />
                      <y of="subject" lte="6544" />
                   </conditions>
+                  <g name="asking-resident">
+                     <conditions>
+                        <actor-base of="speaker" is="Ogmund" />
+                     </conditions>
+                     <shared-info id="shared-exterior-near-my-home" />
+                  </g>
+                  <g name="asking-about-resident">
+                     <conditions>
+                        <actor-base of="subject" is="Ogmund" />
+                     </conditions>
+                     <shared-info id="shared-exterior-near-own-home" />
+                     <line>He's hanging around his house, on the north side of the city.</line>
+                  </g>
                   <line>He's over by Ogmund's house.</line>
+                  <line>He's near Ogmund's house, on the north side of the city.</line>
                </g>
             </g>
             <!--
@@ -651,6 +675,7 @@
                   <z of="subject" gte="-2224" />
                </conditions>
                <line>He's near the Temple of Dibella.</line>
+               <line>He's up around the Temple of Dibella.</line>
             </g>
             <g name="temple-arch-to-south">
                <conditions>
@@ -689,13 +714,20 @@
                   <y of="subject" lte="5520" />
                   <z of="subject" gte="-2960" />
                </conditions>
+               <g non-exclusive="true">
+                  <conditions>
+                     <z of="speaker" lt="-2960" />
+                  </conditionS>
+                  <line>He's up by the guard tower.</line>
+               </g>
                <line>He's by the guard tower.</line>
+               <line>He's hanging around the guard tower.</line>
             </g>
          </g>
          
          <g name="hall-of-the-dead">
             <!--
-               (And also Cidhna Mine's secret exit.)
+               (Cidhna Mine's secret exit is also in this volume.)
             -->
             <conditions>
                <x of="subject" gte="-177952" />
@@ -705,6 +737,7 @@
                <z of="subject" gte="-2960" />
             </conditions>
             <line>He's by the Hall of the Dead's outdoor entrance.</line>
+            <line>He's somewhere around the Hall of the Dead's back entrance. It's tucked into the cliffs not far from The Hag's Cure.</line>
          </g>
          <g name="hags-cure">
             <conditions>

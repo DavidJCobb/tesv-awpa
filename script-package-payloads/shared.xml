@@ -509,6 +509,31 @@
          </data>
       </macro>
       
+      <macro name="mixin-interior-1f-2f">
+         <!--
+            Handles "upstairs" and "downstairs" lines for a building 
+            with two above-ground floors.
+            
+            You must define the following constant in an enclosing 
+            group:
+            
+               height-coordinate-2f
+         -->
+         <g name="upstairs">
+            <conditions>
+               <z of="subject" gte="height-coordinate-2f" />
+               <z of="player"  lt="height-coordinate-2f" />
+            </conditions>
+            <shared-info id="shared-upstairs" />
+         </g>
+         <g name="downstairs">
+            <conditions>
+               <z of="subject" lt="height-coordinate-2f" />
+               <z of="player"  gte="height-coordinate-2f" />
+            </conditions>
+            <shared-info id="shared-downstairs" />
+         </g>
+      </macro>
       <macro name="mixin-interior-1f-2f-no-rooms">
          <!--
             Handles "upstairs," "downstairs," and "same floor" lines 
@@ -628,6 +653,98 @@
             </g>
          </data>
       </macro>
+      
+      <macro name="common-interior-different-floors-1f-2f-3f">
+         <!--
+            For a building with three above-ground floors, handles 
+            "upstairs" and "downstairs" lines. You must define the 
+            following constants in an enclosing group:
+            
+               height-coordinate-2f
+               height-coordinate-3f
+               
+            It is assumed that you've already checked whether the player 
+            and subject are in the same cell, and whether that cell has 
+            a 1F, 2F, and 3F.
+         -->
+         <parameter name="ADDITIONAL-CONDITIONS" default-value="" />
+         <data>
+            <g name="upstairs">
+               <conditions>
+                  <!-- subject not on lowest floor; player not on highest floor -->
+                  <z of="subject" gte="height-coordinate-2f" />
+                  <z of="player"  lt="height-coordinate-3f" />
+                  <or>
+                     <!-- player on lowest floor or subject on highest floor -->
+                     <!-- if we had more than 3 floors, the logic here would be more complex -->
+                     <z of="subject" gte="height-coordinate-3f" />
+                     <z of="player"  lt="height-coordinate-2f" />
+                  </or>
+                  %ADDITIONAL-CONDITIONS%
+               </conditions>
+               <shared-info id="shared-upstairs" />
+            </g>
+            <g name="downstairs">
+               <conditions>
+                  <!--
+                     downstairs is opposite of upstairs; just switch around who we run each coordinate check on
+                  -->
+                  <z of="player" gte="height-coordinate-2f" />
+                  <z of="subject"  lt="height-coordinate-3f" />
+                  <or>
+                     <z of="player" gte="height-coordinate-3f" />
+                     <z of="subject"  lt="height-coordinate-2f" />
+                  </or>
+                  %ADDITIONAL-CONDITIONS%
+               </conditions>
+               <shared-info id="shared-downstairs" />
+            </g>
+         </data>
+      </macro>
+      <macro name="common-interior-same-floor-1f-2f-3f">
+         <!--
+            For a building with three above-ground floors, handles "same 
+            floor" lines. You must define the following constants in an 
+            enclosing group:
+            
+               height-coordinate-2f
+               height-coordinate-ff
+               
+            It is assumed that you've already checked whether the player 
+            and subject are in the same cell, and whether that cell has 
+            a 1F, 2F, and 3F.
+         -->
+         <parameter name="ADDITIONAL-CONDITIONS" default-value="" />
+         <data>
+            <g name="same-floor">
+               <conditions>
+                  <or>
+                     <z of="subject" lt="height-coordinate-2f" />
+                     <z of="subject" lt="height-coordinate-3f" />
+                     <z of="player" gte="height-coordinate-3f" />
+                  </or>
+                  <or>
+                     <z of="subject" lt="height-coordinate-2f" />
+                     <z of="player" lt="height-coordinate-3f" />
+                     <z of="subject" gte="height-coordinate-3f" />
+                  </or>
+                  <or>
+                     <z of="player" lt="height-coordinate-2f" />
+                     <z of="subject" lt="height-coordinate-3f" />
+                     <z of="player" gte="height-coordinate-3f" />
+                  </or>
+                  <or>
+                     <z of="player" lt="height-coordinate-2f" />
+                     <z of="player" lt="height-coordinate-3f" />
+                     <z of="subject" gte="height-coordinate-3f" />
+                  </or>
+                  %ADDITIONAL-CONDITIONS%
+               </conditions>
+               <shared-info id="shared-same-floor" />
+            </g>
+         </data>
+      </macro>
+      
       
       <macro name="mixin-owned-room">
          <parameter name="OWNER" />

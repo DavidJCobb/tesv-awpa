@@ -16,12 +16,23 @@
       <dialogue-conditions>
          <or>
             <faction-membership of="speaker" includes="TownWindhelmFaction" />
-            <!-- Belyn Hlaalu and Faryl Atheron aren't in TownWindhelmFaction, but are in...: -->
+            <!--
+               New Gnisis Cornerclub patrons that aren't in TownWindhelmFaction:
+                - Belyn Hlaalu
+                - Faryl Atheron
+            -->
             <faction-membership of="speaker" includes="WindhelmCornerclubPatrons" />
-            <!-- Malborn moves into Windhelm if you save him: -->
-            <actor-base of="speaker" is="Malborn" />
+            <!--
+               Candlehearth Hall patrons that aren't in TownWindhelmFaction:
+                - Torsten Cruel-Sea
+                - Voldsea Giryon
+            -->
+            <faction-membership of="speaker" includes="WindhelmCandlehearthPatrons" />
          </or>
          <faction-membership of="speaker" excludes="GuardFactionWindhelm" />
+         
+         <!-- Exclude specific WindhelmCandlehearthPatrons actors: -->
+         <actor-base of="speaker" is-not="DA14Samwell" />
          
          <location of="speaker" is="WindhelmLocation" />
       </dialogue-conditions>
@@ -34,12 +45,9 @@
          <actor editor-id="AvalAtheron" name="Aval Atheron" />
          <actor editor-id="AventusAretino" name="Aventus Aretino" />
          <actor editor-id="BelynHlaalu" name="Belyn Hlaalu" />
-         <actor editor-id="Benkum" />
-         <actor editor-id="Brond" />
          <actor editor-id="Brunwulf" name="Brunwulf Free-Winter" />
          <actor editor-id="Calixto" name="Calixto Corrium" />
          <actor editor-id="CaptainLonelyGale" name="Captain Lonely-Gale" />
-         <actor editor-id="Edorfin" />
          <actor editor-id="Elda" name="Elda Early-Dawn" />
          <actor editor-id="FarylAtheron" name="Faryl Atheron" />
          <actor editor-id="Galmar" name="Galmar Stone-Fist" />
@@ -51,14 +59,10 @@
          <actor editor-id="IdesaSadri" name="Idesa Sadri" />
          <actor editor-id="Jora" />
          <actor editor-id="Jorleif" />
-         <actor editor-id="Liesl" />
          <actor editor-id="Lortheim" />
          <actor editor-id="Luaffyn" />
          <actor editor-id="HousecarlWindhelm" name="Calder">
             <!-- TODO: Only after he becomes available -->
-         </actor>
-         <actor editor-id="Malborn">
-            <!-- TODO: Only after he hides in Windhelm after Diplomatic Immunity -->
          </actor>
          <actor editor-id="MalthyrElenil" name="Malthyr Elenil" />
          <actor editor-id="Neetrenaza" />
@@ -81,10 +85,12 @@
          <actor editor-id="Susanna" name="Susanna the Wicked" />
          <actor editor-id="SuvarisAtheron" name="Suvaris Atheron" />
          <actor editor-id="Torbjorn" name="Torbjorn Shatter-Shield" />
+         <actor editor-id="Torsten" name="Torsten Cruel-Sea" />
          <actor editor-id="Tova" name="Tova Shatter-Shield" />
          <actor editor-id="Ulfric" name="Ulfric Stormcloak" />
          <actor editor-id="Ulundil" />
          <actor editor-id="ViolaGiordano" name="Viola Giordano" />
+         <actor editor-id="VoldseaGiryon" name="Voldsea Giryon" />
          <actor editor-id="Wuunferth" name="Wuunferth the Unliving">
             <!-- TODO: overrides for when he's in jail -->
          </actor>
@@ -168,6 +174,13 @@
          </data>
       </macro>
       
+      <condition-set name="blood-on-the-ice-solved">
+         <or>
+            <quest-stage for="MS11" done="250" />
+            <quest-stage for="MS11b" done="20" />
+         </or>
+      </condition-set>
+      
       <invoke name="common-super-near-player" />
       <top-g slug="SameInterior">
          <conditions>
@@ -175,13 +188,84 @@
             <parent-cell of="speaker" same-as="subject" />
          </conditions>
          
-         <!--
-            TODO: different-floors checks
-         -->
-         
-         <!--
-            TODO: per-room checks for the city hall and inn
-         -->
+         <g name="rooms">
+            <!-- TODO: WindhelmBlacksmith -->
+            <!-- TODO: WindhelmAtheronResidence -->
+            <!-- TODO: WindhelmBelynHlaalusHouse -->
+            <!-- TODO: WindhelmBloodworks -->
+            <!-- TODO: WindhelmBrunwulfFreeWintersHouse -->
+            <!-- TODO: WindhelmCalixtosHouseofCuriosities -->
+            <!-- TODO: WindhelmCandlehearthHall -->
+            <!-- TODO: WindhelmHjerim -->
+            <!-- TODO: WindhelmHouseofClanCruelSea -->
+            <!-- TODO: WindhelmHouseofClanShatterShield -->
+            <!-- TODO: WindhelmNewGnisisCornerclub -->
+            <!-- TODO: WindhelmNiranyesHouse -->
+            <!-- TODO: WindhelmPalaceoftheKings -->
+            <!-- TODO: WindhelmPalaceUpstairs01 -->
+            <!-- TODO: WindhelmPalaceUpstairs02 -->
+            <!-- TODO: WindhelmSadrisUsedWares -->
+            <!-- TODO: WindhelmViolaGiordanosHouse -->
+            <!-- TODO: WindhelmWhitePhial -->
+         </g>
+         <g name="floors">
+            <g name="two-floors-2f-at-320">
+               <conditions>
+                  <or>
+                     <parent-cell of="subject" is="WindhelmBelynHlaalusHouse" />
+                     <parent-cell of="subject" is="WindhelmBlacksmith" />
+                     <parent-cell of="subject" is="WindhelmCandlehearthHall" />
+                     <parent-cell of="subject" is="WindhelmWhitePhial" />
+                  </or>
+               </conditions>
+               <constant name="height-coordinate-2f" value="320" />
+               <invoke name="mixin-interior-1f-2f-no-rooms" />
+            </g>
+            <g name="hjerim">
+               <conditions>
+                  <parent-cell of="subject" is="WindhelmHjerim" />
+               </conditions>
+               <constant name="height-coordinate-2f" value="192" />
+               <invoke name="mixin-interior-1f-2f-no-rooms" />
+            </g>
+            <g name="house-atheron">
+               <conditions>
+                  <parent-cell of="subject" is="WindhelmAtheronResidence" />
+               </conditions>
+               <constant name="height-coordinate-2f" value="-448" />
+               <invoke name="mixin-interior-1f-2f-no-rooms" />
+            </g>
+            <g name="house-cruel-sea">
+               <conditions>
+                  <parent-cell of="subject" is="WindhelmHouseofClanCruelSea" />
+               </conditions>
+               <constant name="height-coordinate-2f" value="1472" />
+               <invoke name="mixin-interior-1f-2f-no-rooms" />
+            </g>
+            <g name="house-shatter-shield">
+               <conditions>
+                  <parent-cell of="subject" is="WindhelmHouseofClanShatterShield" />
+               </conditions>
+               <constant name="height-coordinate-2f" value="-192" />
+               <invoke name="mixin-interior-1f-2f-no-rooms" />
+            </g>
+            <g name="house-viola">
+               <conditions>
+                  <parent-cell of="subject" is="WindhelmViolaGiordanosHouse" />
+               </conditions>
+               <constant name="height-coordinate-2f" value="256" />
+               <invoke name="mixin-interior-1f-2f-no-rooms" />
+            </g>
+            <g name="new-gnisis-cornerclub">
+               <conditions>
+                  <parent-cell of="subject" is="WindhelmNewGnisisCornerclub" />
+               </conditions>
+               <constant name="height-coordinate-2f" value="-256" />
+               <constant name="height-coordinate-3f" value="0" />
+               <invoke name="common-interior-different-floors-1f-2f-3f" />
+               <invoke name="common-interior-same-floor-1f-2f-3f" />
+            </g>
+         </g>
          
          <shared-info id="shared-same-building" />
       </top-g>
@@ -253,7 +337,7 @@
                      </or>
                   </conditions>
                   <line emotion="disgust:30">He's probably slacking off down at the Argonian Assemblage.</line>
-                  <line emotion="anger:40">Wasting time at their quarters at the docks, no doubt.</line>
+                  <line emotion="anger:40">Wasting time in their quarters at the docks, no doubt.</line>
                </g>
                <g name="asking-about-resident" non-exclusive="true">
                   <conditions>
@@ -287,7 +371,7 @@
                <conditions>
                   <parent-cell of="subject" is="WindhelmBloodworks" />
                </conditions>
-               <line>He's at the city barracks. When you first walk into the palace, turn right.</line>
+               <line>He's at the city barracks. When you first walk into the palace, the door is on your right.</line>
             </g>
             <g name="blacksmith">
                <conditions>
@@ -311,10 +395,45 @@
                <conditions>
                   <parent-cell of="subject" is="WindhelmCalixtosHouseofCuriosities" />
                </conditions>
-               <!--
-                  if Calixto has been outed as the murderer, responses mentioning his 
-                  home should have a scornful tone
-               -->
+               <g name="blood-on-the-ice-solved">
+                  <!--
+                     if Calixto has been outed as the murderer, responses mentioning his 
+                     home should have a scornful tone.
+                  -->
+                  <conditions>
+                     <condition-set name="blood-on-the-ice-solved" />
+                  </conditions>
+                  <g name="family-of-victim" non-exclusive="true">
+                     <conditions>
+                        <or>
+                           <actor-base of="speaker" is="Nilsine" />
+                           <actor-base of="speaker" is="Torbjorn" />
+                           <actor-base of="speaker" is="Torsten" />
+                           <actor-base of="speaker" is="Tova" />
+                        </or>
+                     </conditions>
+                     <line emotion="disgust:100">I heard he walked into the Butcher's old house earlier.</line>
+                     <line emotion="disgust:100" script-notes="slight venom on &quot;guards;&quot; resentment that they didn't solve the murders">For some reason, he's at the Butcher's old museum. Maybe he's looking for more clues the guards missed.</line>
+                     <line emotion="disgust:100">He's stopping by that wretch Calixto's house.</line>
+                  </g>
+                  <g name="fancy" non-exclusive="true">
+                     <conditions>
+                        <or>
+                           <race of="speaker" is="DarkElfRace" />
+                           <race of="speaker" is="DarkElfRaceVampire" />
+                           <race of="speaker" is="HighElfRace" />
+                           <race of="speaker" is="HighElfRaceVampire" />
+                           <race of="speaker" is="ImperialRace" />
+                           <race of="speaker" is="ImperialRaceVampire" />
+                        </or>
+                     </conditions>
+                     <line emotion="anger:90">He's visiting the house Calixto used to live in. And while I'm on the subject, good riddance to that bastard!</line>
+                     <line emotion="anger:100" script-notes="barely-restrained anger at first, with it coming out in full at &quot;the one&quot;">He's at that old museum. You know, the one that belonged to the Butcher of Windhelm!</line>
+                  </g>
+                  <line emotion="disgust:80">He's at the Butcher's old house.</line>
+                  <line emotion="anger:80">He's visiting the house Calixto used to live in.</line>
+                  <line emotion="disgust:70">He stopped by the Butcher's house for some reason.</line>
+               </g>
                <group name="asking-about-resident">
                   <conditions>
                      <actor-base of="subject" is="Calixto" />
@@ -330,9 +449,30 @@
                <conditions>
                   <parent-cell of="subject" is="WindhelmCandlehearthHall" />
                </conditions>
-               <!--
-                  TODO: lines for asking about staff
-               -->
+               <g name="asking-about-owner">
+                  <conditions>
+                     <or>
+                        <actor-base of="subject" is="Elda" />
+                        <death-count for="Elda" gt="0" />
+                     </or>
+                     <or>
+                        <actor-base of="subject" is="Elda" />
+                        <actor-base of="subject" is="Nils" />
+                     </or>
+                  </conditions>
+                  <line>He owns Candlehearth Hall. You'll probably find him there now.</line>
+                  <line>He should be at work at Candlehearth Hall right now. He runs the place.</line>
+               </g>
+               <g name="asking-about-employee">
+                  <conditions>
+                     <or>
+                        <actor-base of="subject" is="Nils" />
+                        <actor-base of="subject" is="Susanna" />
+                     </or>
+                  </conditions>
+                  <line>He works at Candlehearth Hall. Should be there right now.</line>
+                  <line>You'll find him working at Candlehearth Hall.</line>
+               </g>
                <line>He's at Candlehearth Hall.</line>
                <line>Check Candlehearth Hall, at the heart of the city.</line>
                <line>I saw him stop by Candlehearth Hall not too long ago. He might still be there.</line>
@@ -347,11 +487,9 @@
                <conditions>
                   <parent-cell of="subject" is="WindhelmHalloftheDead" />
                </conditions>
-               <!--
-                  TODO: lines for asking about staff
-               -->
                <line>He's at the Hall of the Dead.</line>
                <line>I think he was headed to the Hall of the Dead earlier.</line>
+               <line>He should be at the Hall of the Dead.</line>
             </g>
             <g name="hjerim">
                <conditions>
@@ -364,9 +502,19 @@
                <conditions>
                   <parent-cell of="subject" is="WindhelmAretinoResidence" />
                </conditions>
-               <!--
-                  TODO: lines for asking about Aventus Aretino
-               -->
+               <g name="asking-about-resident">
+                  <conditions>
+                     <actor-base of="subject" is="AventusAretino" />
+                  </conditions>
+                  <g name="asking-someone-in-the-know">
+                     <conditions>
+                        <actor-base of="speaker" is="IdesaSadri" />
+                     </conditions>
+                     <line>He was sent to an orphanage, but he has since returned to his old house. According to rumor, he's busy performing the Black Sacrament inside.</line>
+                  </g>
+                  <line>He's at his family's old house. I guess he must've run away from the orphanage in Riften.</line>
+                  <line>He's supposed to be at the orphanage in Riften, but he's been seen by his old house here. Maybe he ran away?</line>
+               </g>
                <line>I saw him walk into the Aretino residence not too long ago.</line>
             </g>
             <g name="house-atheron">
@@ -418,17 +566,35 @@
                <conditions>
                   <parent-cell of="subject" is="WindhelmHouseofClanCruelSea" />
                </conditions>
-               <group name="asking-babysitter">
+               <g name="asking-family-member-about-family-member">
+                  <conditions>
+                     <or>
+                        <actor-base of="speaker" is="Grimvar" />
+                        <actor-base of="speaker" is="Hillevi" />
+                        <actor-base of="speaker" is="Torsten" />
+                     </or>
+                  </conditions>
+                  <shared-info id="shared-at-our-home" />
+               </g>
+               <g name="asking-about-babysitter">
                   <conditions>
                      <actor-base of="subject" is="IdesaSadri" />
                   </conditions>
                   <line>He's at the Cruel-Sea family's house. He works for them, helping care for their boy, Grimvar.</line>
                   <line>He works as a caregiver for Clan Cruel-Sea's little one. You'll find him at their house.</line>
-               </group>
-               <!--
-                  TODO: lines for asking about a member of the Cruel-Sea family
-               -->
+               </g>
+               <g name="asking-about-family-member">
+                  <conditions>
+                     <or>
+                        <actor-base of="subject" is="Grimvar" />
+                        <actor-base of="subject" is="Hillevi" />
+                        <actor-base of="subject" is="Torsten" />
+                     </or>
+                  </conditions>
+                  <shared-info id="shared-at-own-home" />
+               </g>
                <line>He's at the Cruel-Sea family's house.</line>
+               <line>He's at the Cruel-Seas' manor.</line>
             </g>
             <g name="house-free-winter">
                <conditions>
@@ -490,6 +656,7 @@
                   <shared-info id="shared-at-own-home" />
                </g>
                <line>He's at the Shatter-Shield family's house.</line>
+               <line>He's visiting the Shatter-Shield mansion.</line>
             </g>
             <g name="house-viola">
                <conditions>
@@ -506,34 +673,85 @@
                <line>He's at the New Gnisis Cornerclub.</line>
             </g>
             <g name="palace-of-the-kings">
-               <conditions>
-                  <or>
-                     <parent-cell of="subject" is="WindhelmPalaceoftheKings" />
-                     <parent-cell of="subject" is="WindhelmPalaceUpstairs01" />
-                     <parent-cell of="subject" is="WindhelmPalaceUpstairs02" />
-                  </or>
-               </conditions>
-               <!--
-                  TODO: lines for asking about one interior while in another interior
-               -->
-               <line>He's at the Palace of the Kings.</line>
+               <g name="asking-someone-outside">
+                  <conditions>
+                     <or>
+                        <parent-cell of="subject" is="WindhelmPalaceoftheKings" />
+                        <parent-cell of="subject" is="WindhelmPalaceUpstairs01" />
+                        <parent-cell of="subject" is="WindhelmPalaceUpstairs02" />
+                     </or>
+                     <parent-cell of="speaker" is-not="WindhelmPalaceoftheKings" />
+                     <parent-cell of="speaker" is-not="WindhelmPalaceUpstairs01" />
+                     <parent-cell of="speaker" is-not="WindhelmPalaceUpstairs02" />
+                  </conditions>
+                  <line>He's at the Palace of the Kings.</line>
+                  <line>He's somewhere in the Palace of the Kings.</line>
+               </g>
+               <g name="asking-someone-inside">
+                  <conditions>
+                     <or>
+                        <parent-cell of="speaker" is="WindhelmPalaceoftheKings" />
+                        <parent-cell of="speaker" is="WindhelmPalaceUpstairs01" />
+                        <parent-cell of="speaker" is="WindhelmPalaceUpstairs02" />
+                     </or>
+                  </conditions>
+                  <g name="main-hall">
+                     <conditions>
+                        <parent-cell of="subject" is="WindhelmPalaceoftheKings" />
+                     </conditions>
+                     <line>He's in the palace's main hall.</line>
+                     <line>Head out to the main hall.</line>
+                  </g>
+                  <g name="upstairs-south">
+                     <conditions>
+                        <parent-cell of="subject" is="WindhelmPalaceUpstairs01" />
+                     </conditions>
+                     <line>He's in the palace's southern wing. When you first walk into the palace, the door is on your left.</line>
+                  </g>
+                  <g name="upstairs-north">
+                     <conditions>
+                        <parent-cell of="subject" is="WindhelmPalaceUpstairs02" />
+                     </conditions>
+                     <line>He's in the palace's northern wing. The door is through the war room by the main hall.</line>
+                  </g>
+               </g>
             </g>
             <g name="sadri-shop">
                <conditions>
                   <parent-cell of="subject" is="WindhelmSadrisUsedWares" />
                </conditions>
-               <!--
-                  TODO: lines for asking about staff
-               -->
+               <g name="asking-about-staff">
+                  <conditions>
+                     <actor-base of="subject" is="RevynSadri" />
+                  </conditions>
+                  <g name="offers-services">
+                     <conditions>
+                        <offers-services of="subject" />
+                     </conditions>
+                     <line>He runs Sadri's Used Wares. He should be working there now.</line>
+                     <line>Check his store. Sadri's Used Wares.</line>
+                  </g>
+                  <line>He's at home right now. He lives behind his shop, Sadri's Used Wares.</line>
+               </g>
+               <g name="asking-about-staff-backup">
+                  <!--
+                     The Unofficial Patch has Idesa Sadri take over the shop if 
+                     Revyn is killed.
+                  -->
+                  <conditions>
+                     <actor-base of="subject" is="IdesaSadri" />
+                     <faction-membership of="subject" includes="WindhelmPawnshopOwnerFaction" />
+                     <offers-services of="subject" />
+                  </conditions>
+                  <line>She's at Sadri's Used Wares. She took over running the shop after her brother died.</line>
+                  <line>She's at Sadri's Used Wares. The place used to belong to her brother, but she runs it now.</line>
+               </g>
                <line>He's at Sadri's Used Wares.</line>
             </g>
             <g name="shatter-shield-office">
                <conditions>
                   <parent-cell of="subject" is="WindhelmClanShatterShieldOffice" />
                </conditions>
-               <!--
-                  TODO: lines for asking about staff
-               -->
                <line>He's at the Clan Shatter-Shield office, out on the docks.</line>
             </g>
             <g name="talos-temple">
@@ -581,10 +799,36 @@
                <conditions>
                   <parent-cell of="subject" is="WindhelmWhitePhial" />
                </conditions>
-               <!--
-                  TODO: lines for asking about staff
-               -->
+               <g name="asking-about-owner">
+                  <g non-exclusive="true">
+                     <conditions>
+                        <or>
+                           <actor-base of="subject" is="Nurelion" />
+                           <death-count for="Nurelion" gt="0" />
+                        </or>
+                        <or>
+                           <actor-base of="subject" is="Nurelion" />
+                           <actor-base of="subject" is="QuintusNavale" />
+                        </or>
+                     </conditions>
+                     <line>He's probably manning his shop right now. The White Phial, on the west side of the city.</line>
+                  </g>
+                  <g non-exclusive="true">
+                     <conditions>
+                        <actor-base of="subject" is="Nurelion" />
+                     </conditions>
+                     <line>He owns the White Phial, and he lives upstairs above the shop. Try checking there.</line>
+                  </g>
+                  <g non-exclusive="true">
+                     <conditions>
+                        <actor-base of="subject" is="QuintusNavale" />
+                     </conditions>
+                     <line>He owns the White Phial. He took the place over after Nurelion passed. You'll find him there.</line>
+                     <line>Check the White Phial. It's his shop and his home.</line>
+                  </g>
+               </g>
                <line>He's at the White Phial.</line>
+               <line>I saw him walk into the White Phial earlier.</line>
             </g>
          </g>
          

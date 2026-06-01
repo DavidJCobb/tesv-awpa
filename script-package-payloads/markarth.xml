@@ -209,6 +209,40 @@
             -->
             <line>He's at Arnleif and Sons.</line>
          </g>
+         <g name="cidhna-mine">
+            <!--
+               NOTE: CidhnaMine03 is an unused cell containing no functional load 
+               doors. Ignore it.
+            -->
+            <g name="from-outside">
+               <conditions>
+                  <or>
+                     <parent-cell of="subject" is="CidhnaMine01" />
+                     <parent-cell of="subject" is="CidhnaMine02" />
+                  </or>
+                  <parent-cell of="speaker" is-not="CidhnaMine01" />
+                  <parent-cell of="speaker" is-not="CidhnaMine02" />
+               </conditions>
+               <line>He's down in Cidhna Mine.</line>
+               <line>He's down in Cidhna Mine. Wonder what he did to end up there...</line>
+            </g>
+            <g name="mine-from-ruins">
+               <conditions>
+                  <parent-cell of="subject" is="CidhnaMine01" />
+                  <parent-cell of="speaker" is="CidhnaMine02" />
+               </conditions>
+               <line>He's up in Cidhna Mine proper.</line>
+               <line>He's up in the mine.</line>
+            </g>
+            <g name="ruins-from-mine">
+               <conditions>
+                  <parent-cell of="subject" is="CidhnaMine02" />
+                  <parent-cell of="speaker" is="CidhnaMine01" />
+               </conditions>
+               <line emotion="puzzled:70">He should be here in the mine, but I haven't seen him in a while...</line>
+               <line emotion="puzzled:60">That's... a good question. He should be here in the mine. Where could he have gone?</line>
+            </g>
+         </g>
          <g name="guard-tower">
             <conditions>
                <parent-cell of="subject" is="MarkarthGuardTower" />

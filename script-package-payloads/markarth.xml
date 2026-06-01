@@ -717,7 +717,7 @@
                <g non-exclusive="true">
                   <conditions>
                      <z of="speaker" lt="-2960" />
-                  </conditionS>
+                  </conditions>
                   <line>He's up by the guard tower.</line>
                </g>
                <line>He's by the guard tower.</line>

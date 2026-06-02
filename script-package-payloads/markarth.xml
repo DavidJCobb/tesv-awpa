@@ -30,17 +30,15 @@
          <actor editor-id="Dryston" />
          <actor editor-id="Endon" />
          <actor editor-id="Eltrys">
-            <!--
-               TODO: Only allow asking about him before he arranges to meet 
-               you at the Talos shrine during The Forsworn Conspiracy. After 
-               that point, he's trying to avoid being noticed, so people 
-               should indeed not notice him.
-               
-               Plus, we don't allow asking about dead actors, so having his 
-               name disappear from the list at the wrong time could end up 
-               being a spoiler. Better to have it disappear once he starts 
-               hiding.
-            -->
+            <begin-asking-about>
+               <filter-conditions>
+                  <!--
+                     Once Eltrys asks you to meet him as part of The Forsworn 
+                     Conspiracy, we treat him as if he's staying out of sight.
+                  -->
+                  <quest-stage for="MS01" not-done="15" />
+               </filter-conditions>
+            </begin-asking-about>
          </actor>
          <actor editor-id="Faleen" />
          <actor editor-id="Frabbi" />
@@ -204,10 +202,24 @@
             <conditions>
                <parent-cell of="subject" is="MarkarthArnleifandSonsTradingCompany" />
             </conditions>
-            <!--
-               TODO: employees
-            -->
+            <g name="asking-about-employee">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Imedhnain" />
+                     <actor-base of="subject" is="Lisbet" />
+                  </or>
+               </conditions>
+               <g non-exclusive="true">
+                  <conditions>
+                     <offers-services of="subject" />
+                  </conditions>
+                  <line>He's at work. Check the Arnleif and Sons building.</line>
+               </g>
+               <line>He's one of the shopkeeps at Arnleif and Sons Trading Company. He should be there now.</line>
+               <line>He lives and works out of Arnleif and Sons, so he should be there doing one of those things.</line>
+            </g>
             <line>He's at Arnleif and Sons.</line>
+            <line>I believe he stopped by Arnleif and Sons Trading Company a little while ago.</line>
          </g>
          <g name="cidhna-mine">
             <!--
@@ -296,10 +308,30 @@
             <conditions>
                <parent-cell of="subject" is="MarkarthNepossHouse" />
             </conditions>
-            <!--
-               TODO: residents, employees
-            -->
+            <g name="asking-about-employee">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Morven" />
+                     <actor-base of="subject" is="Tynan" />
+                     <actor-base of="subject" is="Uaile" />
+                  </or>
+               </conditions>
+               <g name="asking-boss-about-employee">
+                  <conditions>
+                     <actor-base of="subject" is="Nepos" />
+                  </conditions>
+                  <line>He works for me. He's at my home right now.</line>
+               </g>
+               <line>He works for Nepos the Nose. You'll find him at <verbatim>the man's</verbatim> house.</line>
+            </g>
+            <g name="asking-about-owner">
+               <conditions>
+                  <actor-base of="subject" is="Nepos" />
+               </conditions>
+               <shared-info id="shared-at-own-home" />
+            </g>
             <line>He's at Nepos's house.</line>
+            <line>He's at Nepos the Nose's home, up on Dryside.</line>
          </g>
          <g name="house-ogmund">
             <conditions>
@@ -411,6 +443,7 @@
                <parent-cell of="subject" is="MarkarthUnderStoneKeep" />
             </conditions>
             <line>He's at Understone Keep.</line>
+            <line>You'll find him in Understone Keep.</line>
          </g>
          <g name="vlindrel-hall">
             <conditions>
@@ -700,7 +733,7 @@
                   <y of="subject" lte="5168" />
                   <z of="subject" gte="-2960" />
                </conditions>
-               <line>He's passing through the city center. There's a hallway that links the north and south halves of the city, and stairs leading to the mountaintop the city was built around.</line>
+               <line>He's passing through the city center. There's a hallway that connects the north and south halves of the city, with stairs leading up to the guard tower and the Temple of Dibella.</line>
             </g>
             <g name="guard-tower">
                <!--
@@ -747,7 +780,8 @@
                <y of="subject" lte="1712" />
                <z of="subject" gte="-3200" />
             </conditions>
-            <line>He's by the Hag's Cure.</line>
+            <line>He's by The Hag's Cure.</line>
+            <line>I saw him around The Hag's Cure earlier..</line>
          </g>
          <g name="ghorza-forge">
             <conditions>
@@ -758,6 +792,7 @@
                <z of="subject" gte="-3440" />
             </conditions>
             <line>He's by Ghorza's forge.</line>
+            <line>He's over by the blacksmiths' forge.</line>
          </g>
          <g name="junction--hall-of-dead--understone-keep--center">
             <conditions>
@@ -815,7 +850,20 @@
                <y of="subject" lte="1712" />
                <z of="subject" gte="-3664" />
             </conditions>
+            <g name="asking-about-owner">
+               <conditions>
+                  <actor-base of="subject" is="MulushGroShugurz" />
+               </conditions>
+               <shared-info id="shared-exterior-near-own-home" />
+            </g>
+            <g name="asking-owner">
+               <conditions>
+                  <actor-base of="speaker" is="MulushGroShugurz" />
+               </conditions>
+               <shared-info id="shared-exterior-near-my-home" />
+            </g>
             <line>He's by the mine overseer's house.</line>
+            <line>He's by Mulush's house, next to Cidhna Mine.</line>
          </g>
          <g name="cidhna-mine">
             <conditions>
@@ -826,6 +874,7 @@
                <z of="subject" gte="-3664" />
             </conditions>
             <line>He's by the entrance to Cidhna Mine.</line>
+            <line>He's hanging around Cidhna Mine.</line>
          </g>
          <g name="smelter-area">
             <conditions>
@@ -836,6 +885,7 @@
                <z of="subject" lt="-3664" />
             </conditions>
             <line>He's by the smelting operation set up near Cidhna Mine.</line>
+            <line>He's not far from Cidhna Mine's smelter.</line>
          </g>
          
          <g name="entrance-market">

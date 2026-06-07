@@ -1,4 +1,8 @@
 
+--
+-- NOTE: nested macro invocations not supported
+--
+
 local macro
 do
    local instance_members = {}
@@ -205,7 +209,7 @@ do
                local nodes = {}
                for _, part in ipairs(parts) do
                   if type(part) == "string" then
-                     nodes[#nodes + 1} = xml.text(part)
+                     nodes[#nodes + 1] = xml.text(part)
                   else
                      for _, src in ipairs(part) do
                         nodes[#nodes + 1] = src:clone(true)

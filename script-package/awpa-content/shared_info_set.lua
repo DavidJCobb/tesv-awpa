@@ -15,7 +15,8 @@ do
          local list = awpa.env.shared_infos
          list[#list + 1] = self
          
-         self.forms = {}
+         self.forms   = {}
+         self.genders = {} -- vector<string> containing "unisex", "male", or "female"
       end,
       instance_members = instance_members,
    })
@@ -113,9 +114,11 @@ do
                utils.replace_info_responses(after_m, text_m)
                utils.replace_info_responses(after_f, text_f)
                
-               self.forms[j] = after_m
+               self.forms[j]   = after_m
+               self.genders[j] = "male"
                j = j + 1
-               self.forms[j] = after_f
+               self.forms[j]   = after_f
+               self.genders[j] = "female"
                j = j + 1
             else
                if not after_u then
@@ -124,7 +127,8 @@ do
                after_u.editor_id = editor_id_u
                utils.replace_info_responses(after_u, text)
                
-               self.forms[j] = after_u
+               self.forms[j]   = after_u
+               self.genders[j] = "unisex"
                j = j + 1
             end
          end

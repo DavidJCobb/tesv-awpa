@@ -262,16 +262,16 @@ end
             _store_list(results.top_level_lines.unisex, true)
          else
             --
-            -- If a group is empty, it shouldn't exist; the children should've been made 
-            -- groups of their own instead.
+            -- A random-line-group that contains only random-line-subgroups, and not 
+            -- lines of its own.
             --
-            --assert(false, "not implemented")
-            if self.name and self.name ~= "" then
-               print("warning: random-line-group `" .. self.name .. "` produced no lines")
+            if #results.specific_lines.male > 0 then
+               _store_list(results.specific_lines.unisex)
+               _store_list(results.specific_lines.male)
+               _store_list(results.specific_lines.female, true)
             else
-               print("warning: an unnamed random-line-group produced no lines")
+               _store_list(results.specific_lines.unisex, true)
             end
-            dovah.dump(self)
          end
          
          return results

@@ -6,7 +6,7 @@
       <dialogue-conditions>
          <or>
             <faction-membership of="speaker" includes="TownMarkarthFaction" />
-            <actor-base of="speaker" is="UrzogaGraShagurz" />
+            <actor-base of="speaker" is="UrzogaGraShugurz" />
          </or>
          <faction-membership of="speaker" excludes="GuardFactionMarkarth" />
          

@@ -12,6 +12,7 @@ do
          self.source   = nil -- awpa.shared_info_set
          self.form_ids = {} -- vector<int>
          self.forms    = {} -- vector<topic_info>
+         self.genders  = {} -- vector<string>
          
          awpa.env:on_content_object_constructed()
       end,
@@ -59,7 +60,8 @@ do
          local benches_conditions  = {}
          local benches_cnd_config  = {}
       
-         self.forms = {}
+         self.forms   = {}
+         self.genders = {}
          
          local form_ids_after = {}
          do
@@ -115,8 +117,14 @@ benches_cnd_config[i] = benchmark.new()
                         operand  = 1,
                      }
                   })
+                  self.genders[i] = "male"
+                  if gender == "Female" then
+                     self.genders[i] = "female"
+                  end
 benches_conditions[i]:stop()
 benches_cnd_config[i]:stop()
+               else
+                  self.genders[i] = "unisex"
                end
             end
          end

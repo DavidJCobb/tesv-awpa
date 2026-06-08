@@ -24,11 +24,20 @@ do
       end
       function instance_members:generate_line(line, topic, conditions, conditions_are_pre_stripped, conditions_are_sexed)
          assert(awpa.line.is(line))
+         -- `conditions` must be a list of native-compatible tables
+         
          local m, f = line:generate_infos(topic)
          assert(not not m)
          if m and f then
-            utils.append_condition_list(m, conditions)
-            utils.append_condition_list(f, conditions)
+            do
+               local cnd_list_m = m.conditions
+               local cnd_list_f = f.conditions
+               for i = 1, #conditions do
+                  local cnd = conditions[i]
+                  cnd_list_m:insert(cnd)
+                  cnd_list_f:insert(cnd)
+               end
+            end
             if conditions_are_pre_stripped then
                if conditions_are_sexed then
                   cndlib.strip_redundant_GetIsSex_conditions(m.conditions)
@@ -42,7 +51,7 @@ do
             self.male[j]   = m
             self.female[j] = f
          else
-            utils.append_condition_list(m, conditions)
+            utils.append_native_compatible_conditions(m.conditions, conditions)
             if not conditions_are_pre_stripped then
                cndlib.strip_redundant_conditions(m.conditions)
             end
@@ -51,15 +60,18 @@ do
       end
       function instance_members:generate_shared_info(si_ref, topic, conditions, conditions_are_pre_stripped, conditions_are_sexed)
          assert(awpa.shared_info_reference.is(si_ref))
+         -- `conditions` must be a list of native-compatible tables
+         
          si_ref:generate_infos(topic)
-         local src_list = si_ref.forms
+         local src_list    = si_ref.forms
+         local src_genders = si_ref.genders
          for j = 1, #src_list do
             local info = src_list[j]
             local dst_list
-            utils.append_condition_list(info, conditions)
-            if #info.conditions > 0 then
+            utils.append_native_compatible_conditions(info.conditions, conditions)
+            if src_genders[j] ~= "unisex" then
                dst_list = self.male
-               if info.conditions[1].parameters[1] == "Female" then
+               if src_genders[j] == "female" then
                   dst_list = self.female
                end
                

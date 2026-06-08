@@ -59,7 +59,7 @@ do
             actor_info.form.editor_id
          )
       end
-      function instance_members:get_selection_topic_for(actor_info)
+      function instance_members:_get_selection_topic_for(actor_info)
          local editor_id = self:get_selection_topic_editor_id_for(actor_info)
          for i = 1, #self.topics do
             local t = self.topics[i]
@@ -73,7 +73,7 @@ do
             for i = 1, #topics do
                local t = topics[i]
                if t.editor_id == editor_id then
-                  self:_insert_sorted_selection_topic(t)
+                  self.topics[#self.topics + 1] = t
                   return t
                end
             end
@@ -81,28 +81,13 @@ do
          local topic = dovah.create_form(form_types.topic, { parent = branch })
          topic.editor_id = editor_id
          topic.text      = actor_info.name
-         self:_insert_sorted_selection_topic(topic)
+         self.topics[#self.topics + 1] = topic
          return topic
       end
 
-      function instance_members:_insert_sorted_selection_topic(topic)
-         self.topics[#self.topics + 1] = topic
-         
-         local cancel_id = self:get_cancel_topic_editor_id()
-         table.sort(self.topics, function(a, b)
-            if a.editor_id == cancel_id then
-               return true
-            end
-            if b.editor_id == cancel_id then
-               return false
-            end
-            return a.text < b.text
-         end)
-      end
-      
-      function instance_members:setup_actor_selection_topic(actor_info, topic)
+      function instance_members:_setup_actor_selection_topic(actor_info, topic)
          if not topic then
-            topic = self:get_selection_topic_for(actor_info)
+            topic = self:_get_selection_topic_for(actor_info)
          end
          local actor_alias <const> = self.quest_info.form.aliases[actor_info.form.editor_id]
          if not actor_alias then
@@ -112,12 +97,11 @@ do
          local info
          do
             local infos = topic.infos
-            local count = #infos
-            if count > 1 then
-               error("An actor-selection topic has multiple infos. How did this happen?")
-            end
-            if count == 1 then
-               info = infos[1]
+            info = infos[1]
+            if info then
+               if #infos > 1 then
+                  error("An actor-selection topic has multiple infos. How did this happen?")
+               end
             end
          end
          if not info then
@@ -178,8 +162,17 @@ do
          end
          for i = 1, #self.quest_info.actors do
             local actor_info = self.quest_info.actors[i]
-            self:setup_actor_selection_topic(actor_info)
+            self:_setup_actor_selection_topic(actor_info)
          end
+         table.sort(self.topics, function(a, b)
+            if a.editor_id == cancel_id then
+               return true
+            end
+            if b.editor_id == cancel_id then
+               return false
+            end
+            return a.text < b.text
+         end)
       end
    end
 end

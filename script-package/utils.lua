@@ -121,6 +121,12 @@ function utils.append_condition_list(info, src_list)
    _append_conditions_to(info, info.conditions, src_list)
 end
 
+function utils.append_native_compatible_conditions(dst_list, src_list)
+   for i = 1, #src_list do
+      dst_list:insert(src_list[i])
+   end
+end
+
 function utils.replace_info_link_to_list(info, topics)
    local list = info.link_to
    list:clear()

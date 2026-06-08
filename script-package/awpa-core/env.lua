@@ -394,7 +394,6 @@ function awpa.env:generate_content()
       si_def:find_or_create_forms(self.shared_info_topic, preexisting_infos)
    end
 
-local bench_a = benchmark.new()
    for i = 1, #self.quests do
       local quest = self.quests[i]
       do
@@ -404,9 +403,11 @@ local bench_a = benchmark.new()
             list:insert(form)
          end
       end
-      quest:generate_dialogue()
-      
 local bench = benchmark.new()
+      quest:generate_dialogue()
+awpa.perflog:log(bench, "Time taken to generate dialogue for quest %s", quest.id)
+      
+bench = benchmark.new()
       quest:visit_topic_helpers(function(topic_helper)
          topic_helper:finalize_info_order()
       end)

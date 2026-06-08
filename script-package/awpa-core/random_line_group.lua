@@ -182,8 +182,20 @@ do
             end
             conditions[i] = item
          end
-         cndlib.strip_redundant_conditions(conditions)
+         do
+            local bench = benchmark.new()
+            local count = #conditions
+            
+            cndlib.strip_redundant_conditions(conditions)
+            
+            if self.name and self.name ~= "" then
+               awpa.perflog:log(bench, "time for a named random-line-group (%s) to strip redundant conditions (%u -> %u conditions)", self.name, count, #conditions)
+            else
+               awpa.perflog:log(bench, "time for an unnamed random-line-group to strip redundant conditions (%u -> %u conditions)", count, #conditions)
+            end
+         end
          
+local bench = benchmark.new()
          for i = 1, #self.children do
             local item = self.children[i]
             if awpa.line.is(item) then
@@ -196,6 +208,11 @@ do
                error("unexpected object")
             end
          end
+if self.name and self.name ~= "" then
+   awpa.perflog:log(bench, "time for a named random-line-group (%s) to generate its contents (%u children)", self.name, #self.children)
+else
+   awpa.perflog:log(bench, "time for an unnamed random-line-group to generate its contents (%u children)", #self.children)
+end
          
          if self.postprocess then
             results.top_level_lines:for_each_line(self.postprocess)
@@ -203,12 +220,12 @@ do
          end
          
          local function _store_list(list, last_is_random_end)
-            local size = #list
-            for i = 1, size do
-               topic_helper:append_desired_info(list[i])
-            end
-            if last_is_random_end and size > 0 then
-               list[size].is_random_end = true
+            topic_helper:append_desired_infos(list)
+            if last_is_random_end then
+               local size = #list
+               if size > 0 then
+                  list[size].is_random_end = true
+               end
             end
          end
          if #results.top_level_lines.male > 0 then
@@ -248,7 +265,13 @@ do
             -- If a group is empty, it shouldn't exist; the children should've been made 
             -- groups of their own instead.
             --
-            assert(false, "not implemented")
+            --assert(false, "not implemented")
+            if self.name and self.name ~= "" then
+               print("warning: random-line-group `" .. self.name .. "` produced no lines")
+            else
+               print("warning: an unnamed random-line-group produced no lines")
+            end
+            dovah.dump(self)
          end
          
          return results

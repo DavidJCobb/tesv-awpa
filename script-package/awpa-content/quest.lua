@@ -256,10 +256,9 @@ do
          self:ensure_actor_selection_aliases()
          
          do -- dialogue conditions
+local bench = benchmark.new()
             local dst_list = quest.dialogue_conditions
-            for i = #dst_list, 1, -1 do
-               dst_list:remove(i)
-            end
+            dst_list:clear()
             local src_list = self.dialogue_conditions
             for i = 1, #src_list do
                local src = src_list[i]
@@ -268,6 +267,7 @@ do
                   dst_list:insert(src:to_native_compatible_table())
                end
             end
+awpa.perflog:log(bench, "Time taken to generate dialogue conditions for quest %s", self.id)
          end
          
          local branch_main = nil
@@ -280,9 +280,15 @@ do
          end
          self.branch = branch_main
          
+local bench = benchmark.new()
          self.selection_topic_list:generate_all_forms()
+awpa.perflog:log(bench, "Time taken to generate selection-topic list for quest %s", self.id)
+bench = benchmark.new()
          self.ask_root_topic:generate_all_forms()
+awpa.perflog:log(bench, "Time taken to generate ask-topic for quest %s", self.id)
+bench = benchmark.new()
          self.results_root_topic:generate_all_forms()
+awpa.perflog:log(bench, "Time taken to generate results-topic for quest %s", self.id)
       end
    end
 end

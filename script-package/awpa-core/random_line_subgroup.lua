@@ -48,9 +48,17 @@ do
                end
                inner_conditions[j + i] = item
             end
+local bench = benchmark.new()
+local count = #inner_conditions
             cndlib.strip_redundant_conditions(inner_conditions)
+if self.name and self.name ~= "" then
+   awpa.perflog:log(bench, "time for a named random-line-subgroup (%s) to strip redundant conditions (%u -> %u conditions)", self.name, count, #inner_conditions)
+else
+   awpa.perflog:log(bench, "time for an unnamed random-line-subgroup to strip redundant conditions (%u -> %u conditions)", count, #inner_conditions)
+end
          end
          
+local bench = benchmark.new()
          for i = 1, #self.children do
             local item = self.children[i]
             if awpa.line.is(item) then
@@ -63,6 +71,11 @@ do
                error("unexpected object")
             end
          end
+if self.name and self.name ~= "" then
+   awpa.perflog:log(bench, "time for a named random-line-subgroup (%s) to generate its contents (%u children)", self.name, #self.children)
+else
+   awpa.perflog:log(bench, "time for an unnamed random-line-subgroup to generate its contents (%u children)", #self.children)
+end
          
          return results
       end

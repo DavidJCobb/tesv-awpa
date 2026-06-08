@@ -203,7 +203,7 @@
                </conditions>
                <g>
                   <conditions>
-                     <offers-services for="Arcadia" />
+                     <offers-services of="subject" />
                   </conditions>
                   <line>He's at work right now, running Arcadia's Cauldron in the market.</line>
                   <line>He runs the alchemy shop. He should be there now.</line>

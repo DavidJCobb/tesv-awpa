@@ -350,7 +350,7 @@
                      the Thieves Guild:
                   -->
                   <quest-stage for="MQ201" done="205" />
-                  <location is="RiftenLocation" />
+                  <location of="subject" is="RiftenLocation" />
                </filter-conditions>
             </begin-asking-about>
             <begin-asking-to>
@@ -365,7 +365,7 @@
                      <condition-set name="player-in-thieves-guild" />
                      <quest-stage for="MQ201" done="205" />
                      <quest-stage for="MQ201" done="208" /> <!-- abandoned Etienne -->
-                     <location is="RiftenLocation" />
+                     <location of="subject" is="RiftenLocation" />
                      <quest-stage for="TGLeadership" lt="40" /> <!-- player not yet guildmaster -->
                   </conditions>
                   <line>No.</line>
@@ -791,7 +791,7 @@
                         <race of="player" is="ImperialRace" />
                         <race of="player" is="ImperialRaceVampire" />
                      </or>
-                     <relationship-rank with="player" lt="1" />
+                     <relationship-rank of="speaker" with="player" lt="1" />
                   </conditions>
                   <line>No. Leave me be, you Imperial bastard.</line>
                   <line>No. Leave me alone, you Imperial dog.</line>

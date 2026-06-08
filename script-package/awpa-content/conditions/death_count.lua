@@ -28,17 +28,17 @@ do
       end
       function instance_members:from_xml(element)
          if element.node_name ~= "death-count" then
-            error("mismatched node name")
+            utils.fail_load("mismatched node name", element)
          end
          self:_extract_run_on(element)
          
          local v = element.attributes["for"]
          if not v then
-            error("needs `for` attribute")
+            utils.fail_load("attribute `for` required", element)
          end
          self.form = dovah.get_form_by_editor_id(v, form_types.actor_base)
          if not self.form then
-            error("NPC_ not found: " .. v)
+            utils.fail_load("`for` attribute specified an NPC_ that wasn't found: " .. v, element)
          end
          
          self:_extract_numeric_comparison(element)

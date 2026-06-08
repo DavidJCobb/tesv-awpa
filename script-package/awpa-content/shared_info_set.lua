@@ -24,10 +24,10 @@ do
          awpa.env:set_object_id(self, element.attributes["id"])
          self.slug = element.attributes["editor-id-slug"]
          if not self.id then
-            error("Shared infos must have an ID")
+            utils.fail_load("attribute `id` is required", element)
          end
          if not self.slug then
-            error("Shared infos must have an editor ID slug")
+            utils.fail_load("attribute `editor-id-slug` is required", element)
          end
          
          element:for_each_child_element(function(node)
@@ -38,7 +38,7 @@ do
                end
                return
             end
-            error("node name is not allowed here: " .. node.node_name)
+            utils.fail_load_on_unexpected_element(node)
          end)
       end
       

@@ -188,7 +188,8 @@ do
             
             do
                local parser = xml.parser()
-               parser.retain_comments = true
+               parser.retain_comments  = true
+               parser.retain_locations = true
                parser:parse(tab:get_input_xml())
                if not parser.root then
                   self:error(string.format("No root element in tab %d's payload.", i))
@@ -198,7 +199,7 @@ do
 local bench_a = benchmark.new()
 local bench_b = benchmark.new()
             macros.gather_global_macros(payload.xml_root_src, global_macros)
-            macros.transform(payload.xml_root_src)
+            macros.transform(payload.xml_root_src, global_macros)
 bench_a:stop()
             process_xml(payload.xml_root_src)
 bench_b:stop()

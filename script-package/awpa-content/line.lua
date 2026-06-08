@@ -56,10 +56,10 @@ do
          if hours then
             self.hours_until_reset = hours
             if hours < 0 or hours > 24 then
-               error("invalid value for `hours-until-reset` (must be in the range [0, 24])")
+               utils.fail_load("invalid value for `hours-until-reset` (must be in the range [0, 24])", element)
             end
          elseif element.attributes["hours-until-reset"] then
-            error("invalid value for `hours-until-reset` (not a number)")
+            utils.fail_load("invalid value for `hours-until-reset` (not a number)", element)
          end
          
          local notes = element.attributes["script-notes"]
@@ -91,7 +91,7 @@ do
                         goto valid
                      end
                   end
-                  error(string.format("unrecognized emotion typename (`%s` in `%s`)", t, raw))
+                  utils.fail_load(string.format("unrecognized emotion typename (`%s` in `%s`)", t, raw), element)
                   ::valid::
                   self.emotion.type  = t
                   self.emotion.value = v
@@ -123,7 +123,7 @@ do
                      text_m = text_m .. data
                      text_f = text_f .. data
                   else
-                     error("unexpected child element in `line`")
+                     utils.fail_load_on_unexpected_element(node)
                   end
                end
             end

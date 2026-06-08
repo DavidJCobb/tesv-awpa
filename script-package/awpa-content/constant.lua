@@ -18,14 +18,14 @@ do
          if n then
             self.name = n
          else
-            error("constant has no name")
+            utils.fail_load("constant has no name", element)
          end
       
          local v = tonumber(element.attributes["value"])
          if v then
             self.value = v
          else
-            error("constant has no value")
+            utils.fail_load("constant has no value or a non-numeric value", element)
          end
       end
    end

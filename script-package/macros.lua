@@ -24,11 +24,11 @@ do
                   default = dv,
                }
             else
-               error("unexpected node: " .. node.node_name)
+               utils.fail_load_on_unexpected_element(node)
             end
          end)
          if not self.data_node then
-            error("macro missing <data/> node")
+            utils.fail_load("macro missing <data/> node", node)
          end
       end,
       instance_members = instance_members
@@ -216,7 +216,7 @@ do
                      end
                   end
                end
-               node:replace_with(nodes)
+               node:replace_with(table.unpack(nodes))
             end
             
             for k, v in pairs(self.parameters) do
@@ -272,10 +272,10 @@ function macros.gather_global_macros(root, dst_set)
          end
          local name = node.attributes["name"]
          if not name or name == "" then
-            error("nameless macro")
+            utils.fail_load("nameless macro", node)
          end
          if dst_set[name] then
-            error("redefinition of global macro `" .. name .. "`")
+            utils.fail_load("redefinition of global macro `" .. name .. "`", node)
          end
          local item = macro(name, node)
          dst_set[name] = item
@@ -291,7 +291,7 @@ function macros.transform(root, global_macros)
       if node.node_name == "macro" then
          local name = node.attributes["name"]
          if not name or name == "" then
-            error("nameless macro")
+            utils.fail_load("nameless macro", node)
          end
          local list = macro_definitions[name]
          if not list then
@@ -304,7 +304,7 @@ function macros.transform(root, global_macros)
       elseif node.node_name == "invoke" then
          local name = node.attributes["name"]
          if not name or name == "" then
-            error("nameless macro invocation")
+            utils.fail_load("nameless macro invocation", node)
          end
          local dfn
          do
@@ -316,12 +316,20 @@ function macros.transform(root, global_macros)
             end
          end
          if not dfn then
-            error("macro not found: " .. name)
+            utils.fail_load("macro not found: " .. name, node)
          end
          dfn:substitute(node)
       else
          local prior = #macros_in_scope
-         node:for_each_child_element(walk)
+         do
+            local children = { table.unpack(node.children) }
+            for i = 1, #children do
+               local child = children[i]
+               if xml.element.is(child) then
+                  walk(child)
+               end
+            end
+         end
          local after = #macros_in_scope
          if after > prior then
             --

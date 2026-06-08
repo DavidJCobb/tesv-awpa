@@ -24,7 +24,7 @@ do
       end
       function instance_members:from_xml(element)
          if element.node_name ~= "race" then
-            error("mismatched node name")
+            utils.fail_load("mismatched node name", element)
          end
          self:_extract_run_on(element)
          
@@ -32,23 +32,23 @@ do
          if v then
             self.equals = true
             if element.attributes["is-not"] then
-               error("specify only one of `is` or `is-not`")
+               utils.fail_load("specify only one of `is` or `is-not`", element)
             end
          else
             self.equals = false
             v = element.attributes["is-not"]
             if not v then
-               error("specify either `is` or `is-not`")
+               utils.fail_load("attribute `is` or `is-not` required", element)
             end
          end
          self.form = dovah.get_form_by_editor_id(v, form_types.race)
          if not self.form then
             self.form = utils.resolve_form_reference(v)
             if not self.form then
-               error("RACE not found: " .. v)
+               utils.fail_load("RACE not found: " .. v, element)
             end
             if self.form.form_type ~= form_types.race then
-               error("form is not a RACE: " .. v)
+               utils.fail_load("form is not a RACE: " .. v, element)
             end
          end
       end

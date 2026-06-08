@@ -175,30 +175,36 @@
    </shared-infos>
    <global-macros>
       <macro name="common-super-near-player">
-         <top-g slug="SuperNearPlayer">
-            <conditions>
-               <distance of="player" to="subject" lte="128" />
-            </conditions>
-            <shared-info id="shared-near-player" />
-         </top-g>
+         <data>
+            <top-g slug="SuperNearPlayer">
+               <conditions>
+                  <distance of="player" to="subject" lte="128" />
+               </conditions>
+               <shared-info id="shared-near-player" />
+            </top-g>
+         </data>
       </macro>
       <macro name="common-me-outside-they-inside">
-         <g name="me-outside-they-inside">
-            <conditions>
-               <is-in-interior of="subject" />
-               <is-in-exterior of="speaker" />
-            </conditions>
-            <shared-info id="shared-unknown-me-outside-they-inside" />
-         </g>
+         <data>
+            <g name="me-outside-they-inside">
+               <conditions>
+                  <is-in-interior of="subject" />
+                  <is-in-exterior of="speaker" />
+               </conditions>
+               <shared-info id="shared-unknown-me-outside-they-inside" />
+            </g>
+         </data>
       </macro>
       <macro name="common-exterior-fallbacks">
-         <g name="me-inside-they-outside">
-            <conditions>
-               <is-in-interior of="speaker" />
-            </conditions>
-            <shared-info id="shared-unknown-me-inside-they-outside" />
-         </g>
-         <shared-info id="shared-unknown-exterior" />
+         <data>
+            <g name="me-inside-they-outside">
+               <conditions>
+                  <is-in-interior of="speaker" />
+               </conditions>
+               <shared-info id="shared-unknown-me-inside-they-outside" />
+            </g>
+            <shared-info id="shared-unknown-exterior" />
+         </data>
       </macro>
       
       <macro name="common-barracks-with-jail-downstairs-int">
@@ -519,20 +525,22 @@
             
                height-coordinate-2f
          -->
-         <g name="upstairs">
-            <conditions>
-               <z of="subject" gte="height-coordinate-2f" />
-               <z of="player"  lt="height-coordinate-2f" />
-            </conditions>
-            <shared-info id="shared-upstairs" />
-         </g>
-         <g name="downstairs">
-            <conditions>
-               <z of="subject" lt="height-coordinate-2f" />
-               <z of="player"  gte="height-coordinate-2f" />
-            </conditions>
-            <shared-info id="shared-downstairs" />
-         </g>
+         <data>
+            <g name="upstairs">
+               <conditions>
+                  <z of="subject" gte="height-coordinate-2f" />
+                  <z of="player"  lt="height-coordinate-2f" />
+               </conditions>
+               <shared-info id="shared-upstairs" />
+            </g>
+            <g name="downstairs">
+               <conditions>
+                  <z of="subject" lt="height-coordinate-2f" />
+                  <z of="player"  gte="height-coordinate-2f" />
+               </conditions>
+               <shared-info id="shared-downstairs" />
+            </g>
+         </data>
       </macro>
       <macro name="mixin-interior-1f-2f-no-rooms">
          <!--
@@ -546,21 +554,23 @@
             
                height-coordinate-2f
          -->
-         <g name="upstairs">
-            <conditions>
-               <z of="subject" gte="height-coordinate-2f" />
-               <z of="player"  lt="height-coordinate-2f" />
-            </conditions>
-            <shared-info id="shared-upstairs" />
-         </g>
-         <g name="downstairs">
-            <conditions>
-               <z of="subject" lt="height-coordinate-2f" />
-               <z of="player"  gte="height-coordinate-2f" />
-            </conditions>
-            <shared-info id="shared-downstairs" />
-         </g>
-         <shared-info id="shared-same-floor" />
+         <data>
+            <g name="upstairs">
+               <conditions>
+                  <z of="subject" gte="height-coordinate-2f" />
+                  <z of="player"  lt="height-coordinate-2f" />
+               </conditions>
+               <shared-info id="shared-upstairs" />
+            </g>
+            <g name="downstairs">
+               <conditions>
+                  <z of="subject" lt="height-coordinate-2f" />
+                  <z of="player"  gte="height-coordinate-2f" />
+               </conditions>
+               <shared-info id="shared-downstairs" />
+            </g>
+            <shared-info id="shared-same-floor" />
+         </data>
       </macro>
       
       <macro name="common-interior-different-floors-b1f-1f-2f">

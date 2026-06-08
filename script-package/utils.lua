@@ -14,6 +14,27 @@ function utils.join(dst, src)
 end
 
 --
+-- XML-loading utils
+--
+
+function utils.fail_load_on_unexpected_element(node)
+   if node.source_location then
+      error(string.format("unexpected element `%s` at line %d col %d", node.node_name, node.source_location.line, node.source_location.col))
+   end
+   error(string.format("unexpected element `%s`", node.node_name))
+end
+function utils.fail_load(message, context_node)
+   if not context_node then
+      error(message)
+   end
+   local loc = context_node.source_location
+   if loc then
+      error(string.format("%s (see node at line %d col %d)", message, loc.line, loc.col))
+   end
+   error(message)
+end
+
+--
 
 function utils.get_or_create_branch(quest, editor_id, prior_branches)
    if not prior_branches then

@@ -28,13 +28,13 @@ do
       end
       function instance_members:from_xml(element)
          if element.node_name ~= "relationship-rank" then
-            error("mismatched node name")
+            utils.fail_load("mismatched node name", element)
          end
          self:_extract_run_on(element)
          
          local v = element.attributes["with"]
          if not v then
-            error("needs `with` attribute")
+            utils.fail_load("attribute `with` required", element)
          end
          if v == "player" then
             self.form = dovah.get_form_by_id(0x7) -- Player
@@ -42,7 +42,7 @@ do
             self.form = dovah.get_form_by_editor_id(v, form_types.actor_base)
          end
          if not self.form then
-            error("NPC_ not found: " .. v)
+            utils.fail_load("NPC_ not found: " .. v, element)
          end
          
          self:_extract_numeric_comparison(element)

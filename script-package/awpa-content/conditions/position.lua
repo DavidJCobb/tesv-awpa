@@ -35,7 +35,7 @@ do
          then
             self.axis = element.node_name:upper()
          else
-            error("mismatched node name")
+            utils.fail_load("mismatched node name", element)
          end
          self:_extract_run_on(element)
          self:_extract_numeric_comparison(element)

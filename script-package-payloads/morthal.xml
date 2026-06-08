@@ -497,7 +497,7 @@
                   <y of="subject" gte="69328" />
                   <y of="subject" lte="77824" />
                </conditions>
-               <shared-info id="beyond-city-limits-north" />
+               <shared-info id="shared-beyond-city-limits-north" />
             </g>
             <g name="east">  
                <conditions>
@@ -506,7 +506,7 @@
                   <y of="subject" gte="57344" />
                   <y of="subject" lte="77824" />
                </conditions>
-               <shared-info id="beyond-city-limits-east" />
+               <shared-info id="shared-beyond-city-limits-east" />
             </g>
             <g name="west">  
                <conditions>
@@ -515,7 +515,7 @@
                   <y of="subject" gte="57344" />
                   <y of="subject" lte="77824" />
                </conditions>
-               <shared-info id="beyond-city-limits-west" />
+               <shared-info id="shared-beyond-city-limits-west" />
             </g>
             <g name="south">  
                <conditions>
@@ -524,7 +524,7 @@
                   <y of="subject" gte="57344" />
                   <y of="subject" lte="63056" />
                </conditions>
-               <shared-info id="beyond-city-limits-south" />
+               <shared-info id="shared-beyond-city-limits-south" />
             </g>
          </g>
 

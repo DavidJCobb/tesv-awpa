@@ -32,7 +32,7 @@ do
       end
       function instance_members:from_xml(element)
          if element.node_name ~= "parent-cell" then
-            error("mismatched node name")
+            utils.fail_load("mismatched node name", element)
          end
          self:_extract_run_on(element)
          
@@ -41,26 +41,26 @@ do
             if element.attributes["is-not"]
             or element.attributes["same-as"]
             then
-               error("you must specify only one of `is`, `is-not`, or `same-as`")
+               utils.fail_load("you must specify only one of `is`, `is-not`, or `same-as`", element)
             end
          else
             v = element.attributes["is-not"]
             if v then
                self.equals = false
                if element.attributes["same-as"] then
-                  error("you must specify only one of `is`, `is-not`, or `same-as`")
+                  utils.fail_load("you must specify only one of `is`, `is-not`, or `same-as`", element)
                end
             end
          end
          if v then
             self.cell = dovah.get_form_by_editor_id(v, form_types.cell)
             if not self.cell then
-               error("CELL not found: " .. v)
+               utils.fail_load("CELL not found: " .. v, element)
             end
          else
             v = element.attributes["same-as"]
             if not v then
-               error("you must specify one of `is`, `is-not`, or `same-as`")
+               utils.fail_load("attribute `is` or `is-not` or `same-as` required", element)
             end
             self.actor = v
             

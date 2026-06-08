@@ -28,7 +28,7 @@ do
          
          self.editor_id_slug = element.attributes["slug"]
          if not self.editor_id_slug then
-            error("attribute `slug` is required")
+            utils.fail_load("attribute `slug` is required", element)
          end
          
          element:for_each_child_element(function(node)
@@ -64,7 +64,7 @@ do
                item:from_xml(node)
                return
             end
-            error("unexpected element: " .. node.node_name)
+            utils.fail_load_on_unexpected_element(node)
          end)
       end
       function instance_members:amend_xml_clone(nodemap)

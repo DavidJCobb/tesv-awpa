@@ -30,22 +30,22 @@ do
       end
       function instance_members:from_xml(element)
          if element.node_name ~= "papyrus-quest-variable" then
-            error("mismatched node name")
+            utils.fail_load("mismatched node name", element)
          end
          self:_extract_run_on(element)
          
          local v = element.attributes["for"]
          if not v then
-            error("needs `for` attribute")
+            utils.fail_load("attribute `for` required", element)
          end
          self.form = dovah.get_form_by_editor_id(v, form_types.quest)
          if not self.form then
-            error("QUST not found: " .. v)
+            utils.fail_load("QUST not found: " .. v, element)
          end
          
          self.variable = element.attributes["var"]
          if not self.variable then
-            error("variable name `var` missing")
+            utils.fail_load("attribute `var` required", element)
          end
          
          self:_extract_numeric_comparison(element)

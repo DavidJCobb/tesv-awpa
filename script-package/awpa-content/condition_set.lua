@@ -23,7 +23,7 @@ do
          if n then
             self.name = n
          else
-            error("condition set definition has no name")
+            utils.fail_load("condition set definition has no `name`", element)
          end
       end
       function instance_members:apply_to(dst_list, node)

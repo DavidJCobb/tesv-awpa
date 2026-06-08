@@ -28,17 +28,17 @@ do
       end
       function instance_members:from_xml(element)
          if element.node_name ~= "global" then
-            error("mismatched node name")
+            utils.fail_load("mismatched node name", element)
          end
          self:_extract_run_on(element)
          
          local v = element.attributes["form"] or element.attributes["name"]
          if not v then
-            error("needs `form` or `name` attribute")
+            utils.fail_load("attribute `form` or `name` required", element)
          end
          self.form = dovah.get_form_by_editor_id(v, form_types.global)
          if not self.form then
-            error("GLOB not found: " .. v)
+            utils.fail_load("GLOB not found: " .. v, element)
          end
          
          self:_extract_numeric_comparison(element)

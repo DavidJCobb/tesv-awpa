@@ -25,7 +25,7 @@ do
       end
       function instance_members:from_xml(element)
          if element.node_name ~= "location" then
-            error("mismatched node name")
+            utils.fail_load("mismatched node name", element)
          end
          self:_extract_run_on(element)
          
@@ -35,12 +35,12 @@ do
             if v then
                self.equals = false
             else
-               error("needs `is` or `is-not` attribute")
+               utils.fail_load("attribute `is` or `is-not` required", element)
             end
          end
          self.form = dovah.get_form_by_editor_id(v, form_types.location)
          if not self.form then
-            error("LCTN not found: " .. v)
+            utils.fail_load("LCTN not found: " .. v, element)
          end
       end
       function instance_members:assert_valid()

@@ -27,7 +27,7 @@ do
       end
       function instance_members:from_xml(element)
          if element.node_name ~= "actor-base" then
-            error("mismatched node name")
+            utils.fail_load("mismatched node name", element)
          end
          self:_extract_run_on(element)
          
@@ -37,7 +37,7 @@ do
             if v then
                self.equals = false
             else
-               error("needs `is` or `is-not` attribute")
+               utils.fail_load("attribute `is` or `is-not` required", element)
             end
          end
          self.name = v

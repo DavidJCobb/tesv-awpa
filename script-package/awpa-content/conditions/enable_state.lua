@@ -24,17 +24,17 @@ do
       end
       function instance_members:from_xml(element)
          if element.node_name ~= "enable-state" then
-            error("mismatched node name")
+            utils.fail_load("mismatched node name", element)
          end
          self:_extract_run_on(element)
          
          local v = element.attributes["for"]
          if not v then
-            error("needs `for` attribute")
+            utils.fail_load("attribute `for` required", element)
          end
          self.form = utils.resolve_form_reference(v)
          if not self.form then
-            error("REFR not found: " .. v)
+            utils.fail_load("REFR not found: " .. v, element)
          end
          
          local invert = false
@@ -42,7 +42,7 @@ do
          if not v then
             v = element.attributes["is-not"]
             if not v then
-               error("`is` or `is-not` attribute required")
+               utils.fail_load("attribute `is` or `is-not` required", element)
             end
             invert = true
          end
@@ -51,7 +51,7 @@ do
          elseif v == "disabled" then
             v = false
          else
-            error("`is` or `is-not` must be \"enabled\" or \"disabled\"")
+            utils.fail_load("`is` or `is-not` must be \"enabled\" or \"disabled\"", element)
          end
          if invert then
             v = not v

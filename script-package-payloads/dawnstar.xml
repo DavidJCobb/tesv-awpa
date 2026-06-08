@@ -91,7 +91,7 @@
          <g name="different-floors">
             <g name="mortar-and-pestle">
                <conditions>
-                  <parent-cell of="subject" is="DawnstarMortarAndPestle" />
+                  <parent-cell of="subject" is="DawnstarMortarandPestle" />
                </conditions>
                <constant name="height-coordinate-2f" value="240" />
                <invoke name="mixin-interior-1f-2f-no-rooms" />
@@ -206,7 +206,7 @@
          </g> <!-- /leigelf-house -->
          <g name="mortar-and-pestle">
             <conditions>
-               <parent-cell of="subject" is="DawnstarMortarAndPestle" />
+               <parent-cell of="subject" is="DawnstarMortarandPestle" />
             </conditions>
             <g name="asking-about-resident">
                <conditions>
@@ -469,22 +469,22 @@
             </g>
             <g non-exclusive="true" name="both-alive">
                <conditions>
-                  <death-count of="Rustleif" lte="0" />
-                  <death-count of="Seren" lte="0" />
+                  <death-count for="Rustleif" lte="0" />
+                  <death-count for="Seren" lte="0" />
                </conditions>
                <line>He might've been headed to Rustleif and Seren's home. They're the local blacksmiths.</line>
             </g>
             <g non-exclusive="true" name="rustleif-dead-seren-alive">
                <conditions>
-                  <death-count of="Rustleif" gt="0" />
-                  <death-count of="Seren" lte="0" />
+                  <death-count for="Rustleif" gt="0" />
+                  <death-count for="Seren" lte="0" />
                </conditions>
                <line>He might've been headed to Seren's home. <verbatim>She's</verbatim> the local blacksmith.</line>
             </g>
             <g non-exclusive="true" name="seren-dead-rustleif-alive">
                <conditions>
-                  <death-count of="Seren" gt="0" />
-                  <death-count of="Rustleif" lte="0" />
+                  <death-count for="Seren" gt="0" />
+                  <death-count for="Rustleif" lte="0" />
                </conditions>
                <line>He might've been headed to Rustleif's home. <verbatim>He's</verbatim> the local blacksmith.</line>
             </g>
@@ -631,7 +631,7 @@
                   <y of="subject" gte="108784" />
                   <y of="subject" lte="122880" />
                </conditions>
-               <shared-info id="beyond-city-limits-north" />
+               <shared-info id="shared-beyond-city-limits-north" />
             </g>
             <g name="south">
                <conditions>
@@ -640,7 +640,7 @@
                   <y of="subject" gte="90112" />
                   <y of="subject" lte="102624" />
                </conditions>
-               <shared-info id="beyond-city-limits-south" />
+               <shared-info id="shared-beyond-city-limits-south" />
             </g>
          </g>
          

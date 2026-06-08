@@ -24,7 +24,7 @@ do
       end
       function instance_members:from_xml(element)
          if element.node_name ~= "faction-membership" then
-            error("mismatched node name")
+            utils.fail_load("mismatched node name", element)
          end
          self:_extract_run_on(element)
          
@@ -32,23 +32,24 @@ do
          if v then
             self.equals = true
             if element.attributes["excludes"] then
-               error("specify only one of `includes` or `excludes`")
+               utils.fail_load("specify only one of `includes` or `excludes`", element)
             end
          else
             self.equals = false
             v = element.attributes["excludes"]
             if not v then
-               error("specify either `includes` or `excludes`")
+               utils.fail_load("attribute `includes` or `excludes` required", element)
             end
          end
          self.form = dovah.get_form_by_editor_id(v, form_types.faction)
          if not self.form then
             self.form = utils.resolve_form_reference(v)
             if not self.form then
+               utils.fail_load("FACT not found: " .. v, element)
                error("FACT not found: " .. v)
             end
             if self.form.form_type ~= form_types.faction then
-               error("form is not a FACT: " .. v)
+               utils.fail_load("form is not a FACT: " .. v, element)
             end
          end
       end

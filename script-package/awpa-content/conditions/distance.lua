@@ -30,13 +30,13 @@ do
       end
       function instance_members:from_xml(element)
          if element.node_name ~= "distance" then
-            error("mismatched node name")
+            utils.fail_load("mismatched node name", element)
          end
          self:_extract_run_on(element)
          
          local v = element.attributes["to"]
          if not v then
-            error("attribute `to` required")
+            utils.fail_load("attribute `to` required", element)
          end
          do
             local ref = utils.resolve_form_reference(v, true)
@@ -44,7 +44,7 @@ do
                if  ref.form_type ~= form_types.reference
                and ref.form_type ~= form_types.actor
                then
-                  error("ref expected")
+                  utils.fail_load("ref expected for attribute `to`", element)
                end
                self.other = ref
             else
@@ -56,13 +56,11 @@ do
             end
          end
          if self.run_on == "subject" and self.other == "speaker" then
-            error("cannot check the distance between the speaker and themselves")
-         end
-         if self.run_on == "ActorToFind" and self.other == "subject" then
-            error("cannot check the distance between the subject and themselves")
-         end
-         if self.run_on == "player" and self.other == "player" then
-            error("cannot check the distance between the subject and themselves")
+            utils.fail_load("cannot check the distance between the speaker and themselves", element)
+         elseif self.run_on == "ActorToFind" and self.other == "subject" then
+            utils.fail_load("cannot check the distance between the subject and themselves", element)
+         elseif self.run_on == "player" and self.other == "player" then
+            utils.fail_load("cannot check the distance between the player and themselves", element)
          end
          
          self:_extract_numeric_comparison(element)

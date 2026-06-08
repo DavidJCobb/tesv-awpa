@@ -174,11 +174,11 @@ do
          
          local clsname <const> = TAGNAMES_TO_CONSTRUCTOR_NAMES[node.node_name]
          if not clsname then
-            error("unrecognized tag in condition list: " .. node.node_name)
+            utils.fail_load_on_unexpected_element(node)
          end
          local cls <const> = awpa.conditions[clsname]
          if not cls then
-            error("internal error when loading condition with tag name: " .. node.node_name)
+            utils.fail_load("internal error when loading condition with tag name: " .. node.node_name, node)
          end
          local item <const> = awpa.conditions[clsname]()
          item.owning_scope = options.scope
@@ -209,7 +209,7 @@ do
                   if node.node_name == "condition-set"
                   or node.node_name == "or"
                   then
-                     error("can't nest these in an OR")
+                     utils.fail_load("cannot nest this tag in an OR", node)
                   end
                   last_or_linked = awpa.condition.construct_from_xml(node, options)
                   dst_list[#dst_list + 1] = last_or_linked
@@ -222,16 +222,16 @@ do
                end
                if node.node_name == "condition-set" then
                   if not allow_condition_set then
-                     error("condition sets cannot be referenced here")
+                     utils.fail_load("condition sets cannot be referenced here", node)
                   end
                   local name = node.attributes["name"]
                   if not name then
-                     error("condition set reference with no name (is this a misplaced definition?)")
+                     utils.fail_load("condition set reference with no `name` (is this a misplaced definition?)", node)
                   end
                   name = tostring(name)
                   local cs = scope:resolve_condition_set(name)
                   if not cs then
-                     error("condition set `" .. name .. "` not found")
+                     utils.fail_load("condition set `" .. name .. "` not found", node)
                   end
                   cs:apply_to(dst_list, node)
                else

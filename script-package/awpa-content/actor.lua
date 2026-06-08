@@ -42,11 +42,11 @@ do
             self.name = self.editor_id
          end
          if not self.editor_id then
-            error("Actor is missing an editor ID")
+            utils.fail_load("actor info is missing an editor ID", element)
          end
          self.form = dovah.get_form_by_editor_id(self.editor_id, form_types.actor_base)
          if not self.form then
-            error("Actor failed to find its form: " .. self.editor_id)
+            utils.fail_load("actor failed to find its form (given editor ID `" .. self.editor_id .. "`", element)
          end
          
          element:for_each_child_element(function(node)
@@ -62,7 +62,7 @@ do
                end
                if has_nameless then
                   if not node.attributes["slug"] or node.attributes["slug"] == "" then
-                     error("cannot have more than one unnamed redirect topic here; specify a `slug`")
+                     utils.fail_load("cannot have more than one unnamed redirect topic here; specify a `slug`", node)
                   end
                end
             end
@@ -79,7 +79,7 @@ do
                         over.conditions[i].is_override = self
                      end
                   else
-                     error("unexpected element: " .. node.node_name)
+                     utils.fail_load_on_unexpected_element(node)
                   end
                end)
             elseif node.node_name == "begin-asking-to" then
@@ -88,7 +88,7 @@ do
                   if node.node_name == "bribe" then
                      for i = 1, #list do
                         if awpa.actor_redirect_bribe.is(list[i]) then
-                           error("this actor has multiple bribe redirects")
+                           utils.fail_load("this actor has multiple bribe redirects", node)
                         end
                      end
                      local bribe = awpa.actor_redirect_bribe(self)
@@ -107,7 +107,7 @@ do
                      item:from_xml(node)
                      item.topic_text = string.format("<override start via: %s>", self.form.editor_id)
                   else
-                     error("unexpected element: " .. node.node_name)
+                     utils.fail_load_on_unexpected_element(node)
                   end
                end)
             elseif node.node_name == "begin-responding" then
@@ -125,11 +125,11 @@ do
                      item:from_xml(node)
                      item.topic_text = string.format("<override answer from: %s>", self.form.editor_id)
                   else
-                     error("unexpected element: " .. node.node_name)
+                     utils.fail_load_on_unexpected_element(node)
                   end
                end)
             else
-               error("unexpected element: " .. node.node_name)
+               utils.fail_load_on_unexpected_element(node)
             end
          end)
       end

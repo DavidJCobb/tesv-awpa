@@ -24,11 +24,11 @@ do
          do
             local id = element.attributes["id"]
             if not id then
-               error("`shared-info` reference specifies no `id`")
+               utils.fail_load("`shared-info` reference specifies no `id`", element)
             end
             local si = awpa.env.shared_infos_by_id[id]
             if not si then
-               error("missing sharedinfo: " .. tostring(id))
+               utils.fail_load("missing shared-info `" .. tostring(id) .. "`", element)
             end
             self.source = si
          end

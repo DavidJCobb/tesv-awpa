@@ -26,19 +26,19 @@ do
          if  element.node_name ~= "quest-running"
          and element.node_name ~= "quest-not-running"
          then
-            error("mismatched node name")
+            utils.fail_load("mismatched node name", element)
          end
          self:_extract_run_on(element)
          
          local v = element.attributes["name"]
          if not v then
-            error("needs `name` attribute")
+            utils.fail_load("attribute `name` required", element)
          end
          self.form = utils.resolve_form_reference(v, true)
          if not self.form then
             self.form = dovah.get_form_by_editor_id(v, form_types.quest)
             if not self.form then
-               error("QUST not found: " .. v)
+               utils.fail_load("QUST not found: " .. v, element)
             end
          end
          

@@ -34,7 +34,7 @@ do
                item.parent = self.owner
                item:from_xml(node)
             else
-               error("unexpected element: " .. node.node_name)
+               utils.fail_load_on_unexpected_element(node)
             end
          end)
       end
@@ -105,7 +105,7 @@ do
       
       function instance_members:from_xml(element)
          if element.node_name ~= "bribe" then
-            error("invalid node")
+            utils.fail_load_on_unexpected_element(element)
          end
          element:for_each_child_element(function(node)
             if node.node_name == "conditions" then
@@ -122,7 +122,7 @@ do
                   return
                end
             end
-            error("unexpected element: " .. node.node_name)
+            utils.fail_load_on_unexpected_element(node)
          end)
       end
       function instance_members:amend_xml_clone(nodemap)

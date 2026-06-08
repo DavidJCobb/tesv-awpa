@@ -60,7 +60,7 @@ do
                item:from_xml(node)
                return
             end
-            error("invalid child of a `g`: " .. node.node_name)
+            utils.fail_load_on_unexpected_element(node)
          end)
       end
       function instance_members:amend_xml_clone(nodemap)

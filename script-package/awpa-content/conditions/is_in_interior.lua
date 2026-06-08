@@ -25,7 +25,7 @@ do
          if  element.node_name ~= "is-in-interior"
          and element.node_name ~= "is-in-exterior"
          then
-            error("mismatched node name")
+            utils.fail_load("mismatched node name", element)
          end
          self:_extract_run_on(element)
          

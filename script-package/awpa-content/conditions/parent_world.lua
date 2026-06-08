@@ -30,7 +30,7 @@ do
       end
       function instance_members:from_xml(element)
          if element.node_name ~= "parent-world" then
-            error("mismatched node name")
+            utils.fail_load("mismatched node name", element)
          end
          self:_extract_run_on(element)
          
@@ -39,22 +39,22 @@ do
             if element.attributes["is-not"]
             or element.attributes["same-as"]
             then
-               error("you must specify only one of `is` or `is-not`")
+               utils.fail_load("you must specify only one of `is` or `is-not`", element)
             end
          else
             v = element.attributes["is-not"]
             if v then
                self.equals = false
                if element.attributes["same-as"] then
-                  error("you must specify only one of `is` or `is-not`")
+                  utils.fail_load("you must specify only one of `is` or `is-not`", element)
                end
             else
-               error("you must specify one of `is` or `is-not`")
+               utils.fail_load("attribute `is` or `is-not` required", element)
             end
          end
          self.world = dovah.get_form_by_editor_id(v, form_types.worldspace)
          if not self.world then
-            error("WRLD not found: " .. v)
+            utils.fail_load("WRLD not found: " .. v, element)
          end
       end
       function instance_members:_to_native_compatible_table_impl()

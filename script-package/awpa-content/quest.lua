@@ -56,18 +56,18 @@ do
          do
             local attr = element.attributes["locations"]
             if not attr or attr == "" then
-               error("attribute `locations` expected (comma-separated list of Location editor IDs)")
+               utils.fail_load("attribute `locations` expected (comma-separated list of Location editor IDs)", element)
             end
             local list = self.locations
             for name in attr:gmatch("([^,]+)") do
                local form = dovah.get_form_by_editor_id(name, form_types.location)
                if not form then
-                  error(string.format("quest `%s` requested invalid location ID `%s`", self.id, name))
+                  utils.fail_load(string.format("quest `%s` requested invalid location ID `%s`", self.id, name), element)
                end
                list[#list + 1] = form
             end
             if #list == 0 then
-               error("each AWPA content quest must specify the Location(s) to which it pertains")
+               utils.fail_load("each AWPA content quest must specify the Location(s) to which it pertains", element)
             end
          end
          
@@ -85,7 +85,7 @@ do
             if node.node_name == "actors" then
                node:for_each_child_element(function(node)
                   if node.node_name ~= "actor" then
-                     error("unexpected element: " .. node.node_name)
+                     utils.fail_load_on_unexpected_element(node)
                   end
                   local actor = awpa.actor(self)
                   self.actors[#self.actors + 1] = actor

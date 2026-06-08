@@ -23,7 +23,7 @@ do
       end
       function instance_members:from_xml(element)
          if element.node_name ~= "offers-services" then
-            error("mismatched node name")
+            utils.fail_load("mismatched node name", element)
          end
          self:_extract_run_on(element)
          

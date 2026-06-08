@@ -32,19 +32,19 @@ do
       end
       function instance_members:from_xml(element)
          if element.node_name ~= "quest-stage" then
-            error("mismatched node name")
+            utils.fail_load("mismatched node name", element)
          end
          self:_extract_run_on(element)
          
          local v = element.attributes["for"]
          if not v then
-            error("needs `for` attribute")
+            utils.fail_load("attribute `for` required", element)
          end
          self.form = utils.resolve_form_reference(v, true)
          if not self.form then
             self.form = dovah.get_form_by_editor_id(v, form_types.quest)
             if not self.form then
-               error("QUST not found: " .. v)
+               utils.fail_load("QUST not found: " .. v, element)
             end
          end
          
@@ -63,7 +63,7 @@ do
             self.stage = tonumber(self.stage)
             v = self.stage
             if not v or v < 0 or v > 65535 then
-               error("`done` or `not-done` must be an unsigned 16-bit integer")
+               utils.fail_load("attribute `done` or `not-done` must be an unsigned 16-bit integer", element)
             end
          else
             self:_extract_numeric_comparison(element)

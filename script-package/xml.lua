@@ -13,7 +13,8 @@ do -- xml.node
    local instance_members = {}
    xml.node = make_class({
       constructor = function(self)
-         self.parent = nil -- xml.element
+         self.parent          = nil -- xml.element
+         self.source_location = nil
       end,
       instance_members = instance_members
    })
@@ -507,11 +508,13 @@ do
    xml.parser = make_class({
       constructor = function(self, options)
          if options then
-            self.entities        = options.entities        or {}
-            self.retain_comments = options.retain_comments or false
+            self.entities         = options.entities        or {}
+            self.retain_comments  = options.retain_comments or false
+            self.retain_locations = options.retain_locations or false
          else
-            self.entities        = {}
-            self.retain_comments = false
+            self.entities         = {}
+            self.retain_comments  = false
+            self.retain_locations = false
          end
          self.pos      = nil
          self.text     = nil
@@ -521,17 +524,57 @@ do
          self.state    = {
             target  = nil, -- element we're inside of
             parsing = nil, -- nil, "OPEN", "CHILDREN", "CLOSE"
+            
+            last_line_break_pos   = -1,
+            last_line_break_count =  0,
          }
       end,
       getters          = instance_getters,
       instance_members = instance_members,
    })
    
+   function instance_members:_line_at(pos)
+      local state <const> = self.state
+      if pos == state.last_line_break_pos then
+         return state.last_line_break_count
+      end
+      
+      local size <const> = self.length
+      
+      local count      = 0
+      local last_break = -1
+      if pos > state.last_line_break_pos then
+         count      = state.last_line_break_count
+         last_break = state.last_line_break_pos
+      end
+      do
+         local i
+         while true do
+            i = self.text:find("\n", last_break + 1, true)
+            if not (i and i < pos) then
+               break
+            end
+            last_break = i
+            count      = count + 1
+         end
+      end
+      return count, last_break
+   end
+   function instance_members:_update_last_line_break(pos)
+      local count, last_break = self:_line_at(pos or self.pos)
+      self.state.last_line_break_count = count
+      self.state.last_line_break_pos   = last_break
+      return count, last_break
+   end
+   
    function instance_members:parse(str)
       self.pos      = 1
       self.text     = str
       self.length   = #str
       self.prologue = nil
+      
+      self.state.last_line_break_pos   = -1
+      self.state.last_line_break_count = 0
       
       self:_parse_prologue()
       self:_parse_element()
@@ -570,6 +613,9 @@ do
          if k == "commit" then
             return checkpoint_metatable.commit
          end
+         if k == "pos" then
+            return rawget(self, "pos")
+         end
       end
       function checkpoint_metatable:commit()
          rawset(self, "disarmed", true)
@@ -583,6 +629,16 @@ do
       }
       setmetatable(checkpoint, checkpoint_metatable)
       return checkpoint
+   end
+   
+   --
+   function instance_members:_set_node_source_location(node, start_pos)
+      local line, line_pos = self:_update_last_line_break(start_pos)
+      local col = start_pos - line_pos
+      node.source_location = {
+         line = line,
+         col  = col,
+      }
    end
    
    -- Consumes the desired text if it's immediately ahead of `pos`, 
@@ -723,6 +779,9 @@ do
       if self.retain_comments then
          local text = self.text:sub(self.pos, n - 1)
          local node = xml.comment(text)
+         if self.retain_locations then
+            self:_set_node_source_location(node, checkpoint.pos)
+         end
          self.state.target:append_child(node)
       end
       self.pos = n + 3
@@ -931,6 +990,9 @@ do
       end
       
       local elem = xml.element(node_name)
+      if self.retain_locations then
+         self:_set_node_source_location(elem, checkpoint.pos)
+      end
       if self.state.target then
          self.state.target:append_child(elem)
       else

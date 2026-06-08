@@ -266,9 +266,14 @@ end
             -- lines of its own.
             --
             if #results.specific_lines.male > 0 then
-               _store_list(results.specific_lines.unisex)
-               _store_list(results.specific_lines.male)
-               _store_list(results.specific_lines.female, true)
+               if #results.specific_lines.unisex > 0 then
+                  _store_list(results.specific_lines.male)
+                  _store_list(results.specific_lines.female)
+                  _store_list(results.specific_lines.unisex, true)
+               else
+                  _store_list(results.specific_lines.male, true)
+                  _store_list(results.specific_lines.female, true)
+               end
             else
                _store_list(results.specific_lines.unisex, true)
             end

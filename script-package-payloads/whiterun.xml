@@ -456,6 +456,7 @@
             </conditions>
             <invoke name="mixin-house-one-resident-int">
                <parameter name="OWNER" value="OlavatheFeeble" />
+               <parameter name="OWNER-PRINTABLE" value="Olava the Feeble" />
             </invoke>
          </g>
          <g name="house-severio">
@@ -464,6 +465,7 @@
             </conditions>
             <invoke name="mixin-house-one-resident-int">
                <parameter name="OWNER" value="SeverioPelagia" />
+               <parameter name="OWNER-PRINTABLE" value="Severio Pelagia" />
             </invoke>
          </g>
          <g name="house-ysolda">

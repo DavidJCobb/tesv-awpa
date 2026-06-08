@@ -40,7 +40,6 @@ do
          elseif s == "player" then
             return "player"
          end
-         return "subject"
       end
       
       function instance_members:_resolve_constant(name)
@@ -84,7 +83,15 @@ do
          end
       end
       function instance_members:_extract_run_on(element)
-         self.run_on = _parse_run_on(element.attributes["of"])
+         local v = element.attributes["of"]
+         self.run_on = _parse_run_on(v)
+         if not self.run_on then
+            if v then
+               utils.fail_load(string.format("attribute `of` had an unexpected value: %q", v), element)
+            else
+               utils.fail_load("attribute `of` required", element)
+            end
+         end
       end
    
       function instance_members:from_xml(element)

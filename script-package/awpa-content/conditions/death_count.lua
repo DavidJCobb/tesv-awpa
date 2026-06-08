@@ -30,7 +30,6 @@ do
          if element.node_name ~= "death-count" then
             utils.fail_load("mismatched node name", element)
          end
-         self:_extract_run_on(element)
          
          local v = element.attributes["for"]
          if not v then

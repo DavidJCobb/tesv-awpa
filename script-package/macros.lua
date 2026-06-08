@@ -220,10 +220,12 @@ do
             end
             
             for k, v in pairs(self.parameters) do
-               if not param_values[k] then
+               if not param_values[k] and not param_subtrees[k] then
                   local d = v.default
                   if d then
-                     d = subst(d)
+                     d = subst(d) -- subst because one parameter can be defaulted to another
+                  else
+                     utils.fail_load("macro parameter `" .. k .. "` was not specified", invocation)
                   end
                   param_values[k] = d
                end

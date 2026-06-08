@@ -18,19 +18,6 @@
          <location of="speaker" is="FalkreathLocation" />
       </dialogue-conditions>
       
-      <condition-set name="steward-is-nenya">
-         <faction-membership of="Nenya" includes="JobStewardFaction" />
-      </condition-set>
-      <condition-set name="steward-is-not-nenya">
-         <faction-membership of="Nenya" excludes="JobStewardFaction" />
-      </condition-set>
-      <condition-set name="steward-is-tekla">
-         <faction-membership of="Tekla" includes="JobStewardFaction" />
-      </condition-set>
-      <condition-set name="steward-is-not-tekla">
-         <faction-membership of="Tekla" excludes="JobStewardFaction" />
-      </condition-set>
-      
       <actors>
          <actor editor-id="Bolund" />
          <actor editor-id="Delacourt" />

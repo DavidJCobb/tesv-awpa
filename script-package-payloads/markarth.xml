@@ -163,9 +163,9 @@
                <shared-info id="shared-me-outside-walls-they-inside-walls" />
             </g>
             <g name="speaker-exterior">
-               <conditions>   
+               <conditions>
                   <invoke name="condition-entity-outside-city-walls-ext">
-                     <parameter name="%OF%" value="speaker" />
+                     <parameter name="OF" value="speaker" />
                   </invoke>
                </conditions>
                <shared-info id="shared-me-outside-walls-they-inside-walls" />
@@ -185,7 +185,7 @@
             <g name="speaker-exterior">
                <conditions>   
                   <invoke name="condition-entity-inside-city-walls-ext">
-                     <parameter name="%OF%" value="speaker" />
+                     <parameter name="OF" value="speaker" />
                   </invoke>
                </conditions>
                <shared-info id="shared-me-inside-walls-they-outside-walls" />
@@ -503,7 +503,7 @@
          <g name="speaker-outside-walls-subject-inside-walls">
             <conditions>
                <invoke name="condition-entity-inside-city-walls-ext">
-                  <parameter name="%OF%" value="subject" />
+                  <parameter name="OF" value="subject" />
                </invoke>
             </conditions>
             <g name="speaker-interior">
@@ -516,7 +516,7 @@
             <g name="speaker-exterior">
                <conditions>   
                   <invoke name="condition-entity-outside-city-walls-ext">
-                     <parameter name="%OF%" value="speaker" />
+                     <parameter name="OF" value="speaker" />
                   </invoke>
                </conditions>
                <shared-info id="shared-me-outside-walls-they-inside-walls" />
@@ -525,7 +525,7 @@
          <g name="speaker-inside-walls-subject-outside-walls">
             <conditions>
                <invoke name="condition-entity-outside-city-walls-ext">
-                  <parameter name="%OF%" value="subject" />
+                  <parameter name="OF" value="subject" />
                </invoke>
             </conditions>
             <g name="speaker-interior">
@@ -538,7 +538,7 @@
             <g name="speaker-exterior">
                <conditions>   
                   <invoke name="condition-entity-inside-city-walls-ext">
-                     <parameter name="%OF%" value="speaker" />
+                     <parameter name="OF" value="speaker" />
                   </invoke>
                </conditions>
                <shared-info id="shared-me-inside-walls-they-outside-walls" />

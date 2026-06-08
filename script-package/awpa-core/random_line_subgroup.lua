@@ -32,11 +32,11 @@ do
          do
             local j = #conditions
             for i = 1, j do
-               local item = conditions[i]
-               if awpa.condition.is(item) then
-                  item = item:to_native_compatible_table()
-               end
-               inner_conditions[i] = item
+               --
+               -- Caller should've converted the ancestor `conditions` to 
+               -- native-compatible tables already.
+               --
+               inner_conditions[i] = conditions[i]
             end
             for i = 1, #self.conditions do
                local item = self.conditions[i]
@@ -72,9 +72,9 @@ local bench = benchmark.new()
             end
          end
 if self.name and self.name ~= "" then
-   awpa.perflog:log(bench, "time for a named random-line-subgroup (%s) to generate its contents (%u children)", self.name, #self.children)
+   awpa.perflog:log(bench, "time for a named random-line-subgroup (%s) to generate its contents (%u children) (sexed conditions: %q)", self.name, #self.children, conditions_are_sexed)
 else
-   awpa.perflog:log(bench, "time for an unnamed random-line-subgroup to generate its contents (%u children)", #self.children)
+   awpa.perflog:log(bench, "time for an unnamed random-line-subgroup to generate its contents (%u children) (sexed conditions: %q)", #self.children, conditions_are_sexed)
 end
          
          return results

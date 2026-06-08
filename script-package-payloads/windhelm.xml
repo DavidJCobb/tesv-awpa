@@ -377,7 +377,7 @@
                <conditions>
                   <parent-cell of="subject" is="WindhelmBlacksmith" />
                </conditions>
-               <group name="asking-about-resident">
+               <g name="asking-about-resident">
                   <conditions>
                      <or>
                         <actor-base of="subject" is="Hermir" />
@@ -387,7 +387,7 @@
                      <actor-base of="speaker" is-not="Oengul" />
                   </conditions>
                   <line>The blacksmith? He's in the Blacksmith Quarters right now.</line>
-               </group>
+               </g>
                <line>He's at the Blacksmith Quarters.</line>
                <line>Have you checked the Blacksmith Quarters?</line>
             </g>
@@ -434,14 +434,14 @@
                   <line emotion="anger:80">He's visiting the house Calixto used to live in.</line>
                   <line emotion="disgust:70">He stopped by the Butcher's house for some reason.</line>
                </g>
-               <group name="asking-about-resident">
+               <g name="asking-about-resident">
                   <conditions>
                      <actor-base of="subject" is="Calixto" />
                   </conditions>
                   <line>He's at home. He lives by the south end of the Gray Quarter.</line>
                   <line>Probably tending to his museum. Calixto's House of Curiosities. He runs it out of his home, not far from Windhelm's main entrance.</line>
                   <line>If you're looking for Calixto, you should probably check Calixto's House of Curiosities.</line>
-               </group>
+               </g>
                <line>He's at Calixto's House of Curiosities.</line>
                <line>He's visiting Calixto's museum in the Stone Quarter.</line>
             </g>
@@ -521,7 +521,7 @@
                <conditions>
                   <parent-cell of="subject" is="WindhelmAtheronResidence" />
                </conditions>
-               <group name="asking-about-resident">
+               <g name="asking-about-resident">
                   <conditions>
                      <or>
                         <actor-base of="subject" is="AvalAtheron" />
@@ -529,7 +529,7 @@
                         <actor-base of="subject" is="SuvarisAtheron" />
                      </or>
                   </conditions>
-                  <group name="asking-resident-about-resident">
+                  <g name="asking-resident-about-resident">
                      <conditions>
                         <or>
                            <actor-base of="speaker" is="AvalAtheron" />
@@ -538,10 +538,10 @@
                         </or>
                      </conditions>
                      <shared-info id="shared-at-our-home" />
-                  </group>
+                  </g>
                   <shared-info id="shared-at-own-home" />
-               </group>
-               <group name="asking-resident">
+               </g>
+               <g name="asking-resident">
                   <conditions>
                      <or>
                         <actor-base of="speaker" is="AvalAtheron" />
@@ -550,7 +550,7 @@
                      </or>
                   </conditions>
                   <shared-info id="shared-at-my-home" />
-               </group>
+               </g>
                <line>He's at the Atherons' house.</line>
                <line>I think he stopped by the Atheron family's home.</line>
             </g>
@@ -607,7 +607,7 @@
             <g name="house-niranye">
                <g name="basement-from-upstairs">
                   <conditions>
-                     <parent-cell of="subject" is="WindhelmNiranhesHouseBasement" />
+                     <parent-cell of="subject" is="WindhelmNiranyesHouseBasement" />
                      <parent-cell of="speaker" is="WindhelmNiranyesHouse" />
                   </conditions>
                   <shared-info id="shared-downstairs" />
@@ -615,7 +615,7 @@
                <g name="upstairs-from-basement">
                   <conditions>
                      <parent-cell of="speaker" is="WindhelmNiranyesHouseBasement" />
-                     <parent-cell of="subject" is="WindhelmNiranhesHouse" />
+                     <parent-cell of="subject" is="WindhelmNiranyesHouse" />
                   </conditions>
                   <shared-info id="shared-upstairs" />
                </g>
@@ -623,7 +623,7 @@
                   <conditions>
                      <or>
                         <parent-cell of="subject" is="WindhelmNiranyesHouse" />
-                        <parent-cell of="subject" is="WindhelmNiranhesHouseBasement" />
+                        <parent-cell of="subject" is="WindhelmNiranyesHouseBasement" />
                      </or>
                   </conditions>
                   <invoke name="mixin-house-one-resident-int">

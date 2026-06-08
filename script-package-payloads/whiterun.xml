@@ -59,7 +59,7 @@
                <filter-conditions>
                   <!-- only after player has become Thane -->
                   <or>
-                     <quest-stage of="MQ104" done="160" />
+                     <quest-stage for="MQ104" done="160" />
                      <!--
                         TODO: apparently if you somehow do CW before MQ, and 
                         take Whiterun for the Stormcloaks, you have to earn 
@@ -78,12 +78,12 @@
          <actor editor-id="JonBattleBorn" name="Jon Battle-Born" />
          <actor editor-id="KodlakWhitemane" name="Kodlak Whitemane" />
          <actor editor-id="LarsBattleBorn" name="Lars Battle-Born" />
-         <actor editor-id="LilithMaidenLoom" name="Lilith Maiden-Loom" />
+         <actor editor-id="LillithMaidenLoom" name="Lilith Maiden-Loom" />
          <actor editor-id="Mikael" />
          <actor editor-id="MilaValentia" name="Mila Valentia" />
          <actor editor-id="Nazeem" />
          <actor editor-id="Nelkir" />
-         <actor editor-id="HjadaStonearm" name="Hjada Stonearm" />
+         <actor editor-id="NjadaStonearm" name="Njada Stonearm" />
          <actor editor-id="OlavatheFeeble" name="Olava the Feeble" />
          <actor editor-id="OlfinaGrayMane" name="Olfina Gray-Mane" />
          <actor editor-id="OlfridBattleBorn" name="Olfrid Battle-Born" />
@@ -441,7 +441,7 @@
                   Civil War's Battle for Whiterun.
                -->
                <conditions>
-                  <enable-state for="[REFR:0001A270]CWWhiterunIntEnableOnly" is="enabled" />
+                  <enable-state for="[REFR:000FC90B]CWWhiterunIntEnableOnly" is="enabled" />
                </conditions>
                <line emotion="puzzled:70">It's strange... I thought I heard his voice coming from inside Heimskr's house. I hope he isn't trapped beneath the rubble.</line>
                <line emotion="surprise:80">I thought I saw him around Heimskr's shack, but... No... He can't be in there, right?</line>
@@ -580,13 +580,13 @@
                </g>
                <g name="ulfberth-alive" non-exclusive="true">
                   <conditions>
-                     <death-count of="Ulfberth" lte="0" />
+                     <death-count for="Ulfberth" lte="0" />
                   </conditions>
                   <line emotion="happy:30">He's at my shop right now. My husband and I run Warmaidens, by the city gate.</line>
                </g>
                <g name="ulfberth-dead" non-exclusive="true">
                   <conditions>
-                     <death-count of="Ulfberth" gte="1" />
+                     <death-count for="Ulfberth" gte="1" />
                   </conditions>
                   <line emotion="sad:60" script-notes="Still getting used to his death. You were going to say &quot;my husband and I run the place,&quot; before you caught yourself.">He's at my shop right now. Warmaidens. My husband... used to help me run the place...</line>
                </g>
@@ -612,7 +612,7 @@
                </g>
                <g name="adrianne-alive">
                   <conditions>
-                     <death-count of="AdrianneAvenicci" lte="0" />
+                     <death-count for="AdrianneAvenicci" lte="0" />
                   </conditions>
                   <line emotion="happy:30">He's at Warmaidens. My wife and I run the place.</line>
                   <line>He's at my family shop: Warmaidens, the smithy by the gate.</line>
@@ -630,8 +630,8 @@
                </conditions>
                <g name="both-alive" non-exclusive="true">
                   <conditions>
-                     <death-count of="AdrianneAvenicci" lte="0" />
-                     <death-count of="Ulfberth" lte="0" />
+                     <death-count for="AdrianneAvenicci" lte="0" />
+                     <death-count for="Ulfberth" lte="0" />
                   </conditions>
                   <line>He helps run Warmaidens, by the gate. Try checking there.</line>
                </g>
@@ -645,7 +645,7 @@
          
          <invoke name="common-me-outside-they-inside" />
       </top-g>
-      <top-g name="ExteriorOutsideWalls">
+      <top-g slug="ExteriorOutsideWalls">
          <conditions>
             <parent-world of="subject" is="Tamriel" />
          </conditions>
@@ -944,7 +944,7 @@
                   <y of="subject" gte="-544" />
                   <y of="subject" lte="-176" />
                </conditions>
-               <shared-info id="beyond-city-limits-north" />
+               <shared-info id="shared-beyond-city-limits-north" />
             </g>
             <g>
                <conditions>

@@ -249,7 +249,7 @@
             </conditions>
             <g name="jarl">
                <conditions>
-                  <faction-membershop of="subject" includes="JobJarlFaction" />
+                  <faction-membership of="subject" includes="JobJarlFaction" />
                </conditions>
                <line>Falkreath's Jarl. Check the town hall. If he's not on the throne, he won't be far from it.</line>
                <line>The Jarl? Check his longhouse at the center of town.</line>
@@ -257,8 +257,8 @@
             <g name="employee">
                <conditions>
                   <or>
-                     <faction-membershop of="subject" includes="JobHousecarlFaction" />
-                     <faction-membershop of="subject" includes="JobStewardFaction" />
+                     <faction-membership of="subject" includes="JobHousecarlFaction" />
+                     <faction-membership of="subject" includes="JobStewardFaction" />
                   </or>
                </conditions>
                <line>He's at work at the Jarl's Longhouse.</line>

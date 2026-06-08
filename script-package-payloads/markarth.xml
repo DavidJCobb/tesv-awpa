@@ -74,7 +74,7 @@
          <actor editor-id="Senna" />
          <actor editor-id="TacitusSallustius" name="Tacitus Sallustius" />
          <actor editor-id="Thonar" name="Thonar Silver-Blood" />
-         <actor editor-id="Thongvar" name="Thongvar Silver-Blood" />
+         <actor editor-id="Thongvor" name="Thongvor Silver-Blood" />
          <actor editor-id="Tynan" />
          <actor editor-id="Tyranus" name="Vigilant Tyranus" />
          <actor editor-id="Uaile" />
@@ -335,7 +335,7 @@
          </g>
          <g name="house-ogmund">
             <conditions>
-               <parent-cell of="subject" is="MarkarthOgmundHouse" />
+               <parent-cell of="subject" is="MarkarthOgmundsHouse" />
             </conditions>
             <invoke name="mixin-house-one-resident-int">
                <parameter name="OWNER" value="Ogmund" />
@@ -509,7 +509,7 @@
             <g name="speaker-interior">
                <conditions>
                   <is-in-interior of="speaker" />
-                  <parent-cell of="speaker" is="MarkarthStables" />
+                  <parent-cell of="speaker" is="MarkarthStableHouse" />
                </conditions>
                <shared-info id="shared-me-outside-walls-they-inside-walls" />
             </g>
@@ -531,7 +531,7 @@
             <g name="speaker-interior">
                <conditions>
                   <is-in-interior of="speaker" />
-                  <parent-cell of="speaker" is-not="MarkarthStables" />
+                  <parent-cell of="speaker" is-not="MarkarthStableHouse" />
                </conditions>
                <shared-info id="shared-me-inside-walls-they-outside-walls" />
             </g>

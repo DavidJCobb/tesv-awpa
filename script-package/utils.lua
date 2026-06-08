@@ -157,6 +157,11 @@ function utils.resolve_form_reference(text, optional)
       WEAP = form_types.weapon,
    }
    
+   local REFR_TYPES = {
+      form_types.actor,
+      form_types.reference,
+   }
+   
    local sig, form_id, editor_id = text:match("^%[(....):(%x%x%x%x%x%x%x%x)%](.*)$")
    if not form_id then
       sig, editor_id = text:match("^%[(....)%](.*)$")
@@ -188,12 +193,26 @@ function utils.resolve_form_reference(text, optional)
       ))
    end
    if form_id then
-      if form.form_type ~= ft then
-         error(string.format(
-            "form is of the wrong type: %X (expected %s)",
-            form_id,
-            sig
-         ))
+      do
+         local wrong = false
+         if ft == form_types.reference then
+            wrong = true
+            for _, desired in pairs(REFR_TYPES) do
+               if ft == desired then
+                  wrong = false
+                  break
+               end
+            end
+         else
+            wrong = form.form_type ~= ft
+         end
+         if wrong then
+            error(string.format(
+               "form is of the wrong type: %X (expected %s)",
+               form_id,
+               sig
+            ))
+         end
       end
       if editor_id and form.editor_id ~= editor_id then
          error(string.format(

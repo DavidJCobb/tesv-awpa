@@ -5,7 +5,7 @@
    >
       <dialogue-conditions>
          <faction-membership of="speaker" includes="TownMorthalFaction" />
-         <faction-membership of="speaker" excludes="GuardFactionMorthal" />
+         <faction-membership of="speaker" excludes="GuardFactionHaafingar" />
          
          <location of="speaker" is="MorthalLocation" />
       </dialogue-conditions>
@@ -159,7 +159,7 @@
                </conditions>
                <g name="alva-slain">
                   <conditions>
-                     <death-count of="Alva" gt="0" />
+                     <death-count for="Alva" gt="0" />
                   </conditions>
                   <shared-info id="shared-at-own-home" />
                </g>
@@ -168,7 +168,7 @@
             </g>
             <g name="alva-slain">
                <conditions>
-                  <death-count of="Alva" gt="0" />
+                  <death-count for="Alva" gt="0" />
                </conditions>
                <line>I think he's at Hroggar's home right now. The place used to belong to Alva, but...</line>
                <line>Pretty sure I saw him walk into Hroggar's house recently.</line>
@@ -313,7 +313,7 @@
                </conditions>
                <g name="alva-slain">
                   <conditions>
-                     <death-count of="Alva" gt="0" />
+                     <death-count for="Alva" gt="0" />
                   </conditions>
                   <shared-info id="shared-exterior-near-own-home" />
                </g>
@@ -322,7 +322,7 @@
             </g>
             <g name="alva-slain">
                <conditions>
-                  <death-count of="Alva" gt="0" />
+                  <death-count for="Alva" gt="0" />
                </conditions>
                <line>I think he's somewhere near Hroggar's house. The place used to belong to Alva, but...</line>
                <line>Pretty sure I saw him around Hroggar's new home recently.</line>

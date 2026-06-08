@@ -284,24 +284,24 @@
          <data>
             <g name="both-homeowners-alive">
                <conditions>
-                  <death-count of="%OWNER-1%" lte="0" />
-                  <death-count of="%OWNER-2%" lte="0" />
+                  <death-count for="%OWNER-1%" lte="0" />
+                  <death-count for="%OWNER-2%" lte="0" />
                </conditions>
                <line>He might've been headed to %OWNER-1% and %OWNER-2%'s house.</line>
                <line>I think I saw him over by %OWNER-1% and %OWNER-2%'s home.</line>
             </g>
             <g name="owner-1-dead">
                <conditions>
-                  <death-count of="%OWNER-1%" gt="0" />
-                  <death-count of="%OWNER-2%" lte="0" />
+                  <death-count for="%OWNER-1%" gt="0" />
+                  <death-count for="%OWNER-2%" lte="0" />
                </conditions>
                <line>He might've been headed to %OWNER-2%'s house.</line>
                <line>I think I saw him over by %OWNER-2%'s home.%OWNER-2-NOTE%</line>
             </g>
             <g name="owner-2-dead">
                <conditions>
-                  <death-count of="%OWNER-1%" lte="0" />
-                  <death-count of="%OWNER-2%" gt="0" />
+                  <death-count for="%OWNER-1%" lte="0" />
+                  <death-count for="%OWNER-2%" gt="0" />
                </conditions>
                <line>He might've been headed to %OWNER-1%'s house.</line>
                <line>I think I saw him over by %OWNER-1%'s home.%OWNER-1-NOTE%</line>
@@ -329,24 +329,24 @@
          <data>
             <g name="both-homeowners-alive">
                <conditions>
-                  <death-count of="%OWNER-1%" lte="0" />
-                  <death-count of="%OWNER-2%" lte="0" />
+                  <death-count for="%OWNER-1%" lte="0" />
+                  <death-count for="%OWNER-2%" lte="0" />
                </conditions>
                <line>He's visiting %OWNER-1% and %OWNER-2% right now.</line>
                <line>He's at %OWNER-1% and %OWNER-2%'s house%HOUSE-LOCATION-NOTE-1%.</line>
             </g>
             <g name="owner-1-dead">
                <conditions>
-                  <death-count of="%OWNER-1%" gt="0" />
-                  <death-count of="%OWNER-2%" lte="0" />
+                  <death-count for="%OWNER-1%" gt="0" />
+                  <death-count for="%OWNER-2%" lte="0" />
                </conditions>
                <line>He's visiting %OWNER-2% right now.</line>
                <line>He's at %OWNER-2%'s house%HOUSE-LOCATION-NOTE-1%.</line>
             </g>
             <g name="owner-2-dead">
                <conditions>
-                  <death-count of="%OWNER-1%" lte="0" />
-                  <death-count of="%OWNER-2%" gt="0" />
+                  <death-count for="%OWNER-1%" lte="0" />
+                  <death-count for="%OWNER-2%" gt="0" />
                </conditions>
                <line>He's visiting %OWNER-1% right now.</line>
                <line>He's at %OWNER-1%'s house%HOUSE-LOCATION-NOTE-1%.</line>

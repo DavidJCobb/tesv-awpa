@@ -178,7 +178,7 @@
          <data>
             <top-g slug="SuperNearPlayer">
                <conditions>
-                  <distance of="player" to="subject" lte="128" />
+                  <distance of="player" to="subject" lte="256" />
                </conditions>
                <shared-info id="shared-near-player" />
             </top-g>

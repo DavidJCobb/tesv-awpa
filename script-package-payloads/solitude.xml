@@ -130,15 +130,6 @@
          
          <invoke name="common-me-outside-they-inside" />
       </top-g>
-      <top-g name="ExteriorOutsideWalls">
-         <conditions>
-            <parent-world of="subject" is="Tamriel" />
-         </conditions>
-         
-         <!-- TODO -->
-         
-         <!-- else fall back to `Exterior` -->
-      </top-g>
       <top-g slug="Exterior">
          <conditions>
             <or>
@@ -557,7 +548,69 @@
             </g>
          </g>
          
-         <!-- TODO -->
+         <g name="outside-walls">
+            <g name="main-road">
+               <conditions>
+                  <x of="subject" gte="-74016" />
+                  <x of="subject" lte="-65856" />
+                  <y of="subject" gte="99536" />
+                  <y of="subject" lte="105360" />
+                  <z of="subject" gte="-10896" />
+                  <z of="subject" lte="-7936" />
+               </conditions>
+               <line>He's on the main road into the city.</line>
+            </g>
+            <g name="under-city">
+               <conditions>
+                  <x of="subject" gte="-58720" />
+                  <x of="subject" lte="-52896" />
+                  <y of="subject" gte="102128" />
+                  <y of="subject" lte="108304" />
+                  <z of="subject" lte="-10656" />
+               </conditions>
+               <line>He's somewhere beneath the city.</line>
+            </g>
+            
+            <g name="speaker-at-docks">
+               <conditions>
+                  <x of="speaker" gte="-69632" />
+                  <x of="speaker" lte="-61440" />
+                  <y of="speaker" gte="91504" />
+                  <y of="speaker" lte="102400" />
+                  <z of="speaker" lte="-11472" />
+               </conditions>
+               <g name="bridge-above-docks">
+                  <conditions>
+                     <x of="subject" gte="-67744" />
+                     <x of="subject" lte="-63280" />
+                     <y of="subject" gte="98704" />
+                     <y of="subject" lte="101360" />
+                     <z of="subject" gte="-13216" />
+                     <z of="subject" lte="-12096" />
+                  </conditions>
+                  <line>He's on that bridge by the docks.</line>
+               </g>
+               <g name="red-wave">
+                  <conditions>
+                     <x of="subject" gte="-68592" />
+                     <x of="subject" lte="-64672" />
+                     <y of="subject" gte="92384" />
+                     <y of="subject" lte="95312" />
+                  </conditions>
+                  <line>He's by the Red Wave.</line>
+               </g>
+            </g>
+            <g name="docks-general">
+               <conditions>
+                  <x of="subject" gte="-69632" />
+                  <x of="subject" lte="-61440" />
+                  <y of="subject" gte="91504" />
+                  <y of="subject" lte="102400" />
+                  <z of="subject" lte="-11472" />
+               </conditions>
+               <line>He's down by the docks.</line>
+            </g>
+         </g>
          
          <invoke name="common-exterior-fallbacks" />
       </top-g>

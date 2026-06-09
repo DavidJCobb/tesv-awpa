@@ -3,6 +3,22 @@
    <quest id="AWPASolitude"
       locations="SolitudeLocation"
    >
+      <macro name="docks-npc-filter-conditions">
+         <begin-asking-about>
+            <!--
+               NPCs that reside on the docks can only be asked about when you ask 
+               someone who is at the docks.
+            -->
+            <filter-conditions>
+               <x of="speaker" gte="-69632" />
+               <x of="speaker" lte="-61440" />
+               <y of="speaker" gte="91504" />
+               <y of="speaker" lte="102400" />
+               <z of="speaker" lte="-11472" />
+            </filter-conditions>
+         </begin-asking-about>
+      </macro>
+   
       <dialogue-conditions>
          <actor-base of="speaker" is-not="Roggvir" />
          <or>
@@ -74,25 +90,25 @@
          <actor editor-id="Roggvir" />
          <actor editor-id="Rorlund" />
          <actor editor-id="SabineNytte" name="Sabine Nytte">
-            <!-- TODO: Red Wave crewmate; require player near docks to inquire about this NPC -->
+            <invoke name="docks-npc-filter-conditions" />
          </actor>
          <actor editor-id="Safia">
-            <!-- TODO: Red Wave crewmate; require player near docks to inquire about this NPC -->
+            <invoke name="docks-npc-filter-conditions" />
          </actor>
          <actor editor-id="SailorDorian" name="Dorian">
-            <!-- TODO: Red Wave crewmate; require player near docks to inquire about this NPC -->
+            <invoke name="docks-npc-filter-conditions" />
          </actor>
          <actor editor-id="SailorEris" name="Eris">
-            <!-- TODO: Red Wave crewmate; require player near docks to inquire about this NPC -->
+            <invoke name="docks-npc-filter-conditions" />
          </actor>
          <actor editor-id="SailorXander" name="Xander">
-            <!-- TODO: Red Wave crewmate; require player near docks to inquire about this NPC -->
+            <invoke name="docks-npc-filter-conditions" />
          </actor>
          <actor editor-id="Sayma" />
          <actor editor-id="SilanaPetreia" name="Silana Petreia" />
          <actor editor-id="Snilling" />
          <actor editor-id="Snorreid">
-            <!-- TODO: East Empire Company warehouse worker; require player near docks to inquire about this NPC -->
+            <invoke name="docks-npc-filter-conditions" />
          </actor>
          <actor editor-id="Styrr" />
          <actor editor-id="Svari" />
@@ -126,7 +142,162 @@
             <is-in-interior of="subject" />
          </conditions>
          
-         <!-- TODO -->
+         <g name="aromatics">
+            <conditions>
+               <parent-cell of="subject" is="SolitudeAngelinesAromatics" />
+            </conditions>
+            <!-- TODO -->
+         </g>
+         <g name="bards-college">
+            <conditions>
+               <parent-cell of="subject" is="SolitudeBardsCollege" />
+            </conditions>
+            <!-- TODO -->
+         </g>
+         <g name="bits-and-pieces">
+            <conditions>
+               <parent-cell of="subject" is="SolitudeBitsandPieces" />
+            </conditions>
+            <!-- TODO -->
+         </g>
+         <g name="blacksmith">
+            <conditions>
+               <parent-cell of="subject" is="SolitudeBlackSmith" />
+            </conditions>
+            <!-- TODO -->
+         </g>
+         <g name="blue-palace">
+            <conditions>
+               <parent-cell of="subject" is="SolitudeBluePalace" />
+            </conditions>
+            <line>He's in the Blue Palace.</line>
+            <line>Fairly sure you'll find him in the Blue Palace.</line>
+         </g>
+         <g name="castle-dour">
+            <!-- NOTE: SolitudeCastleDourTower appears to be an unused cell. -->
+            <g name="main">
+               <conditions>
+                  <parent-cell of="subject" is="SolitudeCastleDour" />
+               </conditions>
+               <line>He's inside Castle Dour.</line>
+            </g>
+            <g name="dungeon">
+               <conditions>
+                  <parent-cell of="subject" is="SolitudeJail01" />
+               </conditions>
+               <line>He's in the Castle Dour dungeon.</line>
+            </g>
+            <g name="emperor-tower">
+               <conditions>
+                  <parent-cell of="subject" is="SolitudeCastleDourEmperorsTower" />
+               </conditions>
+               <line>He's in the Emperor's Tower.</line>
+            </g>
+            <g name="thalmor-hq">
+               <conditions>
+                  <parent-cell of="subject" is="SolitudeJusticiarsHeadquarters" />
+               </conditions>
+               <!-- TODO: If city taken by Stormcloaks, refer to as "former" Thalmor HQ -->
+               <line>He's in the Thalmor Headquarters.</line>
+            </g>
+         </g>
+         <g name="catacombs">
+            <conditions>
+               <parent-cell of="subject" is="SolitudeHalloftheDeadCatacombs" />
+            </conditions>
+            <!-- TODO -->
+         </g>
+         <g name="fletcher">
+            <conditions>
+               <parent-cell of="subject" is="SolitudeFletcher" />
+            </conditions>
+            <!-- TODO -->
+         </g>
+         <g name="hall-of-the-dead">
+            <conditions>
+               <parent-cell of="subject" is="SolitudeHalloftheDead" />
+            </conditions>
+            <!-- TODO -->
+         </g>
+         <g name="house-addvar">
+            <conditions>
+               <parent-cell of="subject" is="SolitudeAddvarsHouse" />
+            </conditions>
+            <!-- TODO -->
+         </g>
+         <g name="house-bryling">
+            <conditions>
+               <parent-cell of="subject" is="SolitudeBrylingsHouse" />
+            </conditions>
+            <!-- TODO -->
+         </g>
+         <g name="house-erikur">
+            <conditions>
+               <parent-cell of="subject" is="SolitudeErikursHouse" />
+            </conditions>
+            <!-- TODO -->
+         </g>
+         <g name="house-evette">
+            <conditions>
+               <parent-cell of="subject" is="SolitudeEvetteSansHouse" />
+            </conditions>
+            <!-- TODO -->
+         </g>
+         <g name="house-jala">
+            <conditions>
+               <parent-cell of="subject" is="SolitudeJalasHouse" />
+            </conditions>
+            <!-- TODO -->
+         </g>
+         <g name="house-vittoria">
+            <conditions>
+               <parent-cell of="subject" is="SolitudeVittoriaVicisHouse" />
+            </conditions>
+            <!-- TODO -->
+         </g>
+         <g name="proudspire">
+            <conditions>
+               <parent-cell of="subject" is="SolitudeProudspireManor" />
+            </conditions>
+            <!-- TODO -->
+         </g>
+         <g name="radiant-raiment">
+            <conditions>
+               <parent-cell of="subject" is="SolitudeRadiantRaiment" />
+            </conditions>
+            <!-- TODO -->
+         </g>
+         <g name="red-wave">
+            <conditions>
+               <parent-cell of="subject" is="SolitudeRedWave" />
+            </conditions>
+            <!-- TODO -->
+         </g>
+         <g name="sawmill">
+            <conditions>
+               <parent-cell of="subject" is="SolitudeSawmill" />
+            </conditions>
+            <!-- TODO -->
+         </g>
+         <g name="stables">
+            <conditions>
+               <parent-cell of="subject" is="SolitudeStables" />
+            </conditions>
+            <!-- TODO -->
+         </g>
+         <g name="temple-of-the-divines">
+            <conditions>
+               <parent-cell of="subject" is="SolitudeTempleoftheDivines" />
+            </conditions>
+            <!-- TODO: lines for priests -->
+            <line>He's in the Temple of the Divines.</line>
+         </g>
+         <g name="winking-skeever">
+            <conditions>
+               <parent-cell of="subject" is="SolitudeWinkingSkeever" />
+            </conditions>
+            <!-- TODO -->
+         </g>
          
          <invoke name="common-me-outside-they-inside" />
       </top-g>
@@ -430,7 +601,7 @@
                         <actor-base of="subject" is="AquilliusAeresius" />
                      </conditions>
                      <line emotion="puzzled:80">He's at home. He lives with Vittoria Vici, though I'm... not sure why.</line>
-                     <line emotion="puzzled:80">He's at Vittoria Vici's house. I think he's... maybe her roommate?</line>
+                     <line emotion="puzzled:80">He's near Vittoria Vici's house. I think he's... maybe her roommate?</line>
                   </g>
                   <invoke name="mixin-house-one-resident-ext-owner-cases">
                      <parameter name="OWNER" value="VittoriaVici" />

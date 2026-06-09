@@ -163,6 +163,8 @@ do
          ["quest-stage"]            = "quest_stage",
          ["race"]                   = "race",
          ["relationship-rank"]      = "relationship_rank",
+         ["scene-running"]          = "scene_running_state",
+         ["scene-not-running"]      = "scene_running_state",
          ["x"]                      = "position",
          ["y"]                      = "position",
          ["z"]                      = "position",

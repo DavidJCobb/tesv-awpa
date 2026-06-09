@@ -42,6 +42,7 @@ awpa-content/conditions/quest_running_state.lua
 awpa-content/conditions/quest_stage.lua
 awpa-content/conditions/race.lua
 awpa-content/conditions/relationship_rank.lua
+awpa-content/conditions/scene_running_state.lua
 awpa-content/condition_set.lua
 awpa-content/constant.lua
 awpa-content/group.lua

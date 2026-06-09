@@ -264,6 +264,24 @@
             <line>I think I saw him on his way to %OWNER-PRINTABLE%'s house.</line>
          </data>
       </macro>
+      <macro name="mixin-house-one-resident-ext-owner-cases">
+         <parameter name="OWNER" />
+         <parameter name="OWNER-PRINTABLE" default-value="%OWNER%" />
+         <data>
+            <g>
+               <conditions>
+                  <actor-base of="subject" is="%OWNER%" />
+               </conditions>
+               <shared-info id="shared-exterior-near-own-home" />
+            </g>
+            <g>
+               <conditions>
+                  <actor-base of="speaker" is="%OWNER%" />
+               </conditions>
+               <shared-info id="shared-exterior-near-my-home" />
+            </g>
+         </data>
+      </macro>
    
       <macro name="mixin-co-owned-house-ext">
          <!--

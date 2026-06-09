@@ -1019,8 +1019,9 @@
                   <y of="subject" gte="-10176" />
                   <y of="subject" lte="-8896" />
                </conditions>
-               <invoke name="mixin-house-one-resident-int">
+               <invoke name="mixin-house-one-resident-ext-owner-cases">
                   <parameter name="OWNER" value="OlavatheFeeble" />
+                  <parameter name="OWNER-PRINTABLE" value="Olava the Feeble" />
                </invoke>
                <line>He's near Olava's house.</line>
                <line>He was headed toward Olava's house in the Plains District.</line>
@@ -1032,8 +1033,9 @@
                   <y of="subject" gte="-7456" />
                   <y of="subject" lte="-6432" />
                </conditions>
-               <invoke name="mixin-house-one-resident-int">
+               <invoke name="mixin-house-one-resident-ext-owner-cases">
                   <parameter name="OWNER" value="SeverioPelagia" />
+                  <parameter name="OWNER-PRINTABLE" value="Severio Pelagia" />
                </invoke>
                <line>He's near Severio Pelagia's house.</line>
                <line>He was headed up to Severio Pelagia's house, I think.</line>
@@ -1047,7 +1049,7 @@
                   <y of="subject" lte="-9296" />
                   <z of="subject" gte="-3456" />
                </conditions>
-               <invoke name="mixin-house-one-resident-int">
+               <invoke name="mixin-house-one-resident-ext-owner-cases">
                   <parameter name="OWNER" value="Ysolda" />
                </invoke>
                <line>He's hanging around Ysolda's house in the Plains District.</line>

@@ -4,13 +4,104 @@
       locations="SolitudeLocation"
    >
       <dialogue-conditions>
-         <faction-membership of="speaker" includes="TownSolitudeFaction" />
+         <actor-base of="speaker" is-not="Roggvir" />
+         <or>
+            <faction-membership of="speaker" includes="TownSolitudeFaction" />
+            <faction-membership of="speaker" includes="ShipsRedWaveFaction" />
+         </or>
          <faction-membership of="speaker" excludes="GuardFactionSolitude" />
          
          <location of="speaker" is="SolitudeLocation" />
       </dialogue-conditions>
       <actors>
-         <!-- TODO -->
+         <actor editor-id="Addvar" />
+         <actor editor-id="Ahtar" />
+         <actor editor-id="Aia Arria" name="Aia Arria" />
+         <actor editor-id="AngelineMorrard" name="Angeline Morrard" />
+         <actor editor-id="AquilliusAeresius" name="Aquillius Aeresius" />
+         <actor editor-id="AtAfAlan" name="Ataf" />
+         <actor editor-id="Beirand" />
+         <actor editor-id="Bendt" />
+         <actor editor-id="BolgeirBearclaw" name="Bolgeir Bearclaw" />
+         <actor editor-id="Bryling" />
+         <actor editor-id="CaptainAldis" name="Captain Aldis" />
+         <actor editor-id="CaptainMetilius" name="Captain Metilius" />
+         <actor editor-id="CorpulusVinius" name="Corpulus Vinius" />
+         <actor editor-id="Deeja" />
+         <actor editor-id="Dervenin" />
+         <actor editor-id="Elenwen" />
+         <actor editor-id="ElisifTheFair" name="Elisif the Fair" />
+         <actor editor-id="Endarie" />
+         <actor editor-id="Erdi" />
+         <actor editor-id="Erikur" />
+         <actor editor-id="EvetteSan" name="Evette San" />
+         <actor editor-id="FalkFirebeard" name="Falk Firebeard" />
+         <actor editor-id="Fihada" />
+         <actor editor-id="Freie" />
+         <actor editor-id="Fridrika" />
+         <actor editor-id="Gadnor" />
+         <actor editor-id="GeneralTullius" name="General Tullius" />
+         <actor editor-id="GiraudGemane" name="Giraud Gemane" />
+         <actor editor-id="Gisli" />
+         <actor editor-id="Greta" />
+         <actor editor-id="GulumEi" name="Gulum-Ei" />
+         <actor editor-id="Heimvar" />
+         <actor editor-id="HirelingBelrand" name="Belrand" />
+         <actor editor-id="Hjorunn" />
+         <actor editor-id="Horm" />
+         <actor editor-id="HousecarlSolitude" name="Jordis the Sword-Maiden">
+            <!-- TODO: once Proudspire Manor is purchased -->
+         </actor>
+         <actor editor-id="Illdi" />
+         <actor editor-id="IngeSixFingers" name="Inge Six Fingers" />
+         <actor editor-id="IrnskarIronhand" name="Irnskar Ironhand" />
+         <actor editor-id="Jala" />
+         <actor editor-id="JareeRa" name="Jaree-Ra" />
+         <actor editor-id="Jawanan" />
+         <actor editor-id="Jorn" />
+         <actor editor-id="Katla" />
+         <actor editor-id="Kayd" />
+         <actor editor-id="KharagGroShurkul" name="Kharag gro-Shurkul" />
+         <actor editor-id="Knud" />
+         <actor editor-id="Lisette" />
+         <actor editor-id="Melaran" />
+         <actor editor-id="MinetteVinius" name="Minette Vinius" />
+         <actor editor-id="NosterOneEye" name="Noster Eagle-Eye" />
+         <actor editor-id="OctieveSan" name="Octieve San" />
+         <actor editor-id="Odar" />
+         <actor editor-id="PanteaAteia" name="Pantea Ateia" />
+         <actor editor-id="Rikke" />
+         <actor editor-id="Roggvir" />
+         <actor editor-id="Rorlund" />
+         <actor editor-id="SabineNytte" name="Sabine Nytte">
+            <!-- TODO: Red Wave crewmate; require player near docks to inquire about this NPC -->
+         </actor>
+         <actor editor-id="Safia">
+            <!-- TODO: Red Wave crewmate; require player near docks to inquire about this NPC -->
+         </actor>
+         <actor editor-id="SailorDorian" name="Dorian">
+            <!-- TODO: Red Wave crewmate; require player near docks to inquire about this NPC -->
+         </actor>
+         <actor editor-id="SailorEris" name="Eris">
+            <!-- TODO: Red Wave crewmate; require player near docks to inquire about this NPC -->
+         </actor>
+         <actor editor-id="SailorXander" name="Xander">
+            <!-- TODO: Red Wave crewmate; require player near docks to inquire about this NPC -->
+         </actor>
+         <actor editor-id="Sayma" />
+         <actor editor-id="SilanaPetreia" name="Silana Petreia" />
+         <actor editor-id="Snilling" />
+         <actor editor-id="Snorreid">
+            <!-- TODO: East Empire Company warehouse worker; require player near docks to inquire about this NPC -->
+         </actor>
+         <actor editor-id="Styrr" />
+         <actor editor-id="Svari" />
+         <actor editor-id="SybilleStentor" name="Sybille Stentor" />
+         <actor editor-id="Taarie" />
+         <actor editor-id="Una" />
+         <actor editor-id="Viarmo" />
+         <actor editor-id="VittoriaVici" name="Vittoria Vici" />
+         <actor editor-id="VivienneOnis" name="Vivienne Onis" />
       </actors>
       
       <invoke name="common-super-near-player" />
@@ -84,6 +175,7 @@
                <z of="subject" lt="-7392" />
             </conditions>
             <line>He's under the city's arch.</line>
+            <line>You know that big arch between the east and west sides of the city? He's under that.</line>
          </g>
          
          <g name="west">
@@ -117,6 +209,42 @@
                      <y of="subject" gte="103056" />
                      <y of="subject" lte="104176" />
                   </conditions>
+                  <g name="axing-about-the-axeman">
+                     <conditions>
+                        <actor-base of="subject" is="Ahtar" />
+                        <or>
+                           <scene-running name="ExectionScene" />
+                           <scene-running name="ExecutionSceneLeadIn" />
+                        </or>
+                     </conditions>
+                     <line>The executioner? He's... at work, right now. I'm surprised you didn't see him when you walked into the city.</line>
+                     <line>He's doing what he does best. Roggvir's been sentenced to death, and Ahtar is carrying that sentence out.</line>
+                  </g>
+                  <g name="asking-about-roggvir">
+                     <conditions>
+                        <actor-base of="subject" is="Roggvir" />
+                     </conditions>
+                     <g name="asking-sister">
+                        <conditions>
+                           <actor-base of="speaker" is="Greta" />
+                        </conditions>
+                        <line emotion="sad:80" script-notes="you've been asked about your brother, who is about to be executed for a crime you sympathize with">He's my brother. He's... Whatever you need from him, it's too late.</line>
+                     </g>
+                     <g name="asking-niece">
+                        <conditions>
+                           <actor-base of="speaker" is="Svari" />
+                        </conditions>
+                        <line emotion="sad:80" script-notes="your uncle has been sentenced to death, and you've been warned that people might badger you about that">Uncle Roggvir... I don't want to talk right now...</line>
+                     </g>
+                     <g name="asking-brother-in-law">
+                        <conditions>
+                           <actor-base of="speaker" is="Addvar" />
+                        </conditions>
+                        <line emotion="sad:60">He's set to be executed.</line>
+                     </g>
+                     <line script-notes="vocal stress on &quot;and&quot;">He's been sentenced to death. You'll find him and the headsman by the city entrance.</line>
+                     <line>He's been sentenced to death. If you have anything important to say to him, you'd better hurry to the city entrance...</line>
+                  </g>
                   <line>He's by the, uh, executioner's platform. Near the city entrance.</line>
                </g>
                <g name="entrance">
@@ -127,6 +255,7 @@
                      <y of="subject" lte="104944" />
                   </conditions>
                   <line>He's by the city's main gate.</line>
+                  <line>I think you'll find him by Solitude's entrance.</line>
                </g>
                <g name="radiant-raiment">
                   <conditions>
@@ -136,6 +265,7 @@
                      <y of="subject" lte="105216" />
                   </conditions>
                   <line>He's over by Radiant Raiment.</line>
+                  <line>I think I saw him near Radiant Raiment earlier.</line>
                </g>
                <g name="winking-skeever">
                   <conditions>
@@ -145,6 +275,7 @@
                      <y of="subject" lte="106656" />
                   </conditions>
                   <line>He's over by the Winking Skeever.</line>
+                  <line>Check around the Winking Skeever.</line>
                </g>
                <g name="aromatics">
                   <conditions>
@@ -155,6 +286,7 @@
                      <z of="subject" lt="-8208" />
                   </conditions>
                   <line>He's over by Angeline's Aromatics.</line>
+                  <line>I saw him around Angeline's Aromatics a little while ago.</line>
                </g>
                <g name="bits-and-pieces">
                   <conditions>
@@ -164,6 +296,7 @@
                      <y of="subject" lte="105888" />
                   </conditions>
                   <line>He's over by Bits and Pieces.</line>
+                  <line>I saw him walking past Bits and Pieces earlier.</line>
                </g>
                <g name="market">
                   <conditions>
@@ -187,6 +320,7 @@
                <z of="subject" gte="-7392" />
             </conditions>
             <line>I saw him up on the arch.</line>
+            <line>You know that big archway that divides the east and west halves of the city? He's up on that arch.</line>
          </g>
          <g name="emperor-tower-roof">
             <conditions>
@@ -225,7 +359,7 @@
                   <y of="subject" gte="107024" />
                   <y of="subject" lte="111888" />
                </conditions>
-               <line>He's at Castle Dour.</line>
+               <line>He's in front of the Temple of the Divines.</line>
             </g>
             <g name="general">
                <conditions>
@@ -234,7 +368,8 @@
                   <y of="subject" gte="109456" />
                   <y of="subject" lte="111152" />
                </conditions>
-               <line>He's in front of the Temple of the Divines.</line>
+               <line>He's at Castle Dour.</line>
+               <line>He's somewhere inside Castle Dour's walls.</line>
             </g>
          </g>
          <g name="smithy">
@@ -258,12 +393,25 @@
                </conditions>
                <line>He's at Castle Dour's east entrance.</line>
             </g>
+            
+            <g name="blue-palace">
+               <conditions>
+                  <x of="subject" gte="-52752" />
+                  <x of="subject" lte="-50576" />
+                  <y of="subject" gte="99760" />
+                  <y of="subject" lte="101888" />
+                  <z of="subject" gte="-9232" />
+               </conditions>
+               <line>He's in the Blue Palace courtyard.</line>
+            </g>
+            
             <g name="graveyard">
                <conditions>
                   <x of="subject" gte="-57952" />
                   <x of="subject" lte="-56832" />
                   <y of="subject" gte="103296" />
                   <y of="subject" lte="104832" />
+                  <z of="subject" gte="-9232" />
                </conditions>
                <line>He's at the graveyard.</line>
             </g>
@@ -273,6 +421,7 @@
                   <x of="subject" lte="-56832" />
                   <y of="subject" gte="103296" />
                   <y of="subject" lte="106352" />
+                  <z of="subject" gte="-9232" />
                </conditions>
                <line>He's by the Hall of the Dead.</line>
             </g>
@@ -283,8 +432,21 @@
                      <x of="subject" lte="-56384" />
                      <y of="subject" gte="105808" />
                      <y of="subject" lte="107184" />
+                     <z of="subject" gte="-9232" />
                   </conditions>
+                  <g name="asking-about-aquaman">
+                     <conditions>
+                        <actor-base of="subject" is="AquilliusAeresius" />
+                     </conditions>
+                     <line emotion="puzzled:80">He's at home. He lives with Vittoria Vici, though I'm... not sure why.</line>
+                     <line emotion="puzzled:80">He's at Vittoria Vici's house. I think he's... maybe her roommate?</line>
+                  </g>
+                  <invoke name="mixin-house-one-resident-ext-owner-cases">
+                     <parameter name="OWNER" value="VittoriaVici" />
+                     <parameter name="OWNER-PRINTABLE" value="Vittoria Vici" />
+                  </invoke>
                   <line>He's near Vittoria Vici's house.</line>
+                  <line>I saw him passing by Vittoria Vici's house.</line>
                </g>
                <g name="house-vittoria-backyard">
                   <conditions>
@@ -292,9 +454,56 @@
                      <x of="subject" lte="-55824" />
                      <y of="subject" gte="107184" />
                      <y of="subject" lte="107936" />
+                     <z of="subject" gte="-9232" />
                   </conditions>
-                  <line>He's somewhere behind Vittoria Vici's house.</line>
+                  <line>He's behind Vittoria Vici's house.</line>
                </g>
+            </g>
+            <g name="bards-college">
+               <g name="bards-college-west-entrance">
+                  <conditions>
+                     <x of="subject" gte="-55600" />
+                     <x of="subject" lte="-53936" />
+                     <y of="subject" gte="104544" />
+                     <y of="subject" lte="106288" />
+                     <z of="subject" gte="-9232" />
+                  </conditions>
+                  <line>He's by the Bard's College. Check around the front door.</line>
+                  <line>He's in front of the Bard's College.</line>
+               </g>
+               <g name="bards-college-east-entrance">
+                  <conditions>
+                     <x of="subject" gte="-54400" />
+                     <x of="subject" lte="-53168" />
+                     <y of="subject" gte="103472" />
+                     <y of="subject" lte="104544" />
+                     <z of="subject" gte="-9232" />
+                  </conditions>
+                  <line>He's by the Bard's College. Check around the east door.</line>
+               </g>
+               <g name="bards-college-party-area">
+                  <conditions>
+                     <x of="subject" gte="-54624" />
+                     <x of="subject" lte="-53136" />
+                     <y of="subject" gte="105536" />
+                     <y of="subject" lte="106928" />
+                     <z of="subject" gte="-8736" />
+                  </conditions>
+                  <line>He's by the Bard's College. There's a walled area where the bards hold performances; I believe he's in there.</line>
+               </g>
+            </g>
+            <g name="house-erikur">
+               <conditions>
+                  <x of="subject" gte="-55440" />
+                  <x of="subject" lte="-53808" />
+                  <y of="subject" gte="101760" />
+                  <y of="subject" lte="103792" />
+                  <z of="subject" gte="-9232" />
+               </conditions>
+               <invoke name="mixin-house-one-resident-ext-owner-cases">
+                  <parameter name="OWNER" value="Erikur" />
+               </invoke>
+               <line>He's by Erikur's house.</line>
             </g>
             <g name="east-of-dour">
                <g name="east-of-dour--west">
@@ -322,10 +531,30 @@
                   <x of="subject" lte="-58672" />
                   <y of="subject" gte="104176" />
                   <y of="subject" lte="107024" />
+                  <z of="subject" gte="-9232" />
                </conditions>
                <line>He's east of the city's archway.</line>
             </g>
-            
+            <g name="east-general-residential">
+               <conditions>
+                  <x of="subject" gte="-56832" />
+                  <x of="subject" lte="-53680" />
+                  <y of="subject" gte="101152" />
+                  <y of="subject" lte="107936" />
+                  <z of="subject" gte="-9232" />
+               </conditions>
+               <line>He's on the east side of the city, in the residential area.</line>
+            </g>
+            <g name="east-general-castle">
+               <conditions>
+                  <x of="subject" gte="-53680" />
+                  <x of="subject" lte="-49568" />
+                  <y of="subject" gte="98592" />
+                  <y of="subject" lte="104016" />
+                  <z of="subject" gte="-9232" />
+               </conditions>
+               <line>He's on the east side of the city, not far from the Blue Palace.</line>
+            </g>
          </g>
          
          <!-- TODO -->

@@ -246,6 +246,7 @@
       <macro name="mixin-house-one-resident-int">
          <parameter name="OWNER" />
          <parameter name="OWNER-PRINTABLE" default-value="%OWNER%" />
+         <parameter name="EXTRA" default-value="" />
          <data>
             <g>
                <conditions>
@@ -259,6 +260,7 @@
                </conditions>
                <shared-info id="shared-at-my-home" />
             </g>
+            %EXTRA%
             <line>He's at %OWNER-PRINTABLE%'s house.</line>
             <line>I think he's visiting %OWNER-PRINTABLE% right now.</line>
             <line>I think I saw him on his way to %OWNER-PRINTABLE%'s house.</line>

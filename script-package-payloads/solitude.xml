@@ -43,7 +43,9 @@
          <actor editor-id="CaptainAldis" name="Captain Aldis" />
          <actor editor-id="CaptainMetilius" name="Captain Metilius" />
          <actor editor-id="CorpulusVinius" name="Corpulus Vinius" />
-         <actor editor-id="Deeja" />
+         <actor editor-id="Deeja">
+            <invoke name="docks-npc-filter-conditions" />
+         </actor>
          <actor editor-id="Dervenin" />
          <actor editor-id="Elenwen" />
          <actor editor-id="ElisifTheFair" name="Elisif the Fair" />
@@ -66,7 +68,12 @@
          <actor editor-id="Hjorunn" />
          <actor editor-id="Horm" />
          <actor editor-id="HousecarlSolitude" name="Jordis the Sword-Maiden">
-            <!-- TODO: once Proudspire Manor is purchased -->
+            <begin-asking-about>
+               <filter-conditions>
+                  <!-- actor ref is enabled once Proudspire Manor is purchased -->
+                  <quest-state for="Favor252" done="25" />
+               </filter-conditions>
+            </begin-asking-about>
          </actor>
          <actor editor-id="Illdi" />
          <actor editor-id="IngeSixFingers" name="Inge Six Fingers" />
@@ -120,6 +127,10 @@
          <actor editor-id="VivienneOnis" name="Vivienne Onis" />
       </actors>
       
+      <condition-set name="under-stormcloak-control">
+         <enable-state for="[REFR:0007E14C]CWGarrisonEnableMarkerSonsSolitude" is="enabled" />
+      </condition-set>
+      
       <invoke name="common-super-near-player" />
       <top-g slug="SameInterior">
          <conditions>
@@ -146,25 +157,151 @@
             <conditions>
                <parent-cell of="subject" is="SolitudeAngelinesAromatics" />
             </conditions>
-            <!-- TODO -->
+            <g name="asking-about-angeline">
+               <conditions>
+                  <actor-base of="subject" is="AngelineMorrard" />
+               </conditions>
+               <g name="asking-vivienne" non-exclusive="true">
+                  <conditions>
+                     <actor-base of="speaker" is="VivienneOnis" />
+                  </conditions>
+                  <line emotion="happy:50">My aunt? She owns Angeline's Aromatics, the alchemy shop. She should be there now.</line>
+               </g>
+               <line>He's at his store. Angeline's Aromatics. It's next to the Winking Skeever.</line>
+               <line>He works at Angeline's Aromatics. Try checking there.</line>
+            </g>
+            <g name="asking-angeline">
+               <conditions>
+                  <actor-base of="subject" is="AngelineMorrard" />
+               </conditions>
+               <line>He's at my store. I run Angeline's Aromatics, not far from the city entrance.</line>
+               <line>He's at Angeline's Aromatics, my alchemy shop.</line>
+            </g>
+            <g name="asking-vivienne-angeline-dead">
+               <conditions>
+                  <actor-base of="subject" is="VivienneOnis" />
+                  <death-count for="AngelineMorrard" gt="0" />
+               </conditions>
+               <line emotion="sad:20">He's at my store, Angeline's Aromatics. I run the place now that my aunt has passed.</line>
+               <line emotion="sad:40" script-notes="slight emphasis on &quot;my&quot; shop. your aunt used to run the shop, but she died, so you run it now; you're still getting used to that">He's at my aunt's... sorry, my alchemy shop. Angeline's Aromatics.</line>
+            </g>
+            <line>I saw him stop by Angeline's Aromatics earlier.</line>
+            <line>I'm pretty sure he's at Angeline's Aromatics.</line>
          </g>
          <g name="bards-college">
             <conditions>
                <parent-cell of="subject" is="SolitudeBardsCollege" />
             </conditions>
-            <!-- TODO -->
+            <g name="asking-about-cook">
+               <conditions>
+                  <actor-base of="subject" is="Bendt" />
+               </conditions>
+               <g name="asking-teacher" non-exclusive="true">
+                  <conditions>
+                     <or>
+                        <actor-base of="speaker" is="GiraudGemane" />
+                        <actor-base of="speaker" is="IngeSixFingers" />
+                        <actor-base of="speaker" is="PanteaAteia" />
+                        <actor-base of="speaker" is="Viarmo" />
+                     </or>
+                  </conditions>
+                  <line>He's our cook over at the Bard's College. I believe he's there now.</line>
+               </g>
+               <line>He works at the Bard's College. He'll be in there.</line>
+            </g>
+            <g name="asking-about-teacher">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="GiraudGemane" />
+                     <actor-base of="subject" is="IngeSixFingers" />
+                     <actor-base of="subject" is="PanteaAteia" />
+                     <actor-base of="subject" is="Viarmo" />
+                  </or>
+               </conditions>
+               <line>He teaches at the Bard's College. You'll probably find him there.</line>
+               <line>One of the teachers at the Bard's College. Have you checked there?</line>
+            </g>
+            <g name="asking-about-student">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="AiaArria" />
+                     <actor-base of="subject" is="Ataf" />
+                     <actor-base of="subject" is="Illdi" />
+                     <actor-base of="subject" is="Jorn" />
+                  </or>
+               </conditions>
+               <line>He's one of the students in training at the Bard's College. Try looking there.</line>
+               <line>He studies at the Bard's College. He should be there now.</line>
+            </g>
+            <line>I saw him stopping by the Bard's College a little while ago.</line>
+            <line>I think he's at the Bard's College right now.</line>
          </g>
          <g name="bits-and-pieces">
             <conditions>
                <parent-cell of="subject" is="SolitudeBitsandPieces" />
             </conditions>
-            <!-- TODO -->
+            <g name="asking-about-staff">
+               <conditions>
+                  <faction-membership of="subject" includes="ServicesSolitudeBitsAndPieces" />
+                  <offers-services of="subject" />
+               </conditions>
+               <line>He works at Bits and Pieces. He should be there now.</line>
+               <line>You should be able to find him at work, at Bits and Pieces.</line>
+            </g>
+            <g name="asking-about-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Beirand" />
+                     <actor-base of="subject" is="Kayd" />
+                     <actor-base of="subject" is="Sayma" />
+                  </or>
+               </conditions>
+               <g name="asking-resident">
+                  <conditions>
+                     <or>
+                        <actor-base of="speaker" is="Beirand" />
+                        <actor-base of="speaker" is="Kayd" />
+                        <actor-base of="speaker" is="Sayma" />
+                     </or>
+                  </conditions>
+                  <shared-info id="shared-at-our-home" />
+               </g>
+               <shared-info id="shared-at-own-home" />
+            </g>
+            <g name="asking-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="speaker" is="Beirand" />
+                     <actor-base of="speaker" is="Kayd" />
+                     <actor-base of="speaker" is="Sayma" />
+                  </or>
+               </conditions>
+               <shared-info id="shared-at-my-home" />
+            </g>
+            <line>He's at Bits and Pieces right now.</line>
+            <line>I saw him walk into Bits and Pieces, the general store, earlier.</line>
          </g>
          <g name="blacksmith">
             <conditions>
                <parent-cell of="subject" is="SolitudeBlackSmith" />
             </conditions>
-            <!-- TODO -->
+            <g name="asking-about-staff">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Beirand" />
+                     <actor-base of="subject" is="Heimvar" />
+                  </or>
+               </conditions>
+               <g name="asking-about-resident" non-exclusive="true">
+                  <conditions>
+                     <actor-base of="subject" is="Heimvar" />
+                  </conditions>
+                  <line>He lives and works at the smithy next to Castle Dour. Try checking there.</line>
+               </g>
+               <line>The blacksmith? You'll find him at his smithy, just south of Castle Dour.</line>
+            </g>
+            <line>I saw him walk into the smithy near Castle Dour.</line>
+            <line>I think I saw him stop by the blacksmiths' place not too long ago.</line>
          </g>
          <g name="blue-palace">
             <conditions>
@@ -197,7 +334,12 @@
                <conditions>
                   <parent-cell of="subject" is="SolitudeJusticiarsHeadquarters" />
                </conditions>
-               <!-- TODO: If city taken by Stormcloaks, refer to as "former" Thalmor HQ -->
+               <g>
+                  <conditions>
+                     <condition-set name="under-stormcloak-control" />
+                  </conditions>
+                  <line>He's in the former Thalmor Headquarters.</line>
+               </g>
                <line>He's in the Thalmor Headquarters.</line>
             </g>
          </g>
@@ -205,98 +347,329 @@
             <conditions>
                <parent-cell of="subject" is="SolitudeHalloftheDeadCatacombs" />
             </conditions>
-            <!-- TODO -->
+            <line>He's in the city's catacombs. You can get there through the Hall of the Dead.</line>
          </g>
          <g name="fletcher">
             <conditions>
                <parent-cell of="subject" is="SolitudeFletcher" />
             </conditions>
-            <!-- TODO -->
+            <g name="asking-about-staff">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Fihada" />
+                     <actor-base of="subject" is="Jawanan" />
+                  </or>
+               </conditions>
+               <line>He's at his shop. It's not far from the Solitude Blacksmith.</line>
+               <line>He's at Fletcher, his archery supply store. It's just outside Castle Dour.</line>
+            </g>
+            <line>He's at Fletcher, the archery supply store. It's just outside Castle Dour.</line>
+            <line>He's at the archery store next to Castle Dour.</line>
          </g>
          <g name="hall-of-the-dead">
             <conditions>
                <parent-cell of="subject" is="SolitudeHalloftheDead" />
             </conditions>
-            <!-- TODO -->
+            <g name="asking-about-priest">
+               <conditions>
+                  <actor-base of="subject" is="Styrr" />
+               </conditions>
+               <line>He tends to the Hall of the Dead. I believe you'll find him there right now.</line>
+            </g>
+            <line>He's at the Hall of the Dead right now.</line>
+            <line>He's visiting the Hall of the Dead.</line>
          </g>
          <g name="house-addvar">
             <conditions>
                <parent-cell of="subject" is="SolitudeAddvarsHouse" />
             </conditions>
-            <!-- TODO -->
+            <invoke name="mixin-house-three-residents-int">
+               <parameter name="OWNER-1" value="Addvar" />
+               <parameter name="OWNER-2" value="Greta" />
+               <parameter name="OWNER-3" value="Svari" />
+            </invoke>
+            <line>He's at Addvar's house right now.</line>
+            <!-- TODO: disable next line if parents dead + Svari at Honorrhall or adopted by player -->
+            <line>He's visiting Addvar's family.</line>
          </g>
          <g name="house-bryling">
             <conditions>
                <parent-cell of="subject" is="SolitudeBrylingsHouse" />
             </conditions>
-            <!-- TODO -->
+            <invoke name="mixin-house-one-resident-int">
+               <parameter name="OWNER" value="Bryling" />
+               <parameter name="EXTRA">
+                  <!--
+                     This will be inserted after the "he's at my house" line, so 
+                     we don't need a variant for asking Bryling about Irnskar.
+                  -->
+                  <g name="asking-about-housecarl">
+                     <conditions>
+                        <actor-base of="subject" is="IrnskarIronhand" />
+                     </conditions>
+                     <line>He's Bryling's housecarl. You'll find him at <verbatim>her</verbatim> home.</line>
+                  </g>
+               </parameter>
+            </invoke>
          </g>
          <g name="house-erikur">
             <conditions>
                <parent-cell of="subject" is="SolitudeErikursHouse" />
             </conditions>
-            <!-- TODO -->
+            <g name="asking-erikur">
+               <conditions>
+                  <actor-base of="speaker" is="Erikur" />
+               </conditions>
+               <shared-info id="shared-at-my-home" />
+            </g>
+            <g name="asking-about-homeowner">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Erikur" />
+                     <actor-base of="subject" is="Gisli" />
+                  </or>
+               </conditions>
+               <g name="asking-gisli">
+                  <conditions>
+                     <actor-base of="speaker" is="Gisli" />
+                  </conditions>
+                  <shared-info id="shared-at-our-home" />
+               </g>
+               <shared-info id="shared-at-own-home" />
+            </g>
+            <g name="asking-about-melaran">
+               <conditions>
+                  <actor-base of="subject" is="Melaran" />
+               </conditions>
+               <g name="erikur-dead">
+                  <conditions>
+                     <death-count for="Erikur" gt="0" />
+                  </conditions>
+                  <line>He worked for Erikur before <verbatim>he</verbatim> died. He still stays at Erikur and Gisli's home.</line>
+                  <line>He's at Erikur and Gisli's house right now.</line>
+               </g>
+               <line>He works for Erikur. He'll be at the thane's home now.</line>
+               <line>He's Erikur's bodyguard. Try checking Erikur's house.</line>
+            </g>
+            <line>He's at Erikur's house. It's not far from the Blue Palace.</line>
+            <line>I saw him visiting Erikur's house not too long ago.</line>
          </g>
          <g name="house-evette">
             <conditions>
                <parent-cell of="subject" is="SolitudeEvetteSansHouse" />
             </conditions>
-            <!-- TODO -->
+            <invoke name="mixin-house-two-residents-int">
+               <parameter name="OWNER-1" value="EvetteSan" />
+               <parameter name="OWNER-2" value="OctieveSan" />
+            </invoke>
+            <line>He's at Evette San's house right now.</line>
+            <line>I think I saw him stopping by Evette San's house earlier.</line>
          </g>
          <g name="house-jala">
             <conditions>
                <parent-cell of="subject" is="SolitudeJalasHouse" />
             </conditions>
-            <!-- TODO -->
+            <invoke name="mixin-house-two-residents-int">
+               <parameter name="OWNER-1" value="Jala" />
+               <parameter name="OWNER-2" value="Ahtar" />
+            </invoke>
+            <line>He's at Jala's house right now.</line>
+            <line>I'm pretty sure he's visiting Jala's house.</line>
          </g>
          <g name="house-vittoria">
             <conditions>
                <parent-cell of="subject" is="SolitudeVittoriaVicisHouse" />
             </conditions>
-            <!-- TODO -->
+            <g name="asking-vittoria">
+               <conditions>
+                  <actor-base of="speaker" is="VittoriaVici" />
+               </conditions>
+               <shared-info id="shared-at-my-home" />
+            </g>
+            <g name="asking-about-vittoria">
+               <conditions>
+                  <actor-base of="subject" is="VittoriaVici" />
+               </conditions>
+               <shared-info id="shared-at-own-home" />
+            </g>
+            <g name="asking-about-aquillius">
+               <conditions>
+                  <actor-base of="subject" is="AquilliusAeresius" />
+               </conditions>
+               <g name="vittoria-dead">
+                  <conditions>
+                     <death-count for="VittoriaVici" gt="0" />
+                  </conditions>
+                  <line>He lives at Vittoria Vici's old house. He'll be there now.</line>
+                  <line>He was Vittoria Vici's roommate before she died. Now he owns her house. Try checking there.</line>
+               </g>
+               <line>He lives at Vittoria Vici's house. He'll be there now.</line>
+               <line emotion="puzzled:55">He lives with Vittoria Vici, though I'm not sure how they're related. You'll find him there.</line>
+            </g>
+            <g name="vittoria-dead">
+               <conditions>
+                  <death-count for="VittoriaVici" gt="0" />
+               </conditions>
+               <line>He's at Vittoria Vici's old house.</line>
+               <line>I saw him stop by the house Vittoria Vici used to live in, not too long ago.</line>
+            </g>
+            <line>He's at Vittoria Vici's house.</line>
+            <line>I saw him stop by Vittoria Vici's house not too long ago.</line>
          </g>
          <g name="proudspire">
             <conditions>
                <parent-cell of="subject" is="SolitudeProudspireManor" />
             </conditions>
-            <!-- TODO -->
+            <line>He's at Proudspire Manor.</line>
          </g>
          <g name="radiant-raiment">
             <conditions>
                <parent-cell of="subject" is="SolitudeRadiantRaiment" />
             </conditions>
-            <!-- TODO -->
+            <g name="asking-about-staff">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Endarie" />
+                     <actor-base of="subject" is="Taarie" />
+                  </or>
+               </conditions>
+               <g name="asking-staff">
+                  <conditions>
+                     <or>
+                        <actor-base of="speaker" is="Endarie" />
+                        <actor-base of="speaker" is="Taarie" />
+                     </or>
+                  </conditions>
+                  <line>My sister? She and I run Radiant Raiment. She should be there right now.</line>
+                  <line>My sister and I own Radiant Raiment. She'll be there.</line>
+               </g>
+               <line>He lives and works at Radiant Raiment. Try checking there.</line>
+               <line>Have you checked Radiant Raiment? He works there.</line>
+            </g>
+            <line>He's at Radiant Raiment right now.</line>
+            <line>I saw him walk into Radiant Raiment not too long ago.</line>
          </g>
          <g name="red-wave">
             <conditions>
                <parent-cell of="subject" is="SolitudeRedWave" />
             </conditions>
-            <!-- TODO -->
+            <g name="asking-about-sailor">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="SabineNytte" />
+                     <actor-base of="subject" is="Safia" />
+                     <actor-base of="subject" is="SailorDorian" />
+                     <actor-base of="subject" is="SailorEris" />
+                     <actor-base of="subject" is="SailorXander" />
+                  </or>
+               </conditions>
+               <g name="asking-sailor">
+                  <conditions>
+                     <or>
+                        <actor-base of="speaker" is="SabineNytte" />
+                        <actor-base of="speaker" is="Safia" />
+                        <actor-base of="speaker" is="SailorDorian" />
+                        <actor-base of="speaker" is="SailorEris" />
+                        <actor-base of="speaker" is="SailorXander" />
+                     </or>
+                  </conditions>
+                  <line>He and I are part of the Red Wave's crew. He's aboard right now.</line>
+               </g>
+               <line>He's one of the sailors from the Red Wave. It's docked here, and he's probably aboard right now.</line>
+            </g>
+            <line emotion="puzzled:40">I think I saw him stopping by the Red Wave, one of the ships docked at Solitude. Not sure why he'd visit them...</line>
+            <line emotion="puzzled:40">He was headed toward the Red Wave, a ship docked here. Don't know why. The crew don't seem... friendly...</line>
          </g>
          <g name="sawmill">
             <conditions>
                <parent-cell of="subject" is="SolitudeSawmill" />
             </conditions>
-            <!-- TODO -->
+            <g name="asking-about-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Hjorunn" />
+                     <actor-base of="subject" is="KharagGroShurkul" />
+                  </or>
+               </conditions>
+               <g name="asking-resident">
+                  <conditions>
+                     <or>
+                        <actor-base of="speaker" is="Hjorunn" />
+                        <actor-base of="speaker" is="KharagGroShurkul" />
+                     </or>
+                  </conditions>
+                  <line>He works with me at the Solitude Sawmill. He should be in there now.</line>
+               </g>
+               <line>He lives and works at the Solitude Sawmill. Try checking there.</line>
+            </g>
+            <line>I think he was headed to the Solitude Sawmill.</line>
          </g>
          <g name="stables">
             <conditions>
                <parent-cell of="subject" is="SolitudeStables" />
             </conditions>
-            <!-- TODO -->
+            <g name="asking-about-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Fridika" />
+                     <actor-base of="subject" is="Geimund" />
+                     <actor-base of="subject" is="Horm" />
+                  </or>
+               </conditions>
+               <line>He works at the Solitude Stables. Try checking there.</line>
+            </g>
+            <line>I'm pretty sure he's at the Solitude Stables right now.</line>
          </g>
          <g name="temple-of-the-divines">
             <conditions>
                <parent-cell of="subject" is="SolitudeTempleoftheDivines" />
             </conditions>
-            <!-- TODO: lines for priests -->
+            <g name="asking-about-priest">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Freir" />
+                     <actor-base of="subject" is="Rorlund" />
+                     <actor-base of="subject" is="SilanaPetreia" />
+                  </or>
+               </conditions>
+               <g name="asking-priest">
+                  <conditions>
+                     <or>
+                        <actor-base of="speaker" is="Freir" />
+                        <actor-base of="speaker" is="Rorlund" />
+                        <actor-base of="speaker" is="SilanaPetreia" />
+                     </or>
+                  </conditions>
+                  <line>He's one of my fellow priests. You'll find him at the Temple of the Divines.</line>
+               </g>
+               <line>He's one of the priests at the Temple of the Divines. He should be there now.</line>
+               <line>The priest? Try checking the Temple of the Divines.</line>
+            </g>
             <line>He's in the Temple of the Divines.</line>
+            <line>He's visiting the Temple of the Divines.</line>
          </g>
          <g name="winking-skeever">
             <conditions>
                <parent-cell of="subject" is="SolitudeWinkingSkeever" />
             </conditions>
-            <!-- TODO -->
+            <g name="asking-about-staff">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="CorpulusVinius" />
+                     <actor-base of="subject" is="Lisette" />
+                     <actor-base of="subject" is="SorexVinius" />
+                  </or>
+               </conditions>
+               <line>He works at the Winking Skeever, the inn right by the city gate. Try checking there.</line>
+            </g>
+            <g name="asking-about-family">
+               <conditions>
+                  <actor-base of="subject" is="MinetteVinius" />
+               </conditions>
+               <line>You know Corpulus, the man who runs the Winking Skeever? <verbatim>She's his daughter.</verbatim> You'll find her there.</line>
+            </g>
+            <line>He's at the Winking Skeever right now.</line>
+            <line>Try checking the Winking Skeever.</line>
          </g>
          
          <invoke name="common-me-outside-they-inside" />

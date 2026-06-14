@@ -2329,13 +2329,13 @@
             <line>Check near the Bee and Barb.</line>
             <g non-exclusive="true">
                <conditions>
-                  <y of="subject" gte="north-south-dividing-y-coordinate" />
+                  <y of="subject" lt="north-south-dividing-y-coordinate" />
                </conditions>
                <line>I think I saw him walking around by the Bee and Barb -- the north entrance.</line>
             </g>
             <g non-exclusive="true">
                <conditions>
-                  <y of="subject" lt="north-south-dividing-y-coordinate" />
+                  <y of="subject" gte="north-south-dividing-y-coordinate" />
                </conditions>
                <line>I think I saw him walking around by the Bee and Barb -- the south entrance.</line>
             </g>

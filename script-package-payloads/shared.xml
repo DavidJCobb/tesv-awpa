@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <payload>
    <shared-infos>
       <shared-info id="shared-unknown" editor-id-slug="UnknownLocation">
@@ -29,12 +28,12 @@
       </shared-info>
       
       <shared-info id="shared-angry-inmate-doesnt-know" editor-id-slug="InmateCantTellYouAngry">
-         <line emotion="anger:60" script-notes="emphasis on &quot;I&quot;">How would I know where they are? I'm stuck in this cell!</line>
-         <line emotion="anger:50" script-notes="emphasis on &quot;here&quot;">I can't help you from in here.</line>
+         <line emotion="anger:60" script-notes='emphasis on "I"'>How would I know where they are? I'm stuck in this cell!</line>
+         <line emotion="anger:50" script-notes='emphasis on "here"'>I can't help you from in here.</line>
       </shared-info>
       <shared-info id="shared-blunt-inmate-doesnt-know" editor-id-slug="InmateCantTellYouBlunt">
          <line emotion="puzzled:20">Not from in here, I can't.</line>
-         <line emotion="puzzled:40" script-notes="emphasis on &quot;no&quot;; the player has asked you a stupid question and the answer is obvious">Uh, no.</line>
+         <line emotion="puzzled:40" script-notes='emphasis on "no"; the player has asked you a stupid question and the answer is obvious'>Uh, no.</line>
       </shared-info>
       <shared-info id="shared-shaken-inmate-doesnt-know" editor-id-slug="InmateCantTellYouShaken">
          <line emotion="sad:30">Sorry, but there isn't much I'll be able to do from in here...</line>
@@ -549,14 +548,14 @@
             <g name="upstairs">
                <conditions>
                   <z of="subject" gte="height-coordinate-2f" />
-                  <z of="player"  lt="height-coordinate-2f" />
+                  <z of="player" lt="height-coordinate-2f" />
                </conditions>
                <shared-info id="shared-upstairs" />
             </g>
             <g name="downstairs">
                <conditions>
                   <z of="subject" lt="height-coordinate-2f" />
-                  <z of="player"  gte="height-coordinate-2f" />
+                  <z of="player" gte="height-coordinate-2f" />
                </conditions>
                <shared-info id="shared-downstairs" />
             </g>
@@ -578,14 +577,14 @@
             <g name="upstairs">
                <conditions>
                   <z of="subject" gte="height-coordinate-2f" />
-                  <z of="player"  lt="height-coordinate-2f" />
+                  <z of="player" lt="height-coordinate-2f" />
                </conditions>
                <shared-info id="shared-upstairs" />
             </g>
             <g name="downstairs">
                <conditions>
                   <z of="subject" lt="height-coordinate-2f" />
-                  <z of="player"  gte="height-coordinate-2f" />
+                  <z of="player" gte="height-coordinate-2f" />
                </conditions>
                <shared-info id="shared-downstairs" />
             </g>
@@ -612,12 +611,12 @@
                <conditions>
                   <!-- subject not on lowest floor; player not on highest floor -->
                   <z of="subject" gte="height-coordinate-1f" />
-                  <z of="player"  lt="height-coordinate-2f" />
+                  <z of="player" lt="height-coordinate-2f" />
                   <or>
                      <!-- player on lowest floor or subject on highest floor -->
                      <!-- if we had more than 3 floors, the logic here would be more complex -->
                      <z of="subject" gte="height-coordinate-2f" />
-                     <z of="player"  lt="height-coordinate-1f" />
+                     <z of="player" lt="height-coordinate-1f" />
                   </or>
                   %ADDITIONAL-CONDITIONS%
                </conditions>
@@ -629,10 +628,10 @@
                      downstairs is opposite of upstairs; just switch around who we run each coordinate check on
                   -->
                   <z of="player" gte="height-coordinate-1f" />
-                  <z of="subject"  lt="height-coordinate-2f" />
+                  <z of="subject" lt="height-coordinate-2f" />
                   <or>
                      <z of="player" gte="height-coordinate-2f" />
-                     <z of="subject"  lt="height-coordinate-1f" />
+                     <z of="subject" lt="height-coordinate-1f" />
                   </or>
                   %ADDITIONAL-CONDITIONS%
                </conditions>
@@ -703,12 +702,12 @@
                <conditions>
                   <!-- subject not on lowest floor; player not on highest floor -->
                   <z of="subject" gte="height-coordinate-2f" />
-                  <z of="player"  lt="height-coordinate-3f" />
+                  <z of="player" lt="height-coordinate-3f" />
                   <or>
                      <!-- player on lowest floor or subject on highest floor -->
                      <!-- if we had more than 3 floors, the logic here would be more complex -->
                      <z of="subject" gte="height-coordinate-3f" />
-                     <z of="player"  lt="height-coordinate-2f" />
+                     <z of="player" lt="height-coordinate-2f" />
                   </or>
                   %ADDITIONAL-CONDITIONS%
                </conditions>
@@ -720,10 +719,10 @@
                      downstairs is opposite of upstairs; just switch around who we run each coordinate check on
                   -->
                   <z of="player" gte="height-coordinate-2f" />
-                  <z of="subject"  lt="height-coordinate-3f" />
+                  <z of="subject" lt="height-coordinate-3f" />
                   <or>
                      <z of="player" gte="height-coordinate-3f" />
-                     <z of="subject"  lt="height-coordinate-2f" />
+                     <z of="subject" lt="height-coordinate-2f" />
                   </or>
                   %ADDITIONAL-CONDITIONS%
                </conditions>

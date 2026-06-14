@@ -31,44 +31,44 @@
                   <g name="rude-to-student" non-exclusive="true">
                      <conditions>
                         <!-- The player becomes a student once Faralda says they are one: -->
-                        <quest-stage for="MG01" done="30" />
+                        <quest-stage done="30" for="MG01" />
                      </conditions>
-                     <line script-notes='haughty. "hey, idiot, maybe go bother them instead?"' form-id-u="01001511" emotion="disgust:15">Perhaps one of the faculty here can help you instead?</line>
-                     <line script-notes="haughty" form-id-u="01001512" emotion="disgust:15">This seems like a question for one of your professors, not for me.</line>
+                     <line emotion="disgust:15" form-id-u="01001D10" script-notes='haughty. "hey, idiot, maybe go bother them instead?"'>Perhaps one of the faculty here can help you instead?</line>
+                     <line emotion="disgust:15" form-id-u="01001D11" script-notes="haughty">This seems like a question for one of your professors, not for me.</line>
                   </g>
-                  <line script-notes='haughty. emphasis on "not"' form-id-u="01001513" emotion="disgust:15">Helping you find your way around is not my priority.</line>
-                  <line script-notes="haughty" form-id-u="01001514" emotion="disgust:15">You had best find someone else to help you with that.</line>
+                  <line emotion="disgust:15" form-id-u="01001D12" script-notes='haughty. emphasis on "not"'>Helping you find your way around is not my priority.</line>
+                  <line emotion="disgust:15" form-id-u="01001D13" script-notes="haughty">You had best find someone else to help you with that.</line>
                </topic>
             </begin-asking-to>
          </actor>
-         <actor name="Arniel Gane" editor-id="ArnielGane" />
+         <actor editor-id="ArnielGane" name="Arniel Gane" />
          <actor editor-id="Assur" />
          <actor editor-id="Birna" />
-         <actor name="Brelyna Maryon" editor-id="BrelynaMaryon" />
-         <actor name="Colette Marence" editor-id="ColetteMarence" />
-         <actor name="Aranea" editor-id="DA01Aranea" />
+         <actor editor-id="BrelynaMaryon" name="Brelyna Maryon" />
+         <actor editor-id="ColetteMarence" name="Colette Marence" />
+         <actor editor-id="DA01Aranea" name="Aranea" />
          <actor editor-id="Dagur" />
-         <actor name="Drevis Neloren" editor-id="DrevisNeloren" />
+         <actor editor-id="DrevisNeloren" name="Drevis Neloren" />
          <actor editor-id="Eirid" />
          <actor editor-id="Enthir" />
          <actor editor-id="Faralda" />
          <actor editor-id="Haran" />
-         <actor name="J'zargo" editor-id="Jzargo" />
+         <actor editor-id="Jzargo" name="J'zargo" />
          <actor editor-id="Korir" />
          <actor editor-id="Kraldar" />
-         <actor name="Malur Seloth" editor-id="MalurSeloth" />
-         <actor name="Mirabelle Ervine" editor-id="MirabelleErvine" />
+         <actor editor-id="MalurSeloth" name="Malur Seloth" />
+         <actor editor-id="MirabelleErvine" name="Mirabelle Ervine" />
          <actor editor-id="Nelacar" />
          <actor editor-id="Nirya" />
          <actor editor-id="Onmund" />
-         <actor name="Phinis Gestor" editor-id="PhinisGestor" />
+         <actor editor-id="PhinisGestor" name="Phinis Gestor" />
          <actor editor-id="Ranmir" />
-         <actor name="Savos Aren" editor-id="SavosAren" />
-         <actor name="Sergius Turrianus" editor-id="SergiusTurrianus" />
+         <actor editor-id="SavosAren" name="Savos Aren" />
+         <actor editor-id="SergiusTurrianus" name="Sergius Turrianus" />
          <actor editor-id="Thaena" />
          <actor editor-id="Thonjolf" />
          <actor editor-id="Tolfdir" />
-         <actor name="Urag gro-Shub" editor-id="UraggroShub" />
+         <actor editor-id="UraggroShub" name="Urag gro-Shub" />
       </actors>
       
       <macro name="conditions-entity-inside-college-ext">
@@ -129,9 +129,9 @@
       <!--<invoke name="common-super-near-player" />-->
             <top-g slug="SuperNearPlayer">
                <conditions>
-                  <distance to="subject" of="player" lte="256" />
+                  <distance of="player" to="subject" lte="256" />
                </conditions>
-               <shared-info id="shared-near-player" form-ids="01001517,01001518,01001519,0100151A" />
+               <shared-info form-ids="01001D16,01001D17,01001D18,01001D19" id="shared-near-player" />
             </top-g>
          <!-- macro substitution end -->
       <top-g slug="SameInterior">
@@ -164,16 +164,16 @@
                   <z of="subject" gte="height-coordinate-2f" />
                   <z of="player" lt="height-coordinate-2f" />
                </conditions>
-               <shared-info id="shared-upstairs" form-ids="0100151B,0100151C,0100151D,0100151E" />
+               <shared-info form-ids="01001D1A,01001D1B,01001D1C,01001D1D" id="shared-upstairs" />
             </g>
             <g name="downstairs">
                <conditions>
                   <z of="subject" lt="height-coordinate-2f" />
                   <z of="player" gte="height-coordinate-2f" />
                </conditions>
-               <shared-info id="shared-downstairs" form-ids="0100151F,01001520,01001521,01001522" />
+               <shared-info form-ids="01001D1E,01001D1F,01001D20,01001D21" id="shared-downstairs" />
             </g>
-            <shared-info id="shared-same-floor" form-ids="01001523,01001524" />
+            <shared-info form-ids="01001D22,01001D23" id="shared-same-floor" />
          <!-- macro substitution end -->
          </g>
          <g name="birna-oddments">
@@ -187,20 +187,20 @@
                   <z of="subject" gte="height-coordinate-2f" />
                   <z of="player" lt="height-coordinate-2f" />
                </conditions>
-               <shared-info id="shared-upstairs" form-ids="01001525,01001526,01001527,01001528" />
+               <shared-info form-ids="01001D24,01001D25,01001D26,01001D27" id="shared-upstairs" />
             </g>
             <g name="downstairs">
                <conditions>
                   <z of="subject" lt="height-coordinate-2f" />
                   <z of="player" gte="height-coordinate-2f" />
                </conditions>
-               <shared-info id="shared-downstairs" form-ids="01001529,0100152A,0100152B,0100152C" />
+               <shared-info form-ids="01001D28,01001D29,01001D2A,01001D2B" id="shared-downstairs" />
             </g>
-            <shared-info id="shared-same-floor" form-ids="0100152D,0100152E" />
+            <shared-info form-ids="01001D2C,01001D2D" id="shared-same-floor" />
          <!-- macro substitution end -->
          </g>
          
-         <shared-info id="shared-same-building" form-ids="0100152F,01001530" />
+         <shared-info form-ids="01001D2E,01001D2F" id="shared-same-building" />
       </top-g>
       <top-g slug="Interiors">
          <conditions>
@@ -234,7 +234,7 @@
             </or>
          
                </conditions>
-               <shared-info id="winterhold-somewhere-in-college" form-ids="01001531,01001532" />
+               <shared-info form-ids="01001D30,01001D31" id="winterhold-somewhere-in-college" />
             </g>
             <g name="speaker-outside-college-int">
                <conditions>
@@ -249,7 +249,7 @@
             </or>
          
                </conditions>
-               <shared-info id="winterhold-somewhere-in-college" form-ids="01001533,01001534" />
+               <shared-info form-ids="01001D32,01001D33" id="winterhold-somewhere-in-college" />
             </g>
          </g>
          
@@ -257,31 +257,31 @@
             <conditions>
                <parent-cell of="subject" is="WinterholdCollegeArcanaeum" />
             </conditions>
-            <line form-id-m="01001535" form-id-f="01001536">He's in the Arcanaeum.</line>
+            <line form-id-f="01001D35" form-id-m="01001D34">He's in the Arcanaeum.</line>
          </g>
          <g name="college-archmage-quarters">
             <conditions>
                <parent-cell of="subject" is="WinterholdCollegeArchMageQuarters" />
             </conditions>
-            <line form-id-m="01001537" form-id-f="01001538">He's in the Arch-Mage's quarters.</line>
+            <line form-id-f="01001D37" form-id-m="01001D36">He's in the Arch-Mage's quarters.</line>
          </g>
          <g name="college-hall-attainment">
             <conditions>
                <parent-cell of="subject" is="WinterholdCollegeHallofAttainment" />
             </conditions>
-            <line form-id-m="01001539" form-id-f="0100153A">He's in the Hall of Attainment.</line>
+            <line form-id-f="01001D39" form-id-m="01001D38">He's in the Hall of Attainment.</line>
          </g>
          <g name="college-hall-countenance">
             <conditions>
                <parent-cell of="subject" is="WinterholdCollegeHallofCountenance" />
             </conditions>
-            <line form-id-m="0100153B" form-id-f="0100153C">He's in the Hall of Countenance.</line>
+            <line form-id-f="01001D3B" form-id-m="01001D3A">He's in the Hall of Countenance.</line>
          </g>
          <g name="college-hall-elements">
             <conditions>
                <parent-cell of="subject" is="WinterholdCollegeHallofTheElements" />
             </conditions>
-            <line form-id-m="0100153D" form-id-f="0100153E">He's in the Hall of the Elements.</line>
+            <line form-id-f="01001D3D" form-id-m="01001D3C">He's in the Hall of the Elements.</line>
          </g>
          <g name="college-midden">
             <g name="subject-inside-speaker-outside">
@@ -293,35 +293,35 @@
                   <parent-cell of="speaker" is-not="WinterholdCollegeMidden01" />
                   <parent-cell of="speaker" is-not="WinterholdCollegeMidden02" />
                </conditions>
-               <line form-id-m="0100153F" form-id-f="01001540">I believe he's down in the Midden.</line>
-               <line form-id-m="01001541" form-id-f="01001542">He's somewhere in the Midden.</line>
+               <line form-id-f="01001D3F" form-id-m="01001D3E">I believe he's down in the Midden.</line>
+               <line form-id-f="01001D41" form-id-m="01001D40">He's somewhere in the Midden.</line>
             </g>
             <g name="dark-from-light">
                <conditions>
                   <parent-cell of="subject" is="WinterholdCollegeMidden02" />
                   <parent-cell of="speaker" is="WinterholdCollegeMidden01" />
                </conditions>
-               <line form-id-m="01001543" form-id-f="01001544">He's down in the Midden Dark.</line>
+               <line form-id-f="01001D43" form-id-m="01001D42">He's down in the Midden Dark.</line>
             </g>
             <g name="light-from-dark">
                <conditions>
                   <parent-cell of="subject" is="WinterholdCollegeMidden01" />
                   <parent-cell of="speaker" is="WinterholdCollegeMidden02" />
                </conditions>
-               <line form-id-m="01001545" form-id-f="01001546">He's up in the rest of the Midden.</line>
+               <line form-id-f="01001D45" form-id-m="01001D44">He's up in the rest of the Midden.</line>
             </g>
          </g>
          <g name="jail">
             <conditions>
                <parent-cell of="subject" is="WinterholdJail" />
             </conditions>
-            <line form-id-m="01001547" form-id-f="01001548">He's in Winterhold's jail.</line>
+            <line form-id-f="01001D47" form-id-m="01001D46">He's in Winterhold's jail.</line>
          </g>
          <g name="jarl-longhouse">
             <conditions>
                <parent-cell of="subject" is="WinterholdJarlsLonghouse" />
             </conditions>
-            <line form-id-m="01001549" form-id-f="0100154A">He's in the Jarl's longhouse.</line>
+            <line form-id-f="01001D49" form-id-m="01001D48">He's in the Jarl's longhouse.</line>
          </g>
          <g name="house-kraldar">
             <conditions>
@@ -331,22 +331,22 @@
                <conditions>
                   <actor-base of="speaker" is="Kraldar" />
                </conditions>
-               <shared-info id="shared-at-my-home" form-ids="0100154B,0100154C,0100154D,0100154E,0100154F" />
+               <shared-info form-ids="01001D4A,01001D4B,01001D4C,01001D4D,01001D4E" id="shared-at-my-home" />
             </g>
             <g name="asking-about-kraldar">
                <conditions>
                   <actor-base of="subject" is="Kraldar" />
                </conditions>
-               <shared-info id="shared-at-own-home" form-ids="01001550,01001551,01001552,01001553,01001554,01001555,01001556,01001557,01001558,01001559,0100155A,0100155B" />
+               <shared-info form-ids="01001D4F,01001D50,01001D51,01001D52,01001D53,01001D54,01001D55,01001D56,01001D57,01001D58,01001D59,01001D5A" id="shared-at-own-home" />
             </g>
             <g name="asking-about-thonjolf">
                <conditions>
                   <actor-base of="subject" is="Thonjolf" />
                </conditions>
-               <line form-id-m="0100155C" form-id-f="0100155D">He works for Kraldar. I think he's at Kraldar's house right now.</line>
+               <line form-id-f="01001D5C" form-id-m="01001D5B">He works for Kraldar. I think he's at Kraldar's house right now.</line>
             </g>
-            <line form-id-m="0100155E" form-id-f="0100155F">I think he's visiting Kraldar's house right now.</line>
-            <line form-id-m="01001560" form-id-f="01001561">He should be at Kraldar's house.</line>
+            <line form-id-f="01001D5E" form-id-m="01001D5D">I think he's visiting Kraldar's house right now.</line>
+            <line form-id-f="01001D60" form-id-m="01001D5F">He should be at Kraldar's house.</line>
          </g>
          <g name="birna-oddments">
             <conditions>
@@ -357,8 +357,8 @@
                   <actor-base of="subject" is="Birna" />
                   <offers-services of="subject" />
                </conditions>
-               <line form-id-m="01001562" form-id-f="01001563">He runs a general goods store out of his home. He should be working there now.</line>
-               <line form-id-m="01001564" form-id-f="01001565">He runs Birna's Oddments. Try checking there.</line>
+               <line form-id-f="01001D62" form-id-m="01001D61">He runs a general goods store out of his home. He should be working there now.</line>
+               <line form-id-f="01001D64" form-id-m="01001D63">He runs Birna's Oddments. Try checking there.</line>
             </g>
             <g name="asking-about-resident">
                <conditions>
@@ -374,12 +374,12 @@
                         <actor-base of="speaker" is="Ranmir" />
                      </or>
                   </conditions>
-                  <shared-info id="shared-at-our-home" form-ids="01001566,01001567,01001568,01001569,0100156A,0100156B" />
+                  <shared-info form-ids="01001D65,01001D66,01001D67,01001D68,01001D69,01001D6A" id="shared-at-our-home" />
                </g>
-               <shared-info id="shared-at-own-home" form-ids="0100156C,0100156D,0100156E,0100156F,01001570,01001571,01001572,01001573,01001574,01001575,01001576,01001577" />
+               <shared-info form-ids="01001D6B,01001D6C,01001D6D,01001D6E,01001D6F,01001D70,01001D71,01001D72,01001D73,01001D74,01001D75,01001D76" id="shared-at-own-home" />
             </g>
-            <line form-id-m="01001578" form-id-f="01001579">He's in Birna's Oddments.</line>
-            <line form-id-m="0100157A" form-id-f="0100157B">I saw him stopping by Birna's Oddments earlier.</line>
+            <line form-id-f="01001D78" form-id-m="01001D77">He's in Birna's Oddments.</line>
+            <line form-id-f="01001D7A" form-id-m="01001D79">I saw him stopping by Birna's Oddments earlier.</line>
          </g>
          <g name="frozen-hearth">
             <g name="speaker-outside">
@@ -398,25 +398,25 @@
                         <actor-base of="subject" is="Haran" />
                      </or>
                   </conditions>
-                  <line form-id-m="0100157C" form-id-f="0100157D">He works at The Frozen Hearth. I'd check in there.</line>
+                  <line form-id-f="01001D7C" form-id-m="01001D7B">He works at The Frozen Hearth. I'd check in there.</line>
                </g>
-               <line form-id-m="0100157E" form-id-f="0100157F">He's at The Frozen Hearth.</line>
-               <line form-id-m="01001580" form-id-f="01001581">I saw him walk into The Frozen Hearth earlier.</line>
+               <line form-id-f="01001D7E" form-id-m="01001D7D">He's at The Frozen Hearth.</line>
+               <line form-id-f="01001D80" form-id-m="01001D7F">I saw him walk into The Frozen Hearth earlier.</line>
             </g>
             <g name="speaker-upstairs-subject-in-cellar">
                <conditions>
                   <parent-cell of="subject" is="WinterholdTheFrozenHearthCellar" />
                   <parent-cell of="speaker" is="WinterholdTheFrozenHearth" />
                </conditions>
-               <line form-id-m="01001582" form-id-f="01001583">He's down in the cellar.</line>
-               <shared-info id="shared-downstairs" form-ids="01001584,01001585,01001586,01001587" />
+               <line form-id-f="01001D82" form-id-m="01001D81">He's down in the cellar.</line>
+               <shared-info form-ids="01001D83,01001D84,01001D85,01001D86" id="shared-downstairs" />
             </g>
             <g name="speaker-in-cellar-subject-upstairs">
                <conditions>
                   <parent-cell of="subject" is="WinterholdTheFrozenHearth" />
                   <parent-cell of="speaker" is="WinterholdTheFrozenHearthCellar" />
                </conditions>
-               <shared-info id="shared-upstairs" form-ids="01001588,01001589,0100158A,0100158B" />
+               <shared-info form-ids="01001D87,01001D88,01001D89,01001D8A" id="shared-upstairs" />
             </g>
          </g>
          
@@ -426,7 +426,7 @@
                   <is-in-interior of="subject" />
                   <is-in-exterior of="speaker" />
                </conditions>
-               <shared-info id="shared-unknown-me-outside-they-inside" form-ids="0100158C,0100158D" />
+               <shared-info form-ids="01001D8B,01001D8C" id="shared-unknown-me-outside-they-inside" />
             </g>
          <!-- macro substitution end -->
       </top-g>
@@ -457,8 +457,8 @@
                <y of="subject" gte="99792" />
                <y of="subject" lte="101728" />
             </conditions>
-            <line form-id-m="0100158E" form-id-f="0100158F">He's out in front of the Jarl's longhouse.</line>
-            <line form-id-m="01001590" form-id-f="01001591">He's near the Jarl's longhouse.</line>
+            <line form-id-f="01001D8E" form-id-m="01001D8D">He's out in front of the Jarl's longhouse.</line>
+            <line form-id-f="01001D90" form-id-m="01001D8F">He's near the Jarl's longhouse.</line>
          </g>
          <g name="frozen-hearth">
             <conditions>
@@ -467,8 +467,8 @@
                <y of="subject" gte="100848" />
                <y of="subject" lte="102896" />
             </conditions>
-            <line form-id-m="01001592" form-id-f="01001593">He's over by The Frozen Hearth.</line>
-            <line form-id-m="01001594" form-id-f="01001595">I saw him around The Frozen Hearth earlier.</line>
+            <line form-id-f="01001D92" form-id-m="01001D91">He's over by The Frozen Hearth.</line>
+            <line form-id-f="01001D94" form-id-m="01001D93">I saw him around The Frozen Hearth earlier.</line>
          </g>
          <g name="frozen-hearth-back">
             <conditions>
@@ -477,7 +477,7 @@
                <y of="subject" gte="100848" />
                <y of="subject" lte="103504" />
             </conditions>
-            <line form-id-m="01001596" form-id-f="01001597">He's back behind The Frozen Hearth.</line>
+            <line form-id-f="01001D96" form-id-m="01001D95">He's back behind The Frozen Hearth.</line>
          </g>
          
          <g name="house-kraldar">
@@ -494,17 +494,17 @@
                <conditions>
                   <actor-base of="subject" is="Kraldar" />
                </conditions>
-               <shared-info id="shared-exterior-near-own-home" form-ids="01001598,01001599,0100159A,0100159B" />
+               <shared-info form-ids="01001D97,01001D98,01001D99,01001D9A" id="shared-exterior-near-own-home" />
             </g>
             <g>
                <conditions>
                   <actor-base of="speaker" is="Kraldar" />
                </conditions>
-               <shared-info id="shared-exterior-near-my-home" form-ids="0100159C,0100159D,0100159E,0100159F" />
+               <shared-info form-ids="01001D9B,01001D9C,01001D9D,01001D9E" id="shared-exterior-near-my-home" />
             </g>
          <!-- macro substitution end -->
-            <line form-id-m="010015A0" form-id-f="010015A1">He's hanging around Kraldar's house.</line>
-            <line form-id-m="010015A2" form-id-f="010015A3">He's over by Kraldar's house.</line>
+            <line form-id-f="01001DA0" form-id-m="01001D9F">He's hanging around Kraldar's house.</line>
+            <line form-id-f="01001DA2" form-id-m="01001DA1">He's over by Kraldar's house.</line>
          </g>
          <g name="house-ranmir">
             <conditions>
@@ -517,16 +517,16 @@
                <conditions>
                   <actor-base of="subject" is="Birna" />
                </conditions>
-               <line form-id-u="010015A4">She's near her store. Birna's Oddments, on the west side of town.</line>
+               <line form-id-u="01001DA3">She's near her store. Birna's Oddments, on the west side of town.</line>
             </g>
             <g name="asking-about-ranmir">
                <conditions>
                   <actor-base of="subject" is="Ranmir" />
                </conditions>
-               <line form-id-m="010015A5" form-id-f="010015A6">He's near his home. He lives with Birna in her shop, Birna's Oddments.</line>
+               <line form-id-f="01001DA5" form-id-m="01001DA4">He's near his home. He lives with Birna in her shop, Birna's Oddments.</line>
             </g>
-            <line form-id-m="010015A7" form-id-f="010015A8">He's hanging around Birna's Oddments.</line>
-            <line form-id-m="010015A9" form-id-f="010015AA">I saw him pass by Birna's Oddments not too long ago.</line>
+            <line form-id-f="01001DA7" form-id-m="01001DA6">He's hanging around Birna's Oddments.</line>
+            <line form-id-f="01001DA9" form-id-m="01001DA8">I saw him pass by Birna's Oddments not too long ago.</line>
          </g>
          
          <g name="west-trail">
@@ -536,7 +536,7 @@
                <y of="subject" gte="99200" />
                <y of="subject" lte="102400" />
             </conditions>
-            <line form-id-m="010015AB" form-id-f="010015AC">He's on the west trail out of the city.</line>
+            <line form-id-f="01001DAB" form-id-m="01001DAA">He's on the west trail out of the city.</line>
          </g>
          <g name="ruins">
             <conditions>
@@ -545,7 +545,7 @@
                <y of="subject" gte="102256" />
                <y of="subject" lte="104768" />
             </conditions>
-            <line form-id-m="010015AD" form-id-f="010015AE">I saw him headed toward the ruins to the east.</line>
+            <line form-id-f="01001DAD" form-id-m="01001DAC">I saw him headed toward the ruins to the east.</line>
          </g>
          
          <g name="bridge-to-college-start">
@@ -555,7 +555,7 @@
                <y of="subject" gte="104560" />
                <y of="subject" lte="105728" />
             </conditions>
-            <line form-id-m="010015AF" form-id-f="010015B0">He's near the start of the bridge to the College.</line>
+            <line form-id-f="01001DAF" form-id-m="01001DAE">He's near the start of the bridge to the College.</line>
          </g>
          <g name="bridge-to-college">
             <conditions>
@@ -565,8 +565,8 @@
                <y of="subject" lte="109904" />
                <z of="subject" gte="-8544" />
             </conditions>
-            <line form-id-m="010015B1" form-id-f="010015B2">He's on the bridge to the College.</line>
-            <line form-id-m="010015B3" form-id-f="010015B4">I think he was headed toward the College. Check the bridge.</line>
+            <line form-id-f="01001DB1" form-id-m="01001DB0">He's on the bridge to the College.</line>
+            <line form-id-f="01001DB3" form-id-m="01001DB2">I think he was headed toward the College. Check the bridge.</line>
          </g>
          
          <g name="college">
@@ -599,7 +599,7 @@
             </or>
          
                   </conditions>
-                  <shared-info id="winterhold-somewhere-in-college" form-ids="010015B5,010015B6" />
+                  <shared-info form-ids="01001DB4,01001DB5" id="winterhold-somewhere-in-college" />
                </g>
                <g name="speaker-outside-college-int">
                   <conditions>
@@ -614,7 +614,7 @@
             </or>
          
                   </conditions>
-                  <shared-info id="winterhold-somewhere-in-college" form-ids="010015B7,010015B8" />
+                  <shared-info form-ids="01001DB6,01001DB7" id="winterhold-somewhere-in-college" />
                </g>
             </g>
             <g name="courtyard">
@@ -626,7 +626,7 @@
                   <z of="subject" gte="-7888" />
                   <z of="subject" lte="-6928" />
                </conditions>
-               <line form-id-m="010015B9" form-id-f="010015BA">He's in the courtyard.</line>
+               <line form-id-f="01001DB9" form-id-m="01001DB8">He's in the courtyard.</line>
             </g>
             <g name="hall-attainment-roof">
                <conditions>
@@ -637,7 +637,7 @@
                   <z of="subject" gte="-6928" />
                   <z of="subject" lte="-5584" />
                </conditions>
-               <line form-id-m="010015BB" form-id-f="010015BC">He's up on top of the Hall of Attainment -- the west tower.</line>
+               <line form-id-f="01001DBB" form-id-m="01001DBA">He's up on top of the Hall of Attainment -- the west tower.</line>
             </g>
             <g name="hall-countenance-roof">
                <conditions>
@@ -648,7 +648,7 @@
                   <z of="subject" gte="-6928" />
                   <z of="subject" lte="-5584" />
                </conditions>
-               <line form-id-m="010015BD" form-id-f="010015BE">He's up on top of the Hall of Countenance -- the south tower.</line>
+               <line form-id-f="01001DBD" form-id-m="01001DBC">He's up on top of the Hall of Countenance -- the south tower.</line>
             </g>
             <g name="wall-top-around-archmage-tower">
                <conditions>
@@ -659,7 +659,7 @@
                   <z of="subject" gte="-6928" />
                   <z of="subject" lte="-5584" />
                </conditions>
-               <line form-id-m="010015BF" form-id-f="010015C0">He's up on the wall that circles around the main tower.</line>
+               <line form-id-f="01001DBF" form-id-m="01001DBE">He's up on the wall that circles around the main tower.</line>
             </g>
             <g name="archmage-roof">
                <conditions>
@@ -669,7 +669,7 @@
                   <y of="subject" lte="114864" />
                   <z of="subject" gte="-5584" />
                </conditions>
-               <line form-id-m="010015C1" form-id-f="010015C2">He's up on top of the main tower.</line>
+               <line form-id-f="01001DC1" form-id-m="01001DC0">He's up on top of the main tower.</line>
             </g>
             <g name="walls">
                <conditions>
@@ -680,7 +680,7 @@
                   <z of="subject" gte="-6928" />
                   <z of="subject" lte="-5584" />
                </conditions>
-               <line form-id-m="010015C3" form-id-f="010015C4">He's up on top of the walls.</line>
+               <line form-id-f="01001DC3" form-id-m="01001DC2">He's up on top of the walls.</line>
             </g>
          </g>
          
@@ -691,7 +691,7 @@
                <y of="subject" gte="98912" />
                <y of="subject" lte="104640" />
             </conditions>
-            <line form-id-m="010015C5" form-id-f="010015C6">He's on the main road through the city.</line>
+            <line form-id-f="01001DC5" form-id-m="01001DC4">He's on the main road through the city.</line>
          </g>
          <g name="south-road">
             <conditions>
@@ -700,7 +700,7 @@
                <y of="subject" gte="96608" />
                <y of="subject" lte="98912" />
             </conditions>
-            <line form-id-m="010015C7" form-id-f="010015C8">He's on the main road out of the city.</line>
+            <line form-id-f="01001DC7" form-id-m="01001DC6">He's on the main road out of the city.</line>
          </g>
          <g name="north-trail">
             <conditions>
@@ -711,7 +711,7 @@
                <z of="subject" gte="-11072" />
                <z of="subject" lt="-8544" />
             </conditions>
-            <line form-id-m="010015C9" form-id-f="010015CA">He's on the northern trail out of the city. If you look around below the bridge to the College, you'll find it.</line>
+            <line form-id-f="01001DC9" form-id-m="01001DC8">He's on the northern trail out of the city. If you look around below the bridge to the College, you'll find it.</line>
          </g>
          
          <g name="directional-fallbacks">
@@ -722,7 +722,7 @@
                   <y of="subject" gte="99664" />
                   <y of="subject" lte="105728" />
                </conditions>
-               <shared-info id="shared-beyond-city-limits-east" form-ids="010015CB,010015CC,010015CD,010015CE" />
+               <shared-info form-ids="01001DCA,01001DCB,01001DCC,01001DCD" id="shared-beyond-city-limits-east" />
             </g>
             <g name="south">  
                <conditions>
@@ -731,7 +731,7 @@
                   <y of="subject" gte="90112" />
                   <y of="subject" lte="99664" />
                </conditions>
-               <shared-info id="shared-beyond-city-limits-south" form-ids="010015CF,010015D0,010015D1,010015D2" />
+               <shared-info form-ids="01001DCE,01001DCF,01001DD0,01001DD1" id="shared-beyond-city-limits-south" />
             </g>
             <g name="west">  
                <conditions>
@@ -740,7 +740,7 @@
                   <y of="subject" gte="99664" />
                   <y of="subject" lte="110416" />
                </conditions>
-               <shared-info id="shared-beyond-city-limits-west" form-ids="010015D3,010015D4,010015D5,010015D6" />
+               <shared-info form-ids="01001DD2,01001DD3,01001DD4,01001DD5" id="shared-beyond-city-limits-west" />
             </g>
             <g name="north">  
                <conditions>
@@ -749,7 +749,7 @@
                   <y of="subject" gte="105728" />
                   <y of="subject" lte="118784" />
                </conditions>
-               <shared-info id="shared-beyond-city-limits-north" form-ids="010015D7,010015D8,010015D9,010015DA" />
+               <shared-info form-ids="01001DD6,01001DD7,01001DD8,01001DD9" id="shared-beyond-city-limits-north" />
             </g>
          </g>
          
@@ -758,13 +758,13 @@
                <conditions>
                   <is-in-interior of="speaker" />
                </conditions>
-               <shared-info id="shared-unknown-me-inside-they-outside" form-ids="010015DB,010015DC" />
+               <shared-info form-ids="01001DDA,01001DDB" id="shared-unknown-me-inside-they-outside" />
             </g>
-            <shared-info id="shared-unknown-exterior" form-ids="010015DD" />
+            <shared-info form-ids="01001DDC" id="shared-unknown-exterior" />
          <!-- macro substitution end -->
       </top-g>
       
       <!-- final fallback lines -->
-      <shared-info id="shared-unknown" form-ids="010015DE,010015DF,010015E0,010015E1,010015E2,010015E3" />
+      <shared-info form-ids="01001DDD,01001DDE,01001DDF,01001DE0,01001DE1,01001DE2" id="shared-unknown" />
    </quest>
 </payload>

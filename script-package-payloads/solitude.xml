@@ -3,22 +3,6 @@
    <quest id="AWPASolitude"
       locations="SolitudeLocation"
    >
-      <macro name="docks-npc-filter-conditions">
-         <begin-asking-about>
-            <!--
-               NPCs that reside on the docks can only be asked about when you ask 
-               someone who is at the docks.
-            -->
-            <filter-conditions>
-               <x of="speaker" gte="-69632" />
-               <x of="speaker" lte="-61440" />
-               <y of="speaker" gte="91504" />
-               <y of="speaker" lte="102400" />
-               <z of="speaker" lte="-11472" />
-            </filter-conditions>
-         </begin-asking-about>
-      </macro>
-   
       <dialogue-conditions>
          <actor-base of="speaker" is-not="Roggvir" />
          <or>
@@ -29,10 +13,42 @@
          
          <location of="speaker" is="SolitudeLocation" />
       </dialogue-conditions>
+      
+      <macro name="docks-npc-filter-conditions">
+         <begin-asking-about>
+            <!--
+               NPCs that reside on the docks can only be asked about when you ask 
+               someone who is at the docks.
+            -->
+            <filter-conditions>
+               <or>
+                  <x of="speaker" gte="-69632" />
+                  <parent-cell of="speaker" is="SolitudeRedWave" />
+               </or>
+               <or>
+                  <x of="speaker" lte="-61440" />
+                  <parent-cell of="speaker" is="SolitudeRedWave" />
+               </or>
+               <or>
+                  <y of="speaker" gte="91504" />
+                  <parent-cell of="speaker" is="SolitudeRedWave" />
+               </or>
+               <or>
+                  <y of="speaker" lte="102400" />
+                  <parent-cell of="speaker" is="SolitudeRedWave" />
+               </or>
+               <or>
+                  <z of="speaker" lte="-11472" />
+                  <parent-cell of="speaker" is="SolitudeRedWave" />
+               </or>
+            </filter-conditions>
+         </begin-asking-about>
+      </macro>
+      
       <actors>
          <actor editor-id="Addvar" />
          <actor editor-id="Ahtar" />
-         <actor editor-id="Aia Arria" name="Aia Arria" />
+         <actor editor-id="AiaArria" name="Aia Arria" />
          <actor editor-id="AngelineMorrard" name="Angeline Morrard" />
          <actor editor-id="AquilliusAeresius" name="Aquillius Aeresius" />
          <actor editor-id="AtAfAlan" name="Ataf" />
@@ -138,9 +154,87 @@
             <parent-cell of="speaker" same-as="subject" />
          </conditions>
          
-         <!--
-            TODO: different-floors checks
-         -->
+         <g name="rooms">
+            <!-- TODO: SolitudeAddvarsHouse -->
+            <!-- TODO: SolitudeAngelinesAromatics -->
+            <!-- TODO: SolitudeBardsCollege -->
+            <!-- TODO: SolitudeBitsandPieces -->
+            <!-- TODO: SolitudeBlackSmith -->
+            <!-- TODO: SolitudeBluePalace -->
+            <!-- TODO: SolitudeBrylingsHouse -->
+            <!-- TODO: SolitudeCastleDour -->
+            <!-- TODO: SolitudeCastleDourEmperorsTower -->
+            <!-- TODO: SolitudeErikursHouse -->
+            <!-- TODO: SolitudeEvetteSansHouse -->
+            <!-- TODO: SolitudeFletcher -->
+            <!-- TODO: SolitudeHalloftheDead -->
+            <!-- TODO: SolitudeJail01 -->
+            <!-- TODO: SolitudeJalasHouse -->
+            <!-- TODO: SolitudeJusticiarsHeadquarters -->
+            <!-- TODO: SolitudeProudspireManor -->
+            <!-- TODO: SolitudeRadiantRaiment -->
+            <!-- TODO: SolitudeRedWave -->
+            <!-- TODO: SolitudeSawmill -->
+            <!-- TODO: SolitudeStables -->
+            <!-- TODO: SolitudeTempleoftheDivines -->
+            <!-- TODO: SolitudeVittoriaVicisHouse -->
+            <!-- TODO: SolitudeWinkingSkeever -->
+         </g>
+         
+         <g name="b1f--1f-0--2f-288">
+            <conditions>
+               <or>
+                  <parent-cell of="subject" is="SolitudeAngelinesAromatics" />
+                  <parent-cell of="subject" is="SolitudeBitsandPieces" />
+                  <parent-cell of="subject" is="SolitudeBrylingsHouse" />
+                  <parent-cell of="subject" is="SolitudeErikursHouse" />
+                  <parent-cell of="subject" is="SolitudeHalloftheDead" />
+                  <parent-cell of="subject" is="SolitudeProudspireManor" />
+                  <parent-cell of="subject" is="SolitudeRadiantRaiment" />
+                  <parent-cell of="subject" is="SolitudeTempleoftheDivines" />
+                  <parent-cell of="subject" is="SolitudeVittoriaVicisHouse" />
+                  <parent-cell of="subject" is="SolitudeWinkingSkeever" />
+               </or>
+            </conditions>
+            <constant name="height-coordinate-1f" value="0" />
+            <constant name="height-coordinate-2f" value="288" />
+            <invoke name="common-interior-different-floors-b1f-1f-2f" />
+            <invoke name="common-interior-same-floor-b1f-1f-2f" />
+         </g>
+         <g name="b1f--1f-288--2f-576">
+            <conditions>
+               <or>
+                  <parent-cell of="subject" is="SolitudeBardsCollege" />
+                  <parent-cell of="subject" is="SolitudeJusticiarsHeadquarters" />
+               </or>
+            </conditions>
+            <constant name="height-coordinate-1f" value="288" />
+            <constant name="height-coordinate-2f" value="576" />
+            <invoke name="common-interior-different-floors-b1f-1f-2f" />
+            <invoke name="common-interior-same-floor-b1f-1f-2f" />
+         </g>
+         <g name="1f--2f-288">
+            <conditions>
+               <or>
+                  <parent-cell of="subject" is="SolitudeAddvarsHouse" />
+                  <parent-cell of="subject" is="SolitudeBlackSmith" />
+                  <parent-cell of="subject" is="SolitudeEvetteSansHouse" />
+                  <parent-cell of="subject" is="SolitudeFletcher" />
+                  <parent-cell of="subject" is="SolitudeJalasHouse" />
+                  <parent-cell of="subject" is="SolitudeSawmill" />
+                  <parent-cell of="subject" is="SolitudeStables" />
+               </or>
+            </conditions>
+            <constant name="height-coordinate-2f" value="288" />
+            <invoke name="mixin-interior-1f-2f-no-rooms" />
+         </g>
+         <g name="red-wave">
+            <conditions>
+               <parent-cell of="subject" is="SolitudeRedWave" />
+            </conditions>
+            <constant name="height-coordinate-2f" value="368" />
+            <invoke name="mixin-interior-1f-2f-no-rooms" />
+         </g>
          
          <!--
             TODO: per-room checks for the city hall and inn

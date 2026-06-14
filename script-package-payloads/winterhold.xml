@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<payload>
+   <quest id="AWPAWinterhold"
+      locations="WinterholdLocation"
+   >
+      <dialogue-conditions>
+         <faction-membership of="speaker" includes="TownWinterholdFaction" />
+         <faction-membership of="speaker" excludes="GuardFactionWinterhold" />
+         
+         <location of="speaker" is="WinterholdLocation" />
+      </dialogue-conditions>
+      <actors>
+         <!-- TODO -->
+      </actors>
+      
+      <invoke name="common-super-near-player" />
+      <top-g slug="SameInterior">
+         <conditions>
+            <is-in-interior of="subject" />
+            <parent-cell of="speaker" same-as="subject" />
+         </conditions>
+         
+         <!--
+            TODO: different-floors checks
+         -->
+         
+         <!--
+            TODO: per-room checks for the city hall and inn
+         -->
+         
+         <shared-info id="shared-same-building" />
+      </top-g>
+      <top-g slug="Interiors">
+         <conditions>
+            <is-in-interior of="subject" />
+         </conditions>
+         
+         <!-- TODO -->
+         
+         <invoke name="common-me-outside-they-inside" />
+      </top-g>
+      <top-g slug="Exterior">
+         <conditions>
+            <parent-world of="subject" is="Tamriel" />
+         </conditions>
+         
+         <g name="jarl-longhouse">
+            <conditions>
+               <x of="subject" gte="108480" />
+               <x of="subject" lte="110096" />
+               <y of="subject" gte="99792" />
+               <y of="subject" lte="101728" />
+            </conditions>
+            <line>He's out in front of the Jarl's longhouse.</line>
+         </g>
+         <g name="frozen-hearth">
+            <conditions>
+               <x of="subject" gte="109344" />
+               <x of="subject" lte="110624" />
+               <y of="subject" gte="100848" />
+               <y of="subject" lte="102896" />
+            </conditions>
+            <line>He's over by The Frozen Hearth.</line>
+         </g>
+         <g name="frozen-hearth-back">
+            <conditions>
+               <x of="subject" gte="109936" />
+               <x of="subject" lte="111584" />
+               <y of="subject" gte="100848" />
+               <y of="subject" lte="103504" />
+            </conditions>
+            <line>He's back behind The Frozen Hearth.</line>
+         </g>
+         
+         <g name="house-korir">
+            <conditions>
+               <x of="subject" gte="107296" />
+               <x of="subject" lte="109328" />
+               <y of="subject" gte="103488" />
+               <y of="subject" lte="105136" />
+            </conditions>
+            <line>He's hanging around Korir's house.</line>
+         </g>
+         <g name="house-ranmir">
+            <conditions>
+               <x of="subject" gte="107088" />
+               <x of="subject" lte="109136" />
+               <y of="subject" gte="102208" />
+               <y of="subject" lte="103488" />
+            </conditions>
+            <line>He's hanging around Ranmir's house.</line>
+         </g>
+         
+         <g name="west-trail">
+            <conditions>
+               <x of="subject" gte="105904" />
+               <x of="subject" lte="108848" />
+               <y of="subject" gte="99200" />
+               <y of="subject" lte="102400" />
+            </conditions>
+            <line>He's on the west trail out of the city.</line>
+         </g>
+         <g name="ruins">
+            <conditions>
+               <x of="subject" gte="110480" />
+               <x of="subject" lte="112768" />
+               <y of="subject" gte="102256" />
+               <y of="subject" lte="104768" />
+            </conditions>
+            <line>I saw him headed toward the ruins to the east.</line>
+         </g>
+         
+         <g name="bridge-to-college-start">
+            <conditions>
+               <x of="subject" gte="108128" />
+               <x of="subject" lte="110576" />
+               <y of="subject" gte="104560" />
+               <y of="subject" lte="105728" />
+            </conditions>
+            <line>He's near the start of the bridge to the College.</line>
+         </g>
+         <g name="bridge-to-college">
+            <conditions>
+               <x of="subject" gte="109424" />
+               <x of="subject" lte="114624" />
+               <y of="subject" gte="104640" />
+               <y of="subject" lte="109904" />
+               <z of="subject" gte="-8544" />
+            </conditions>
+            <line>He's on the bridge to the College.</line>
+         </g>
+         
+         <g name="college">
+            <g name="speaker-outside-college">
+               <conditions>
+                  <or>
+                     <x of="subject" lt="112944" />
+                     <x of="subject" gt="119600" />
+                     <y of="subject" lt="108208" />
+                     <y of="subject" gt="114864" />
+                     <z of="speaker" lt="-8544" />
+                  </or>
+               </conditions>
+               <line>He's somewhere in the College.</line>
+            </g>
+            <g name="courtyard">
+               <conditions>
+                  <x of="subject" gte="114352" />
+                  <x of="subject" lte="118320" />
+                  <y of="subject" gte="109616" />
+                  <y of="subject" lte="113568" />
+                  <z of="subject" gte="-7888" />
+                  <z of="subject" lte="-6928" />
+               </conditions>
+               <line>He's in the College courtyard.</line>
+            </g>
+            <g name="hall-attainment-roof">
+               <conditions>
+                  <x of="subject" gte="112944" />
+                  <x of="subject" lte="114496" />
+                  <y of="subject" gte="111024" />
+                  <y of="subject" lte="112272" />
+                  <z of="subject" gte="-6928" />
+                  <z of="subject" lte="-5584" />
+               </conditions>
+               <line>He's up on top of the Hall of Attainment -- the west tower.</line>
+            </g>
+            <g name="hall-countenance-roof">
+               <conditions>
+                  <x of="subject" gte="115792" />
+                  <x of="subject" lte="117008" />
+                  <y of="subject" gte="108208" />
+                  <y of="subject" lte="109568" />
+                  <z of="subject" gte="-6928" />
+                  <z of="subject" lte="-5584" />
+               </conditions>
+               <line>He's up on top of the Hall of Countenance -- the south tower.</line>
+            </g>
+            <g name="wall-top-around-archmage-tower">
+               <conditions>
+                  <x of="subject" gte="116864" />
+                  <x of="subject" lte="119600" />
+                  <y of="subject" gte="112192" />
+                  <y of="subject" lte="114864" />
+                  <z of="subject" gte="-6928" />
+                  <z of="subject" lte="-5584" />
+               </conditions>
+               <line>He's up on the wall that circles around the main tower.</line>
+            </g>
+            <g name="archmage-roof">
+               <conditions>
+                  <x of="subject" gte="116704" />
+                  <x of="subject" lte="119600" />
+                  <y of="subject" gte="111904" />
+                  <y of="subject" lte="114864" />
+                  <z of="subject" gte="-5584" />
+               </conditions>
+               <line>He's up on top of the main tower.</line>
+            </g>
+            <g name="walls">
+               <conditions>
+                  <x of="subject" gte="112944" />
+                  <x of="subject" lte="119600" />
+                  <y of="subject" gte="108208" />
+                  <y of="subject" lte="114864" />
+                  <z of="subject" gte="-6928" />
+                  <z of="subject" lte="-5584" />
+               </conditions>
+               <line>He's up on top of the walls.</line>
+            </g>
+         </g>
+         
+         <g name="main-road">
+            <conditions>
+               <x of="subject" gte="108768" />
+               <x of="subject" lte="111360" />
+               <y of="subject" gte="98912" />
+               <y of="subject" lte="104640" />
+            </conditions>
+            <line>He's on the main road through the city.</line>
+         </g>
+         <g name="south-road">
+            <conditions>
+               <x of="subject" gte="109840" />
+               <x of="subject" lte="113728" />
+               <y of="subject" gte="96608" />
+               <y of="subject" lte="98912" />
+            </conditions>
+            <line>He's on the main road out of the city.</line>
+         </g>
+         <g name="north-trail">
+            <conditions>
+               <x of="subject" gte="108416" />
+               <x of="subject" lte="111424" />
+               <y of="subject" gte="104560" />
+               <y of="subject" lte="110416" />
+               <z of="subject" gte="-11072" />
+               <z of="subject" lt="-8544" />
+            </conditions>
+            <line>He's on the northern trail out of the city. If you look around below the bridge to the College, you'll find it.</line>
+         </g>
+         
+         <g name="directional-fallbacks">
+            <g name="east">  
+               <conditions>
+                  <x of="subject" gte="111360" />
+                  <x of="subject" lte="118784" />
+                  <y of="subject" gte="99664" />
+                  <y of="subject" lte="105728" />
+               </conditions>
+               <shared-info id="shared-beyond-city-limits-east" />
+            </g>
+            <g name="south">  
+               <conditions>
+                  <x of="subject" gte="106496" />
+                  <x of="subject" lte="122880" />
+                  <y of="subject" gte="90112" />
+                  <y of="subject" lte="99664" />
+               </conditions>
+               <shared-info id="shared-beyond-city-limits-south" />
+            </g>
+            <g name="west">  
+               <conditions>
+                  <x of="subject" gte="106496" />
+                  <x of="subject" lte="108416" />
+                  <y of="subject" gte="99664" />
+                  <y of="subject" lte="110416" />
+               </conditions>
+               <shared-info id="shared-beyond-city-limits-west" />
+            </g>
+            <g name="north">  
+               <conditions>
+                  <x of="subject" gte="102400" />
+                  <x of="subject" lte="118784" />
+                  <y of="subject" gte="105728" />
+                  <y of="subject" lte="118784" />
+               </conditions>
+               <shared-info id="shared-beyond-city-limits-north" />
+            </g>
+         </g>
+         
+         <invoke name="common-exterior-fallbacks" />
+      </top-g>
+      
+      <!-- final fallback lines -->
+      <shared-info id="shared-unknown" />
+   </quest>
+</payload>

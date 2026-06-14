@@ -1,0 +1,800 @@
+<?xml version="1.0" encoding="utf-8"?>
+<payload>
+   <shared-infos>
+      <shared-info id="shared-unknown" editor-id-slug="UnknownLocation">
+         <line>I don't know where he is.</line>
+         <line>Sorry, but I don't know.</line>
+         <line>I haven't seen him around.</line>
+         <line>No clue, honestly.</line>
+      </shared-info>
+      <shared-info id="shared-unknown-me-outside-they-inside" editor-id-slug="UnknownInteriorSpeakerOutside">
+         <line>I don't know where he is. I haven't seen him walking around, though, so he must be indoors.</line>
+      </shared-info>
+      <shared-info id="shared-unknown-exterior" editor-id-slug="UnknownExterior">
+         <line>Somewhere outside. I'm not sure where.</line>
+      </shared-info>
+      <shared-info id="shared-unknown-me-inside-they-outside" editor-id-slug="UnknownExteriorSpeakerInside">
+         <line>I don't know. I'm in here, and he's out there, somewhere.</line>
+      </shared-info>
+      
+      <shared-info id="shared-me-inside-walls-they-outside-walls" editor-id-slug="UnknownSpeakerInsideWallsSubjectOutsideWalls">
+         <line>I don't know. Somewhere outside the city walls, is my guess.</line>
+         <line>I haven't seen them anywhere within the city walls.</line>
+         <line>I haven't seen them around. Try asking someone outside the city walls, maybe.</line>
+      </shared-info>
+      <shared-info id="shared-me-outside-walls-they-inside-walls" editor-id-slug="UnknownSpeakerOutsideWallsSubjectInsideWalls">
+         <line>I don't know. Somewhere inside the city walls, is my guess.</line>
+         <line>They're not out here. Have you checked anywhere inside the city walls?</line>
+         <line>I think I might've seen them headed inside the city walls earlier.</line>
+      </shared-info>
+      
+      <shared-info id="shared-angry-inmate-doesnt-know" editor-id-slug="InmateCantTellYouAngry">
+         <line emotion="anger:60" script-notes="emphasis on &quot;I&quot;">How would I know where they are? I'm stuck in this cell!</line>
+         <line emotion="anger:50" script-notes="emphasis on &quot;here&quot;">I can't help you from in here.</line>
+      </shared-info>
+      <shared-info id="shared-blunt-inmate-doesnt-know" editor-id-slug="InmateCantTellYouBlunt">
+         <line emotion="puzzled:20">Not from in here, I can't.</line>
+         <line emotion="puzzled:40" script-notes="emphasis on &quot;no&quot;; the player has asked you a stupid question and the answer is obvious">Uh, no.</line>
+      </shared-info>
+      <shared-info id="shared-shaken-inmate-doesnt-know" editor-id-slug="InmateCantTellYouShaken">
+         <line emotion="sad:30">Sorry, but there isn't much I'll be able to do from in here...</line>
+      </shared-info>
+      
+      <shared-info id="shared-at-my-home" editor-id-slug="AtMyHome">
+         <line>He's at my place right now.</line>
+         <line>I saw him around my house not too long ago.</line>
+         <line>Try checking around my house.</line>
+      </shared-info>
+      <shared-info id="shared-at-own-home" editor-id-slug="AtOwnHome">
+         <line>He's at home right now.</line>
+         <line>I'm pretty sure he's at home.</line>
+         <line>Try checking by his house.</line>
+         <line>I think I saw him heading home.</line>
+         <line>He's probably at home.</line>
+         <line>Have you tried stopping by his house?</line>
+      </shared-info>
+      <shared-info id="shared-at-our-home" editor-id-slug="AtOurHome">
+         <line>He's at our home right now.</line>
+         <line>I'm pretty sure he's at our place.</line>
+         <line>Have you checked our home?</line>
+         <line>Try looking around our house.</line>
+      </shared-info>
+   
+      <shared-info id="shared-upstairs" editor-id-slug="FloorUpstairs">
+         <line>He's upstairs.</line>
+         <line>Try checking upstairs.</line>
+         <line>Try looking upstairs.</line>
+      </shared-info>
+      <shared-info id="shared-downstairs" editor-id-slug="FloorDownstairs">
+         <line>He's downstairs.</line>
+         <line>Try checking downstairs.</line>
+         <line>Try looking downstairs.</line>
+      </shared-info>
+      <shared-info id="shared-outside-this-building" editor-id-slug="OutsideSameBuilding">
+         <line>I think he's just outside, actually.</line>
+         <line>Check outside. I saw him hanging around here on my way in.</line>
+         <line>Head outside. I'm pretty sure he's nearby.</line>
+      </shared-info>
+      <shared-info id="shared-same-building" editor-id-slug="FloorSame">
+         <line>He should be somewhere in this building.</line>
+      </shared-info>
+      <shared-info id="shared-same-floor" editor-id-slug="FloorSame">
+         <line>He should be somewhere on this floor of the building.</line>
+      </shared-info>
+      <shared-info id="shared-same-room" editor-id-slug="SameRoom">
+         <line>He's in this room.</line>
+         <line>He's in the room with us.</line>
+      </shared-info>
+      <shared-info id="shared-near-player" editor-id-slug="NearPlayer">
+         <line>He's standing right next to you.</line>
+         <line>He's standing right here.</line>
+      </shared-info>
+      
+      <shared-info id="shared-exterior-near-blacksmith" editor-id-slug="ExtNearBlacksmith">
+         <line>I think I saw him by the smithy not too long ago.</line>
+         <line>Pretty sure he's over by the blacksmith's shop.</line>
+      </shared-info>
+      <shared-info id="shared-exterior-near-own-home" editor-id-slug="ExtNearOwnHome">
+         <line>I saw him around his house not too long ago.</line>
+         <line>I think he's over by his house right now.</line>
+      </shared-info>
+      <shared-info id="shared-exterior-near-our-home" editor-id-slug="ExtNearOurHome">
+         <line>I'm pretty sure he's hanging around our house right now.</line>
+         <line>He's at home, or somewhere around there.</line>
+      </shared-info>
+      <shared-info id="shared-exterior-near-my-home" editor-id-slug="ExtNearOurHome">
+         <line>I saw him walking past my house earlier.</line>
+         <line>He's over by my house.</line>
+      </shared-info>
+      <shared-info id="shared-exterior-lumber-mill" editor-id-slug="ExtLumberMill">
+         <line>He's over by the lumber mill.</line>
+         <line>I saw him hanging around the lumber mill a little while ago.</line>
+      </shared-info>
+      <shared-info id="shared-exterior-market" editor-id-slug="ExtMarket">
+         <line>He's in the market.</line>
+         <line>I saw him heading toward the market.</line>
+         <line>He should be at the market.</line>
+      </shared-info>
+      <shared-info id="shared-exterior-market-with-us" editor-id-slug="ExtMarketHere">
+         <line>He's here in the market.</line>
+      </shared-info>
+      <shared-info id="shared-exterior-hall-of-the-dead" editor-id-slug="ExtHallOfTheDead">
+         <line>He's over by the Hall of the Dead.</line>
+         <line>He was headed toward the Hall of the Dead not too long ago.</line>
+         <line>I think you might find him around the Hall of the Dead.</line>
+      </shared-info>
+      
+      <shared-info id="shared-alchemy-table" editor-id-slug="AlchemyTable">
+         <line>He's at the alchemy table.</line>
+         <line>He's by the alchemy table.</line>
+      </shared-info>
+      <shared-info id="shared-back-of-the-store" editor-id-slug="StoreBack">
+         <line>He's in the back.</line>
+         <line>He's back behind the shop proper.</line>
+      </shared-info>
+      <shared-info id="shared-behind-the-counter" editor-id-slug="BehindCounter">
+         <line>He's behind the counter.</line>
+      </shared-info>
+      <shared-info id="shared-dining-room" editor-id-slug="RoomDining">
+         <line>He's in the dining room.</line>
+      </shared-info>
+      <shared-info id="shared-enchanting-table" editor-id-slug="EnchantingTable">
+         <line>He's at the enchanting table.</line>
+         <line>He's by the enchanting table.</line>
+      </shared-info>
+      <shared-info id="shared-foyer" editor-id-slug="RoomFoyer">
+         <line>He's in the foyer.</line>
+      </shared-info>
+      <shared-info id="shared-front-of-building" editor-id-slug="FrontOfBuilding">
+         <line>He's up front.</line>
+         <line>He's at the front of the building.</line>
+      </shared-info>
+      <shared-info id="shared-in-own-room" editor-id-slug="RoomOwn">
+         <line>He's in his room.</line>
+      </shared-info>
+      <shared-info id="shared-in-my-room" editor-id-slug="RoomMy">
+         <line>He's in my room.</line>
+      </shared-info>
+      
+      <shared-info id="shared-beyond-city-limits-north" editor-id-slug="BeyondCityLimitsNorth">
+         <line>He's somewhere north of the city.</line>
+         <line>I think I saw him walking out of the city, to the north.</line>
+      </shared-info>
+      <shared-info id="shared-beyond-city-limits-south" editor-id-slug="BeyondCityLimitsSouth">
+         <line>He's somewhere south of the city.</line>
+         <line>I think I saw him walking out of the city, to the south.</line>
+      </shared-info>
+      <shared-info id="shared-beyond-city-limits-east" editor-id-slug="BeyondCityLimitsEast">
+         <line>He's somewhere east of the city.</line>
+         <line>I think I saw him walking out of the city, to the east.</line>
+      </shared-info>
+      <shared-info id="shared-beyond-city-limits-west" editor-id-slug="BeyondCityLimitsWest">
+         <line>He's somewhere west of the city.</line>
+         <line>I think I saw him walking out of the city, to the west.</line>
+      </shared-info>
+   </shared-infos>
+   <global-macros>
+      <macro name="common-super-near-player">
+         <data>
+            <top-g slug="SuperNearPlayer">
+               <conditions>
+                  <distance of="player" to="subject" lte="256" />
+               </conditions>
+               <shared-info id="shared-near-player" />
+            </top-g>
+         </data>
+      </macro>
+      <macro name="common-me-outside-they-inside">
+         <data>
+            <g name="me-outside-they-inside">
+               <conditions>
+                  <is-in-interior of="subject" />
+                  <is-in-exterior of="speaker" />
+               </conditions>
+               <shared-info id="shared-unknown-me-outside-they-inside" />
+            </g>
+         </data>
+      </macro>
+      <macro name="common-exterior-fallbacks">
+         <data>
+            <g name="me-inside-they-outside">
+               <conditions>
+                  <is-in-interior of="speaker" />
+               </conditions>
+               <shared-info id="shared-unknown-me-inside-they-outside" />
+            </g>
+            <shared-info id="shared-unknown-exterior" />
+         </data>
+      </macro>
+      
+      <macro name="common-barracks-with-jail-downstairs-int">
+         <parameter name="BARRACKS-EDITOR-ID" />
+         <parameter name="JAIL-EDITOR-ID" />
+         <data>
+            <g name="barracks-or-jail">
+               <conditions>
+                  <or>
+                     <parent-cell of="subject" is="%BARRACKS-EDITOR-ID%" />
+                     <parent-cell of="subject" is="%JAIL-EDITOR-ID%" />
+                  </or>
+                  <parent-cell of="speaker" is-not="%BARRACKS-EDITOR-ID%" />
+                  <parent-cell of="speaker" is-not="%JAIL-EDITOR-ID%" />
+               </conditions>
+               <line>I think he's at the barracks. Or the jail. One of those.</line>
+               <line>Try checking the city barracks.</line>
+               <line>I think I saw him headed for the barracks.</line>
+            </g>
+            <g name="barracks-to-jail">
+               <conditions>
+                  <parent-cell of="subject" is="%JAIL-EDITOR-ID%" />
+                  <parent-cell of="speaker" is="%BARRACKS-EDITOR-ID%" />
+               </conditions>
+               <line>He's downstairs.</line>
+               <line>Head down the stairs, to the city jail. You'll find him in there.</line>
+            </g>
+            <g name="barracks-per-jail">
+               <conditions>
+                  <parent-cell of="subject" is="%BARRACKS-EDITOR-ID%" />
+                  <parent-cell of="speaker" is="%JAIL-EDITOR-ID%" />
+               </conditions>
+               <line>He's upstairs.</line>
+               <line>Head out to the barracks.</line>
+            </g>
+         </data>
+      </macro>
+      
+      <macro name="mixin-house-one-resident-int">
+         <parameter name="OWNER" />
+         <parameter name="OWNER-PRINTABLE" default-value="%OWNER%" />
+         <parameter name="EXTRA" default-value="" />
+         <data>
+            <g>
+               <conditions>
+                  <actor-base of="subject" is="%OWNER%" />
+               </conditions>
+               <shared-info id="shared-at-own-home" />
+            </g>
+            <g>
+               <conditions>
+                  <actor-base of="speaker" is="%OWNER%" />
+               </conditions>
+               <shared-info id="shared-at-my-home" />
+            </g>
+            %EXTRA%
+            <line>He's at %OWNER-PRINTABLE%'s house.</line>
+            <line>I think he's visiting %OWNER-PRINTABLE% right now.</line>
+            <line>I think I saw him on his way to %OWNER-PRINTABLE%'s house.</line>
+         </data>
+      </macro>
+      <macro name="mixin-house-one-resident-ext-owner-cases">
+         <parameter name="OWNER" />
+         <parameter name="OWNER-PRINTABLE" default-value="%OWNER%" />
+         <data>
+            <g>
+               <conditions>
+                  <actor-base of="subject" is="%OWNER%" />
+               </conditions>
+               <shared-info id="shared-exterior-near-own-home" />
+            </g>
+            <g>
+               <conditions>
+                  <actor-base of="speaker" is="%OWNER%" />
+               </conditions>
+               <shared-info id="shared-exterior-near-my-home" />
+            </g>
+         </data>
+      </macro>
+   
+      <macro name="mixin-co-owned-house-ext">
+         <!--
+            For a co-owned house (i.e. "Alice and Bob's house," rather than 
+            "Alice's house" that Bob also lives at), handles asking a non-
+            resident about another non-resident, provided at least one of 
+            the residents is alive.
+            
+            The "notes" are spliced into specific lines used when only one 
+            owner is alive. You can use them for sentence fragments that 
+            characterize the surviving owner, e.g. ", the local alchemist".
+         -->
+         <parameter name="OWNER-1" />
+         <parameter name="OWNER-2" />
+         <parameter name="OWNER-1-NOTE" default-value="" />
+         <parameter name="OWNER-2-NOTE" default-value="" />
+         <parameter name="BOTH-DEAD-ADDITIONAL-LINES" default-value="" />
+         <data>
+            <g name="both-homeowners-alive">
+               <conditions>
+                  <death-count for="%OWNER-1%" lte="0" />
+                  <death-count for="%OWNER-2%" lte="0" />
+               </conditions>
+               <line>He might've been headed to %OWNER-1% and %OWNER-2%'s house.</line>
+               <line>I think I saw him over by %OWNER-1% and %OWNER-2%'s home.</line>
+            </g>
+            <g name="owner-1-dead">
+               <conditions>
+                  <death-count for="%OWNER-1%" gt="0" />
+                  <death-count for="%OWNER-2%" lte="0" />
+               </conditions>
+               <line>He might've been headed to %OWNER-2%'s house.</line>
+               <line>I think I saw him over by %OWNER-2%'s home.%OWNER-2-NOTE%</line>
+            </g>
+            <g name="owner-2-dead">
+               <conditions>
+                  <death-count for="%OWNER-1%" lte="0" />
+                  <death-count for="%OWNER-2%" gt="0" />
+               </conditions>
+               <line>He might've been headed to %OWNER-1%'s house.</line>
+               <line>I think I saw him over by %OWNER-1%'s home.%OWNER-1-NOTE%</line>
+            </g>
+            <!-- else both actors are dead -->
+            <line>He's over by the house %OWNER-1% and %OWNER-2% used to live in.</line>
+            %BOTH-DEAD-ADDITIONAL-LINES%
+         </data>
+      </macro>
+      <macro name="mixin-co-owned-house-int">
+         <!--
+            For a co-owned house (i.e. "Alice and Bob's house," rather than 
+            "Alice's house" that Bob also lives at), handles asking a non-
+            resident about another non-resident, provided at least one of 
+            the residents is alive.
+            
+            The house "note" is spliced into specific lines. You can use it 
+            as a sentence fragment to describe the location of the house, 
+            e.g. ", over by the lumber mill".
+         -->
+         <parameter name="OWNER-1" />
+         <parameter name="OWNER-2" />
+         <parameter name="HOUSE-LOCATION-NOTE-1" default-value="" />
+         <parameter name="BOTH-DEAD-ADDITIONAL-LINES" default-value="" />
+         <data>
+            <g name="both-homeowners-alive">
+               <conditions>
+                  <death-count for="%OWNER-1%" lte="0" />
+                  <death-count for="%OWNER-2%" lte="0" />
+               </conditions>
+               <line>He's visiting %OWNER-1% and %OWNER-2% right now.</line>
+               <line>He's at %OWNER-1% and %OWNER-2%'s house%HOUSE-LOCATION-NOTE-1%.</line>
+            </g>
+            <g name="owner-1-dead">
+               <conditions>
+                  <death-count for="%OWNER-1%" gt="0" />
+                  <death-count for="%OWNER-2%" lte="0" />
+               </conditions>
+               <line>He's visiting %OWNER-2% right now.</line>
+               <line>He's at %OWNER-2%'s house%HOUSE-LOCATION-NOTE-1%.</line>
+            </g>
+            <g name="owner-2-dead">
+               <conditions>
+                  <death-count for="%OWNER-1%" lte="0" />
+                  <death-count for="%OWNER-2%" gt="0" />
+               </conditions>
+               <line>He's visiting %OWNER-1% right now.</line>
+               <line>He's at %OWNER-1%'s house%HOUSE-LOCATION-NOTE-1%.</line>
+            </g>
+            <!-- else both actors are dead -->
+            <line>He's at the house %OWNER-1% and %OWNER-2% used to live in.</line>
+            %BOTH-DEAD-ADDITIONAL-LINES%
+         </data>
+      </macro>
+      
+      <macro name="mixin-house-two-residents-ext">
+         <!--
+            For a house with two residents, generates the content 
+            for asking a resident, and asking about a resident.
+         -->
+         <parameter name="OWNER-1" />
+         <parameter name="OWNER-2" />
+         <data>
+            <g name="asking-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="speaker" is="%OWNER-1%" />
+                     <actor-base of="speaker" is="%OWNER-2%" />
+                  </or>
+               </conditions>
+               <g name="asking-resident-about-resident">
+                  <conditions>
+                     <or>
+                        <actor-base of="subject" is="%OWNER-1%" />
+                        <actor-base of="subject" is="%OWNER-2%" />
+                     </or>
+                  </conditions>
+                  <shared-info id="shared-exterior-near-our-home" />
+               </g>
+               <shared-info id="shared-exterior-near-my-home" />
+            </g>
+            <g name="asking-about-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="%OWNER-1%" />
+                     <actor-base of="subject" is="%OWNER-2%" />
+                  </or>
+               </conditions>
+               <shared-info id="shared-exterior-near-own-home" />
+            </g>
+         </data>
+      </macro>
+      <macro name="mixin-house-two-residents-int">
+         <!--
+            For a house with two residents, generates the content 
+            for asking a resident, and asking about a resident.
+         -->
+         <parameter name="OWNER-1" />
+         <parameter name="OWNER-2" />
+         <data>
+            <g name="asking-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="speaker" is="%OWNER-1%" />
+                     <actor-base of="speaker" is="%OWNER-2%" />
+                  </or>
+               </conditions>
+               <g name="asking-resident-about-resident">
+                  <conditions>
+                     <or>
+                        <actor-base of="subject" is="%OWNER-1%" />
+                        <actor-base of="subject" is="%OWNER-2%" />
+                     </or>
+                  </conditions>
+                  <shared-info id="shared-at-our-home" />
+               </g>
+               <shared-info id="shared-at-my-home" />
+            </g>
+            <g name="asking-about-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="%OWNER-1%" />
+                     <actor-base of="subject" is="%OWNER-2%" />
+                  </or>
+               </conditions>
+               <shared-info id="shared-at-own-home" />
+            </g>
+         </data>
+      </macro>
+      
+      <macro name="mixin-house-three-residents-ext">
+         <!--
+            For a house with three residents, generates the content 
+            for asking a resident, and asking about a resident.
+         -->
+         <parameter name="OWNER-1" />
+         <parameter name="OWNER-2" />
+         <parameter name="OWNER-3" />
+         <data>
+            <g name="asking-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="speaker" is="%OWNER-1%" />
+                     <actor-base of="speaker" is="%OWNER-2%" />
+                     <actor-base of="speaker" is="%OWNER-3%" />
+                  </or>
+               </conditions>
+               <g name="asking-resident-about-resident">
+                  <conditions>
+                     <or>
+                        <actor-base of="subject" is="%OWNER-1%" />
+                        <actor-base of="subject" is="%OWNER-2%" />
+                        <actor-base of="subject" is="%OWNER-3%" />
+                     </or>
+                  </conditions>
+                  <shared-info id="shared-exterior-near-our-home" />
+               </g>
+               <shared-info id="shared-exterior-near-my-home" />
+            </g>
+            <g name="asking-about-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="%OWNER-1%" />
+                     <actor-base of="subject" is="%OWNER-2%" />
+                     <actor-base of="subject" is="%OWNER-3%" />
+                  </or>
+               </conditions>
+               <shared-info id="shared-exterior-near-own-home" />
+            </g>
+         </data>
+      </macro>
+      <macro name="mixin-house-three-residents-int">
+         <!--
+            For a house with three residents, generates the content 
+            for asking a resident, and asking about a resident.
+         -->
+         <parameter name="OWNER-1" />
+         <parameter name="OWNER-2" />
+         <parameter name="OWNER-3" />
+         <data>
+            <g name="asking-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="speaker" is="%OWNER-1%" />
+                     <actor-base of="speaker" is="%OWNER-2%" />
+                     <actor-base of="speaker" is="%OWNER-3%" />
+                  </or>
+               </conditions>
+               <g name="asking-resident-about-resident">
+                  <conditions>
+                     <or>
+                        <actor-base of="subject" is="%OWNER-1%" />
+                        <actor-base of="subject" is="%OWNER-2%" />
+                        <actor-base of="subject" is="%OWNER-3%" />
+                     </or>
+                  </conditions>
+                  <shared-info id="shared-at-our-home" />
+               </g>
+               <shared-info id="shared-at-my-home" />
+            </g>
+            <g name="asking-about-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="%OWNER-1%" />
+                     <actor-base of="subject" is="%OWNER-2%" />
+                     <actor-base of="subject" is="%OWNER-3%" />
+                  </or>
+               </conditions>
+               <shared-info id="shared-at-own-home" />
+            </g>
+         </data>
+      </macro>
+      
+      <macro name="mixin-interior-1f-2f">
+         <!--
+            Handles "upstairs" and "downstairs" lines for a building 
+            with two above-ground floors.
+            
+            You must define the following constant in an enclosing 
+            group:
+            
+               height-coordinate-2f
+         -->
+         <data>
+            <g name="upstairs">
+               <conditions>
+                  <z of="subject" gte="height-coordinate-2f" />
+                  <z of="player"  lt="height-coordinate-2f" />
+               </conditions>
+               <shared-info id="shared-upstairs" />
+            </g>
+            <g name="downstairs">
+               <conditions>
+                  <z of="subject" lt="height-coordinate-2f" />
+                  <z of="player"  gte="height-coordinate-2f" />
+               </conditions>
+               <shared-info id="shared-downstairs" />
+            </g>
+         </data>
+      </macro>
+      <macro name="mixin-interior-1f-2f-no-rooms">
+         <!--
+            Handles "upstairs," "downstairs," and "same floor" lines 
+            for a building with two above-ground floors and no distinct 
+            rooms within them. Interiors designed for the Farmhouse06 
+            building model are an example.
+            
+            You must define the following constant in an enclosing 
+            group:
+            
+               height-coordinate-2f
+         -->
+         <data>
+            <g name="upstairs">
+               <conditions>
+                  <z of="subject" gte="height-coordinate-2f" />
+                  <z of="player"  lt="height-coordinate-2f" />
+               </conditions>
+               <shared-info id="shared-upstairs" />
+            </g>
+            <g name="downstairs">
+               <conditions>
+                  <z of="subject" lt="height-coordinate-2f" />
+                  <z of="player"  gte="height-coordinate-2f" />
+               </conditions>
+               <shared-info id="shared-downstairs" />
+            </g>
+            <shared-info id="shared-same-floor" />
+         </data>
+      </macro>
+      
+      <macro name="common-interior-different-floors-b1f-1f-2f">
+         <!--
+            For a building with a basement and two above-ground floors, 
+            handles "upstairs" and "downstairs" lines. You must define 
+            the following constants in an enclosing group:
+            
+               height-coordinate-1f
+               height-coordinate-2f
+               
+            It is assumed that you've already checked whether the player 
+            and subject are in the same cell, and whether that cell has 
+            a B1F, 1F, and 2F.
+         -->
+         <parameter name="ADDITIONAL-CONDITIONS" default-value="" />
+         <data>
+            <g name="upstairs">
+               <conditions>
+                  <!-- subject not on lowest floor; player not on highest floor -->
+                  <z of="subject" gte="height-coordinate-1f" />
+                  <z of="player"  lt="height-coordinate-2f" />
+                  <or>
+                     <!-- player on lowest floor or subject on highest floor -->
+                     <!-- if we had more than 3 floors, the logic here would be more complex -->
+                     <z of="subject" gte="height-coordinate-2f" />
+                     <z of="player"  lt="height-coordinate-1f" />
+                  </or>
+                  %ADDITIONAL-CONDITIONS%
+               </conditions>
+               <shared-info id="shared-upstairs" />
+            </g>
+            <g name="downstairs">
+               <conditions>
+                  <!--
+                     downstairs is opposite of upstairs; just switch around who we run each coordinate check on
+                  -->
+                  <z of="player" gte="height-coordinate-1f" />
+                  <z of="subject"  lt="height-coordinate-2f" />
+                  <or>
+                     <z of="player" gte="height-coordinate-2f" />
+                     <z of="subject"  lt="height-coordinate-1f" />
+                  </or>
+                  %ADDITIONAL-CONDITIONS%
+               </conditions>
+               <shared-info id="shared-downstairs" />
+            </g>
+         </data>
+      </macro>
+      <macro name="common-interior-same-floor-b1f-1f-2f">
+         <!--
+            For a building with a basement and two above-ground floors, 
+            handles "same floor" lines. You must define the following 
+            constants in an enclosing group:
+            
+               height-coordinate-1f
+               height-coordinate-2f
+               
+            It is assumed that you've already checked whether the player 
+            and subject are in the same cell, and whether that cell has 
+            a B1F, 1F, and 2F.
+         -->
+         <parameter name="ADDITIONAL-CONDITIONS" default-value="" />
+         <data>
+            <g name="same-floor">
+               <conditions>
+                  <or>
+                     <z of="subject" lt="height-coordinate-1f" />
+                     <z of="subject" lt="height-coordinate-2f" />
+                     <z of="player" gte="height-coordinate-2f" />
+                  </or>
+                  <or>
+                     <z of="subject" lt="height-coordinate-1f" />
+                     <z of="player" lt="height-coordinate-2f" />
+                     <z of="subject" gte="height-coordinate-2f" />
+                  </or>
+                  <or>
+                     <z of="player" lt="height-coordinate-1f" />
+                     <z of="subject" lt="height-coordinate-2f" />
+                     <z of="player" gte="height-coordinate-2f" />
+                  </or>
+                  <or>
+                     <z of="player" lt="height-coordinate-1f" />
+                     <z of="player" lt="height-coordinate-2f" />
+                     <z of="subject" gte="height-coordinate-2f" />
+                  </or>
+                  %ADDITIONAL-CONDITIONS%
+               </conditions>
+               <shared-info id="shared-same-floor" />
+            </g>
+         </data>
+      </macro>
+      
+      <macro name="common-interior-different-floors-1f-2f-3f">
+         <!--
+            For a building with three above-ground floors, handles 
+            "upstairs" and "downstairs" lines. You must define the 
+            following constants in an enclosing group:
+            
+               height-coordinate-2f
+               height-coordinate-3f
+               
+            It is assumed that you've already checked whether the player 
+            and subject are in the same cell, and whether that cell has 
+            a 1F, 2F, and 3F.
+         -->
+         <parameter name="ADDITIONAL-CONDITIONS" default-value="" />
+         <data>
+            <g name="upstairs">
+               <conditions>
+                  <!-- subject not on lowest floor; player not on highest floor -->
+                  <z of="subject" gte="height-coordinate-2f" />
+                  <z of="player"  lt="height-coordinate-3f" />
+                  <or>
+                     <!-- player on lowest floor or subject on highest floor -->
+                     <!-- if we had more than 3 floors, the logic here would be more complex -->
+                     <z of="subject" gte="height-coordinate-3f" />
+                     <z of="player"  lt="height-coordinate-2f" />
+                  </or>
+                  %ADDITIONAL-CONDITIONS%
+               </conditions>
+               <shared-info id="shared-upstairs" />
+            </g>
+            <g name="downstairs">
+               <conditions>
+                  <!--
+                     downstairs is opposite of upstairs; just switch around who we run each coordinate check on
+                  -->
+                  <z of="player" gte="height-coordinate-2f" />
+                  <z of="subject"  lt="height-coordinate-3f" />
+                  <or>
+                     <z of="player" gte="height-coordinate-3f" />
+                     <z of="subject"  lt="height-coordinate-2f" />
+                  </or>
+                  %ADDITIONAL-CONDITIONS%
+               </conditions>
+               <shared-info id="shared-downstairs" />
+            </g>
+         </data>
+      </macro>
+      <macro name="common-interior-same-floor-1f-2f-3f">
+         <!--
+            For a building with three above-ground floors, handles "same 
+            floor" lines. You must define the following constants in an 
+            enclosing group:
+            
+               height-coordinate-2f
+               height-coordinate-ff
+               
+            It is assumed that you've already checked whether the player 
+            and subject are in the same cell, and whether that cell has 
+            a 1F, 2F, and 3F.
+         -->
+         <parameter name="ADDITIONAL-CONDITIONS" default-value="" />
+         <data>
+            <g name="same-floor">
+               <conditions>
+                  <or>
+                     <z of="subject" lt="height-coordinate-2f" />
+                     <z of="subject" lt="height-coordinate-3f" />
+                     <z of="player" gte="height-coordinate-3f" />
+                  </or>
+                  <or>
+                     <z of="subject" lt="height-coordinate-2f" />
+                     <z of="player" lt="height-coordinate-3f" />
+                     <z of="subject" gte="height-coordinate-3f" />
+                  </or>
+                  <or>
+                     <z of="player" lt="height-coordinate-2f" />
+                     <z of="subject" lt="height-coordinate-3f" />
+                     <z of="player" gte="height-coordinate-3f" />
+                  </or>
+                  <or>
+                     <z of="player" lt="height-coordinate-2f" />
+                     <z of="player" lt="height-coordinate-3f" />
+                     <z of="subject" gte="height-coordinate-3f" />
+                  </or>
+                  %ADDITIONAL-CONDITIONS%
+               </conditions>
+               <shared-info id="shared-same-floor" />
+            </g>
+         </data>
+      </macro>
+      
+      
+      <macro name="mixin-owned-room">
+         <parameter name="OWNER" />
+         <parameter name="OWNER-PRINTABLE" default-value="%OWNER%" />
+         <data>
+            <g>
+               <conditions>
+                  <actor-base of="subject" is="%OWNER%" />
+               </conditions>
+               <shared-info id="shared-in-own-room" />
+            </g>
+            <g>
+               <conditions>
+                  <actor-base of="speaker" is="%OWNER%" />
+               </conditions>
+               <shared-info id="shared-in-my-room" />
+            </g>
+            <line>He's in %OWNER-PRINTABLE%'s room.</line>
+         </data>
+      </macro>
+      
+   </global-macros>
+</payload>

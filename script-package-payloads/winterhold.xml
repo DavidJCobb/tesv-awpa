@@ -117,13 +117,33 @@
             <parent-cell of="speaker" same-as="subject" />
          </conditions>
          
-         <!--
-            TODO: per-room checks for the city hall and inn
-         -->
+         <g name="rooms">
+            <!-- TODO: WinterholdHallofAttainment -->
+            <!-- TODO: WinterholdHallofCountenance -->
+            <!-- TODO: WinterholdJarlsLonghouse -->
+            <!-- TODO: WinterholdTheFrozenHearth -->
+         </g>
          
          <!--
-            TODO: different-floors checks
+            Upstairs/downstairs/same-floor:
          -->
+         <g name="college-halls-side">
+            <conditions>
+               <or>
+                  <parent-cell of="subject" is="WinterholdCollegeHallofAttainment" />
+                  <parent-cell of="subject" is="WinterholdCollegeHallofCountenance" />
+               </or>
+            </conditions>
+            <constant name="height-coordinate-2f" value="0" />
+            <invoke name="mixin-interior-1f-2f-no-rooms" />
+         </g>
+         <g name="birna-oddments">
+            <conditions>
+               <parent-cell of="subject" is="WinterholdRanmirshouse" />
+            </conditions>
+            <constant name="height-coordinate-2f" value="240" />
+            <invoke name="mixin-interior-1f-2f-no-rooms" />
+         </g>
          
          <shared-info id="shared-same-building" />
       </top-g>
@@ -312,6 +332,7 @@
                   <parent-cell of="speaker" is="WinterholdTheFrozenHearth" />
                </conditions>
                <line>He's down in the cellar.</line>
+               <shared-info id="shared-downstairs" />
             </g>
             <g name="speaker-in-cellar-subject-upstairs">
                <conditions>

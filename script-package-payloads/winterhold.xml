@@ -1,17 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 <payload>
+   <shared-infos>
+      <shared-info id="winterhold-somewhere-in-college" editor-id-slug="WinterholdSomewhereInCollege">
+         <line>He's somewhere in the College.</line>
+      </shared-info>
+      <shared-info id="winterhold-somewhere-in-town" editor-id-slug="WinterholdSomewhereInTown">
+         <line>He's somewhere outside the College.</line>
+      </shared-info>
+   </shared-infos>
+   
    <quest id="AWPAWinterhold"
       locations="WinterholdLocation"
    >
       <dialogue-conditions>
-         <faction-membership of="speaker" includes="TownWinterholdFaction" />
+         <or>
+            <faction-membership of="speaker" includes="TownWinterholdFaction" />
+            <faction-membership of="speaker" includes="CollegeofWinterholdFaction" />
+         </or>
          <faction-membership of="speaker" excludes="GuardFactionWinterhold" />
+         <actor-base of="speaker" is-not="MGArnielSummon" />
+         <actor-base of="speaker" is-not="dunAlftandEndrast" />
+         <actor-base of="speaker" is-not="dunAlftandJzhar" />
          
          <location of="speaker" is="WinterholdLocation" />
       </dialogue-conditions>
       <actors>
-         <!-- TODO -->
+         <actor editor-id="ArnielGane" name="Arniel Gane" />
+         <actor editor-id="Assur" />
+         <actor editor-id="Birna" />
+         <actor editor-id="BrelynaMaryon" name="Brelyna Maryon" />
+         <actor editor-id="ColetteMarence" name="Colette Marence" />
+         <actor editor-id="DA01Aranea" name="Aranea" />
+         <actor editor-id="Dagur" />
+         <actor editor-id="DrevisNeloren" name="Drevis Neloren" />
+         <actor editor-id="Eirid" />
+         <actor editor-id="Enthir" />
+         <actor editor-id="Faralda" />
+         <actor editor-id="Haran" />
+         <actor editor-id="Jzargo" name="J'zargo" />
+         <actor editor-id="Korir" />
+         <actor editor-id="Kraldar" />
+         <actor editor-id="MalurSeloth" name="Malur Seloth" />
+         <actor editor-id="MirabelleErvine" name="Mirabelle Ervine" />
+         <actor editor-id="Nelacar" />
+         <actor editor-id="Nirya" />
+         <actor editor-id="Onmund" />
+         <actor editor-id="PhinisGestor" name="Phinis Gestor" />
+         <actor editor-id="Ranmir" />
+         <actor editor-id="SavosAren" name="Savos Aren" />
+         <actor editor-id="SergiusTurrianus" name="Sergius Turrianus" />
+         <actor editor-id="Thaena" />
+         <actor editor-id="Thonjolf" />
+         <actor editor-id="Tolfdir" />
+         <actor editor-id="UraggroShub" name="Urag gro-Shub" />
       </actors>
+      
+      <macro name="conditions-entity-inside-college-ext">
+         <parameter name="OF" />
+         <data>
+            <parent-world of="%OF%" is="Tamriel" />
+            <or>
+               <x of="%OF%" gte="112944" />
+               <x of="%OF%" lte="119600" />
+               <y of="%OF%" gte="108208" />
+               <y of="%OF%" lte="114864" />
+               <z of="%OF%" gte="-8544" />
+            </or>
+         </data>
+      </macro>
+      <macro name="conditions-entity-inside-college-int">
+         <parameter name="OF" />
+         <data>
+            <or>
+               <parent-cell of="%OF%" is="WinterholdCollegeArcanaeum" />
+               <parent-cell of="%OF%" is="WinterholdCollegeArchMageQuarters" />
+               <parent-cell of="%OF%" is="WinterholdCollegeHallofAttainment" />
+               <parent-cell of="%OF%" is="WinterholdCollegeHallofCountenance" />
+               <parent-cell of="%OF%" is="WinterholdCollegeHallofTheElements" />
+               <parent-cell of="%OF%" is="WinterholdCollegeMidden01" />
+               <parent-cell of="%OF%" is="WinterholdCollegeMidden02" />
+            </or>
+         </data>
+      </macro>
+      
+      <macro name="conditions-entity-outside-college-ext">
+         <parameter name="OF" />
+         <data>
+            <parent-world of="%OF%" is="Tamriel" />
+            <or>
+               <x of="%OF%" lt="112944" />
+               <x of="%OF%" gt="119600" />
+               <y of="%OF%" lt="108208" />
+               <y of="%OF%" gt="114864" />
+               <z of="%OF%" lt="-8544" />
+            </or>
+         </data>
+      </macro>
+      <macro name="conditions-entity-outside-college-int">
+         <parameter name="OF" />
+         <data>
+            <or>
+               <parent-cell of="%OF%" is="WinterholdJail" />
+               <parent-cell of="%OF%" is="WinterholdJarlsLonghouse" />
+               <parent-cell of="%OF%" is="WinterholdKorirshouse" />
+               <parent-cell of="%OF%" is="WinterholdRanmirshouse" />
+               <parent-cell of="%OF%" is="WinterholdTheFrozenHearth" />
+               <parent-cell of="%OF%" is="WinterholdTheFrozenHearthCellar" />
+            </or>
+         </data>
+      </macro>
       
       <invoke name="common-super-near-player" />
       <top-g slug="SameInterior">
@@ -21,11 +118,11 @@
          </conditions>
          
          <!--
-            TODO: different-floors checks
+            TODO: per-room checks for the city hall and inn
          -->
          
          <!--
-            TODO: per-room checks for the city hall and inn
+            TODO: different-floors checks
          -->
          
          <shared-info id="shared-same-building" />
@@ -35,7 +132,195 @@
             <is-in-interior of="subject" />
          </conditions>
          
-         <!-- TODO -->
+         <g name="somewhere-in-college">
+            <conditions>
+               <invoke name="conditions-entity-inside-college-int">
+                  <parameter name="OF" value="subject" />
+               </invoke>
+            </conditions>
+            <g name="speaker-outside-college-ext">
+               <conditions>
+                  <invoke name="conditions-entity-outside-college-ext">
+                     <parameter name="OF" value="speaker" />
+                  </invoke>
+               </conditions>
+               <shared-info id="winterhold-somewhere-in-college" />
+            </g>
+            <g name="speaker-outside-college-int">
+               <conditions>
+                  <invoke name="conditions-entity-outside-college-int">
+                     <parameter name="OF" value="speaker" />
+                  </invoke>
+               </conditions>
+               <shared-info id="winterhold-somewhere-in-college" />
+            </g>
+         </g>
+         
+         <g name="college-arcanaeum">
+            <conditions>
+               <parent-cell of="subject" is="WinterholdCollegeArcanaeum" />
+            </conditions>
+            <line>He's in the Arcanaeum.</line>
+         </g>
+         <g name="college-archmage-quarters">
+            <conditions>
+               <parent-cell of="subject" is="WinterholdCollegeArchMageQuarters" />
+            </conditions>
+            <line>He's in the Arch-Mage's quarters.</line>
+         </g>
+         <g name="college-hall-attainment">
+            <conditions>
+               <parent-cell of="subject" is="WinterholdCollegeHallofAttainment" />
+            </conditions>
+            <line>He's in the Hall of Attainment.</line>
+         </g>
+         <g name="college-hall-countenance">
+            <conditions>
+               <parent-cell of="subject" is="WinterholdCollegeHallofCountenance" />
+            </conditions>
+            <line>He's in the Hall of Countenance.</line>
+         </g>
+         <g name="college-hall-elements">
+            <conditions>
+               <parent-cell of="subject" is="WinterholdCollegeHallofTheElements" />
+            </conditions>
+            <line>He's in the Hall of the Elements.</line>
+         </g>
+         <g name="college-midden">
+            <g name="subject-inside-speaker-outside">
+               <conditions>
+                  <or>
+                     <parent-cell of="subject" is="WinterholdCollegeMidden01" />
+                     <parent-cell of="subject" is="WinterholdCollegeMidden02" />
+                  </or>
+                  <parent-cell of="speaker" is-not="WinterholdCollegeMidden01" />
+                  <parent-cell of="speaker" is-not="WinterholdCollegeMidden02" />
+               </conditions>
+               <line>I believe he's down in the Midden.</line>
+               <line>He's somewhere in the Midden.</line>
+            </g>
+            <g name="dark-from-light">
+               <conditions>
+                  <parent-cell of="subject" is="WinterholdCollegeMidden02" />
+                  <parent-cell of="speaker" is="WinterholdCollegeMidden01" />
+               </conditions>
+               <line>He's down in the Midden Dark.</line>
+            </g>
+            <g name="light-from-dark">
+               <conditions>
+                  <parent-cell of="subject" is="WinterholdCollegeMidden01" />
+                  <parent-cell of="speaker" is="WinterholdCollegeMidden02" />
+               </conditions>
+               <line>He's up in the rest of the Midden.</line>
+            </g>
+         </g>
+         <g name="jail">
+            <conditions>
+               <parent-cell of="subject" is="WinterholdJail" />
+            </conditions>
+            <line>He's in Winterhold's jail.</line>
+         </g>
+         <g name="jarl-longhouse">
+            <conditions>
+               <parent-cell of="subject" is="WinterholdJarlsLonghouse" />
+            </conditions>
+            <line>He's in the Jarl's longhouse.</line>
+         </g>
+         <g name="house-kraldar">
+            <conditions>
+               <parent-cell of="subject" is="WinterholdKorirshouse" />
+            </conditions>
+            <g name="asking-kraldar">
+               <conditions>
+                  <actor-base of="speaker" is="Kraldar" />
+               </conditions>
+               <shared-info id="shared-at-my-home" />
+            </g>
+            <g name="asking-about-kraldar">
+               <conditions>
+                  <actor-base of="subject" is="Kraldar" />
+               </conditions>
+               <shared-info id="shared-at-own-home" />
+            </g>
+            <g name="asking-about-thonjolf">
+               <conditions>
+                  <actor-base of="subject" is="Thonjolf" />
+               </conditions>
+               <line>He works for Kraldar. I think he's at Kraldar's house right now.</line>
+            </g>
+            <line>I think he's visiting Kraldar's house right now.</line>
+            <line>He should be at Kraldar's house.</line>
+         </g>
+         <g name="birna-oddments">
+            <conditions>
+               <parent-cell of="subject" is="WinterholdRanmirshouse" />
+            </conditions>
+            <g name="asking-about-merchant">
+               <conditions>
+                  <actor-base of="subject" is="Birna" />
+                  <offers-services of="subject" />
+               </conditions>
+               <line>He runs a general goods store out of his home. He should be working there now.</line>
+               <line>He runs Birna's Oddments. Try checking there.</line>
+            </g>
+            <g name="asking-about-resident">
+               <conditions>
+                  <or>
+                     <actor-base of="subject" is="Birna" />
+                     <actor-base of="subject" is="Ranmir" />
+                  </or>
+               </conditions>
+               <g name="asking-resident">
+                  <conditions>
+                     <or>
+                        <actor-base of="speaker" is="Birna" />
+                        <actor-base of="speaker" is="Ranmir" />
+                     </or>
+                  </conditions>
+                  <shared-info id="shared-at-our-home" />
+               </g>
+               <shared-info id="shared-at-own-home" />
+            </g>
+            <line>He's in Birna's Oddments.</line>
+            <line>I saw him stopping by Birna's Oddments earlier.</line>
+         </g>
+         <g name="frozen-hearth">
+            <g name="speaker-outside">
+               <conditions>
+                  <or>
+                     <parent-cell of="subject" is="WinterholdTheFrozenHearth" />
+                     <parent-cell of="subject" is="WinterholdTheFrozenHearthCellar" />
+                  </or>
+                  <parent-cell of="speaker" is-not="WinterholdTheFrozenHearth" />
+                  <parent-cell of="speaker" is-not="WinterholdTheFrozenHearthCellar" />
+               </conditions>
+               <g name="asking-about-staff">
+                  <conditions>
+                     <or>
+                        <actor-base of="subject" is="Dagur" />
+                        <actor-base of="subject" is="Haran" />
+                     </or>
+                  </conditions>
+                  <line>He works at The Frozen Hearth. I'd check in there.</line>
+               </g>
+               <line>He's at The Frozen Hearth.</line>
+               <line>I saw him walk into The Frozen Hearth earlier.</line>
+            </g>
+            <g name="speaker-upstairs-subject-in-cellar">
+               <conditions>
+                  <parent-cell of="subject" is="WinterholdTheFrozenHearthCellar" />
+                  <parent-cell of="speaker" is="WinterholdTheFrozenHearth" />
+               </conditions>
+               <line>He's down in the cellar.</line>
+            </g>
+            <g name="speaker-in-cellar-subject-upstairs">
+               <conditions>
+                  <parent-cell of="subject" is="WinterholdTheFrozenHearth" />
+                  <parent-cell of="speaker" is="WinterholdTheFrozenHearthCellar" />
+               </conditions>
+               <shared-info id="shared-upstairs" />
+            </g>
+         </g>
          
          <invoke name="common-me-outside-they-inside" />
       </top-g>
@@ -43,6 +328,14 @@
          <conditions>
             <parent-world of="subject" is="Tamriel" />
          </conditions>
+         
+         <g name="speaker-in-college-subject-in-town-ext">
+            <conditions>
+               <invoke name="conditions-entity-outside-college-ext">
+                  <parameter name="OF" value="subject" />
+               </invoke>
+            </conditions>
+         </g>
          
          <g name="jarl-longhouse">
             <conditions>
@@ -52,6 +345,7 @@
                <y of="subject" lte="101728" />
             </conditions>
             <line>He's out in front of the Jarl's longhouse.</line>
+            <line>He's near the Jarl's longhouse.</line>
          </g>
          <g name="frozen-hearth">
             <conditions>
@@ -61,6 +355,7 @@
                <y of="subject" lte="102896" />
             </conditions>
             <line>He's over by The Frozen Hearth.</line>
+            <line>I saw him around The Frozen Hearth earlier.</line>
          </g>
          <g name="frozen-hearth-back">
             <conditions>
@@ -72,14 +367,18 @@
             <line>He's back behind The Frozen Hearth.</line>
          </g>
          
-         <g name="house-korir">
+         <g name="house-kraldar">
             <conditions>
                <x of="subject" gte="107296" />
                <x of="subject" lte="109328" />
                <y of="subject" gte="103488" />
                <y of="subject" lte="105136" />
             </conditions>
-            <line>He's hanging around Korir's house.</line>
+            <invoke name="mixin-house-one-resident-ext-owner-cases">
+               <parameter name="OWNER" value="Kraldar" />
+            </invoke>
+            <line>He's hanging around Kraldar's house.</line>
+            <line>He's over by Kraldar's house.</line>
          </g>
          <g name="house-ranmir">
             <conditions>
@@ -88,7 +387,20 @@
                <y of="subject" gte="102208" />
                <y of="subject" lte="103488" />
             </conditions>
-            <line>He's hanging around Ranmir's house.</line>
+            <g name="asking-about-birna">
+               <conditions>
+                  <actor-base of="subject" is="Birna" />
+               </conditions>
+               <line>She's near her store. Birna's Oddments, on the west side of town.</line>
+            </g>
+            <g name="asking-about-ranmir">
+               <conditions>
+                  <actor-base of="subject" is="Ranmir" />
+               </conditions>
+               <line>He's near his home. He lives with Birna in her shop, Birna's Oddments.</line>
+            </g>
+            <line>He's hanging around Birna's Oddments.</line>
+            <line>I saw him pass by Birna's Oddments not too long ago.</line>
          </g>
          
          <g name="west-trail">
@@ -128,20 +440,35 @@
                <z of="subject" gte="-8544" />
             </conditions>
             <line>He's on the bridge to the College.</line>
+            <line>I think he was headed toward the College. Check the bridge.</line>
          </g>
          
          <g name="college">
-            <g name="speaker-outside-college">
+            <g name="anywhere">
+               <!--
+                  Lines for subject inside college (exterior), speaker outside college.
+               -->
                <conditions>
-                  <or>
-                     <x of="subject" lt="112944" />
-                     <x of="subject" gt="119600" />
-                     <y of="subject" lt="108208" />
-                     <y of="subject" gt="114864" />
-                     <z of="speaker" lt="-8544" />
-                  </or>
+                  <invoke name="conditions-entity-inside-college-ext">
+                     <parameter name="OF" value="subject" />
+                  </invoke>
                </conditions>
-               <line>He's somewhere in the College.</line>
+               <g name="speaker-outside-college-ext">
+                  <conditions>
+                     <invoke name="conditions-entity-outside-college-ext">
+                        <parameter name="OF" value="speaker" />
+                     </invoke>
+                  </conditions>
+                  <shared-info id="winterhold-somewhere-in-college" />
+               </g>
+               <g name="speaker-outside-college-int">
+                  <conditions>
+                     <invoke name="conditions-entity-outside-college-int">
+                        <parameter name="OF" value="speaker" />
+                     </invoke>
+                  </conditions>
+                  <shared-info id="winterhold-somewhere-in-college" />
+               </g>
             </g>
             <g name="courtyard">
                <conditions>
@@ -152,7 +479,7 @@
                   <z of="subject" gte="-7888" />
                   <z of="subject" lte="-6928" />
                </conditions>
-               <line>He's in the College courtyard.</line>
+               <line>He's in the courtyard.</line>
             </g>
             <g name="hall-attainment-roof">
                <conditions>

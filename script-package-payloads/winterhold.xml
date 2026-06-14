@@ -16,6 +16,7 @@
          <or>
             <faction-membership of="speaker" includes="TownWinterholdFaction" />
             <faction-membership of="speaker" includes="CollegeofWinterholdFaction" />
+            <actor-base of="speaker" is="Ancano" />
          </or>
          <faction-membership of="speaker" excludes="GuardFactionWinterhold" />
          <actor-base of="speaker" is-not="MGArnielSummon" />
@@ -25,6 +26,22 @@
          <location of="speaker" is="WinterholdLocation" />
       </dialogue-conditions>
       <actors>
+         <actor editor-id="Ancano">
+            <begin-asking-to>
+               <topic slug="Unhelpful">
+                  <g name="rude-to-student" non-exclusive="true">
+                     <conditions>
+                        <!-- The player becomes a student once Faralda says they are one: -->
+                        <quest-stage for="MG01" done="30" />
+                     </conditions>
+                     <line emotion="disgust:15" script-notes="haughty. &quot;hey, idiot, maybe go bother them instead?&quot;">Perhaps one of the faculty here can help you instead?</line>
+                     <line emotion="disgust:15" script-notes="haughty">This seems like a question for one of your professors, not for me.</line>
+                  </g>
+                  <line emotion="disgust:15" script-notes="haughty. emphasis on &quot;not&quot;">Helping you find your way around is not my priority.</line>
+                  <line emotion="disgust:15" script-notes="haughty">You had best find someone else to help you with that.</line>
+               </topic>
+            </begin-asking-to>
+         </actor>
          <actor editor-id="ArnielGane" name="Arniel Gane" />
          <actor editor-id="Assur" />
          <actor editor-id="Birna" />

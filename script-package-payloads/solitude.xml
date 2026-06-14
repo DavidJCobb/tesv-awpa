@@ -15,34 +15,36 @@
       </dialogue-conditions>
       
       <macro name="docks-npc-filter-conditions">
-         <begin-asking-about>
-            <!--
-               NPCs that reside on the docks can only be asked about when you ask 
-               someone who is at the docks.
-            -->
-            <filter-conditions>
-               <or>
-                  <x of="speaker" gte="-69632" />
-                  <parent-cell of="speaker" is="SolitudeRedWave" />
-               </or>
-               <or>
-                  <x of="speaker" lte="-61440" />
-                  <parent-cell of="speaker" is="SolitudeRedWave" />
-               </or>
-               <or>
-                  <y of="speaker" gte="91504" />
-                  <parent-cell of="speaker" is="SolitudeRedWave" />
-               </or>
-               <or>
-                  <y of="speaker" lte="102400" />
-                  <parent-cell of="speaker" is="SolitudeRedWave" />
-               </or>
-               <or>
-                  <z of="speaker" lte="-11472" />
-                  <parent-cell of="speaker" is="SolitudeRedWave" />
-               </or>
-            </filter-conditions>
-         </begin-asking-about>
+         <data>
+            <begin-asking-about>
+               <!--
+                  NPCs that reside on the docks can only be asked about when you ask 
+                  someone who is at the docks.
+               -->
+               <filter-conditions>
+                  <or>
+                     <x of="speaker" gte="-69632" />
+                     <parent-cell of="speaker" is="SolitudeRedWave" />
+                  </or>
+                  <or>
+                     <x of="speaker" lte="-61440" />
+                     <parent-cell of="speaker" is="SolitudeRedWave" />
+                  </or>
+                  <or>
+                     <y of="speaker" gte="91504" />
+                     <parent-cell of="speaker" is="SolitudeRedWave" />
+                  </or>
+                  <or>
+                     <y of="speaker" lte="102400" />
+                     <parent-cell of="speaker" is="SolitudeRedWave" />
+                  </or>
+                  <or>
+                     <z of="speaker" lte="-11472" />
+                     <parent-cell of="speaker" is="SolitudeRedWave" />
+                  </or>
+               </filter-conditions>
+            </begin-asking-about>
+         </data>
       </macro>
       
       <actors>
@@ -71,7 +73,7 @@
          <actor editor-id="EvetteSan" name="Evette San" />
          <actor editor-id="FalkFirebeard" name="Falk Firebeard" />
          <actor editor-id="Fihada" />
-         <actor editor-id="Freie" />
+         <actor editor-id="Freir" />
          <actor editor-id="Fridrika" />
          <actor editor-id="Gadnor" />
          <actor editor-id="GeneralTullius" name="General Tullius" />
@@ -87,7 +89,7 @@
             <begin-asking-about>
                <filter-conditions>
                   <!-- actor ref is enabled once Proudspire Manor is purchased -->
-                  <quest-state for="Favor252" done="25" />
+                  <quest-stage for="Favor252" done="25" />
                </filter-conditions>
             </begin-asking-about>
          </actor>

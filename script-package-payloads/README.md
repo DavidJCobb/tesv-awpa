@@ -1,0 +1,1 @@
+The "bake" process produces modified XML with generated form IDs, etc., embedded inside. Those should be kept here; the original files (sans that content) should be in the `script-package-payloads-initial` folder for easier review.

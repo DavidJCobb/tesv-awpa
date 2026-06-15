@@ -111,6 +111,13 @@
          <actor editor-id="GeneralTullius" name="General Tullius">
             <begin-asking-to>
                <topic>
+                  <!--
+                     If you haven't joined the Imperials, Tullius has lines 
+                     wherein he threatens you with imprisonment if you keep 
+                     pestering him. Even after joining the Empire, he can 
+                     still be blunt and mildly rude. Best to aim just a bit 
+                     below that.
+                  -->
                   <line script-notes="blunt">I'm a general, not a steward.</line>
                   <line emotion="puzzled:15" script-notes="somewhat annoyed; it makes no sense to bother you about this">You might try asking someone local to Solitude?</line>
                </topic>

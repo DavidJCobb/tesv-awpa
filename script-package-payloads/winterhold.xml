@@ -46,7 +46,19 @@
          <actor editor-id="Birna" />
          <actor editor-id="BrelynaMaryon" name="Brelyna Maryon" />
          <actor editor-id="ColetteMarence" name="Colette Marence" />
-         <actor editor-id="DA01Aranea" name="Aranea" />
+         <actor editor-id="DA01Aranea" name="Aranea Ienith">
+            <begin-asking-about>
+               <filter-conditions>
+                  <!--
+                     Aranea is in TownWinterholdFaction, but she never actually leaves 
+                     the Shrine of Azura. In case any mods might change things, let's 
+                     keep her in the active list, but limit asking about her to when 
+                     (or rather if) she's in town.
+                  -->
+                  <location of="subject" is="WinterholdLocation" />
+               </filter-conditions>
+            </begin-asking-about>
+         </actor>
          <actor editor-id="Dagur" />
          <actor editor-id="DrevisNeloren" name="Drevis Neloren" />
          <actor editor-id="Eirid" />

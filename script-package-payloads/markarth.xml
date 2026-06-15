@@ -45,7 +45,14 @@
          <actor editor-id="Hathrasil" />
          <actor editor-id="HirelingVorstag" name="Vorstag" />
          <actor editor-id="HogniRedArm" name="Hogni Red-Arm" />
-         <actor editor-id="HousecarlMarkarth" name="Argis the Bulwark" />
+         <actor editor-id="HousecarlMarkarth" name="Argis the Bulwark">
+            <begin-asking-about>
+               <filter-conditions>
+                  <!-- actor ref is enabled once Vlindrel Hall is purchased -->
+                  <quest-stage for="Favor250" done="25" />
+               </filter-conditions>
+            </begin-asking-about>
+         </actor>
          <actor editor-id="Hreinn" />
          <actor editor-id="Hroki" />
          <actor editor-id="Igmund">
@@ -68,7 +75,33 @@
          <actor editor-id="Nepos" name="Nepos the Nose" />
          <actor editor-id="Ogmund" />
          <actor editor-id="Omluag" />
-         <actor editor-id="Ondolemar" />
+         <actor editor-id="Ondolemar">
+            <!--
+               When the Stormcloaks take Markarth, Ondolemar is killed and 
+               disabled. Interestingly enough, this is done by a package 
+               fragment, and the package's editor ID suggests that earlier 
+               in development, Ondolemar was simply exiled to the Blue 
+               Palace akin to other members of Imperial-aligned courts. As 
+               such, we don't need any special handling for a Stormcloak 
+               takeover of the city, at least for this NPC.
+            -->
+            <begin-asking-to>
+               <topic>
+                  <!--
+                     Ondolemar's behavior to the player becomes ever so 
+                     slightly warmer if you help him catch a local Talos 
+                     worshipper. It resets if you spend that goodwill on 
+                     causing a distraction at the Thalmor Embassy later.
+                  -->
+                  <conditions>
+                     <relationship-rank of="subject" with="player" lt="1" />
+                  </conditions>
+                  <line emotion="disgust:40">No. I have more important matters to attend to.</line>
+                  <line emotion="disgust:50">My priority is dealing with Talos worshippers and other heretics, not acting as the citizenry's tour guide.</line>
+                  <line emotion="disgust:35" script-notes="you've been asked if you can help the player find someone, but the player isn't worth your time; stress &quot;finding&quot; in your reply as a way of throwing the player's words back at them">The only people I'm interested in finding are heretics. Unless you'd like to report any, we have little to talk about.</line>
+               </topic>
+            </begin-asking-to>
+         </actor>
          <actor editor-id="Orla" />
          <actor editor-id="Raerek" />
          <actor editor-id="Reburrus" name="Reburrus Quintilius" />

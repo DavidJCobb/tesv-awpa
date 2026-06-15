@@ -75,7 +75,12 @@
          <actor editor-id="Lortheim" />
          <actor editor-id="Luaffyn" />
          <actor editor-id="HousecarlWindhelm" name="Calder">
-            <!-- TODO: Only after he becomes available -->
+            <begin-asking-about>
+               <filter-conditions>
+                  <!-- actor ref is enabled once Hjerim is purchased -->
+                  <quest-stage for="Favor254" done="25" />
+               </filter-conditions>
+            </begin-asking-about>
          </actor>
          <actor editor-id="MalthyrElenil" name="Malthyr Elenil" />
          <actor editor-id="Neetrenaza" />

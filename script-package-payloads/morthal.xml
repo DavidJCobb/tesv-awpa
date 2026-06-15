@@ -10,20 +10,6 @@
          
          <location of="speaker" is="MorthalLocation" />
       </dialogue-conditions>
-      
-      <condition-set name="sorli-is-jarl">
-         <faction-membership of="Sorli" includes="JobJarlFaction" />
-      </condition-set>
-      <macro name="sorli-court-member">
-         <data>
-            <begin-asking-about>
-               <filter-conditions>
-                  <condition-set name="sorli-is-jarl" />
-               </filter-conditions>
-            </begin-asking-about>
-         </data>
-      </macro>
-      
       <actors>
          <actor editor-id="Agni" />
          <actor editor-id="Alva">
@@ -59,10 +45,18 @@
          <actor editor-id="Joric" />
          <actor editor-id="Lami" />
          <actor editor-id="Pactur">
-            <invoke name="sorli-court-member" />
+            <begin-asking-about>
+               <filter-conditions>
+                  <faction-membership of="subject" includes="JobStewardFaction" />
+               </filter-conditions>
+            </begin-asking-about>
          </actor>
          <actor editor-id="Sorli" name="Sorli the Builder">
-            <invoke name="sorli-court-member" />
+            <begin-asking-about>
+               <filter-conditions>
+                  <faction-membership of="subject" includes="JobJarlFaction" />
+               </filter-conditions>
+            </begin-asking-about>
             <begin-asking-to>
                <topic>
                   <conditions>

@@ -1,5 +1,5 @@
 <payload>
-   <quest locations="MorthalLocation" id="AWPAMorthal">
+   <quest id="AWPAMorthal" locations="MorthalLocation">
       <dialogue-conditions>
          <or>
             <faction-membership of="speaker" includes="TownMorthalFaction" />
@@ -19,7 +19,7 @@
                      Don't allow asking about Alva once she's outed as a vampire.
                   -->
                   <quest-not-completed name="MS14" />
-                  <papyrus-quest-variable var="::PCFoundAlvasCoffin_var" for="MS14" eq="0" />
+                  <papyrus-quest-variable for="MS14" var="::PCFoundAlvasCoffin_var" eq="0" />
                </filter-conditions>
             </begin-asking-about>
          </actor>
@@ -28,7 +28,7 @@
          <actor editor-id="Falion" />
          <actor editor-id="Gorm" />
          <actor editor-id="Hroggar" />
-         <actor editor-id="IdgrodRavencrone" name="Idgrod Ravencrone">
+         <actor name="Idgrod Ravencrone" editor-id="IdgrodRavencrone">
             <!--
                I have most Jarls respond to "Can you help me find someone?" by 
                telling the player to ask the steward instead. I am notably *not* 
@@ -39,7 +39,7 @@
                one would expect.
             -->
          </actor>
-         <actor editor-id="IdgrodTheYounger" name="Idgrod the Younger" />
+         <actor name="Idgrod the Younger" editor-id="IdgrodTheYounger" />
          <actor editor-id="Jonna" />
          <actor editor-id="Jorgen" />
          <actor editor-id="Joric" />
@@ -51,7 +51,7 @@
                </filter-conditions>
             </begin-asking-about>
          </actor>
-         <actor editor-id="Sorli" name="Sorli the Builder">
+         <actor name="Sorli the Builder" editor-id="Sorli">
             <begin-asking-about>
                <filter-conditions>
                   <faction-membership of="subject" includes="JobJarlFaction" />
@@ -62,7 +62,7 @@
                   <conditions>
                      <faction-membership of="speaker" includes="JobJarlFaction" />
                   </conditions>
-                  <shared-info id="shared-refer-to-steward-neutral" />
+                  <shared-info id="shared-refer-to-steward-neutral" form-ids="01001E02,01001E03,01001E04" />
                </topic>
             </begin-asking-to>
          </actor>
@@ -89,7 +89,7 @@
                <conditions>
                   <parent-cell of="subject" is="MorthalThaumaturgistsHut" />
                </conditions>
-               <constant value="240" name="height-coordinate-2f" />
+               <constant name="height-coordinate-2f" value="240" />
                <!--<invoke name="mixin-interior-1f-2f-no-rooms" />-->
             <g name="upstairs">
                <conditions>

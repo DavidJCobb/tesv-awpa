@@ -9,7 +9,7 @@
       </shared-info>
    </shared-infos>
    
-   <quest locations="WindhelmLocation" id="AWPAWindhelm">
+   <quest id="AWPAWindhelm" locations="WindhelmLocation">
       <dialogue-conditions>
          <or>
             <faction-membership of="speaker" includes="TownWindhelmFaction" />
@@ -34,47 +34,47 @@
          <location of="speaker" is="WindhelmLocation" />
       </dialogue-conditions>
       <actors>
-         <actor editor-id="Adelaisa" name="Adelaisa Vendicci" />
-         <actor editor-id="AdonatoLeotelli" name="Adonato Leotelli" />
-         <actor editor-id="AmbarysRendar" name="Ambarys Rendar" />
-         <actor editor-id="Angrenor" name="Angrenor Once-Honored" />
+         <actor name="Adelaisa Vendicci" editor-id="Adelaisa" />
+         <actor name="Adonato Leotelli" editor-id="AdonatoLeotelli" />
+         <actor name="Ambarys Rendar" editor-id="AmbarysRendar" />
+         <actor name="Angrenor Once-Honored" editor-id="Angrenor" />
          <actor editor-id="Arivanya" />
-         <actor editor-id="AvalAtheron" name="Aval Atheron" />
-         <actor editor-id="AventusAretino" name="Aventus Aretino" />
-         <actor editor-id="BelynHlaalu" name="Belyn Hlaalu" />
-         <actor editor-id="Brunwulf" name="Brunwulf Free-Winter">
+         <actor name="Aval Atheron" editor-id="AvalAtheron" />
+         <actor name="Aventus Aretino" editor-id="AventusAretino" />
+         <actor name="Belyn Hlaalu" editor-id="BelynHlaalu" />
+         <actor name="Brunwulf Free-Winter" editor-id="Brunwulf">
             <begin-asking-to>
                <topic>
                   <conditions>
                      <faction-membership of="speaker" includes="JobJarlFaction" />
                   </conditions>
-                  <shared-info id="shared-refer-to-steward-neutral" />
+                  <shared-info id="shared-refer-to-steward-neutral" form-ids="01001E17,01001E18,01001E19" />
                </topic>
             </begin-asking-to>
          </actor>
-         <actor editor-id="Calixto" name="Calixto Corrium" />
-         <actor editor-id="CaptainLonelyGale" name="Captain Lonely-Gale" />
-         <actor editor-id="Elda" name="Elda Early-Dawn" />
-         <actor editor-id="FarylAtheron" name="Faryl Atheron" />
-         <actor editor-id="Galmar" name="Galmar Stone-Fist">
+         <actor name="Calixto Corrium" editor-id="Calixto" />
+         <actor name="Captain Lonely-Gale" editor-id="CaptainLonelyGale" />
+         <actor name="Elda Early-Dawn" editor-id="Elda" />
+         <actor name="Faryl Atheron" editor-id="FarylAtheron" />
+         <actor name="Galmar Stone-Fist" editor-id="Galmar">
             <begin-asking-to>
                <topic>
-                  <line>That seems like a question you should ask the steward.</line>
-                  <line>My focus is on fighting for all of Skyrim. The steward tends to our city.</line>
+                  <line form-id-u="01001E1A">That seems like a question you should ask the steward.</line>
+                  <line form-id-u="01001E1B">My focus is on fighting for all of Skyrim. The steward tends to our city.</line>
                </topic>
             </begin-asking-to>
          </actor>
-         <actor editor-id="GemmaUriel" name="Gemma Uriel" />
+         <actor name="Gemma Uriel" editor-id="GemmaUriel" />
          <actor editor-id="Grimvar" />
          <actor editor-id="Helgird" />
          <actor editor-id="Hermir" />
          <actor editor-id="Hillevi" />
-         <actor editor-id="IdesaSadri" name="Idesa Sadri" />
+         <actor name="Idesa Sadri" editor-id="IdesaSadri" />
          <actor editor-id="Jora" />
          <actor editor-id="Jorleif" />
          <actor editor-id="Lortheim" />
          <actor editor-id="Luaffyn" />
-         <actor editor-id="HousecarlWindhelm" name="Calder">
+         <actor name="Calder" editor-id="HousecarlWindhelm">
             <begin-asking-about>
                <filter-conditions>
                   <!-- actor ref is enabled once Hjerim is purchased -->
@@ -82,30 +82,30 @@
                </filter-conditions>
             </begin-asking-about>
          </actor>
-         <actor editor-id="MalthyrElenil" name="Malthyr Elenil" />
+         <actor name="Malthyr Elenil" editor-id="MalthyrElenil" />
          <actor editor-id="Neetrenaza" />
          <actor editor-id="Nils" />
-         <actor editor-id="Nilsine" name="Nilsine Shatter-Shield" />
+         <actor name="Nilsine Shatter-Shield" editor-id="Nilsine" />
          <actor editor-id="Niranye" />
          <actor editor-id="Nurelion" />
-         <actor editor-id="Oengul" name="Oengul War-Anvil" />
-         <actor editor-id="OrthusEndario" name="Orthus Endario" />
-         <actor editor-id="QuintusNavale" name="Quintus Navale" />
-         <actor editor-id="RevynSadri" name="Revyn Sadri" />
-         <actor editor-id="Rolff" name="Rolff Stone-Fist" />
-         <actor editor-id="ScoutsManyMarshes" name="Scouts-Many-Marshes" />
+         <actor name="Oengul War-Anvil" editor-id="Oengul" />
+         <actor name="Orthus Endario" editor-id="OrthusEndario" />
+         <actor name="Quintus Navale" editor-id="QuintusNavale" />
+         <actor name="Revyn Sadri" editor-id="RevynSadri" />
+         <actor name="Rolff Stone-Fist" editor-id="Rolff" />
+         <actor name="Scouts-Many-Marshes" editor-id="ScoutsManyMarshes" />
          <actor editor-id="Shahvee" />
-         <actor editor-id="Sifnar" name="Sifnar Ironkettle" />
-         <actor editor-id="Silda" name="Silda the Unseen" />
-         <actor editor-id="StandsInShallows" name="Stands-In-Shallows" />
-         <actor editor-id="HirelingStenvar" name="Stenvar" />
+         <actor name="Sifnar Ironkettle" editor-id="Sifnar" />
+         <actor name="Silda the Unseen" editor-id="Silda" />
+         <actor name="Stands-In-Shallows" editor-id="StandsInShallows" />
+         <actor name="Stenvar" editor-id="HirelingStenvar" />
          <actor editor-id="Sulvar" />
-         <actor editor-id="Susanna" name="Susanna the Wicked" />
-         <actor editor-id="SuvarisAtheron" name="Suvaris Atheron" />
-         <actor editor-id="Torbjorn" name="Torbjorn Shatter-Shield" />
-         <actor editor-id="Torsten" name="Torsten Cruel-Sea" />
-         <actor editor-id="Tova" name="Tova Shatter-Shield" />
-         <actor editor-id="Ulfric" name="Ulfric Stormcloak">
+         <actor name="Susanna the Wicked" editor-id="Susanna" />
+         <actor name="Suvaris Atheron" editor-id="SuvarisAtheron" />
+         <actor name="Torbjorn Shatter-Shield" editor-id="Torbjorn" />
+         <actor name="Torsten Cruel-Sea" editor-id="Torsten" />
+         <actor name="Tova Shatter-Shield" editor-id="Tova" />
+         <actor name="Ulfric Stormcloak" editor-id="Ulfric">
             <begin-asking-to>
                <topic>
                   <!--
@@ -113,14 +113,14 @@
                      wherein he threatens you with arrest if you continue to 
                      pester him. He uses an arrogant tone. Best to match it.
                   -->
-                  <shared-info id="shared-refer-to-steward-haughty" />
+                  <shared-info id="shared-refer-to-steward-haughty" form-ids="01001E1C,01001E1D,01001E1E" />
                </topic>
             </begin-asking-to>
          </actor>
          <actor editor-id="Ulundil" />
-         <actor editor-id="ViolaGiordano" name="Viola Giordano" />
-         <actor editor-id="VoldseaGiryon" name="Voldsea Giryon" />
-         <actor editor-id="Wuunferth" name="Wuunferth the Unliving">
+         <actor name="Viola Giordano" editor-id="ViolaGiordano" />
+         <actor name="Voldsea Giryon" editor-id="VoldseaGiryon" />
+         <actor name="Wuunferth the Unliving" editor-id="Wuunferth">
             <!-- TODO: overrides for when he's in jail -->
          </actor>
       </actors>
@@ -254,7 +254,7 @@
                      <parent-cell of="subject" is="WindhelmWhitePhial" />
                   </or>
                </conditions>
-               <constant value="320" name="height-coordinate-2f" />
+               <constant name="height-coordinate-2f" value="320" />
                <!--<invoke name="mixin-interior-1f-2f-no-rooms" />-->
             <g name="upstairs">
                <conditions>
@@ -277,7 +277,7 @@
                <conditions>
                   <parent-cell of="subject" is="WindhelmHjerim" />
                </conditions>
-               <constant value="192" name="height-coordinate-2f" />
+               <constant name="height-coordinate-2f" value="192" />
                <!--<invoke name="mixin-interior-1f-2f-no-rooms" />-->
             <g name="upstairs">
                <conditions>
@@ -300,7 +300,7 @@
                <conditions>
                   <parent-cell of="subject" is="WindhelmAtheronResidence" />
                </conditions>
-               <constant value="-448" name="height-coordinate-2f" />
+               <constant name="height-coordinate-2f" value="-448" />
                <!--<invoke name="mixin-interior-1f-2f-no-rooms" />-->
             <g name="upstairs">
                <conditions>
@@ -323,7 +323,7 @@
                <conditions>
                   <parent-cell of="subject" is="WindhelmHouseofClanCruelSea" />
                </conditions>
-               <constant value="1472" name="height-coordinate-2f" />
+               <constant name="height-coordinate-2f" value="1472" />
                <!--<invoke name="mixin-interior-1f-2f-no-rooms" />-->
             <g name="upstairs">
                <conditions>
@@ -346,7 +346,7 @@
                <conditions>
                   <parent-cell of="subject" is="WindhelmHouseofClanShatterShield" />
                </conditions>
-               <constant value="-192" name="height-coordinate-2f" />
+               <constant name="height-coordinate-2f" value="-192" />
                <!--<invoke name="mixin-interior-1f-2f-no-rooms" />-->
             <g name="upstairs">
                <conditions>
@@ -369,7 +369,7 @@
                <conditions>
                   <parent-cell of="subject" is="WindhelmViolaGiordanosHouse" />
                </conditions>
-               <constant value="256" name="height-coordinate-2f" />
+               <constant name="height-coordinate-2f" value="256" />
                <!--<invoke name="mixin-interior-1f-2f-no-rooms" />-->
             <g name="upstairs">
                <conditions>
@@ -392,8 +392,8 @@
                <conditions>
                   <parent-cell of="subject" is="WindhelmNewGnisisCornerclub" />
                </conditions>
-               <constant value="-256" name="height-coordinate-2f" />
-               <constant value="0" name="height-coordinate-3f" />
+               <constant name="height-coordinate-2f" value="-256" />
+               <constant name="height-coordinate-3f" value="0" />
                <!--<invoke name="common-interior-different-floors-1f-2f-3f" />-->
             <g name="upstairs">
                <conditions>
@@ -598,7 +598,7 @@
                         <actor-base of="subject" is="Stands-In-Shallows" />
                      </or>
                   </conditions>
-                  <line emotion="disgust:30" form-id-m="01001B2B" form-id-f="01001B2C">He's probably slacking off down at the Argonian Assemblage.</line>
+                  <line form-id-m="01001B2B" emotion="disgust:30" form-id-f="01001B2C">He's probably slacking off down at the Argonian Assemblage.</line>
                   <line emotion="anger:40" form-id-u="01001B2D">Wasting time in their quarters at the docks, no doubt.</line>
                </g>
                <g non-exclusive="true" name="asking-about-resident">
@@ -674,9 +674,9 @@
                            <actor-base of="speaker" is="Tova" />
                         </or>
                      </conditions>
-                     <line emotion="disgust:100" form-id-m="01001B41" form-id-f="01001B42">I heard he walked into the Butcher's old house earlier.</line>
-                     <line form-id-f="01001B44" emotion="disgust:100" form-id-m="01001B43" script-notes="slight venom on &#22;guards;&#22; resentment that they didn't solve the murders">For some reason, he's at the Butcher's old museum. Maybe he's looking for more clues the guards missed.</line>
-                     <line emotion="disgust:100" form-id-m="01001B45" form-id-f="01001B46">He's stopping by that wretch Calixto's house.</line>
+                     <line form-id-m="01001B41" emotion="disgust:100" form-id-f="01001B42">I heard he walked into the Butcher's old house earlier.</line>
+                     <line emotion="disgust:100" form-id-f="01001B44" form-id-m="01001B43" script-notes="slight venom on &#16;guards;&#16; resentment that they didn't solve the murders">For some reason, he's at the Butcher's old museum. Maybe he's looking for more clues the guards missed.</line>
+                     <line form-id-m="01001B45" emotion="disgust:100" form-id-f="01001B46">He's stopping by that wretch Calixto's house.</line>
                   </g>
                   <g non-exclusive="true" name="fancy">
                      <conditions>
@@ -689,12 +689,12 @@
                            <race of="speaker" is="ImperialRaceVampire" />
                         </or>
                      </conditions>
-                     <line emotion="anger:90" form-id-m="01001B47" form-id-f="01001B48">He's visiting the house Calixto used to live in. And while I'm on the subject, good riddance to that bastard!</line>
-                     <line form-id-f="01001B4A" emotion="anger:100" form-id-m="01001B49" script-notes='barely-restrained anger at first, with it coming out in full at "the one"'>He's at that old museum. You know, the one that belonged to the Butcher of Windhelm!</line>
+                     <line form-id-m="01001B47" emotion="anger:90" form-id-f="01001B48">He's visiting the house Calixto used to live in. And while I'm on the subject, good riddance to that bastard!</line>
+                     <line emotion="anger:100" form-id-f="01001B4A" form-id-m="01001B49" script-notes='barely-restrained anger at first, with it coming out in full at "the one"'>He's at that old museum. You know, the one that belonged to the Butcher of Windhelm!</line>
                   </g>
-                  <line emotion="disgust:80" form-id-m="01001B4B" form-id-f="01001B4C">He's at the Butcher's old house.</line>
-                  <line emotion="anger:80" form-id-m="01001B4D" form-id-f="01001B4E">He's visiting the house Calixto used to live in.</line>
-                  <line emotion="disgust:70" form-id-m="01001B4F" form-id-f="01001B50">He stopped by the Butcher's house for some reason.</line>
+                  <line form-id-m="01001B4B" emotion="disgust:80" form-id-f="01001B4C">He's at the Butcher's old house.</line>
+                  <line form-id-m="01001B4D" emotion="anger:80" form-id-f="01001B4E">He's visiting the house Calixto used to live in.</line>
+                  <line form-id-m="01001B4F" emotion="disgust:70" form-id-f="01001B50">He stopped by the Butcher's house for some reason.</line>
                </g>
                <g name="asking-about-resident">
                   <conditions>
@@ -757,7 +757,7 @@
                <conditions>
                   <parent-cell of="subject" is="WindhelmHjerim" />
                </conditions>
-               <line emotion="sad:40" form-id-m="01001B6F" form-id-f="01001B70">He's at Hjerim. Friga Shatter-Shield lived there before...</line>
+               <line form-id-m="01001B6F" emotion="sad:40" form-id-f="01001B70">He's at Hjerim. Friga Shatter-Shield lived there before...</line>
                <line form-id-m="01001B71" form-id-f="01001B72">He's in one of the mansions in the northwest part of the city. The place is called Hjerim.</line>
             </g>
             <g name="house-aretino">
@@ -1099,7 +1099,7 @@
                         <actor-base of="speaker" is="Lortheim" />
                      </or>
                   </conditions>
-                  <line emotion="happy:60" form-id-m="01001C43" form-id-f="01001C44">He's a fellow priest of Talos. He's at the Temple right now.</line>
+                  <line form-id-m="01001C43" emotion="happy:60" form-id-f="01001C44">He's a fellow priest of Talos. He's at the Temple right now.</line>
                </g>
                <g non-exclusive="true" name="asking-about-priest">
                   <conditions>

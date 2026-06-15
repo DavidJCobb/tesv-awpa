@@ -24,7 +24,7 @@
          <line>The Jarl's steward? He'll be at Mistveil Keep.</line>
       </shared-info>
    </shared-infos>
-   <quest locations="RiftenLocation,RiftenMistveilKeepLocation" id="AWPARiften">
+   <quest id="AWPARiften" locations="RiftenLocation,RiftenMistveilKeepLocation">
       <dialogue-conditions>
          <!-- Can only ask Riften townspeople: -->
          <faction-membership of="speaker" includes="TownRiftenFaction" />
@@ -95,11 +95,11 @@
          -->
          <or> <!-- Bassianus -->
             <actor-base of="speaker" is-not="BassianusAxius" />
-            <papyrus-quest-variable var="::BassianusMoveToRiften_var" for="T02PostQuest" eq="1" />
+            <papyrus-quest-variable for="T02PostQuest" var="::BassianusMoveToRiften_var" eq="1" />
          </or>
          <or> <!-- Fastred -->
             <actor-base of="speaker" is-not="Fastred" />
-            <papyrus-quest-variable var="::FastredMoveToRiften_var" for="T02PostQuest" eq="1" />
+            <papyrus-quest-variable for="T02PostQuest" var="::FastredMoveToRiften_var" eq="1" />
          </or>
          
          <!--
@@ -125,11 +125,11 @@
             <quest-not-running name="TG01" />
             <!-- OR have sucessfully extorted her: -->
             <quest-stage for="TG01" done="30" />
-            <papyrus-quest-variable var="::pTG01KeeravaPaid_var" for="TG01" eq="1" />
+            <papyrus-quest-variable for="TG01" var="::pTG01KeeravaPaid_var" eq="1" />
             <!-- OR haven't yet confronted her: -->
-            <papyrus-quest-variable var="::pTG01KeeravaWarned_var" for="TG01" eq="0" />
+            <papyrus-quest-variable for="TG01" var="::pTG01KeeravaWarned_var" eq="0" />
             <!-- OR confronted the other two targets, so she's already scared: -->
-            <papyrus-quest-variable gte="2" for="TG01" var="::pTG01GotCash_var" />
+            <papyrus-quest-variable for="TG01" var="::pTG01GotCash_var" gte="2" />
          </or>
          <or> <!-- Cannot ask Bersi between failing to scare her, and coercing her -->
             <!-- not asking Bersi: -->
@@ -138,13 +138,13 @@
             <quest-not-running name="TG01" />
             <!-- OR have sucessfully extorted him: -->
             <quest-stage for="TG01" done="40" />
-            <papyrus-quest-variable var="::pTG01BersiPaid_var" for="TG01" eq="1" />
+            <papyrus-quest-variable for="TG01" var="::pTG01BersiPaid_var" eq="1" />
             <!-- OR haven't yet confronted him: -->
-            <papyrus-quest-variable var="::pTG01BersiWarned_var" for="TG01" eq="0" />
+            <papyrus-quest-variable for="TG01" var="::pTG01BersiWarned_var" eq="0" />
             <!-- OR confronted the other two targets, so he's already scared: -->
-            <papyrus-quest-variable gte="2" for="TG01" var="::pTG01GotCash_var" />
+            <papyrus-quest-variable for="TG01" var="::pTG01GotCash_var" gte="2" />
             <!-- OR have broken his urn: -->
-            <papyrus-quest-variable gte="3" for="TG01" var="::pTG01SmashUrn_var" />
+            <papyrus-quest-variable for="TG01" var="::pTG01SmashUrn_var" gte="3" />
          </or>
          <or> <!-- Cannot ask Haelga between failing to scare her, and coercing her -->
             <!-- not asking Haelga: -->
@@ -153,19 +153,19 @@
             <quest-not-running name="TG01" />
             <!-- OR have sucessfully extorted her: -->
             <quest-stage for="TG01" done="45" />
-            <papyrus-quest-variable var="::pTG0HaelgaPaid_var" for="TG01" eq="1" />
+            <papyrus-quest-variable for="TG01" var="::pTG0HaelgaPaid_var" eq="1" />
             <!-- OR haven't yet confronted her: -->
-            <papyrus-quest-variable var="::pTG01HaelgaWarned_var" for="TG01" eq="0" />
+            <papyrus-quest-variable for="TG01" var="::pTG01HaelgaWarned_var" eq="0" />
             <!-- OR confronted the other two targets, so she's already scared: -->
-            <papyrus-quest-variable gte="2" for="TG01" var="::pTG01GotCash_var" />
+            <papyrus-quest-variable for="TG01" var="::pTG01GotCash_var" gte="2" />
          </or>
       </dialogue-conditions>
       
       <condition-set name="under-stormcloak-control">
-         <papyrus-quest-variable var="::OwnerRift_var" for="CW" eq="[GLOB]CWSons" />
+         <papyrus-quest-variable for="CW" var="::OwnerRift_var" eq="[GLOB]CWSons" />
       </condition-set>
       <condition-set name="under-imperial-control">
-         <papyrus-quest-variable for="CW" neq="[GLOB]CWSons" var="::OwnerRift_var" />
+         <papyrus-quest-variable for="CW" var="::OwnerRift_var" neq="[GLOB]CWSons" />
       </condition-set>
       <condition-set name="vald-is-spawned">
          <quest-running name="TG07" />
@@ -234,7 +234,7 @@
             </begin-asking-about>
          
          </actor>
-         <actor editor-id="Arnskar" name="Arnskar Ember-Master">
+         <actor name="Arnskar Ember-Master" editor-id="Arnskar">
             
             <begin-asking-about>
                <filter-conditions>
@@ -249,10 +249,10 @@
                </filter-conditions>
             </begin-asking-about>
          </actor>
-         <actor editor-id="Asbjorn" name="Asbjorn Fire-Timer" />
-         <actor editor-id="Asgeir" name="Asgeir Snow-Shod" />
+         <actor name="Asbjorn Fire-Timer" editor-id="Asbjorn" />
+         <actor name="Asgeir Snow-Shod" editor-id="Asgeir" />
          <actor editor-id="Balimund" />
-         <actor editor-id="BassianusAxius" name="Bassianus Axius">
+         <actor name="Bassianus Axius" editor-id="BassianusAxius">
             <begin-asking-about>
                <filter-conditions>
                   <!--
@@ -260,11 +260,11 @@
                      moved to Riften.
                   -->
                   <quest-running name="T02PostQuest" />
-                  <papyrus-quest-variable var="::BassianusMoveToRiften_var" for="T02PostQuest" eq="1" />
+                  <papyrus-quest-variable for="T02PostQuest" var="::BassianusMoveToRiften_var" eq="1" />
                </filter-conditions>
             </begin-asking-about>
          </actor>
-         <actor editor-id="Bersi" name="Bersi Honey-Hand">
+         <actor name="Bersi Honey-Hand" editor-id="Bersi">
             <!--
                Dialogue conditions block off "Can you help me find someone?" 
                if the player fails to extort Bersi on behalf of the Thieves 
@@ -284,11 +284,11 @@
                         Haven't yet collected payment:
                      -->
                      <quest-stage for="TG01" not-done="40" />
-                     <papyrus-quest-variable var="::pTG01BersiPaid_var" for="TG01" eq="0" />
+                     <papyrus-quest-variable for="TG01" var="::pTG01BersiPaid_var" eq="0" />
                      <!--
                         Urn smashed:
                      -->
-                     <papyrus-quest-variable gte="3" for="TG01" var="::pTG01SmashUrn_var" />
+                     <papyrus-quest-variable for="TG01" var="::pTG01SmashUrn_var" gte="3" />
                   </conditions>
                   <line emotion="fear:40" form-id-u="01001025">I... What? I can't believe you smashed my urn!</line>
                   <line emotion="anger:60" form-id-u="01001026" script-notes='angry, shocked, indignant at what the player just did; all the more indignant for them casually asking a completely irrelevant question after doing it; emphasis on "directions"'>You're going to smash my belongings and then ask me for directions?</line>
@@ -296,7 +296,7 @@
             </begin-asking-to>
          </actor>
          <actor editor-id="Bolli" />
-         <actor editor-id="BrandShei" name="Brand-Shei">
+         <actor name="Brand-Shei" editor-id="BrandShei">
             <begin-asking-to>
                <topic slug="InJail">
                   <conditions>
@@ -310,13 +310,13 @@
          <actor editor-id="Briehl" />
          <actor editor-id="Brynjolf">
          </actor>
-         <actor editor-id="ConstanceMichel" name="Constance Michel">
+         <actor name="Constance Michel" editor-id="ConstanceMichel">
             <!--
                TODO: don't allow asking this actor while she's shocked 
                by Grelod's murder.
             -->
          </actor>
-         <actor editor-id="CynricEndell" name="Cynric Endell">
+         <actor name="Cynric Endell" editor-id="CynricEndell">
             
             <begin-asking-about>
                <filter-conditions>
@@ -326,7 +326,7 @@
             </begin-asking-about>
          
          </actor>
-         <actor editor-id="DelvinMallory" name="Delvin Mallory">
+         <actor name="Delvin Mallory" editor-id="DelvinMallory">
             
             <begin-asking-about>
                <filter-conditions>
@@ -336,10 +336,10 @@
             </begin-asking-about>
          
          </actor>
-         <actor editor-id="Dinya" name="Dinya Balu" />
+         <actor name="Dinya Balu" editor-id="Dinya" />
          <actor editor-id="Edda" />
          <actor editor-id="Elgrim" />
-         <actor editor-id="EtienneRarnis" name="Etienne Rarnis">
+         <actor name="Etienne Rarnis" editor-id="EtienneRarnis">
             <!--
                Etienne is held prisoner in the Thalmor Embassy. If he survives 
                the player's raid on the place, he relocates to Riften to join 
@@ -384,12 +384,12 @@
                      We only care about Fastred if she moves to Riften.
                   -->
                   <quest-running name="T02PostQuest" />
-                  <papyrus-quest-variable var="::FastredMoveToRiften_var" for="T02PostQuest" eq="1" />
+                  <papyrus-quest-variable for="T02PostQuest" var="::FastredMoveToRiften_var" eq="1" />
                </filter-conditions>
             </begin-asking-about>
          </actor>
-         <actor editor-id="Francois" name="Francois Beaufort" />
-         <actor editor-id="FromDeepestFathoms" name="From-Deepest-Fathoms">
+         <actor name="Francois Beaufort" editor-id="Francois" />
+         <actor name="From-Deepest-Fathoms" editor-id="FromDeepestFathoms">
             <begin-asking-about>
                <!--
                   From-Deepest-Fathoms only spawns when the player hits Level 14, 
@@ -437,7 +437,7 @@
                </topic>
             </begin-asking-to>
          </actor>
-         <actor editor-id="Grelod" name="Grelod the Kind">
+         <actor name="Grelod the Kind" editor-id="Grelod">
          </actor>
          <actor editor-id="Haelga">
             <!--
@@ -449,8 +449,8 @@
          </actor>
          <actor editor-id="Hafjorg" />
          <actor editor-id="Harrald" />
-         <actor editor-id="Hemming" name="Hemming Black-Briar" />
-         <actor editor-id="HerluinLothaire" name="Herluin Lothaire">
+         <actor name="Hemming Black-Briar" editor-id="Hemming" />
+         <actor name="Herluin Lothaire" editor-id="HerluinLothaire">
             
             <begin-asking-about>
                <filter-conditions>
@@ -466,14 +466,14 @@
             </begin-asking-about>
          </actor>
          <actor editor-id="Hroar" />
-         <actor editor-id="Hofgrir" name="Hofgrir Horse-Crusher" />
+         <actor name="Hofgrir Horse-Crusher" editor-id="Hofgrir" />
          <actor editor-id="Indaryn">
             <!--
                TODO: examine Indaryn's lines and character; not sure he 
                would be a helpful man
             -->
          </actor>
-         <actor editor-id="Ingun" name="Ingun Black-Briar">
+         <actor name="Ingun Black-Briar" editor-id="Ingun">
             <begin-responding>
                <topic slug="IgnoresBeggars">
                   <!--
@@ -486,7 +486,7 @@
                   </conditions>
                   <line emotion="puzzled:80" form-id-u="01001041">I'm afraid I don't recognize that name.</line>
                   <line emotion="puzzled:90" form-id-u="01001042">Hm... That name doesn't sound familiar. Should I know who that is?</line>
-                  <line emotion="puzzled:70" form-id-m="01001043" form-id-f="01001044">I'm sorry, but I haven't noticed him around.</line>
+                  <line form-id-m="01001043" emotion="puzzled:70" form-id-f="01001044">I'm sorry, but I haven't noticed him around.</line>
                </topic>
                <topic slug="Scatterbrained">
                   <!--
@@ -506,7 +506,7 @@
                   <g non-exclusive="true">
                      <conditions>
                         <global name="GameHour" gte="12" />
-                        <global lt="18" name="GameHour" />
+                        <global name="GameHour" lt="18" />
                      </conditions>
                      <line emotion="puzzled:60" form-id-u="01001045">I'm afraid I don't know. I've been planning new alchemical experiments all day.</line>
                   </g>
@@ -518,13 +518,13 @@
                      <line emotion="puzzled:80" form-id-u="01001046">I'm afraid I don't know. I've been planning new alchemical experiments all night.</line>
                   </g>
                   <line form-id-m="01001047" form-id-f="01001048">I haven't noticed him around town. You'll have to ask someone else.</line>
-                  <line emotion="puzzled:90" form-id-m="01001049" form-id-f="0100104A">Hmm... I don't remember seeing him, but... I probably wouldn't have noticed him.</line>
-                  <line emotion="puzzled:70" hours-until-reset="24" form-id-u="0100104B">I'm not sure. I've been thinking about my experiments... Would you happen to know a good place to gather Painted Troll Fat? Sorry, never mind.</line>
+                  <line form-id-m="01001049" emotion="puzzled:90" form-id-f="0100104A">Hmm... I don't remember seeing him, but... I probably wouldn't have noticed him.</line>
+                  <line emotion="puzzled:70" form-id-u="0100104B" hours-until-reset="24">I'm not sure. I've been thinking about my experiments... Would you happen to know a good place to gather Painted Troll Fat? Sorry, never mind.</line>
                   <line form-id-m="0100104C" form-id-f="0100104D">I've been too focused on my experiments to really notice him.</line>
                </topic>
             </begin-responding>
          </actor>
-         <actor editor-id="HousecarlRiften" name="Iona">
+         <actor name="Iona" editor-id="HousecarlRiften">
             <begin-asking-about>
                <filter-conditions>
                   <!--
@@ -533,7 +533,7 @@
                      purchasing Honeyside.
                   -->
                   <location of="subject" is="RiftenLocation" />
-                  <papyrus-quest-variable var="::RiftenHouseVar_var" for="HousePurchase" eq="1" />
+                  <papyrus-quest-variable for="HousePurchase" var="::RiftenHouseVar_var" eq="1" />
                </filter-conditions>
             </begin-asking-about>
          </actor>
@@ -545,7 +545,7 @@
                to other means).
             -->
          </actor>
-         <actor editor-id="Laila" name="Laila Law-Giver">
+         <actor name="Laila Law-Giver" editor-id="Laila">
             
             <begin-asking-about>
                <filter-conditions>
@@ -554,12 +554,12 @@
             </begin-asking-about>
             <begin-asking-to>
                <topic>
-                  <shared-info id="shared-refer-to-steward-neutral" />
+                  <shared-info id="shared-refer-to-steward-neutral" form-ids="01001E05,01001E06,01001E07" />
                </topic>
             </begin-asking-to>
          
          </actor>
-         <actor editor-id="LouisLetrush" name="Louis Letrush">
+         <actor name="Louis Letrush" editor-id="LouisLetrush">
             <begin-asking-about>
                <filter-conditions>
                   <!--
@@ -573,7 +573,7 @@
          </actor>
          <actor editor-id="Madesi" />
          <actor editor-id="Maramal" />
-         <actor editor-id="HirelingMarcurio" name="Marcurio">
+         <actor name="Marcurio" editor-id="HirelingMarcurio">
             <begin-asking-about>
                <filter-conditions>
                   <!--
@@ -584,10 +584,10 @@
                </filter-conditions>
             </begin-asking-about>
          </actor>
-         <actor editor-id="Marise" name="Marise Aravel" />
+         <actor name="Marise Aravel" editor-id="Marise" />
          <actor editor-id="Maul">
          </actor>
-         <actor editor-id="Maven" name="Maven Black-Briar">
+         <actor name="Maven Black-Briar" editor-id="Maven">
             <begin-asking-to>
                <topic slug="AnnoyedByFilthyCommoner">
                   <!--
@@ -610,7 +610,7 @@
                </topic>
             </begin-asking-to>
          </actor>
-         <actor editor-id="MercerFrey" name="Mercer Frey">
+         <actor name="Mercer Frey" editor-id="MercerFrey">
             
             <begin-asking-about>
                <filter-conditions>
@@ -632,8 +632,8 @@
                </filter-conditions>
             </begin-asking-about>
          </actor>
-         <actor editor-id="Mjoll" name="Mjoll the Lioness" />
-         <actor editor-id="Molgrom" name="Molgrom Twice-Killed">
+         <actor name="Mjoll the Lioness" editor-id="Mjoll" />
+         <actor name="Molgrom Twice-Killed" editor-id="Molgrom">
             <begin-asking-to>
                <topic slug="InJail">
                   <conditions>
@@ -643,7 +643,7 @@
                </topic>
             </begin-asking-to>
          </actor>
-         <actor editor-id="Niluva" name="Niluva Hlaalu" />
+         <actor name="Niluva Hlaalu" editor-id="Niluva" />
          <actor editor-id="Niruin">
             
             <begin-asking-about>
@@ -655,8 +655,8 @@
          
          </actor>
          <actor editor-id="Nivenor" />
-         <actor editor-id="Nura" name="Nura Snow-Shod" />
-         <actor editor-id="RavynImyan" name="Ravyn Imyan">
+         <actor name="Nura Snow-Shod" editor-id="Nura" />
+         <actor name="Ravyn Imyan" editor-id="RavynImyan">
             
             <begin-asking-about>
                <filter-conditions>
@@ -666,8 +666,8 @@
             </begin-asking-about>
          
          </actor>
-         <actor editor-id="Romlyn" name="Romlyn Dreth" />
-         <actor editor-id="Runa" name="Runa Fair-Shield" />
+         <actor name="Romlyn Dreth" editor-id="Romlyn" />
+         <actor name="Runa Fair-Shield" editor-id="Runa" />
          <actor editor-id="Rune">
             
             <begin-asking-about>
@@ -696,7 +696,7 @@
          <actor editor-id="Sapphire">
          </actor>
          <actor editor-id="Shadr" />
-         <actor editor-id="Sibbi" name="Sibbi Black-Briar">
+         <actor name="Sibbi Black-Briar" editor-id="Sibbi">
             <begin-asking-to>
                <topic slug="InJail">
                   <conditions>
@@ -716,7 +716,7 @@
             about him.
          -->
          <!--<actor editor-id="Snilf" />-->
-         <actor editor-id="Svana" name="Svana Far-Shield" />
+         <actor name="Svana Far-Shield" editor-id="Svana" />
          <actor editor-id="Syndus">
             
             <begin-asking-about>
@@ -732,8 +732,8 @@
                </filter-conditions>
             </begin-asking-about>
          </actor>
-         <actor editor-id="TalenJei" name="Talen-Jei" />
-         <actor editor-id="Threki" name="Threki the Innocent">
+         <actor name="Talen-Jei" editor-id="TalenJei" />
+         <actor name="Threki the Innocent" editor-id="Threki">
             <begin-asking-to>
                <topic slug="InJail">
                   <conditions>
@@ -764,7 +764,7 @@
             </begin-asking-about>
          
          </actor>
-         <actor editor-id="Tythis" name="Tythis Ulen" />
+         <actor name="Tythis Ulen" editor-id="Tythis" />
          <actor editor-id="Ungrien" />
          <actor editor-id="Unmid" />
          <actor editor-id="Vald">
@@ -775,7 +775,7 @@
             </begin-asking-about>
          </actor>
          <actor editor-id="Valindor" />
-         <actor editor-id="VanrythGatharian" name="Vanryth Gatharian">
+         <actor name="Vanryth Gatharian" editor-id="VanrythGatharian">
             
             <begin-asking-about>
                <filter-conditions>
@@ -790,7 +790,7 @@
                </filter-conditions>
             </begin-asking-about>
          </actor>
-         <actor editor-id="Vekel" name="Vekel the Man">
+         <actor name="Vekel the Man" editor-id="Vekel">
             
             <begin-asking-about>
                <filter-conditions>
@@ -810,7 +810,7 @@
             </begin-asking-about>
          
          </actor>
-         <actor editor-id="VipirtheFleet" name="Vipir the Fleet">
+         <actor name="Vipir the Fleet" editor-id="VipirtheFleet">
             
             <begin-asking-about>
                <filter-conditions>
@@ -820,7 +820,7 @@
             </begin-asking-about>
          
          </actor>
-         <actor editor-id="Vulwulf" name="Vulwulf Snow-Shod">
+         <actor name="Vulwulf Snow-Shod" editor-id="Vulwulf">
             <begin-asking-to>
                <topic slug="Racism">
                   <!--
@@ -861,7 +861,7 @@
                      <parent-cell of="speaker" is="RiftenBeeandBarb" />
                      <parent-cell of="subject" is-not="RiftenBeeandBarb" />
                      <or>
-                        <global lt="4" name="GameHour" />
+                        <global name="GameHour" lt="4" />
                         <global name="GameHour" gt="12" />
                      </or>
                      <global neq="19" name="GameHour" />
@@ -869,13 +869,13 @@
                   <g non-exclusive="true">
                      <conditions>
                         <global name="GameHour" gt="12" />
-                        <global lt="19" name="GameHour" />
+                        <global name="GameHour" lt="19" />
                      </conditions>
                      <line form-id-u="0100104E">I wouldn't know. I've been here since noon.</line>
                   </g>
                   <g non-exclusive="true">
                      <conditions>
-                        <global lt="4" name="GameHour" />
+                        <global name="GameHour" lt="4" />
                         <global name="GameHour" gt="19" />
                      </conditions>
                      <line form-id-u="0100104F">I wouldn't know. I've been here since dinner.</line>
@@ -902,9 +902,9 @@
             <parent-cell of="player" same-as="subject" />
          </conditions>
          
-         <constant value="-192" name="height-coordinate-b1f" />
-         <constant value="64" name="height-coordinate-1f" />
-         <constant value="320" name="height-coordinate-2f" />
+         <constant name="height-coordinate-b1f" value="-192" />
+         <constant name="height-coordinate-1f" value="64" />
+         <constant name="height-coordinate-2f" value="320" />
          <condition-set name="subject-in-multifloor-interior">
             <or>
                <parent-cell of="subject" is="RiftenBeeandBarb" />
@@ -1236,7 +1236,7 @@
                   <parent-cell of="subject" is="RiftenElgrimsElixirs" />
                </conditions>
                
-               <constant value="32" name="front-back-dividing-y-coordinate" />
+               <constant name="front-back-dividing-y-coordinate" value="32" />
             
                <condition-set name="speaker-is-up-front">
                   <y of="speaker" lte="front-back-dividing-y-coordinate" />
@@ -1633,8 +1633,8 @@
                   <conditions>
                      <actor-base of="speaker" is="Svana" />
                   </conditions>
-                  <line form-id-f="010010FE" emotion="sad:80" form-id-m="010010FD" script-notes="Stress &#22;says;&#22; you doubt he's being truthful, and you're worried that he feels he isn't welcome at the Bunkhouse due to the racist behavior of tenants such as Grelka.">He sleeps in Beggar's Row. He says he prefers it down there, but...</line>
-                  <line form-id-f="01001100" emotion="sad:70" form-id-m="010010FF" script-notes="You doubt that he is being truthful, and are worried about him.">Probably at Beggar's Row, in the canal. Supposedly he likes sleeping someplace cold and damp.</line>
+                  <line emotion="sad:80" form-id-f="010010FE" form-id-m="010010FD" script-notes="Stress &#16;says;&#16; you doubt he's being truthful, and you're worried that he feels he isn't welcome at the Bunkhouse due to the racist behavior of tenants such as Grelka.">He sleeps in Beggar's Row. He says he prefers it down there, but...</line>
+                  <line emotion="sad:70" form-id-f="01001100" form-id-m="010010FF" script-notes="You doubt that he is being truthful, and are worried about him.">Probably at Beggar's Row, in the canal. Supposedly he likes sleeping someplace cold and damp.</line>
                </g>
             </g>
             <g name="asking-about-beggar">
@@ -1854,11 +1854,11 @@
                         <actor-base of="subject" is="Vex" />
                      </or>
                   </conditions>
-                  <line emotion="disgust:80" form-id-m="01001176" form-id-f="01001177">I'm not sure why you or anyone else would want to see him, but he works at Honorhall Orphanage.</line>
-                  <line emotion="disgust:70" form-id-m="01001178" form-id-f="01001179">He runs Honorhall Orphanage, unfortunately. Try looking in there.</line>
-                  <line emotion="disgust:80" form-id-m="0100117A" form-id-f="0100117B">He'll be at Honorhall Orphanage, probably snarling at one of the children.</line>
-                  <line emotion="anger:75" form-id-m="0100117C" form-id-f="0100117D">He's at Honorhall Orphanage. Pretty sure I heard her barking at the kids in there a little while ago.</line>
-                  <line emotion="disgust:80" form-id-m="0100117E" form-id-f="0100117F">Ugh, him. Have you checked Honorhall Orphanage?</line>
+                  <line form-id-m="01001176" emotion="disgust:80" form-id-f="01001177">I'm not sure why you or anyone else would want to see him, but he works at Honorhall Orphanage.</line>
+                  <line form-id-m="01001178" emotion="disgust:70" form-id-f="01001179">He runs Honorhall Orphanage, unfortunately. Try looking in there.</line>
+                  <line form-id-m="0100117A" emotion="disgust:80" form-id-f="0100117B">He'll be at Honorhall Orphanage, probably snarling at one of the children.</line>
+                  <line form-id-m="0100117C" emotion="anger:75" form-id-f="0100117D">He's at Honorhall Orphanage. Pretty sure I heard her barking at the kids in there a little while ago.</line>
+                  <line form-id-m="0100117E" emotion="disgust:80" form-id-f="0100117F">Ugh, him. Have you checked Honorhall Orphanage?</line>
                   <line emotion="disgust:100" form-id-u="01001180">You'll find that awful harpy at Honorhall.</line>
                </g>
                <line form-id-m="01001181" form-id-f="01001182">He runs Honorhall Orphanage. You'll probably find him there.</line>
@@ -1975,7 +1975,7 @@
                      </conditions>
                      <line emotion="disgust:70" form-id-u="010011AE">Maven is at Mistveil Keep right now.</line>
                      <line emotion="disgust:60" form-id-u="010011AF">Check Mistveil Keep.</line>
-                     <line emotion="anger:90" form-id-m="010011B0" form-id-f="010011B1">The Imperials put him on the throne. Try checking there.</line>
+                     <line form-id-m="010011B0" emotion="anger:90" form-id-f="010011B1">The Imperials put him on the throne. Try checking there.</line>
                   </g>
                   <shared-info form-ids="010011B2,010011B3,010011B4,010011B5,010011B6" id="mistveil-keep-jarl" />
                </g>
@@ -2122,9 +2122,9 @@
                   <actor-base of="speaker" is="Brynjolf" />
                   <condition-set name="player-in-thieves-guild" />
                </conditions>
-               <line emotion="anger:65" form-id-m="01001205" form-id-f="01001206">One of ours. You'll find him in the city jail. His methods were too messy, and he's paying the price for that.</line>
-               <line emotion="disgust:80" form-id-m="01001207" form-id-f="01001208">Molgrom was working a job for us. He took shortcuts and spilled too much blood. That's bad for business, so now he gets to spend some time in jail until he's learned his lesson.</line>
-               <line emotion="anger:70" form-id-m="01001209" form-id-f="0100120A">He's in jail. He botched a job and tried to kill his way out, and there are consequences for that.</line>
+               <line form-id-m="01001205" emotion="anger:65" form-id-f="01001206">One of ours. You'll find him in the city jail. His methods were too messy, and he's paying the price for that.</line>
+               <line form-id-m="01001207" emotion="disgust:80" form-id-f="01001208">Molgrom was working a job for us. He took shortcuts and spilled too much blood. That's bad for business, so now he gets to spend some time in jail until he's learned his lesson.</line>
+               <line form-id-m="01001209" emotion="anger:70" form-id-f="0100120A">He's in jail. He botched a job and tried to kill his way out, and there are consequences for that.</line>
             </g>
             <g name="sibbi">
                <conditions>
@@ -2138,27 +2138,27 @@
                         <actor-base of="speaker" is="Mjoll" />
                      </or>
                   </conditions>
-                  <line emotion="disgust:60" form-id-m="0100120B" form-id-f="0100120C">He's locked up in jail right now. Word is, he killed someone.</line>
-                  <line emotion="disgust:70" form-id-m="0100120D" form-id-f="0100120E">He's been arrested for murder. He's in jail right now.</line>
-                  <line emotion="disgust:70" form-id-m="0100120F" form-id-f="01001210">They have him in jail on a murder charge.</line>
-                  <line emotion="disgust:80" form-id-m="01001211" form-id-f="01001212">He's in jail, and with any luck, he'll stay there.</line>
+                  <line form-id-m="0100120B" emotion="disgust:60" form-id-f="0100120C">He's locked up in jail right now. Word is, he killed someone.</line>
+                  <line form-id-m="0100120D" emotion="disgust:70" form-id-f="0100120E">He's been arrested for murder. He's in jail right now.</line>
+                  <line form-id-m="0100120F" emotion="disgust:70" form-id-f="01001210">They have him in jail on a murder charge.</line>
+                  <line form-id-m="01001211" emotion="disgust:80" form-id-f="01001212">He's in jail, and with any luck, he'll stay there.</line>
                </g>
                <g name="ingun-on-sibbi">
                   <conditions>
                      <actor-base of="speaker" is="Ingun" />
                   </conditions>
-                  <line form-id-m="01001213" form-id-f="01001214" script-notes="apathetic/disinterested">He's in jail for now. There was some sort of conflict involving his ex-fiance.</line>
-                  <line form-id-m="01001215" form-id-f="01001216" script-notes="&#22;Relationships,&#22; plural, is not a typo; bro has been pursuing multiple women at once, and I'm writing Ingun as aware of this but largely apathetic to it.">He's been arrested. Something went wrong with his relationships, I suppose.</line>
-                  <line form-id-m="01001217" form-id-f="01001218" script-notes="apathetic/disinterested">He's being held in jail while Mother and the guards sort out... some sort of misunderstanding, I guess.</line>
+                  <line script-notes="apathetic/disinterested" form-id-m="01001213" form-id-f="01001214">He's in jail for now. There was some sort of conflict involving his ex-fiance.</line>
+                  <line script-notes="&#16;Relationships,&#16; plural, is not a typo; bro has been pursuing multiple women at once, and I'm writing Ingun as aware of this but largely apathetic to it." form-id-m="01001215" form-id-f="01001216">He's been arrested. Something went wrong with his relationships, I suppose.</line>
+                  <line script-notes="apathetic/disinterested" form-id-m="01001217" form-id-f="01001218">He's being held in jail while Mother and the guards sort out... some sort of misunderstanding, I guess.</line>
                </g>
                <g name="svana-on-sibbi">
                   <conditions>
                      <actor-base of="speaker" is="Svana" />
                   </conditions>
-                  <line form-id-f="0100121A" emotion="puzzled:70" form-id-m="01001219" script-notes="Slight emphasis on &#22;allegedly.&#22; You find it hard to believe this about the man who's gradually tricking you into becoming his side piece.">He's in jail right now, allegedly for murder.</line>
-                  <line form-id-f="0100121C" emotion="puzzled:80" form-id-m="0100121B" script-notes="Emphasis on &#22;say.&#22; You find it hard to believe this about the man who's gradually tricking you into becoming his side piece.">He's being held in jail. They say he murdered someone.</line>
-                  <line form-id-f="0100121E" emotion="puzzled:60" form-id-m="0100121D" script-notes="Emphasis on &#22;supposedly.&#22; You find it hard to believe this about the man who's gradually tricking you into becoming his side piece.">He's been arrested. Supposedly, he killed someone. I have my doubts.</line>
-                  <line form-id-f="01001220" emotion="sad:80" form-id-m="0100121F" script-notes="Sibbi is trying to groom you into a relationship and has been successful so far, and you are therefore in denial that your activities led his fiance to attack him, and him to murder her brother.">He was arrested after some kind of conflict with his fiance and her brother. He'll be in jail until that gets sorted out.</line>
+                  <line emotion="puzzled:70" form-id-f="0100121A" form-id-m="01001219" script-notes="Slight emphasis on &#16;allegedly.&#16; You find it hard to believe this about the man who's gradually tricking you into becoming his side piece.">He's in jail right now, allegedly for murder.</line>
+                  <line emotion="puzzled:80" form-id-f="0100121C" form-id-m="0100121B" script-notes="Emphasis on &#16;say.&#16; You find it hard to believe this about the man who's gradually tricking you into becoming his side piece.">He's being held in jail. They say he murdered someone.</line>
+                  <line emotion="puzzled:60" form-id-f="0100121E" form-id-m="0100121D" script-notes="Emphasis on &#16;supposedly.&#16; You find it hard to believe this about the man who's gradually tricking you into becoming his side piece.">He's been arrested. Supposedly, he killed someone. I have my doubts.</line>
+                  <line emotion="sad:80" form-id-f="01001220" form-id-m="0100121F" script-notes="Sibbi is trying to groom you into a relationship and has been successful so far, and you are therefore in denial that your activities led his fiance to attack him, and him to murder her brother.">He was arrested after some kind of conflict with his fiance and her brother. He'll be in jail until that gets sorted out.</line>
                </g>
             </g>
             <g name="inmate">
@@ -2418,9 +2418,9 @@
                   <actor-base of="subject" is="Bolli" />
                   <actor-base of="speaker" is="Nivenor" />
                </conditions>
-               <line emotion="disgust:70" form-id-m="010012D8" form-id-f="010012D9">He's probably giving away all our gold at the Temple of Mara.</line>
-               <line emotion="disgust:60" form-id-m="010012DA" form-id-f="010012DB">He's at the Temple of Mara. If I'm lucky, he isn't handing over the deed to the fishery...</line>
-               <line form-id-f="010012DD" emotion="anger:80" form-id-m="010012DC" script-notes='Emphasis on "you" and "too;" you are angry that he donates gold to the poor rather than spending literally all of it on you.'>Try checking the Temple of Mara. And hey, maybe he'll give you some of our gold too...</line>
+               <line form-id-m="010012D8" emotion="disgust:70" form-id-f="010012D9">He's probably giving away all our gold at the Temple of Mara.</line>
+               <line form-id-m="010012DA" emotion="disgust:60" form-id-f="010012DB">He's at the Temple of Mara. If I'm lucky, he isn't handing over the deed to the fishery...</line>
+               <line emotion="anger:80" form-id-f="010012DD" form-id-m="010012DC" script-notes='Emphasis on "you" and "too;" you are angry that he donates gold to the poor rather than spending literally all of it on you.'>Try checking the Temple of Mara. And hey, maybe he'll give you some of our gold too...</line>
             </g>
             <line form-id-m="010012DE" form-id-f="010012DF">I think I saw him walking into the Temple of Mara not too long ago.</line>
             <line form-id-m="010012E0" form-id-f="010012E1">I think he's down at the temple.</line>
@@ -2517,8 +2517,8 @@
             </or>
          </conditions>
          
-         <constant value="11040" name="height-coordinate-ground" />
-         <constant value="-96960" name="north-south-dividing-y-coordinate" />
+         <constant name="height-coordinate-ground" value="11040" />
+         <constant name="north-south-dividing-y-coordinate" value="-96960" />
          
          <g name="mistveil-courtyard">
             <conditions>

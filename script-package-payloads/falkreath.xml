@@ -7,7 +7,7 @@
       </shared-info>
    </shared-infos>
    
-   <quest locations="FalkreathLocation" id="AWPAFalkreath">
+   <quest id="AWPAFalkreath" locations="FalkreathLocation">
       <dialogue-conditions>
          <faction-membership of="speaker" includes="TownFalkreathFaction" />
          <faction-membership of="speaker" excludes="GuardFactionFalkreath" />
@@ -18,18 +18,18 @@
       <actors>
          <actor editor-id="Bolund" />
          <actor editor-id="Delacourt" />
-         <actor editor-id="Dengeir" name="Dengeir of Stuhn">
+         <actor name="Dengeir of Stuhn" editor-id="Dengeir">
             <begin-asking-to>
                <topic>
                   <conditions>
                      <faction-membership of="speaker" includes="JobJarlFaction" />
                   </conditions>
-                  <shared-info id="shared-refer-to-steward-neutral" />
+                  <shared-info id="shared-refer-to-steward-neutral" form-ids="01001DEF,01001DF0,01001DF1" />
                </topic>
             </begin-asking-to>
          </actor>
          <actor editor-id="Helvard" />
-         <actor editor-id="IndaraCaerellia" name="Indara Caerellia" />
+         <actor name="Indara Caerellia" editor-id="IndaraCaerellia" />
          <actor editor-id="Kust" />
          <actor editor-id="Lod" />
          <actor editor-id="Mathies" />
@@ -46,7 +46,7 @@
          <actor editor-id="Siddgeir">
             <begin-asking-to>
                <topic>
-                  <shared-info id="shared-refer-to-steward-haughty" />
+                  <shared-info id="shared-refer-to-steward-haughty" form-ids="01001DF2,01001DF3,01001DF4" />
                </topic>
             </begin-asking-to>
          </actor>
@@ -69,12 +69,12 @@
                   <conditions>
                      <quest-not-completed name="dunMossMotherQST" />
                   </conditions>
-                  <line emotion="sad:70" form-id-m="01000AD5" form-id-f="01000AD6">He's one of the local bear hunters. He's been missing for a while.</line>
-                  <line emotion="fear:60" form-id-m="01000AD7" form-id-f="01000AD8">He went out hunting a while ago, but he hasn't returned. I think he went westward.</line>
+                  <line form-id-m="01000AD5" emotion="sad:70" form-id-f="01000AD6">He's one of the local bear hunters. He's been missing for a while.</line>
+                  <line form-id-m="01000AD7" emotion="fear:60" form-id-f="01000AD8">He went out hunting a while ago, but he hasn't returned. I think he went westward.</line>
                </topic>
             </begin-asking-to>
          </actor>
-         <actor editor-id="ValgaVinicia" name="Valga Vinicia" />
+         <actor name="Valga Vinicia" editor-id="ValgaVinicia" />
          <actor editor-id="Zaria" />
       </actors>
       

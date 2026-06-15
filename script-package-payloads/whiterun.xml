@@ -12,7 +12,7 @@
       </shared-info>
    </shared-infos>
    
-   <quest locations="WhiterunLocation" id="AWPAWhiterun">
+   <quest id="AWPAWhiterun" locations="WhiterunLocation">
       <dialogue-conditions>
          <faction-membership of="speaker" includes="TownWhiterunFaction" />
          <faction-membership of="speaker" excludes="GuardFactionWhiterun" />
@@ -20,44 +20,44 @@
          <location of="speaker" is="WhiterunLocation" />
       </dialogue-conditions>
       <actors>
-         <actor editor-id="AcolyteJenssen" name="Acolyte Jenssen" />
-         <actor editor-id="AdrianneAvenicci" name="Adrianne Avenicci" />
-         <actor editor-id="AelaTheHuntress" name="Aela the Huntress" />
+         <actor name="Acolyte Jenssen" editor-id="AcolyteJenssen" />
+         <actor name="Adrianne Avenicci" editor-id="AdrianneAvenicci" />
+         <actor name="Aela the Huntress" editor-id="AelaTheHuntress" />
          <actor editor-id="Ahlam" />
-         <actor editor-id="AlfhildBattleBorn" name="Alfhild Battle-Born" />
+         <actor name="Alfhild Battle-Born" editor-id="AlfhildBattleBorn" />
          <actor editor-id="Amren" />
          <actor editor-id="Andurs" />
          <actor editor-id="Anoriath" />
          <actor editor-id="Arcadia" />
          <actor editor-id="Athis" />
-         <actor editor-id="AvulsteinGrayMane" name="Avulstein Gray-Mane" />
-         <actor editor-id="BalgruuftheGreater" name="Balgruuf the Greater">
+         <actor name="Avulstein Gray-Mane" editor-id="AvulsteinGrayMane" />
+         <actor name="Balgruuf the Greater" editor-id="BalgruuftheGreater">
             <begin-asking-to>
                <topic>
-                  <shared-info id="shared-refer-to-steward-neutral" />
+                  <shared-info id="shared-refer-to-steward-neutral" form-ids="01001E0E,01001E0F,01001E10" />
                </topic>
             </begin-asking-to>
          </actor>
          <actor editor-id="Belethor" />
-         <actor editor-id="BergritteBattleBorn" name="Bergritte Battle-Born" />
+         <actor name="Bergritte Battle-Born" editor-id="BergritteBattleBorn" />
          <actor editor-id="Braith" />
          <actor editor-id="Brenuin" />
          <actor editor-id="Brill" />
-         <actor editor-id="CarlottaValentia" name="Carlotta Valentia" />
-         <actor editor-id="CommanderCaius" name="Commander Caius" />
+         <actor name="Carlotta Valentia" editor-id="CarlottaValentia" />
+         <actor name="Commander Caius" editor-id="CommanderCaius" />
          <actor editor-id="Dagny" />
-         <actor editor-id="DanicaPureSpring" name="Danica Pure-Spring" />
+         <actor name="Danica Pure-Spring" editor-id="DanicaPureSpring" />
          <actor editor-id="Elrindir" />
-         <actor editor-id="EorlundGrayMane" name="Eorlund Gray-Mane" />
-         <actor editor-id="FarengarSecretFire" name="Farengar Secret-Fire" />
+         <actor name="Eorlund Gray-Mane" editor-id="EorlundGrayMane" />
+         <actor name="Farengar Secret-Fire" editor-id="FarengarSecretFire" />
          <actor editor-id="Farkas" />
          <actor editor-id="Fianna" />
-         <actor editor-id="FraliaGrayMane" name="Fralia Gray-Mane" />
+         <actor name="Fralia Gray-Mane" editor-id="FraliaGrayMane" />
          <actor editor-id="Frothar" />
          <actor editor-id="Gerda" />
          <actor editor-id="Gloth" />
          <actor editor-id="Heimskr" />
-         <actor editor-id="HousecarlWhiterun" name="Lydia">
+         <actor name="Lydia" editor-id="HousecarlWhiterun">
             <begin-asking-about>
                <filter-conditions>
                   <!-- only after player has become Thane -->
@@ -92,26 +92,26 @@
                   <conditions>
                      <faction-membership of="speaker" includes="JobJarlFaction" />
                   </conditions>
-                  <shared-info id="shared-refer-to-steward-haughty" />
+                  <shared-info id="shared-refer-to-steward-haughty" form-ids="01001E11,01001E12,01001E13" />
                </topic>
             </begin-asking-to>
          </actor>
          <actor editor-id="Irileth" />
-         <actor editor-id="IdolafBattleBorn" name="Idolaf Battle-Born" />
+         <actor name="Idolaf Battle-Born" editor-id="IdolafBattleBorn" />
          <actor editor-id="Jervar" />
-         <actor editor-id="JonBattleBorn" name="Jon Battle-Born" />
-         <actor editor-id="KodlakWhitemane" name="Kodlak Whitemane" />
-         <actor editor-id="LarsBattleBorn" name="Lars Battle-Born" />
-         <actor editor-id="LillithMaidenLoom" name="Lilith Maiden-Loom" />
+         <actor name="Jon Battle-Born" editor-id="JonBattleBorn" />
+         <actor name="Kodlak Whitemane" editor-id="KodlakWhitemane" />
+         <actor name="Lars Battle-Born" editor-id="LarsBattleBorn" />
+         <actor name="Lilith Maiden-Loom" editor-id="LillithMaidenLoom" />
          <actor editor-id="Mikael" />
-         <actor editor-id="MilaValentia" name="Mila Valentia" />
+         <actor name="Mila Valentia" editor-id="MilaValentia" />
          <actor editor-id="Nazeem" />
          <actor editor-id="Nelkir" />
-         <actor editor-id="NjadaStonearm" name="Njada Stonearm" />
-         <actor editor-id="OlavatheFeeble" name="Olava the Feeble" />
-         <actor editor-id="OlfinaGrayMane" name="Olfina Gray-Mane" />
-         <actor editor-id="OlfridBattleBorn" name="Olfrid Battle-Born" />
-         <actor editor-id="ProventusAvenicci" name="Proventus Avenicci" />
+         <actor name="Njada Stonearm" editor-id="NjadaStonearm" />
+         <actor name="Olava the Feeble" editor-id="OlavatheFeeble" />
+         <actor name="Olfina Gray-Mane" editor-id="OlfinaGrayMane" />
+         <actor name="Olfrid Battle-Born" editor-id="OlfridBattleBorn" />
+         <actor name="Proventus Avenicci" editor-id="ProventusAvenicci" />
          <actor editor-id="Ria" />
          <actor editor-id="Saadia">
             <begin-asking-about>
@@ -120,29 +120,29 @@
                      Don't allow asking about Saadia once you begin leading her 
                      to the Alik'r ambush.
                   -->
-                  <papyrus-quest-variable var="::SaadiaFollow_var" for="MS08" eq="0" />
-                  <papyrus-quest-variable var="::SaadiaCaptured_var" for="MS08" eq="0" />
+                  <papyrus-quest-variable for="MS08" var="::SaadiaFollow_var" eq="0" />
+                  <papyrus-quest-variable for="MS08" var="::SaadiaCaptured_var" eq="0" />
                </filter-conditions>
             </begin-asking-about>
          </actor>
          <actor editor-id="Saffir" />
-         <actor editor-id="SeverioPelagia" name="Severio Pelagia" />
+         <actor name="Severio Pelagia" editor-id="SeverioPelagia" />
          <actor editor-id="Sigurd" />
          <actor editor-id="Sinmir" />
          <actor editor-id="Skjor" />
-         <actor editor-id="SkulvarSableHilt" name="Skulvar Sable-Hilt" />
+         <actor name="Skulvar Sable-Hilt" editor-id="SkulvarSableHilt" />
          <actor editor-id="Terek" />
-         <actor editor-id="Tilma" name="Tilma the Haggard" />
+         <actor name="Tilma the Haggard" editor-id="Tilma" />
          <actor editor-id="Torvar" />
-         <actor editor-id="Ulfberth" name="Ulfberth War-Bear" />
-         <actor editor-id="Uthgerd" name="Uthgerd the Unbroken" />
-         <actor editor-id="VignarGrayMane" name="Vignar Gray-Mane">
+         <actor name="Ulfberth War-Bear" editor-id="Ulfberth" />
+         <actor name="Uthgerd the Unbroken" editor-id="Uthgerd" />
+         <actor name="Vignar Gray-Mane" editor-id="VignarGrayMane">
             <begin-asking-to>
                <topic>
                   <conditions>
                      <faction-membership of="speaker" includes="JobJarlFaction" />
                   </conditions>
-                  <shared-info id="shared-refer-to-steward-neutral" />
+                  <shared-info id="shared-refer-to-steward-neutral" form-ids="01001E14,01001E15,01001E16" />
                </topic>
             </begin-asking-to>
          </actor>
@@ -534,8 +534,8 @@
                <conditions>
                   <enable-state for="[REFR:000FC90B]CWWhiterunIntEnableOnly" is="enabled" />
                </conditions>
-               <line emotion="puzzled:70" form-id-m="01001842" form-id-f="01001843">It's strange... I thought I heard his voice coming from inside Heimskr's house. I hope he isn't trapped beneath the rubble.</line>
-               <line emotion="surprise:80" form-id-m="01001844" form-id-f="01001845">I thought I saw him around Heimskr's shack, but... No... He can't be in there, right?</line>
+               <line form-id-m="01001842" emotion="puzzled:70" form-id-f="01001843">It's strange... I thought I heard his voice coming from inside Heimskr's house. I hope he isn't trapped beneath the rubble.</line>
+               <line form-id-m="01001844" emotion="surprise:80" form-id-f="01001845">I thought I saw him around Heimskr's shack, but... No... He can't be in there, right?</line>
             </g>
             <!--<invoke name="mixin-house-one-resident-int">
                <parameter value="Heimskr" name="OWNER" />
@@ -743,13 +743,13 @@
                   <conditions>
                      <death-count for="Ulfberth" lte="0" />
                   </conditions>
-                  <line emotion="happy:30" form-id-m="010018D5" form-id-f="010018D6">He's at my shop right now. My husband and I run Warmaidens, by the city gate.</line>
+                  <line form-id-m="010018D5" emotion="happy:30" form-id-f="010018D6">He's at my shop right now. My husband and I run Warmaidens, by the city gate.</line>
                </g>
                <g non-exclusive="true" name="ulfberth-dead">
                   <conditions>
                      <death-count for="Ulfberth" gte="1" />
                   </conditions>
-                  <line form-id-f="010018D8" emotion="sad:60" form-id-m="010018D7" script-notes='Still getting used to his death. You were going to say "my husband and I run the place," before you caught yourself.'>He's at my shop right now. Warmaidens. My husband... used to help me run the place...</line>
+                  <line emotion="sad:60" form-id-f="010018D8" form-id-m="010018D7" script-notes='Still getting used to his death. You were going to say "my husband and I run the place," before you caught yourself.'>He's at my shop right now. Warmaidens. My husband... used to help me run the place...</line>
                </g>
                <line form-id-m="010018D9" form-id-f="010018DA">He's at Warmaidens, my smithy by the gate.</line>
             </g>
@@ -775,12 +775,12 @@
                   <conditions>
                      <death-count for="AdrianneAvenicci" lte="0" />
                   </conditions>
-                  <line emotion="happy:30" form-id-m="010018E6" form-id-f="010018E7">He's at Warmaidens. My wife and I run the place.</line>
+                  <line form-id-m="010018E6" emotion="happy:30" form-id-f="010018E7">He's at Warmaidens. My wife and I run the place.</line>
                   <line form-id-m="010018E8" form-id-f="010018E9">He's at my family shop: Warmaidens, the smithy by the gate.</line>
                </g>
                <!-- else Adrianne dead -->
                <line form-id-m="010018EA" form-id-f="010018EB">He's at my shop, Warmaidens. It's over by Whiterun's gate.</line>
-               <line emotion="sad:60" form-id-m="010018EC" form-id-f="010018ED">I'm pretty sure he's at Warmaidens. My wife used to run the place with me, before...</line>
+               <line form-id-m="010018EC" emotion="sad:60" form-id-f="010018ED">I'm pretty sure he's at Warmaidens. My wife used to run the place with me, before...</line>
             </g>
             <g non-exclusive="true" name="asking-about-employee">
                <conditions>

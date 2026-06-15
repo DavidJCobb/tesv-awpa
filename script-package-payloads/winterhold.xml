@@ -8,7 +8,7 @@
       </shared-info>
    </shared-infos>
    
-   <quest locations="WinterholdLocation" id="AWPAWinterhold">
+   <quest id="AWPAWinterhold" locations="WinterholdLocation">
       <dialogue-conditions>
          <or>
             <faction-membership of="speaker" includes="TownWinterholdFaction" />
@@ -41,12 +41,12 @@
                </topic>
             </begin-asking-to>
          </actor>
-         <actor editor-id="ArnielGane" name="Arniel Gane" />
+         <actor name="Arniel Gane" editor-id="ArnielGane" />
          <actor editor-id="Assur" />
          <actor editor-id="Birna" />
-         <actor editor-id="BrelynaMaryon" name="Brelyna Maryon" />
-         <actor editor-id="ColetteMarence" name="Colette Marence" />
-         <actor editor-id="DA01Aranea" name="Aranea Ienith">
+         <actor name="Brelyna Maryon" editor-id="BrelynaMaryon" />
+         <actor name="Colette Marence" editor-id="ColetteMarence" />
+         <actor name="Aranea Ienith" editor-id="DA01Aranea">
             <begin-asking-about>
                <filter-conditions>
                   <!--
@@ -60,12 +60,12 @@
             </begin-asking-about>
          </actor>
          <actor editor-id="Dagur" />
-         <actor editor-id="DrevisNeloren" name="Drevis Neloren" />
+         <actor name="Drevis Neloren" editor-id="DrevisNeloren" />
          <actor editor-id="Eirid" />
          <actor editor-id="Enthir" />
          <actor editor-id="Faralda" />
          <actor editor-id="Haran" />
-         <actor editor-id="Jzargo" name="J'zargo" />
+         <actor name="J'zargo" editor-id="Jzargo" />
          <actor editor-id="Korir">
             <begin-asking-to>
                <topic>
@@ -76,7 +76,7 @@
                   <conditions>
                      <parent-cell of="speaker" is="WinterholdJarlsLonghouse" />
                   </conditions>
-                  <shared-info id="shared-refer-to-steward-neutral" />
+                  <shared-info id="shared-refer-to-steward-neutral" form-ids="01001E1F,01001E20,01001E21" />
                </topic>
             </begin-asking-to>
          </actor>
@@ -91,23 +91,23 @@
                      <faction-membership of="speaker" includes="JobJarlFaction" />
                      <parent-cell of="speaker" is="WinterholdJarlsLonghouse" />
                   </conditions>
-                  <shared-info id="shared-refer-to-steward-neutral" />
+                  <shared-info id="shared-refer-to-steward-neutral" form-ids="01001E22,01001E23,01001E24" />
                </topic>
             </begin-asking-to>
          </actor>
-         <actor editor-id="MalurSeloth" name="Malur Seloth" />
-         <actor editor-id="MirabelleErvine" name="Mirabelle Ervine" />
+         <actor name="Malur Seloth" editor-id="MalurSeloth" />
+         <actor name="Mirabelle Ervine" editor-id="MirabelleErvine" />
          <actor editor-id="Nelacar" />
          <actor editor-id="Nirya" />
          <actor editor-id="Onmund" />
-         <actor editor-id="PhinisGestor" name="Phinis Gestor" />
+         <actor name="Phinis Gestor" editor-id="PhinisGestor" />
          <actor editor-id="Ranmir" />
-         <actor editor-id="SavosAren" name="Savos Aren" />
-         <actor editor-id="SergiusTurrianus" name="Sergius Turrianus" />
+         <actor name="Savos Aren" editor-id="SavosAren" />
+         <actor name="Sergius Turrianus" editor-id="SergiusTurrianus" />
          <actor editor-id="Thaena" />
          <actor editor-id="Thonjolf" />
          <actor editor-id="Tolfdir" />
-         <actor editor-id="UraggroShub" name="Urag gro-Shub" />
+         <actor name="Urag gro-Shub" editor-id="UraggroShub" />
       </actors>
       
       <macro name="conditions-entity-inside-college-ext">
@@ -196,7 +196,7 @@
                   <parent-cell of="subject" is="WinterholdCollegeHallofCountenance" />
                </or>
             </conditions>
-            <constant value="0" name="height-coordinate-2f" />
+            <constant name="height-coordinate-2f" value="0" />
             <!--<invoke name="mixin-interior-1f-2f-no-rooms" />-->
             <g name="upstairs">
                <conditions>
@@ -219,7 +219,7 @@
             <conditions>
                <parent-cell of="subject" is="WinterholdRanmirshouse" />
             </conditions>
-            <constant value="240" name="height-coordinate-2f" />
+            <constant name="height-coordinate-2f" value="240" />
             <!--<invoke name="mixin-interior-1f-2f-no-rooms" />-->
             <g name="upstairs">
                <conditions>

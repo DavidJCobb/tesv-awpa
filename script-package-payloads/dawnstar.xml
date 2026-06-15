@@ -8,7 +8,7 @@
       </shared-info>
    </shared-infos>
    
-   <quest locations="DawnstarLocation" id="AWPADawnstar">
+   <quest id="AWPADawnstar" locations="DawnstarLocation">
       <dialogue-conditions>
          <or>
             <faction-membership of="speaker" includes="TownDawnstarFaction" />
@@ -28,13 +28,13 @@
          <actor editor-id="Beitild" />
          <actor editor-id="Bodil" />
          <actor editor-id="Borgny" />
-         <actor editor-id="BrinaMerilis" name="Brina Merilis">
+         <actor name="Brina Merilis" editor-id="BrinaMerilis">
             <begin-asking-to>
                <topic>
                   <conditions>
                      <faction-membership of="speaker" includes="JobJarlFaction" />
                   </conditions>
-                  <shared-info id="shared-refer-to-steward-neutral" />
+                  <shared-info id="shared-refer-to-steward-neutral" form-ids="01001DE9,01001DEA,01001DEB" />
                </topic>
             </begin-asking-to>
          </actor>
@@ -49,20 +49,20 @@
          <actor editor-id="Fruki" />
          <actor editor-id="Gjak" />
          <actor editor-id="Guthrum" />
-         <actor editor-id="HorikHalfhand" name="Horik Halfhand" />
+         <actor name="Horik Halfhand" editor-id="HorikHalfhand" />
          <actor editor-id="Irgnir" />
          <actor editor-id="Jod" />
          <actor editor-id="Karl" />
          <actor editor-id="Karita" />
-         <actor editor-id="LeifWayfinder" name="Captain Wayfinder" />
+         <actor name="Captain Wayfinder" editor-id="LeifWayfinder" />
          <actor editor-id="Leigelf" />
-         <actor editor-id="LondNorthstrider" name="Lond" />
+         <actor name="Lond" editor-id="LondNorthstrider" />
          <actor editor-id="Madena" />
-         <actor editor-id="RavamVerethi" name="Ravam Verethi" />
+         <actor name="Ravam Verethi" editor-id="RavamVerethi" />
          <actor editor-id="Rustleif" />
          <actor editor-id="Seren" />
-         <actor editor-id="SilusVesuius" name="Silus Vesuius" />
-         <actor editor-id="SkaldtheElder" name="Skald the Elder">
+         <actor name="Silus Vesuius" editor-id="SilusVesuius" />
+         <actor name="Skald the Elder" editor-id="SkaldtheElder">
             <begin-asking-to>
                <topic>
                   <!--
@@ -70,7 +70,7 @@
                      it's important." Giving him blunt/haughty redirects 
                      fits.
                   -->
-                  <shared-info id="shared-refer-to-steward-haughty" />
+                  <shared-info id="shared-refer-to-steward-haughty" form-ids="01001DEC,01001DED,01001DEE" />
                </topic>
             </begin-asking-to>
          </actor>
@@ -117,7 +117,7 @@
                <conditions>
                   <parent-cell of="subject" is="DawnstarMortarandPestle" />
                </conditions>
-               <constant value="240" name="height-coordinate-2f" />
+               <constant name="height-coordinate-2f" value="240" />
                <!--<invoke name="mixin-interior-1f-2f-no-rooms" />-->
             <g name="upstairs">
                <conditions>
@@ -492,9 +492,9 @@
             <parent-world of="subject" is="Tamriel" />
          </conditions>
          
-         <constant value="100720" name="main-street-y-min" />
-         <constant value="103424" name="main-street-y-max" />
-         <constant value="-13568" name="main-street-z-min" />
+         <constant name="main-street-y-min" value="100720" />
+         <constant name="main-street-y-max" value="103424" />
+         <constant name="main-street-z-min" value="-13568" />
          
          <g name="bay">
             <g name="bay-innermost">

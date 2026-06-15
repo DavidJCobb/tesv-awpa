@@ -1,5 +1,5 @@
 <payload>
-   <quest locations="MarkarthLocation" id="AWPAMarkarth">
+   <quest id="AWPAMarkarth" locations="MarkarthLocation">
       <dialogue-conditions>
          <or>
             <faction-membership of="speaker" includes="TownMarkarthFaction" />
@@ -12,12 +12,12 @@
       <actors>
          <actor editor-id="Adara" />
          <actor editor-id="Aicantar" />
-         <actor editor-id="Anton" name="Anton Virane" />
+         <actor name="Anton Virane" editor-id="Anton" />
          <actor editor-id="Anwen" />
          <actor editor-id="Banning" />
-         <actor editor-id="Betrid" name="Betrid Silver-Blood" />
+         <actor name="Betrid Silver-Blood" editor-id="Betrid" />
          <actor editor-id="Bothela" />
-         <actor editor-id="BrotherVerulus" name="Brother Verulus" />
+         <actor name="Brother Verulus" editor-id="BrotherVerulus" />
          <actor editor-id="Cairine" />
          <actor editor-id="Calcelmo" />
          <actor editor-id="Cedran" />
@@ -40,12 +40,12 @@
          <actor editor-id="Faleen" />
          <actor editor-id="Frabbi" />
          <actor editor-id="Garvey" />
-         <actor editor-id="GhorzaGraBagol" name="Ghorza gra-Bagol" />
+         <actor name="Ghorza gra-Bagol" editor-id="GhorzaGraBagol" />
          <actor editor-id="Hamal" />
          <actor editor-id="Hathrasil" />
-         <actor editor-id="HirelingVorstag" name="Vorstag" />
-         <actor editor-id="HogniRedArm" name="Hogni Red-Arm" />
-         <actor editor-id="HousecarlMarkarth" name="Argis the Bulwark">
+         <actor name="Vorstag" editor-id="HirelingVorstag" />
+         <actor name="Hogni Red-Arm" editor-id="HogniRedArm" />
+         <actor name="Argis the Bulwark" editor-id="HousecarlMarkarth">
             <begin-asking-about>
                <filter-conditions>
                   <!-- actor ref is enabled once Vlindrel Hall is purchased -->
@@ -58,21 +58,21 @@
          <actor editor-id="Igmund">
             <begin-asking-to>
                <topic>
-                  <shared-info id="shared-refer-to-steward-neutral" />
+                  <shared-info id="shared-refer-to-steward-neutral" form-ids="01001DF5,01001DF6,01001DF7" />
                </topic>
             </begin-asking-to>
          </actor>
-         <actor editor-id="Ildene" name="Nana Ildene" />
+         <actor name="Nana Ildene" editor-id="Ildene" />
          <actor editor-id="Imedhnain" />
          <actor editor-id="Kerah" />
          <actor editor-id="Kleppr" />
          <actor editor-id="Lisbet" />
          <actor editor-id="Morven" />
-         <actor editor-id="MothgroBagol" name="Moth gro-Bagol" />
-         <actor editor-id="MS01Margret" name="Margret" />
+         <actor name="Moth gro-Bagol" editor-id="MothgroBagol" />
+         <actor name="Margret" editor-id="MS01Margret" />
          <actor editor-id="Muiri" />
-         <actor editor-id="MulushGroShugurz" name="Mulush gro-Shugurz" />
-         <actor editor-id="Nepos" name="Nepos the Nose" />
+         <actor name="Mulush gro-Shugurz" editor-id="MulushGroShugurz" />
+         <actor name="Nepos the Nose" editor-id="Nepos" />
          <actor editor-id="Ogmund" />
          <actor editor-id="Omluag" />
          <actor editor-id="Ondolemar">
@@ -96,36 +96,36 @@
                   <conditions>
                      <relationship-rank of="subject" with="player" lt="1" />
                   </conditions>
-                  <line emotion="disgust:40">No. I have more important matters to attend to.</line>
-                  <line emotion="disgust:50">My priority is dealing with Talos worshippers and other heretics, not acting as the citizenry's tour guide.</line>
-                  <line emotion="disgust:35" script-notes="you've been asked if you can help the player find someone, but the player isn't worth your time; stress &quot;finding&quot; in your reply as a way of throwing the player's words back at them">The only people I'm interested in finding are heretics. Unless you'd like to report any, we have little to talk about.</line>
+                  <line form-id-u="01001DF8" emotion="disgust:40">No. I have more important matters to attend to.</line>
+                  <line form-id-u="01001DF9" emotion="disgust:50">My priority is dealing with Talos worshippers and other heretics, not acting as the citizenry's tour guide.</line>
+                  <line emotion="disgust:35" form-id-u="01001DFA" script-notes="you've been asked if you can help the player find someone, but the player isn't worth your time; stress &#22;finding&#22; in your reply as a way of throwing the player's words back at them">The only people I'm interested in finding are heretics. Unless you'd like to report any, we have little to talk about.</line>
                </topic>
             </begin-asking-to>
          </actor>
          <actor editor-id="Orla" />
          <actor editor-id="Raerek" />
-         <actor editor-id="Reburrus" name="Reburrus Quintilius" />
+         <actor name="Reburrus Quintilius" editor-id="Reburrus" />
          <actor editor-id="Rhiada" />
          <actor editor-id="Rondach" />
          <actor editor-id="Senna" />
-         <actor editor-id="TacitusSallustius" name="Tacitus Sallustius" />
-         <actor editor-id="Thonar" name="Thonar Silver-Blood" />
-         <actor editor-id="Thongvor" name="Thongvor Silver-Blood">
+         <actor name="Tacitus Sallustius" editor-id="TacitusSallustius" />
+         <actor name="Thonar Silver-Blood" editor-id="Thonar" />
+         <actor name="Thongvor Silver-Blood" editor-id="Thongvor">
             <begin-asking-to>
                <topic>
                   <conditions>
                      <faction-membership of="speaker" includes="JobJarlFaction" />
                   </conditions>
-                  <shared-info id="shared-refer-to-steward-haughty" />
+                  <shared-info id="shared-refer-to-steward-haughty" form-ids="01001DFB,01001DFC,01001DFD" />
                </topic>
             </begin-asking-to>
          </actor>
          <actor editor-id="Tynan" />
-         <actor editor-id="Tyranus" name="Vigilant Tyranus" />
+         <actor name="Vigilant Tyranus" editor-id="Tyranus" />
          <actor editor-id="Uaile" />
-         <actor editor-id="UrzogaGraShugurz" name="Urzoga gra-Shugurz" />
+         <actor name="Urzoga gra-Shugurz" editor-id="UrzogaGraShugurz" />
          <actor editor-id="Voada" />
-         <actor editor-id="Yngvar" name="Yngvar the Singer" />
+         <actor name="Yngvar the Singer" editor-id="Yngvar" />
       </actors>
       
       <!--
@@ -327,8 +327,8 @@
                   <parent-cell of="subject" is="CidhnaMine02" />
                   <parent-cell of="speaker" is="CidhnaMine01" />
                </conditions>
-               <line emotion="puzzled:70" form-id-m="01000CB9" form-id-f="01000CBA">He should be here in the mine, but I haven't seen him in a while...</line>
-               <line emotion="puzzled:60" form-id-m="01000CBB" form-id-f="01000CBC">That's... a good question. He should be here in the mine. Where could he have gone?</line>
+               <line form-id-m="01000CB9" emotion="puzzled:70" form-id-f="01000CBA">He should be here in the mine, but I haven't seen him in a while...</line>
+               <line form-id-m="01000CBB" emotion="puzzled:60" form-id-f="01000CBC">That's... a good question. He should be here in the mine. Where could he have gone?</line>
             </g>
          </g>
          <g name="guard-tower">
@@ -485,7 +485,7 @@
                </conditions>
                <line form-id-m="01000D13" form-id-f="01000D14">He works at the Silver-Blood Inn. You should be able to find him there.</line>
                <line form-id-m="01000D15" form-id-f="01000D16">He's an employee at the Silver-Blood Inn. He'll be in there.</line>
-               <line emotion="puzzled:20" form-id-m="01000D17" form-id-f="01000D18">He's part of the family that runs the Silver-Blood Inn. Not the Silver-Bloods; they just own the place. Anyway, he should be in there.</line>
+               <line form-id-m="01000D17" emotion="puzzled:20" form-id-f="01000D18">He's part of the family that runs the Silver-Blood Inn. Not the Silver-Bloods; they just own the place. Anyway, he should be in there.</line>
             </g>
             <line form-id-m="01000D19" form-id-f="01000D1A">He's at the Silver-Blood Inn.</line>
             <line form-id-u="01000D1B">Check the Silver-Blood Inn, across from the city's main gate.</line>

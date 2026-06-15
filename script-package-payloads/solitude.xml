@@ -1,5 +1,5 @@
 <payload>
-   <quest locations="SolitudeLocation" id="AWPASolitude">
+   <quest id="AWPASolitude" locations="SolitudeLocation">
       <dialogue-conditions>
          <actor-base of="speaker" is-not="Roggvir" />
          <or>
@@ -47,17 +47,17 @@
       <actors>
          <actor editor-id="Addvar" />
          <actor editor-id="Ahtar" />
-         <actor editor-id="AiaArria" name="Aia Arria" />
-         <actor editor-id="AngelineMorrard" name="Angeline Morrard" />
-         <actor editor-id="AquilliusAeresius" name="Aquillius Aeresius" />
-         <actor editor-id="AtAfAlan" name="Ataf" />
+         <actor name="Aia Arria" editor-id="AiaArria" />
+         <actor name="Angeline Morrard" editor-id="AngelineMorrard" />
+         <actor name="Aquillius Aeresius" editor-id="AquilliusAeresius" />
+         <actor name="Ataf" editor-id="AtAfAlan" />
          <actor editor-id="Beirand" />
          <actor editor-id="Bendt" />
-         <actor editor-id="BolgeirBearclaw" name="Bolgeir Bearclaw" />
+         <actor name="Bolgeir Bearclaw" editor-id="BolgeirBearclaw" />
          <actor editor-id="Bryling" />
-         <actor editor-id="CaptainAldis" name="Captain Aldis" />
-         <actor editor-id="CaptainMetilius" name="Captain Metilius" />
-         <actor editor-id="CorpulusVinius" name="Corpulus Vinius" />
+         <actor name="Captain Aldis" editor-id="CaptainAldis" />
+         <actor name="Captain Metilius" editor-id="CaptainMetilius" />
+         <actor name="Corpulus Vinius" editor-id="CorpulusVinius" />
          <actor editor-id="Deeja">
             
             <begin-asking-about>
@@ -92,23 +92,23 @@
          </actor>
          <actor editor-id="Dervenin" />
          <actor editor-id="Elenwen" />
-         <actor editor-id="ElisifTheFair" name="Elisif the Fair">
+         <actor name="Elisif the Fair" editor-id="ElisifTheFair">
             <begin-asking-to>
                <topic>
-                  <shared-info id="shared-refer-to-steward-neutral" />
+                  <shared-info id="shared-refer-to-steward-neutral" form-ids="01001E08,01001E09,01001E0A" />
                </topic>
             </begin-asking-to>
          </actor>
          <actor editor-id="Endarie" />
          <actor editor-id="Erdi" />
          <actor editor-id="Erikur" />
-         <actor editor-id="EvetteSan" name="Evette San" />
-         <actor editor-id="FalkFirebeard" name="Falk Firebeard" />
+         <actor name="Evette San" editor-id="EvetteSan" />
+         <actor name="Falk Firebeard" editor-id="FalkFirebeard" />
          <actor editor-id="Fihada" />
          <actor editor-id="Freir" />
          <actor editor-id="Fridrika" />
          <actor editor-id="Gadnor" />
-         <actor editor-id="GeneralTullius" name="General Tullius">
+         <actor name="General Tullius" editor-id="GeneralTullius">
             <begin-asking-to>
                <topic>
                   <!--
@@ -118,20 +118,20 @@
                      still be blunt and mildly rude. Best to aim just a bit 
                      below that.
                   -->
-                  <line script-notes="blunt">I'm a general, not a steward.</line>
-                  <line emotion="puzzled:15" script-notes="somewhat annoyed; it makes no sense to bother you about this">You might try asking someone local to Solitude?</line>
+                  <line form-id-u="01001E0B" script-notes="blunt">I'm a general, not a steward.</line>
+                  <line emotion="puzzled:15" form-id-u="01001E0C" script-notes="somewhat annoyed; it makes no sense to bother you about this">You might try asking someone local to Solitude?</line>
                </topic>
             </begin-asking-to>
          </actor>
-         <actor editor-id="GiraudGemane" name="Giraud Gemane" />
+         <actor name="Giraud Gemane" editor-id="GiraudGemane" />
          <actor editor-id="Gisli" />
          <actor editor-id="Greta" />
-         <actor editor-id="GulumEi" name="Gulum-Ei" />
+         <actor name="Gulum-Ei" editor-id="GulumEi" />
          <actor editor-id="Heimvar" />
-         <actor editor-id="HirelingBelrand" name="Belrand" />
+         <actor name="Belrand" editor-id="HirelingBelrand" />
          <actor editor-id="Hjorunn" />
          <actor editor-id="Horm" />
-         <actor editor-id="HousecarlSolitude" name="Jordis the Sword-Maiden">
+         <actor name="Jordis the Sword-Maiden" editor-id="HousecarlSolitude">
             <begin-asking-about>
                <filter-conditions>
                   <!-- actor ref is enabled once Proudspire Manor is purchased -->
@@ -140,33 +140,33 @@
             </begin-asking-about>
          </actor>
          <actor editor-id="Illdi" />
-         <actor editor-id="IngeSixFingers" name="Inge Six Fingers" />
-         <actor editor-id="IrnskarIronhand" name="Irnskar Ironhand" />
+         <actor name="Inge Six Fingers" editor-id="IngeSixFingers" />
+         <actor name="Irnskar Ironhand" editor-id="IrnskarIronhand" />
          <actor editor-id="Jala" />
-         <actor editor-id="JareeRa" name="Jaree-Ra" />
+         <actor name="Jaree-Ra" editor-id="JareeRa" />
          <actor editor-id="Jawanan" />
          <actor editor-id="Jorn" />
          <actor editor-id="Katla" />
          <actor editor-id="Kayd" />
-         <actor editor-id="KharagGroShurkul" name="Kharag gro-Shurkul" />
+         <actor name="Kharag gro-Shurkul" editor-id="KharagGroShurkul" />
          <actor editor-id="Knud" />
          <actor editor-id="Lisette" />
          <actor editor-id="Melaran" />
-         <actor editor-id="MinetteVinius" name="Minette Vinius" />
-         <actor editor-id="NosterOneEye" name="Noster Eagle-Eye" />
-         <actor editor-id="OctieveSan" name="Octieve San" />
+         <actor name="Minette Vinius" editor-id="MinetteVinius" />
+         <actor name="Noster Eagle-Eye" editor-id="NosterOneEye" />
+         <actor name="Octieve San" editor-id="OctieveSan" />
          <actor editor-id="Odar" />
-         <actor editor-id="PanteaAteia" name="Pantea Ateia" />
+         <actor name="Pantea Ateia" editor-id="PanteaAteia" />
          <actor editor-id="Rikke">
             <begin-asking-to>
                <topic>
-                  <line emotion="puzzled:30">I'm the wrong person to ask. The Jarl's steward might be able to help.</line>
+                  <line form-id-u="01001E0D" emotion="puzzled:30">I'm the wrong person to ask. The Jarl's steward might be able to help.</line>
                </topic>
             </begin-asking-to>
          </actor>
          <actor editor-id="Roggvir" />
          <actor editor-id="Rorlund" />
-         <actor editor-id="SabineNytte" name="Sabine Nytte">
+         <actor name="Sabine Nytte" editor-id="SabineNytte">
             
             <begin-asking-about>
                <!--
@@ -230,7 +230,7 @@
             </begin-asking-about>
          
          </actor>
-         <actor editor-id="SailorDorian" name="Dorian">
+         <actor name="Dorian" editor-id="SailorDorian">
             
             <begin-asking-about>
                <!--
@@ -262,7 +262,7 @@
             </begin-asking-about>
          
          </actor>
-         <actor editor-id="SailorEris" name="Eris">
+         <actor name="Eris" editor-id="SailorEris">
             
             <begin-asking-about>
                <!--
@@ -294,7 +294,7 @@
             </begin-asking-about>
          
          </actor>
-         <actor editor-id="SailorXander" name="Xander">
+         <actor name="Xander" editor-id="SailorXander">
             
             <begin-asking-about>
                <!--
@@ -327,7 +327,7 @@
          
          </actor>
          <actor editor-id="Sayma" />
-         <actor editor-id="SilanaPetreia" name="Silana Petreia" />
+         <actor name="Silana Petreia" editor-id="SilanaPetreia" />
          <actor editor-id="Snilling" />
          <actor editor-id="Snorreid">
             
@@ -363,12 +363,12 @@
          </actor>
          <actor editor-id="Styrr" />
          <actor editor-id="Svari" />
-         <actor editor-id="SybilleStentor" name="Sybille Stentor" />
+         <actor name="Sybille Stentor" editor-id="SybilleStentor" />
          <actor editor-id="Taarie" />
          <actor editor-id="Una" />
          <actor editor-id="Viarmo" />
-         <actor editor-id="VittoriaVici" name="Vittoria Vici" />
-         <actor editor-id="VivienneOnis" name="Vivienne Onis" />
+         <actor name="Vittoria Vici" editor-id="VittoriaVici" />
+         <actor name="Vivienne Onis" editor-id="VivienneOnis" />
       </actors>
       
       <condition-set name="under-stormcloak-control">
@@ -431,8 +431,8 @@
                   <parent-cell of="subject" is="SolitudeWinkingSkeever" />
                </or>
             </conditions>
-            <constant value="0" name="height-coordinate-1f" />
-            <constant value="288" name="height-coordinate-2f" />
+            <constant name="height-coordinate-1f" value="0" />
+            <constant name="height-coordinate-2f" value="288" />
             <!--<invoke name="common-interior-different-floors-b1f-1f-2f" />-->
             <g name="upstairs">
                <conditions>
@@ -501,8 +501,8 @@
                   <parent-cell of="subject" is="SolitudeJusticiarsHeadquarters" />
                </or>
             </conditions>
-            <constant value="288" name="height-coordinate-1f" />
-            <constant value="576" name="height-coordinate-2f" />
+            <constant name="height-coordinate-1f" value="288" />
+            <constant name="height-coordinate-2f" value="576" />
             <!--<invoke name="common-interior-different-floors-b1f-1f-2f" />-->
             <g name="upstairs">
                <conditions>
@@ -576,7 +576,7 @@
                   <parent-cell of="subject" is="SolitudeStables" />
                </or>
             </conditions>
-            <constant value="288" name="height-coordinate-2f" />
+            <constant name="height-coordinate-2f" value="288" />
             <!--<invoke name="mixin-interior-1f-2f-no-rooms" />-->
             <g name="upstairs">
                <conditions>
@@ -599,7 +599,7 @@
             <conditions>
                <parent-cell of="subject" is="SolitudeRedWave" />
             </conditions>
-            <constant value="368" name="height-coordinate-2f" />
+            <constant name="height-coordinate-2f" value="368" />
             <!--<invoke name="mixin-interior-1f-2f-no-rooms" />-->
             <g name="upstairs">
                <conditions>
@@ -659,8 +659,8 @@
                   <actor-base of="subject" is="VivienneOnis" />
                   <death-count for="AngelineMorrard" gt="0" />
                </conditions>
-               <line emotion="sad:20" form-id-m="0100151D" form-id-f="0100151E">He's at my store, Angeline's Aromatics. I run the place now that my aunt has passed.</line>
-               <line form-id-f="01001520" emotion="sad:40" form-id-m="0100151F" script-notes="slight emphasis on &#22;my&#22; shop. your aunt used to run the shop, but she died, so you run it now; you're still getting used to that">He's at my aunt's... sorry, my alchemy shop. Angeline's Aromatics.</line>
+               <line form-id-m="0100151D" emotion="sad:20" form-id-f="0100151E">He's at my store, Angeline's Aromatics. I run the place now that my aunt has passed.</line>
+               <line emotion="sad:40" form-id-f="01001520" form-id-m="0100151F" script-notes="slight emphasis on &#16;my&#16; shop. your aunt used to run the shop, but she died, so you run it now; you're still getting used to that">He's at my aunt's... sorry, my alchemy shop. Angeline's Aromatics.</line>
             </g>
             <line form-id-m="01001521" form-id-f="01001522">I saw him stop by Angeline's Aromatics earlier.</line>
             <line form-id-m="01001523" form-id-f="01001524">I'm pretty sure he's at Angeline's Aromatics.</line>
@@ -1093,7 +1093,7 @@
                   <line form-id-m="01001619" form-id-f="0100161A">He was Vittoria Vici's roommate before she died. Now he owns her house. Try checking there.</line>
                </g>
                <line form-id-m="0100161B" form-id-f="0100161C">He lives at Vittoria Vici's house. He'll be there now.</line>
-               <line emotion="puzzled:55" form-id-m="0100161D" form-id-f="0100161E">He lives with Vittoria Vici, though I'm not sure how they're related. You'll find him there.</line>
+               <line form-id-m="0100161D" emotion="puzzled:55" form-id-f="0100161E">He lives with Vittoria Vici, though I'm not sure how they're related. You'll find him there.</line>
             </g>
             <g name="vittoria-dead">
                <conditions>
@@ -1166,8 +1166,8 @@
                </g>
                <line form-id-m="01001635" form-id-f="01001636">He's one of the sailors from the Red Wave. It's docked here, and he's probably aboard right now.</line>
             </g>
-            <line emotion="puzzled:40" form-id-m="01001637" form-id-f="01001638">I think I saw him stopping by the Red Wave, one of the ships docked at Solitude. Not sure why he'd visit them...</line>
-            <line emotion="puzzled:40" form-id-m="01001639" form-id-f="0100163A">He was headed toward the Red Wave, a ship docked here. Don't know why. The crew don't seem... friendly...</line>
+            <line form-id-m="01001637" emotion="puzzled:40" form-id-f="01001638">I think I saw him stopping by the Red Wave, one of the ships docked at Solitude. Not sure why he'd visit them...</line>
+            <line form-id-m="01001639" emotion="puzzled:40" form-id-f="0100163A">He was headed toward the Red Wave, a ship docked here. Don't know why. The crew don't seem... friendly...</line>
          </g>
          <g name="sawmill">
             <conditions>
@@ -1287,7 +1287,7 @@
                <y of="subject" lte="109040" />
                <z of="subject" gte="-6432" />
             </conditions>
-            <line emotion="puzzled:90" form-id-m="01001656" form-id-f="01001657">He's up on Castle Dour's upper level, on the western tower. Come to think of it, how do you get up there?...</line>
+            <line form-id-m="01001656" emotion="puzzled:90" form-id-f="01001657">He's up on Castle Dour's upper level, on the western tower. Come to think of it, how do you get up there?...</line>
          </g>
          <g name="windmill">
             <conditions>
@@ -1360,7 +1360,7 @@
                         <conditions>
                            <actor-base of="speaker" is="Greta" />
                         </conditions>
-                        <line form-id-f="01001667" emotion="sad:80" form-id-m="01001666" script-notes="you've been asked about your brother, who is about to be executed for a crime you sympathize with">He's my brother. He's... Whatever you need from him, it's too late.</line>
+                        <line emotion="sad:80" form-id-f="01001667" form-id-m="01001666" script-notes="you've been asked about your brother, who is about to be executed for a crime you sympathize with">He's my brother. He's... Whatever you need from him, it's too late.</line>
                      </g>
                      <g name="asking-niece">
                         <conditions>
@@ -1372,9 +1372,9 @@
                         <conditions>
                            <actor-base of="speaker" is="Addvar" />
                         </conditions>
-                        <line emotion="sad:60" form-id-m="01001669" form-id-f="0100166A">He's set to be executed.</line>
+                        <line form-id-m="01001669" emotion="sad:60" form-id-f="0100166A">He's set to be executed.</line>
                      </g>
-                     <line form-id-m="0100166B" form-id-f="0100166C" script-notes='vocal stress on "and"'>He's been sentenced to death. You'll find him and the headsman by the city entrance.</line>
+                     <line script-notes='vocal stress on "and"' form-id-m="0100166B" form-id-f="0100166C">He's been sentenced to death. You'll find him and the headsman by the city entrance.</line>
                      <line form-id-m="0100166D" form-id-f="0100166E">He's been sentenced to death. If you have anything important to say to him, you'd better hurry to the city entrance...</line>
                   </g>
                   <line form-id-m="0100166F" form-id-f="01001670">He's by the, uh, executioner's platform. Near the city entrance.</line>
@@ -1462,7 +1462,7 @@
                <y of="subject" lte="107808" />
                <z of="subject" gte="-6352" />
             </conditions>
-            <line form-id-f="0100168B" emotion="puzzled:70" form-id-m="0100168A" script-notes='emphasis on "get"'>I saw him on the roof of the Emperor's Tower. How did he get up there?...</line>
+            <line emotion="puzzled:70" form-id-f="0100168B" form-id-m="0100168A" script-notes='emphasis on "get"'>I saw him on the roof of the Emperor's Tower. How did he get up there?...</line>
          </g>
          <g name="castle-dour-walls">
             <conditions>
@@ -1570,8 +1570,8 @@
                      <conditions>
                         <actor-base of="subject" is="AquilliusAeresius" />
                      </conditions>
-                     <line emotion="puzzled:80" form-id-m="010016A0" form-id-f="010016A1">He's at home. He lives with Vittoria Vici, though I'm... not sure why.</line>
-                     <line emotion="puzzled:80" form-id-m="010016A2" form-id-f="010016A3">He's near Vittoria Vici's house. I think he's... maybe her roommate?</line>
+                     <line form-id-m="010016A0" emotion="puzzled:80" form-id-f="010016A1">He's at home. He lives with Vittoria Vici, though I'm... not sure why.</line>
+                     <line form-id-m="010016A2" emotion="puzzled:80" form-id-f="010016A3">He's near Vittoria Vici's house. I think he's... maybe her roommate?</line>
                   </g>
                   <!--<invoke name="mixin-house-one-resident-ext-owner-cases">
                      <parameter value="VittoriaVici" name="OWNER" />

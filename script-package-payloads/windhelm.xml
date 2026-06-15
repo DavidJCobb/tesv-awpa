@@ -1121,7 +1121,12 @@
                      <conditions>
                         <actor-base of="subject" is="QuintusNavale" />
                      </conditions>
-                     <line form-id-m="01001C51" form-id-f="01001C52">He owns the White Phial. He took the place over after Nurelion passed. You'll find him there.</line>
+                     <g non-exclusive="true">
+                        <conditions>
+                           <death-count for="Nurelion" gt="0" />
+                        </conditions>
+                        <line form-id-m="01001C51" form-id-f="01001C52">He owns the White Phial. He took the place over after Nurelion passed. You'll find him there.</line>
+                     </g>
                      <line form-id-m="01001C53" form-id-f="01001C54">Check the White Phial. It's his shop and his home.</line>
                   </g>
                </g>

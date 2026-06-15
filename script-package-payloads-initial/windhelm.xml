@@ -714,13 +714,13 @@
                      <conditions>
                         <parent-cell of="subject" is="WindhelmPalaceUpstairs01" />
                      </conditions>
-                     <line>He's in the palace's southern wing. When you first walk into the palace, the door is on your left.</line>
+                     <line>He's on the palace's upper floor. When you first walk into the palace, the door is on your left.</line>
                   </g>
                   <g name="upstairs-north">
                      <conditions>
                         <parent-cell of="subject" is="WindhelmPalaceUpstairs02" />
                      </conditions>
-                     <line>He's in the palace's northern wing. The door is through the war room by the main hall.</line>
+                     <line>He's in the palace's barracks. The door is through the war room by the main hall.</line>
                   </g>
                </g>
             </g>
@@ -831,7 +831,12 @@
                      <conditions>
                         <actor-base of="subject" is="QuintusNavale" />
                      </conditions>
-                     <line>He owns the White Phial. He took the place over after Nurelion passed. You'll find him there.</line>
+                     <g non-exclusive="true">
+                        <conditions>
+                           <death-count for="Nurelion" gt="0" />
+                        </conditions>
+                        <line>He owns the White Phial. He took the place over after Nurelion passed. You'll find him there.</line>
+                     </g>
                      <line>Check the White Phial. It's his shop and his home.</line>
                   </g>
                </g>

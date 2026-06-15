@@ -9,7 +9,10 @@ Bool _do_init_on_update        = False
 Bool _do_loc_refresh_on_update = False
 
 ; Per-session state:
-Bool _has_warned_about_form_list_size = False
+Bool _enable_debug_logging             = False ; `setpqv AWPACoreSvc _enable_debug_logging True`
+Bool _has_warned_about_form_list_empty = False
+Bool _has_warned_about_form_list_junk  = False
+Bool _has_warned_about_form_list_size  = False
 
 Event OnInit()
    _do_init_on_update = True
@@ -74,9 +77,17 @@ AskWherePeopleAreContentQuestBase[] Function _ContentQuestsAsArray()
       If kCurrent
          kArray[iDst] = kCurrent
          iDst = iDst + 1
+      ElseIf !_has_warned_about_form_list_junk
+         _has_warned_about_form_list_junk = True
+         Debug.Trace("[Ask Where People Are] FormList `AskWherePeopleAreContentQuests` contains at least one entry that cannot be cast to class `AskWherePeopleAreContentQuestBase`. First seen entry (at index " + iSrc + "): " + AskWherePeopleAreContentQuests.GetAt(iSrc), 1)
       EndIf
       iSrc = iSrc + 1
    EndWhile
+   
+   If !_has_warned_about_form_list_empty && iSrc == 0
+      _has_warned_about_form_list_empty = True
+      Debug.Trace("[Ask Where People Are] FormList `AskWherePeopleAreContentQuests` contains no usable content quests!", 1)
+   EndIf
    
    Return kArray
 EndFunction
@@ -97,8 +108,15 @@ Function OnPlayerLocationChange(Location akCurrentLocation)
    EndIf
    _processing_loc_change = True
    
+   If _enable_debug_logging
+      Debug.Trace("[Ask Where People Are] Player has moved to Location " + akCurrentLocation + ".")
+   EndIf
+   
    Int iCurrent = 0
    If !akCurrentLocation
+      If _enable_debug_logging
+         Debug.Trace("[Ask Where People Are] Player is no longer in any Location.")
+      EndIf
       ;
       ; Fast path for if the player is no longer in any Location: halt all 
       ; content quests.
@@ -140,7 +158,7 @@ Function OnPlayerLocationChange(Location akCurrentLocation)
    ; accesses will go through the array and thus be "free."
    ;
    AskWherePeopleAreContentQuestBase[] kContentQuests = _ContentQuestsAsArray()
-   Int iSize = kContentQuests.RFind(None)
+   Int iSize = kContentQuests.Find(None)
    If iSize < 0
       iSize = kContentQuests.Length
    EndIf
@@ -189,7 +207,10 @@ Function OnPlayerLocationChange(Location akCurrentLocation)
          Int        iLocation = 0
          Int        iLocCount = kLocList.Length
          While iLocation < iLocCount
-            If akCurrentLocation.IsChild(kLocList[iLocation])
+            ; NOTE: Bethesda's API naming is kinda butt for everything that 
+            ;       involves Locations; to wit, `Location::IsChild` checks 
+            ;       if the ARGUMENT is a child of the CONTEXT.
+            If kLocList[iLocation].IsChild(akCurrentLocation)
                kQuestToStart = kCurrent
                iLocation     = iLocCount
                iCurrent      = iSize
@@ -207,12 +228,18 @@ Function OnPlayerLocationChange(Location akCurrentLocation)
       ;
       iCurrent = 0
       If !kQuestToStart
+         If _enable_debug_logging
+            Debug.Trace("[Ask Where People Are] Player has moved to a content-irrelevant Location.")
+         EndIf
          While iCurrent < iSize
             kContentQuests[iCurrent].Stop()
             iCurrent = iCurrent + 1
          EndWhile
          _current_location_quest = None
       Else
+         If _enable_debug_logging
+            Debug.Trace("[Ask Where People Are] Player has moved to a relevant Location for content quest " + kQuestToStart + ".")
+         EndIf
          While iCurrent < iSize
             AskWherePeopleAreContentQuestBase kCurrent = kContentQuests[iCurrent]
             If kCurrent != kQuestToStart
@@ -240,7 +267,10 @@ EndFunction
 
 Function OnPlayerLoadGame()
    ; Reset per-session state:
-   _has_warned_about_form_list_size = False
+   _enable_debug_logging             = False
+   _has_warned_about_form_list_empty = False
+   _has_warned_about_form_list_junk  = False
+   _has_warned_about_form_list_size  = False
 
    If _do_init_on_update
       Return

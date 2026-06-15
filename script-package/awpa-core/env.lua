@@ -281,7 +281,7 @@ local function _generate_core_service_quest()
    quest.allow_repeated_stages      = true
    quest.start_game_enabled         = true
    quest.warn_on_alias_fill_failure = true
-   quest.object_window_category     = "Ask Where People Are/Core"
+   quest.object_window_category     = "Ask Where People Are\\Core\\"
    utils.set_papyrus_script_data(quest, {
       ["AskWherePeopleAreCoreService"] = {
          ["AskWherePeopleAreContentQuests"] = dovah.get_form_by_editor_id("AskWherePeopleAreContentQuests", form_types.formlist),
@@ -327,6 +327,7 @@ function awpa.env:generate_content()
          quest = dovah.create_form(form_types.quest)
          quest.editor_id = "AWPASharedInfos"
       end
+      quest.object_window_category = "Ask Where People Are\\Core\\"
       self.shared_info_quest = quest
    end
    if not self.shared_info_topic then

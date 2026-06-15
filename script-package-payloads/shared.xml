@@ -74,10 +74,10 @@
          <line>Check outside. I saw him hanging around here on my way in.</line>
          <line>Head outside. I'm pretty sure he's nearby.</line>
       </shared-info>
-      <shared-info id="shared-same-building" editor-id-slug="BuildingSame">
+      <shared-info id="shared-same-building" editor-id-slug="SameBuilding">
          <line>He should be somewhere in this building.</line>
       </shared-info>
-      <shared-info id="shared-same-floor" editor-id-slug="FloorSame">
+      <shared-info id="shared-same-floor" editor-id-slug="SameFloor">
          <line>He should be somewhere on this floor of the building.</line>
       </shared-info>
       <shared-info id="shared-same-room" editor-id-slug="SameRoom">
@@ -101,7 +101,7 @@
          <line>I'm pretty sure he's hanging around our house right now.</line>
          <line>He's at home, or somewhere around there.</line>
       </shared-info>
-      <shared-info id="shared-exterior-near-my-home" editor-id-slug="ExtNearOurHome">
+      <shared-info id="shared-exterior-near-my-home" editor-id-slug="ExtNearMyHome">
          <line>I saw him walking past my house earlier.</line>
          <line>He's over by my house.</line>
       </shared-info>
@@ -177,7 +177,7 @@
          <data>
             <top-g slug="SuperNearPlayer">
                <conditions>
-                  <distance of="player" to="subject" lte="256" />
+                  <distance of="player" lte="256" to="subject" />
                </conditions>
                <shared-info id="shared-near-player" />
             </top-g>

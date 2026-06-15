@@ -1,5 +1,5 @@
 <payload>
-   <quest id="AWPAMorthal" locations="MorthalLocation">
+   <quest locations="MorthalLocation" id="AWPAMorthal">
       <dialogue-conditions>
          <faction-membership of="speaker" includes="TownMorthalFaction" />
          <faction-membership of="speaker" excludes="GuardFactionHaafingar" />
@@ -15,7 +15,7 @@
                      Don't allow asking about Alva once she's outed as a vampire.
                   -->
                   <quest-not-completed name="MS14" />
-                  <papyrus-quest-variable eq="0" var="::PCFoundAlvasCoffin_var" for="MS14" />
+                  <papyrus-quest-variable var="::PCFoundAlvasCoffin_var" for="MS14" eq="0" />
                </filter-conditions>
             </begin-asking-about>
          </actor>
@@ -37,7 +37,7 @@
       <!--<invoke name="common-super-near-player" />-->
             <top-g slug="SuperNearPlayer">
                <conditions>
-                  <distance of="player" to="subject" lte="256" />
+                  <distance of="player" lte="256" to="subject" />
                </conditions>
                <shared-info form-ids="01000E0A,01000E0B,01000E0C,01000E0D" id="shared-near-player" />
             </top-g>
@@ -53,7 +53,7 @@
                <conditions>
                   <parent-cell of="subject" is="MorthalThaumaturgistsHut" />
                </conditions>
-               <constant name="height-coordinate-2f" value="240" />
+               <constant value="240" name="height-coordinate-2f" />
                <!--<invoke name="mixin-interior-1f-2f-no-rooms" />-->
             <g name="upstairs">
                <conditions>
@@ -92,31 +92,31 @@
                   <parent-cell of="subject" is="MorthalGuardhouseJail" />
                </or>
             </conditions>
-            <line form-id-f="01000E1B" form-id-m="01000E1A">I think he's stopping by the Guardhouse.</line>
-            <line form-id-f="01000E1D" form-id-m="01000E1C">Check the Guardhouse. I saw him walk in there earlier.</line>
-            <line form-id-f="01000E1F" form-id-m="01000E1E">He might be in the Guardhouse right now.</line>
+            <line form-id-m="01000E1A" form-id-f="01000E1B">I think he's stopping by the Guardhouse.</line>
+            <line form-id-m="01000E1C" form-id-f="01000E1D">Check the Guardhouse. I saw him walk in there earlier.</line>
+            <line form-id-m="01000E1E" form-id-f="01000E1F">He might be in the Guardhouse right now.</line>
          </g>
          <g name="guardhouse-to-jail">
             <conditions>
                <parent-cell of="subject" is="MorthalGuardhouseJail" />
                <parent-cell of="speaker" is="MorthalGuardhouse" />
             </conditions>
-            <line form-id-f="01000E21" form-id-m="01000E20">He's downstairs.</line>
-            <line form-id-f="01000E23" form-id-m="01000E22">Head down the stairs, to the town jail. You'll find him in there.</line>
+            <line form-id-m="01000E20" form-id-f="01000E21">He's downstairs.</line>
+            <line form-id-m="01000E22" form-id-f="01000E23">Head down the stairs, to the town jail. You'll find him in there.</line>
          </g>
          <g name="guardhouse-per-jail">
             <conditions>
                <parent-cell of="subject" is="MorthalGuardhouse" />
                <parent-cell of="speaker" is="MorthalGuardhouseJail" />
             </conditions>
-            <line form-id-f="01000E25" form-id-m="01000E24">He's upstairs.</line>
+            <line form-id-m="01000E24" form-id-f="01000E25">He's upstairs.</line>
          </g>
          <g name="highmoon-hall">
             <conditions>
                <parent-cell of="subject" is="MorthalHighmoonHall" />
             </conditions>
-            <line form-id-f="01000E27" form-id-m="01000E26">I believe he's visiting Highmoon Hall right now.</line>
-            <line form-id-f="01000E29" form-id-m="01000E28">Pretty sure he's at the town hall.</line>
+            <line form-id-m="01000E26" form-id-f="01000E27">I believe he's visiting Highmoon Hall right now.</line>
+            <line form-id-m="01000E28" form-id-f="01000E29">Pretty sure he's at the town hall.</line>
             <line form-id-u="01000E2A">Highmoon Hall would be a good place to check, if you haven't already.</line>
          </g>
          <g name="house-alva">
@@ -186,21 +186,21 @@
                <conditions>
                   <death-count for="Alva" gt="0" />
                </conditions>
-               <line form-id-f="01000E59" form-id-m="01000E58">I think he's at Hroggar's home right now. The place used to belong to Alva, but...</line>
-               <line form-id-f="01000E5B" form-id-m="01000E5A">Pretty sure I saw him walk into Hroggar's house recently.</line>
-               <line form-id-f="01000E5D" form-id-m="01000E5C">He's visiting Hroggar's new house, at the southeast edge of town.</line>
+               <line form-id-m="01000E58" form-id-f="01000E59">I think he's at Hroggar's home right now. The place used to belong to Alva, but...</line>
+               <line form-id-m="01000E5A" form-id-f="01000E5B">Pretty sure I saw him walk into Hroggar's house recently.</line>
+               <line form-id-m="01000E5C" form-id-f="01000E5D">He's visiting Hroggar's new house, at the southeast edge of town.</line>
             </g>
-            <line form-id-f="01000E5F" form-id-m="01000E5E">I think he's at Alva's home right now.</line>
-            <line form-id-f="01000E61" form-id-m="01000E60">Pretty sure I saw him walk into Alva's house recently.</line>
-            <line form-id-f="01000E63" form-id-m="01000E62">He's visiting Alva's house.</line>
+            <line form-id-m="01000E5E" form-id-f="01000E5F">I think he's at Alva's home right now.</line>
+            <line form-id-m="01000E60" form-id-f="01000E61">Pretty sure I saw him walk into Alva's house recently.</line>
+            <line form-id-m="01000E62" form-id-f="01000E63">He's visiting Alva's house.</line>
          </g>
          <g name="house-falion">
             <conditions>
                <parent-cell of="subject" is="MorthalFalionsHouse" />
             </conditions>
             <!--<invoke name="mixin-house-two-residents-int">
-               <parameter name="OWNER-1" value="Falion" />
-               <parameter name="OWNER-2" value="Agni" />
+               <parameter value="Falion" name="OWNER-1" />
+               <parameter value="Agni" name="OWNER-2" />
             </invoke>-->
             <g name="asking-resident">
                <conditions>
@@ -230,17 +230,17 @@
                <shared-info form-ids="01000E6F,01000E70,01000E71,01000E72,01000E73,01000E74,01000E75,01000E76,01000E77,01000E78,01000E79,01000E7A" id="shared-at-own-home" />
             </g>
          <!-- macro substitution end -->
-            <line form-id-f="01000E7C" form-id-m="01000E7B">He was headed to Falion's house earlier.</line>
-            <line form-id-f="01000E7E" form-id-m="01000E7D">I saw him walk into Falion's house a while ago.</line>
-            <line form-id-f="01000E80" form-id-m="01000E7F">I think he was at Falion's house.</line>
+            <line form-id-m="01000E7B" form-id-f="01000E7C">He was headed to Falion's house earlier.</line>
+            <line form-id-m="01000E7D" form-id-f="01000E7E">I saw him walk into Falion's house a while ago.</line>
+            <line form-id-m="01000E7F" form-id-f="01000E80">I think he was at Falion's house.</line>
          </g>
          <g name="house-jorgen-lami">
             <conditions>
                <parent-cell of="subject" is="MorthalJorgenandLamisHouse" />
             </conditions>
             <!--<invoke name="mixin-house-two-residents-int">
-               <parameter name="OWNER-1" value="Jorgen" />
-               <parameter name="OWNER-2" value="Lami" />
+               <parameter value="Jorgen" name="OWNER-1" />
+               <parameter value="Lami" name="OWNER-2" />
             </invoke>-->
             <g name="asking-resident">
                <conditions>
@@ -271,41 +271,41 @@
             </g>
          <!-- macro substitution end -->
             <!--<invoke name="mixin-co-owned-house-int">
-               <parameter name="OWNER-1" value="Jorgen" />
-               <parameter name="OWNER-2" value="Lami" />
-               <parameter name="HOUSE-LOCATION-NOTE-1" value=", on the north edge of town" />
+               <parameter value="Jorgen" name="OWNER-1" />
+               <parameter value="Lami" name="OWNER-2" />
+               <parameter value=", on the north edge of town" name="HOUSE-LOCATION-NOTE-1" />
                <parameter name="BOTH-DEAD-ADDITIONAL-LINES">
                   <line>He's at the abandoned house on the north edge of town.</line>
                </parameter>
             </invoke>-->
             <g name="both-homeowners-alive">
                <conditions>
-                  <death-count lte="0" for="Jorgen" />
-                  <death-count lte="0" for="Lami" />
+                  <death-count for="Jorgen" lte="0" />
+                  <death-count for="Lami" lte="0" />
                </conditions>
-               <line form-id-f="01000E99" form-id-m="01000E98">He's visiting Jorgen and %OWNER-2% right now.</line>
-               <line form-id-f="01000E9B" form-id-m="01000E9A">He's at Jorgen and %OWNER-2%'s house%HOUSE-LOCATION-NOTE-1%.</line>
+               <line form-id-m="01000E98" form-id-f="01000E99">He's visiting Jorgen and %OWNER-2% right now.</line>
+               <line form-id-m="01000E9A" form-id-f="01000E9B">He's at Jorgen and %OWNER-2%'s house%HOUSE-LOCATION-NOTE-1%.</line>
             </g>
             <g name="owner-1-dead">
                <conditions>
-                  <death-count gt="0" for="Jorgen" />
-                  <death-count lte="0" for="Lami" />
+                  <death-count for="Jorgen" gt="0" />
+                  <death-count for="Lami" lte="0" />
                </conditions>
-               <line form-id-f="01000E9D" form-id-m="01000E9C">He's visiting Lami right now.</line>
-               <line form-id-f="01000E9F" form-id-m="01000E9E">He's at Lami's house%HOUSE-LOCATION-NOTE-1%.</line>
+               <line form-id-m="01000E9C" form-id-f="01000E9D">He's visiting Lami right now.</line>
+               <line form-id-m="01000E9E" form-id-f="01000E9F">He's at Lami's house%HOUSE-LOCATION-NOTE-1%.</line>
             </g>
             <g name="owner-2-dead">
                <conditions>
-                  <death-count lte="0" for="Jorgen" />
-                  <death-count gt="0" for="Lami" />
+                  <death-count for="Jorgen" lte="0" />
+                  <death-count for="Lami" gt="0" />
                </conditions>
-               <line form-id-f="01000EA1" form-id-m="01000EA0">He's visiting Jorgen right now.</line>
-               <line form-id-f="01000EA3" form-id-m="01000EA2">He's at Jorgen's house%HOUSE-LOCATION-NOTE-1%.</line>
+               <line form-id-m="01000EA0" form-id-f="01000EA1">He's visiting Jorgen right now.</line>
+               <line form-id-m="01000EA2" form-id-f="01000EA3">He's at Jorgen's house%HOUSE-LOCATION-NOTE-1%.</line>
             </g>
             <!-- else both actors are dead -->
-            <line form-id-f="01000EA5" form-id-m="01000EA4">He's at the house Jorgen and %OWNER-2% used to live in.</line>
+            <line form-id-m="01000EA4" form-id-f="01000EA5">He's at the house Jorgen and %OWNER-2% used to live in.</line>
             
-                  <line form-id-f="01000EA7" form-id-m="01000EA6">He's at the abandoned house on the north edge of town.</line>
+                  <line form-id-m="01000EA6" form-id-f="01000EA7">He's at the abandoned house on the north edge of town.</line>
                
          <!-- macro substitution end -->
          </g>
@@ -314,8 +314,8 @@
                <parent-cell of="subject" is="MorthalThonnirsHouse" />
             </conditions>
             <!--<invoke name="mixin-house-two-residents-int">
-               <parameter name="OWNER-1" value="Thonnir" />
-               <parameter name="OWNER-2" value="Vikmund" />
+               <parameter value="Thonnir" name="OWNER-1" />
+               <parameter value="Vikmund" name="OWNER-2" />
             </invoke>-->
             <g name="asking-resident">
                <conditions>
@@ -345,15 +345,15 @@
                <shared-info form-ids="01000EB3,01000EB4,01000EB5,01000EB6,01000EB7,01000EB8,01000EB9,01000EBA,01000EBB,01000EBC,01000EBD,01000EBE" id="shared-at-own-home" />
             </g>
          <!-- macro substitution end -->
-            <line form-id-f="01000EC0" form-id-m="01000EBF">I saw him on his way to Thonnir's house.</line>
-            <line form-id-f="01000EC2" form-id-m="01000EC1">I'm pretty sure he's stopping by Thonnir's house right now.</line>
+            <line form-id-m="01000EBF" form-id-f="01000EC0">I saw him on his way to Thonnir's house.</line>
+            <line form-id-m="01000EC1" form-id-f="01000EC2">I'm pretty sure he's stopping by Thonnir's house right now.</line>
          </g>
          <g name="moorside-inn">
             <conditions>
                <parent-cell of="subject" is="MorthalMoorsideInn" />
             </conditions>
-            <line form-id-f="01000EC4" form-id-m="01000EC3">He's at Moorside Inn right now.</line>
-            <line form-id-f="01000EC6" form-id-m="01000EC5">He's over at the local inn.</line>
+            <line form-id-m="01000EC3" form-id-f="01000EC4">He's at Moorside Inn right now.</line>
+            <line form-id-m="01000EC5" form-id-f="01000EC6">He's over at the local inn.</line>
          </g>
          <g name="thaumaturgist">
             <conditions>
@@ -363,11 +363,11 @@
                <conditions>
                   <actor-base of="subject" is="Lami" />
                </conditions>
-               <line form-id-f="01000EC8" form-id-m="01000EC7">The alchemist? He's at work right now, at the Thaumaturgist's Hut.</line>
-               <line form-id-f="01000ECA" form-id-m="01000EC9">He's tending to his potion shop in the middle of town.</line>
+               <line form-id-m="01000EC7" form-id-f="01000EC8">The alchemist? He's at work right now, at the Thaumaturgist's Hut.</line>
+               <line form-id-m="01000EC9" form-id-f="01000ECA">He's tending to his potion shop in the middle of town.</line>
             </g>
-            <line form-id-f="01000ECC" form-id-m="01000ECB">He's at the Thaumaturgist's Hut.</line>
-            <line form-id-f="01000ECE" form-id-m="01000ECD">He's visiting the local alchemist right now.</line>
+            <line form-id-m="01000ECB" form-id-f="01000ECC">He's at the Thaumaturgist's Hut.</line>
+            <line form-id-m="01000ECD" form-id-f="01000ECE">He's visiting the local alchemist right now.</line>
             <line form-id-u="01000ECF">Check the Thaumaturgist's Hut. Two-story building at the center of town.</line>
          </g>
          
@@ -394,9 +394,9 @@
                <y of="subject" lte="69680" />
                <z of="subject" gte="-13808" />
             </conditions>
-            <line form-id-f="01000ED3" form-id-m="01000ED2">I saw him on the city's north bridge not too long ago.</line>
+            <line form-id-m="01000ED2" form-id-f="01000ED3">I saw him on the city's north bridge not too long ago.</line>
             <line form-id-u="01000ED4">Check the bridge leading north out of Morthal.</line>
-            <line form-id-f="01000ED6" form-id-m="01000ED5">I'm pretty sure he's over on the bridge.</line>
+            <line form-id-m="01000ED5" form-id-f="01000ED6">I'm pretty sure he's over on the bridge.</line>
          </g>
          
          <g name="burned-house">  
@@ -406,9 +406,9 @@
                <y of="subject" gte="63120" />
                <y of="subject" lte="64688" />
             </conditions>
-            <line form-id-f="01000ED8" form-id-m="01000ED7">I think he was headed in the direction of Hroggar's old house. It burned down not too long ago.</line>
-            <line form-id-f="01000EDA" form-id-m="01000ED9">I saw him headed toward the burned house next to the inn, where Hroggar used to live.</line>
-            <line form-id-f="01000EDC" form-id-m="01000EDB">He was walking around the burned-down house to the west not too long ago.</line>
+            <line form-id-m="01000ED7" form-id-f="01000ED8">I think he was headed in the direction of Hroggar's old house. It burned down not too long ago.</line>
+            <line form-id-m="01000ED9" form-id-f="01000EDA">I saw him headed toward the burned house next to the inn, where Hroggar used to live.</line>
+            <line form-id-m="01000EDB" form-id-f="01000EDC">He was walking around the burned-down house to the west not too long ago.</line>
          </g>
          <g name="house-alva">
             <conditions>
@@ -462,12 +462,12 @@
                <conditions>
                   <death-count for="Alva" gt="0" />
                </conditions>
-               <line form-id-f="01000EF4" form-id-m="01000EF3">I think he's somewhere near Hroggar's house. The place used to belong to Alva, but...</line>
-               <line form-id-f="01000EF6" form-id-m="01000EF5">Pretty sure I saw him around Hroggar's new home recently.</line>
+               <line form-id-m="01000EF3" form-id-f="01000EF4">I think he's somewhere near Hroggar's house. The place used to belong to Alva, but...</line>
+               <line form-id-m="01000EF5" form-id-f="01000EF6">Pretty sure I saw him around Hroggar's new home recently.</line>
                <line form-id-u="01000EF7">Try looking around Hroggar's new house, at the southeast edge of town.</line>
             </g>
-            <line form-id-f="01000EF9" form-id-m="01000EF8">I think he's somewhere near Alva's home right now.</line>
-            <line form-id-f="01000EFB" form-id-m="01000EFA">Pretty sure I saw him around Alva's house recently.</line>
+            <line form-id-m="01000EF8" form-id-f="01000EF9">I think he's somewhere near Alva's home right now.</line>
+            <line form-id-m="01000EFA" form-id-f="01000EFB">Pretty sure I saw him around Alva's house recently.</line>
             <line form-id-u="01000EFC">Try looking around Alva's house.</line>
          </g>
          <g name="house-falion">
@@ -478,8 +478,8 @@
                <y of="subject" lte="68672" />
             </conditions>
             <!--<invoke name="mixin-house-two-residents-ext">
-               <parameter name="OWNER-1" value="Falion" />
-               <parameter name="OWNER-2" value="Agni" />
+               <parameter value="Falion" name="OWNER-1" />
+               <parameter value="Agni" name="OWNER-2" />
             </invoke>-->
             <g name="asking-resident">
                <conditions>
@@ -509,9 +509,9 @@
                <shared-info form-ids="01000F05,01000F06,01000F07,01000F08" id="shared-exterior-near-own-home" />
             </g>
          <!-- macro substitution end -->
-            <line form-id-f="01000F0A" form-id-m="01000F09">He passed by Falion's house a little while ago.</line>
-            <line form-id-f="01000F0C" form-id-m="01000F0B">I spotted him over around Falion's home earlier. He might still be there.</line>
-            <line form-id-f="01000F0E" form-id-m="01000F0D">I saw him near Falion's house, on the east edge of town.</line>
+            <line form-id-m="01000F09" form-id-f="01000F0A">He passed by Falion's house a little while ago.</line>
+            <line form-id-m="01000F0B" form-id-f="01000F0C">I spotted him over around Falion's home earlier. He might still be there.</line>
+            <line form-id-m="01000F0D" form-id-f="01000F0E">I saw him near Falion's house, on the east edge of town.</line>
          </g>
          <g name="house-jorgen-lami">  
             <conditions>
@@ -521,8 +521,8 @@
                <y of="subject" lte="71568" />
             </conditions>
             <!--<invoke name="mixin-house-two-residents-ext">
-               <parameter name="OWNER-1" value="Jorgen" />
-               <parameter name="OWNER-2" value="Lami" />
+               <parameter value="Jorgen" name="OWNER-1" />
+               <parameter value="Lami" name="OWNER-2" />
             </invoke>-->
             <g name="asking-resident">
                <conditions>
@@ -553,8 +553,8 @@
             </g>
          <!-- macro substitution end -->
             <!--<invoke name="mixin-co-owned-house-ext">
-               <parameter name="OWNER-1" value="Jorgen" />
-               <parameter name="OWNER-2" value="Lami" />
+               <parameter value="Jorgen" name="OWNER-1" />
+               <parameter value="Lami" name="OWNER-2" />
                <parameter name="OWNER-1-NOTE"> <verbatim>He</verbatim> runs the lumber mill right next to it.</parameter>
                <parameter name="OWNER-2-NOTE"> <verbatim>She</verbatim> runs the alchemy shop at the center of town, but <verbatim>she</verbatim> lives over by the lumber mill.</parameter>
                <parameter name="BOTH-DEAD-ADDITIONAL-LINES">
@@ -564,33 +564,33 @@
             </invoke>-->
             <g name="both-homeowners-alive">
                <conditions>
-                  <death-count lte="0" for="Jorgen" />
-                  <death-count lte="0" for="Lami" />
+                  <death-count for="Jorgen" lte="0" />
+                  <death-count for="Lami" lte="0" />
                </conditions>
-               <line form-id-f="01000F1C" form-id-m="01000F1B">He might've been headed to Jorgen and %OWNER-2%'s house.</line>
-               <line form-id-f="01000F1E" form-id-m="01000F1D">I think I saw him over by Jorgen and %OWNER-2%'s home.</line>
+               <line form-id-m="01000F1B" form-id-f="01000F1C">He might've been headed to Jorgen and %OWNER-2%'s house.</line>
+               <line form-id-m="01000F1D" form-id-f="01000F1E">I think I saw him over by Jorgen and %OWNER-2%'s home.</line>
             </g>
             <g name="owner-1-dead">
                <conditions>
-                  <death-count gt="0" for="Jorgen" />
-                  <death-count lte="0" for="Lami" />
+                  <death-count for="Jorgen" gt="0" />
+                  <death-count for="Lami" lte="0" />
                </conditions>
-               <line form-id-f="01000F20" form-id-m="01000F1F">He might've been headed to Lami's house.</line>
-               <line form-id-f="01000F22" form-id-m="01000F21">I think I saw him over by Lami's home.%OWNER-2-NOTE%</line>
+               <line form-id-m="01000F1F" form-id-f="01000F20">He might've been headed to Lami's house.</line>
+               <line form-id-m="01000F21" form-id-f="01000F22">I think I saw him over by Lami's home.%OWNER-2-NOTE%</line>
             </g>
             <g name="owner-2-dead">
                <conditions>
-                  <death-count lte="0" for="Jorgen" />
-                  <death-count gt="0" for="Lami" />
+                  <death-count for="Jorgen" lte="0" />
+                  <death-count for="Lami" gt="0" />
                </conditions>
-               <line form-id-f="01000F24" form-id-m="01000F23">He might've been headed to Jorgen's house.</line>
-               <line form-id-f="01000F26" form-id-m="01000F25">I think I saw him over by Jorgen's home.%OWNER-1-NOTE%</line>
+               <line form-id-m="01000F23" form-id-f="01000F24">He might've been headed to Jorgen's house.</line>
+               <line form-id-m="01000F25" form-id-f="01000F26">I think I saw him over by Jorgen's home.%OWNER-1-NOTE%</line>
             </g>
             <!-- else both actors are dead -->
-            <line form-id-f="01000F28" form-id-m="01000F27">He's over by the house Jorgen and %OWNER-2% used to live in.</line>
+            <line form-id-m="01000F27" form-id-f="01000F28">He's over by the house Jorgen and %OWNER-2% used to live in.</line>
             
-                  <line form-id-f="01000F2A" form-id-m="01000F29">He's over by the house across the bridge.</line>
-                  <line form-id-f="01000F2C" form-id-m="01000F2B">I think I saw him headed toward the abandoned house by the lumber mill.</line>
+                  <line form-id-m="01000F29" form-id-f="01000F2A">He's over by the house across the bridge.</line>
+                  <line form-id-m="01000F2B" form-id-f="01000F2C">I think I saw him headed toward the abandoned house by the lumber mill.</line>
                
          <!-- macro substitution end -->
          </g>
@@ -602,8 +602,8 @@
                <y of="subject" lte="67056" />
             </conditions>
             <!--<invoke name="mixin-house-two-residents-ext">
-               <parameter name="OWNER-1" value="Thonnir" />
-               <parameter name="OWNER-2" value="Virkmund" />
+               <parameter value="Thonnir" name="OWNER-1" />
+               <parameter value="Virkmund" name="OWNER-2" />
             </invoke>-->
             <g name="asking-resident">
                <conditions>
@@ -633,9 +633,9 @@
                <shared-info form-ids="01000F35,01000F36,01000F37,01000F38" id="shared-exterior-near-own-home" />
             </g>
          <!-- macro substitution end -->
-            <line form-id-f="01000F3A" form-id-m="01000F39">He was hanging around Thonnir's house a little while ago.</line>
-            <line form-id-f="01000F3C" form-id-m="01000F3B">I saw him by Thonnir's house recently.</line>
-            <line form-id-f="01000F3E" form-id-m="01000F3D">I'm fairly sure he's near Thonnir's house right now.</line>
+            <line form-id-m="01000F39" form-id-f="01000F3A">He was hanging around Thonnir's house a little while ago.</line>
+            <line form-id-m="01000F3B" form-id-f="01000F3C">I saw him by Thonnir's house recently.</line>
+            <line form-id-m="01000F3D" form-id-f="01000F3E">I'm fairly sure he's near Thonnir's house right now.</line>
          </g>
          <g name="lumber-mill">  
             <conditions>
@@ -653,9 +653,9 @@
                <y of="subject" gte="64688" />
                <y of="subject" lte="67152" />
             </conditions>
-            <line form-id-f="01000F44" form-id-m="01000F43">I think he's over by the Moorside Inn.</line>
+            <line form-id-m="01000F43" form-id-f="01000F44">I think he's over by the Moorside Inn.</line>
             <line form-id-u="01000F45">Have you looked around the local inn?</line>
-            <line form-id-f="01000F47" form-id-m="01000F46">I saw him headed toward the Moorside Inn not too long ago.</line>
+            <line form-id-m="01000F46" form-id-f="01000F47">I saw him headed toward the Moorside Inn not too long ago.</line>
          </g>
          <g name="thaumaturgist">  
             <conditions>
@@ -664,8 +664,8 @@
                <y of="subject" gte="64288" />
                <y of="subject" lte="65648" />
             </conditions>
-            <line form-id-f="01000F49" form-id-m="01000F48">He was headed by the alchemist's shop. It's near the center of town.</line>
-            <line form-id-f="01000F4B" form-id-m="01000F4A">I think he might've been on his way to the Thaumaturgist's Hut?</line>
+            <line form-id-m="01000F48" form-id-f="01000F49">He was headed by the alchemist's shop. It's near the center of town.</line>
+            <line form-id-m="01000F4A" form-id-f="01000F4B">I think he might've been on his way to the Thaumaturgist's Hut?</line>
          </g>
          
          <g name="guardhouse">  
@@ -675,8 +675,8 @@
                <y of="subject" gte="62016" />
                <y of="subject" lte="64144" />
             </conditions>
-            <line form-id-f="01000F4D" form-id-m="01000F4C">I saw him hanging around the Guardhouse, near Morthal's south entrance.</line>
-            <line form-id-f="01000F4F" form-id-m="01000F4E">I'm pretty sure he's by the Guardhouse.</line>
+            <line form-id-m="01000F4C" form-id-f="01000F4D">I saw him hanging around the Guardhouse, near Morthal's south entrance.</line>
+            <line form-id-m="01000F4E" form-id-f="01000F4F">I'm pretty sure he's by the Guardhouse.</line>
             <line form-id-u="01000F50">I'd try checking the Guardhouse.</line>
          </g>
          <g name="highmoon-hall">  
@@ -686,7 +686,7 @@
                <y of="subject" gte="62704" />
                <y of="subject" lte="64688" />
             </conditions>
-            <line form-id-f="01000F52" form-id-m="01000F51">I saw him around Highmoon Hall not too long ago.</line>
+            <line form-id-m="01000F51" form-id-f="01000F52">I saw him around Highmoon Hall not too long ago.</line>
             <line form-id-u="01000F53">Have you looked near the town hall?</line>
          </g>
          
@@ -698,8 +698,8 @@
                   <y of="subject" gte="64688" />
                   <y of="subject" lte="67488" />
                </conditions>
-               <line form-id-f="01000F55" form-id-m="01000F54">He's out on the main street running through town.</line>
-               <line form-id-f="01000F57" form-id-m="01000F56">He's on Morthal's main road, between the town hall and the inn.</line>
+               <line form-id-m="01000F54" form-id-f="01000F55">He's out on the main street running through town.</line>
+               <line form-id-m="01000F56" form-id-f="01000F57">He's on Morthal's main road, between the town hall and the inn.</line>
             </g>
             <g name="west-trail">  
                <conditions>
@@ -708,8 +708,8 @@
                   <y of="subject" gte="63728" />
                   <y of="subject" lte="68608" />
                </conditions>
-               <line form-id-f="01000F59" form-id-m="01000F58">I think he was headed toward one of the trails to the west.</line>
-               <line form-id-f="01000F5B" form-id-m="01000F5A">There's a hiking trail to the west that people occasionally follow. I saw him headed that way.</line>
+               <line form-id-m="01000F58" form-id-f="01000F59">I think he was headed toward one of the trails to the west.</line>
+               <line form-id-m="01000F5A" form-id-f="01000F5B">There's a hiking trail to the west that people occasionally follow. I saw him headed that way.</line>
             </g>
             <g name="river">  
                <conditions>
@@ -718,7 +718,7 @@
                   <y of="subject" gte="67056" />
                   <y of="subject" lte="69328" />
                </conditions>
-               <line form-id-f="01000F5D" form-id-m="01000F5C">He's out on the river that runs through town -- the one with a bridge across it.</line>
+               <line form-id-m="01000F5C" form-id-f="01000F5D">He's out on the river that runs through town -- the one with a bridge across it.</line>
             </g>
             <g name="southeast-walkways">  
                <conditions>
@@ -727,8 +727,8 @@
                   <y of="subject" gte="63536" />
                   <y of="subject" lte="65648" />
                </conditions>
-               <line form-id-f="01000F5F" form-id-m="01000F5E">I saw him out on the walkways, in the southeast part of town.</line>
-               <line form-id-f="01000F61" form-id-m="01000F60">I'm pretty sure he's on the walkways and piers on the eastern half of town... or maybe in the water.</line>
+               <line form-id-m="01000F5E" form-id-f="01000F5F">I saw him out on the walkways, in the southeast part of town.</line>
+               <line form-id-m="01000F60" form-id-f="01000F61">I'm pretty sure he's on the walkways and piers on the eastern half of town... or maybe in the water.</line>
             </g>
             <g name="south-entrance">  
                <conditions>
@@ -737,9 +737,9 @@
                   <y of="subject" gte="61440" />
                   <y of="subject" lte="63536" />
                </conditions>
-               <line form-id-f="01000F63" form-id-m="01000F62">He's over by the southern road into town.</line>
+               <line form-id-m="01000F62" form-id-f="01000F63">He's over by the southern road into town.</line>
                <line form-id-u="01000F64">Check by the south road out of Morthal.</line>
-               <line form-id-f="01000F66" form-id-m="01000F65">I'm pretty sure he's around the town's main entrance, south of Highmoon Hall.</line>
+               <line form-id-m="01000F65" form-id-f="01000F66">I'm pretty sure he's around the town's main entrance, south of Highmoon Hall.</line>
             </g>
          </g>
          <g name="directional-fallbacks">

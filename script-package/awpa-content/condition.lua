@@ -213,6 +213,10 @@ do
       
          local last_or_linked = nil
          node:for_each_child_element(function(node)
+            if last_or_linked then
+               last_or_linked.is_or_linked = false
+               last_or_linked = nil
+            end
             if node.node_name == "or" then
                node:for_each_child_element(function(node)
                   if node.node_name == "condition-set"
@@ -225,10 +229,6 @@ do
                   last_or_linked.is_or_linked = true
                end)
             else
-               if last_or_linked then
-                  last_or_linked.is_or_linked = false
-                  last_or_linked = nil
-               end
                if node.node_name == "condition-set" then
                   if not allow_condition_set then
                      utils.fail_load("condition sets cannot be referenced here", node)

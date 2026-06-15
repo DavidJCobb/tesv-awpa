@@ -9,7 +9,7 @@
       </shared-info>
    </shared-infos>
    
-   <quest id="AWPAWindhelm" locations="WindhelmLocation">
+   <quest locations="WindhelmLocation" id="AWPAWindhelm">
       <dialogue-conditions>
          <or>
             <faction-membership of="speaker" includes="TownWindhelmFaction" />
@@ -173,15 +173,15 @@
       
       <condition-set name="blood-on-the-ice-solved">
          <or>
-            <quest-stage done="250" for="MS11" />
-            <quest-stage done="20" for="MS11b" />
+            <quest-stage for="MS11" done="250" />
+            <quest-stage for="MS11b" done="20" />
          </or>
       </condition-set>
       
       <!--<invoke name="common-super-near-player" />-->
             <top-g slug="SuperNearPlayer">
                <conditions>
-                  <distance of="player" to="subject" lte="256" />
+                  <distance of="player" lte="256" to="subject" />
                </conditions>
                <shared-info form-ids="01001AD3,01001AD4,01001AD5,01001AD6" id="shared-near-player" />
             </top-g>
@@ -222,7 +222,7 @@
                      <parent-cell of="subject" is="WindhelmWhitePhial" />
                   </or>
                </conditions>
-               <constant name="height-coordinate-2f" value="320" />
+               <constant value="320" name="height-coordinate-2f" />
                <!--<invoke name="mixin-interior-1f-2f-no-rooms" />-->
             <g name="upstairs">
                <conditions>
@@ -245,7 +245,7 @@
                <conditions>
                   <parent-cell of="subject" is="WindhelmHjerim" />
                </conditions>
-               <constant name="height-coordinate-2f" value="192" />
+               <constant value="192" name="height-coordinate-2f" />
                <!--<invoke name="mixin-interior-1f-2f-no-rooms" />-->
             <g name="upstairs">
                <conditions>
@@ -268,7 +268,7 @@
                <conditions>
                   <parent-cell of="subject" is="WindhelmAtheronResidence" />
                </conditions>
-               <constant name="height-coordinate-2f" value="-448" />
+               <constant value="-448" name="height-coordinate-2f" />
                <!--<invoke name="mixin-interior-1f-2f-no-rooms" />-->
             <g name="upstairs">
                <conditions>
@@ -291,7 +291,7 @@
                <conditions>
                   <parent-cell of="subject" is="WindhelmHouseofClanCruelSea" />
                </conditions>
-               <constant name="height-coordinate-2f" value="1472" />
+               <constant value="1472" name="height-coordinate-2f" />
                <!--<invoke name="mixin-interior-1f-2f-no-rooms" />-->
             <g name="upstairs">
                <conditions>
@@ -314,7 +314,7 @@
                <conditions>
                   <parent-cell of="subject" is="WindhelmHouseofClanShatterShield" />
                </conditions>
-               <constant name="height-coordinate-2f" value="-192" />
+               <constant value="-192" name="height-coordinate-2f" />
                <!--<invoke name="mixin-interior-1f-2f-no-rooms" />-->
             <g name="upstairs">
                <conditions>
@@ -337,7 +337,7 @@
                <conditions>
                   <parent-cell of="subject" is="WindhelmViolaGiordanosHouse" />
                </conditions>
-               <constant name="height-coordinate-2f" value="256" />
+               <constant value="256" name="height-coordinate-2f" />
                <!--<invoke name="mixin-interior-1f-2f-no-rooms" />-->
             <g name="upstairs">
                <conditions>
@@ -360,8 +360,8 @@
                <conditions>
                   <parent-cell of="subject" is="WindhelmNewGnisisCornerclub" />
                </conditions>
-               <constant name="height-coordinate-2f" value="-256" />
-               <constant name="height-coordinate-3f" value="0" />
+               <constant value="-256" name="height-coordinate-2f" />
+               <constant value="0" name="height-coordinate-3f" />
                <!--<invoke name="common-interior-different-floors-1f-2f-3f" />-->
             <g name="upstairs">
                <conditions>
@@ -566,10 +566,10 @@
                         <actor-base of="subject" is="Stands-In-Shallows" />
                      </or>
                   </conditions>
-                  <line emotion="disgust:30" form-id-f="01001B2C" form-id-m="01001B2B">He's probably slacking off down at the Argonian Assemblage.</line>
-                  <line form-id-u="01001B2D" emotion="anger:40">Wasting time in their quarters at the docks, no doubt.</line>
+                  <line emotion="disgust:30" form-id-m="01001B2B" form-id-f="01001B2C">He's probably slacking off down at the Argonian Assemblage.</line>
+                  <line emotion="anger:40" form-id-u="01001B2D">Wasting time in their quarters at the docks, no doubt.</line>
                </g>
-               <g name="asking-about-resident" non-exclusive="true">
+               <g non-exclusive="true" name="asking-about-resident">
                   <conditions>
                      <or>
                         <actor-base of="subject" is="Neetrenaza" />
@@ -578,30 +578,30 @@
                         <actor-base of="subject" is="Stands-In-Shallows" />
                      </or>
                   </conditions>
-                  <g name="otherwise-non-argonian" non-exclusive="true">
+                  <g non-exclusive="true" name="otherwise-non-argonian">
                      <conditions>
                         <race of="speaker" is-not="ArgonianRace" />
                         <race of="speaker" is-not="ArgonianRaceVampire" />
                      </conditions>
-                     <line form-id-f="01001B33" form-id-m="01001B32">The Argonians share a living space down at the docks. You'll find him there.</line>
-                     <line form-id-f="01001B35" form-id-m="01001B34">One of the Argonians? He's probably at the quarters they share, by the docks.</line>
+                     <line form-id-m="01001B32" form-id-f="01001B33">The Argonians share a living space down at the docks. You'll find him there.</line>
+                     <line form-id-m="01001B34" form-id-f="01001B35">One of the Argonians? He's probably at the quarters they share, by the docks.</line>
                   </g>
                </g>
                <g name="idesa">
                   <conditions>
                      <actor-base of="subject" is="IdesaSadri" />
                   </conditions>
-                  <line form-id-f="01001B2F" form-id-m="01001B2E">He visits the Argonian Assemblage every so often. He should be there now.</line>
-                  <line form-id-f="01001B31" form-id-m="01001B30">Pretty sure he's visiting the Argonian Assemblage. He heads down there pretty often.</line>
+                  <line form-id-m="01001B2E" form-id-f="01001B2F">He visits the Argonian Assemblage every so often. He should be there now.</line>
+                  <line form-id-m="01001B30" form-id-f="01001B31">Pretty sure he's visiting the Argonian Assemblage. He heads down there pretty often.</line>
                </g>
-               <line form-id-f="01001B37" form-id-m="01001B36">He's down at the Argonian Assemblage.</line>
-               <line form-id-f="01001B39" form-id-m="01001B38">I believe I saw him around the Argonian Assemblage.</line>
+               <line form-id-m="01001B36" form-id-f="01001B37">He's down at the Argonian Assemblage.</line>
+               <line form-id-m="01001B38" form-id-f="01001B39">I believe I saw him around the Argonian Assemblage.</line>
             </g>
             <g name="barracks">
                <conditions>
                   <parent-cell of="subject" is="WindhelmBloodworks" />
                </conditions>
-               <line form-id-f="01001B3B" form-id-m="01001B3A">He's at the city barracks. When you first walk into the palace, the door is on your right.</line>
+               <line form-id-m="01001B3A" form-id-f="01001B3B">He's at the city barracks. When you first walk into the palace, the door is on your right.</line>
             </g>
             <g name="blacksmith">
                <conditions>
@@ -616,9 +616,9 @@
                      <actor-base of="speaker" is-not="Hermir" />
                      <actor-base of="speaker" is-not="Oengul" />
                   </conditions>
-                  <line form-id-f="01001B3D" form-id-m="01001B3C">The blacksmith? He's in the Blacksmith Quarters right now.</line>
+                  <line form-id-m="01001B3C" form-id-f="01001B3D">The blacksmith? He's in the Blacksmith Quarters right now.</line>
                </g>
-               <line form-id-f="01001B3F" form-id-m="01001B3E">He's at the Blacksmith Quarters.</line>
+               <line form-id-m="01001B3E" form-id-f="01001B3F">He's at the Blacksmith Quarters.</line>
                <line form-id-u="01001B40">Have you checked the Blacksmith Quarters?</line>
             </g>
             <g name="calixto-museum">
@@ -633,7 +633,7 @@
                   <conditions>
                      <condition-set name="blood-on-the-ice-solved" />
                   </conditions>
-                  <g name="family-of-victim" non-exclusive="true">
+                  <g non-exclusive="true" name="family-of-victim">
                      <conditions>
                         <or>
                            <actor-base of="speaker" is="Nilsine" />
@@ -642,11 +642,11 @@
                            <actor-base of="speaker" is="Tova" />
                         </or>
                      </conditions>
-                     <line emotion="disgust:100" form-id-f="01001B42" form-id-m="01001B41">I heard he walked into the Butcher's old house earlier.</line>
-                     <line script-notes="slight venom on &#22;guards;&#22; resentment that they didn't solve the murders" emotion="disgust:100" form-id-f="01001B44" form-id-m="01001B43">For some reason, he's at the Butcher's old museum. Maybe he's looking for more clues the guards missed.</line>
-                     <line emotion="disgust:100" form-id-f="01001B46" form-id-m="01001B45">He's stopping by that wretch Calixto's house.</line>
+                     <line emotion="disgust:100" form-id-m="01001B41" form-id-f="01001B42">I heard he walked into the Butcher's old house earlier.</line>
+                     <line form-id-f="01001B44" emotion="disgust:100" form-id-m="01001B43" script-notes="slight venom on &#22;guards;&#22; resentment that they didn't solve the murders">For some reason, he's at the Butcher's old museum. Maybe he's looking for more clues the guards missed.</line>
+                     <line emotion="disgust:100" form-id-m="01001B45" form-id-f="01001B46">He's stopping by that wretch Calixto's house.</line>
                   </g>
-                  <g name="fancy" non-exclusive="true">
+                  <g non-exclusive="true" name="fancy">
                      <conditions>
                         <or>
                            <race of="speaker" is="DarkElfRace" />
@@ -657,23 +657,23 @@
                            <race of="speaker" is="ImperialRaceVampire" />
                         </or>
                      </conditions>
-                     <line emotion="anger:90" form-id-f="01001B48" form-id-m="01001B47">He's visiting the house Calixto used to live in. And while I'm on the subject, good riddance to that bastard!</line>
-                     <line script-notes='barely-restrained anger at first, with it coming out in full at "the one"' emotion="anger:100" form-id-f="01001B4A" form-id-m="01001B49">He's at that old museum. You know, the one that belonged to the Butcher of Windhelm!</line>
+                     <line emotion="anger:90" form-id-m="01001B47" form-id-f="01001B48">He's visiting the house Calixto used to live in. And while I'm on the subject, good riddance to that bastard!</line>
+                     <line form-id-f="01001B4A" emotion="anger:100" form-id-m="01001B49" script-notes='barely-restrained anger at first, with it coming out in full at "the one"'>He's at that old museum. You know, the one that belonged to the Butcher of Windhelm!</line>
                   </g>
-                  <line emotion="disgust:80" form-id-f="01001B4C" form-id-m="01001B4B">He's at the Butcher's old house.</line>
-                  <line emotion="anger:80" form-id-f="01001B4E" form-id-m="01001B4D">He's visiting the house Calixto used to live in.</line>
-                  <line emotion="disgust:70" form-id-f="01001B50" form-id-m="01001B4F">He stopped by the Butcher's house for some reason.</line>
+                  <line emotion="disgust:80" form-id-m="01001B4B" form-id-f="01001B4C">He's at the Butcher's old house.</line>
+                  <line emotion="anger:80" form-id-m="01001B4D" form-id-f="01001B4E">He's visiting the house Calixto used to live in.</line>
+                  <line emotion="disgust:70" form-id-m="01001B4F" form-id-f="01001B50">He stopped by the Butcher's house for some reason.</line>
                </g>
                <g name="asking-about-resident">
                   <conditions>
                      <actor-base of="subject" is="Calixto" />
                   </conditions>
-                  <line form-id-f="01001B52" form-id-m="01001B51">He's at home. He lives by the south end of the Gray Quarter.</line>
-                  <line form-id-f="01001B54" form-id-m="01001B53">Probably tending to his museum. Calixto's House of Curiosities. He runs it out of his home, not far from Windhelm's main entrance.</line>
+                  <line form-id-m="01001B51" form-id-f="01001B52">He's at home. He lives by the south end of the Gray Quarter.</line>
+                  <line form-id-m="01001B53" form-id-f="01001B54">Probably tending to his museum. Calixto's House of Curiosities. He runs it out of his home, not far from Windhelm's main entrance.</line>
                   <line form-id-u="01001B55">If you're looking for Calixto, you should probably check Calixto's House of Curiosities.</line>
                </g>
-               <line form-id-f="01001B57" form-id-m="01001B56">He's at Calixto's House of Curiosities.</line>
-               <line form-id-f="01001B59" form-id-m="01001B58">He's visiting Calixto's museum in the Stone Quarter.</line>
+               <line form-id-m="01001B56" form-id-f="01001B57">He's at Calixto's House of Curiosities.</line>
+               <line form-id-m="01001B58" form-id-f="01001B59">He's visiting Calixto's museum in the Stone Quarter.</line>
             </g>
             <g name="candlehearth">
                <conditions>
@@ -690,8 +690,8 @@
                         <actor-base of="subject" is="Nils" />
                      </or>
                   </conditions>
-                  <line form-id-f="01001B5B" form-id-m="01001B5A">He owns Candlehearth Hall. You'll probably find him there now.</line>
-                  <line form-id-f="01001B5D" form-id-m="01001B5C">He should be at work at Candlehearth Hall right now. He runs the place.</line>
+                  <line form-id-m="01001B5A" form-id-f="01001B5B">He owns Candlehearth Hall. You'll probably find him there now.</line>
+                  <line form-id-m="01001B5C" form-id-f="01001B5D">He should be at work at Candlehearth Hall right now. He runs the place.</line>
                </g>
                <g name="asking-about-employee">
                   <conditions>
@@ -700,33 +700,33 @@
                         <actor-base of="subject" is="Susanna" />
                      </or>
                   </conditions>
-                  <line form-id-f="01001B5F" form-id-m="01001B5E">He works at Candlehearth Hall. Should be there right now.</line>
-                  <line form-id-f="01001B61" form-id-m="01001B60">You'll find him working at Candlehearth Hall.</line>
+                  <line form-id-m="01001B5E" form-id-f="01001B5F">He works at Candlehearth Hall. Should be there right now.</line>
+                  <line form-id-m="01001B60" form-id-f="01001B61">You'll find him working at Candlehearth Hall.</line>
                </g>
-               <line form-id-f="01001B63" form-id-m="01001B62">He's at Candlehearth Hall.</line>
+               <line form-id-m="01001B62" form-id-f="01001B63">He's at Candlehearth Hall.</line>
                <line form-id-u="01001B64">Check Candlehearth Hall, at the heart of the city.</line>
-               <line form-id-f="01001B66" form-id-m="01001B65">I saw him stop by Candlehearth Hall not too long ago. He might still be there.</line>
+               <line form-id-m="01001B65" form-id-f="01001B66">I saw him stop by Candlehearth Hall not too long ago. He might still be there.</line>
             </g>
             <g name="eec">
                <conditions>
                   <parent-cell of="subject" is="WindhelmEastEmpireCompany" />
                </conditions>
-               <line form-id-f="01001B68" form-id-m="01001B67">He's at the East Empire Company office, out on the docks.</line>
+               <line form-id-m="01001B67" form-id-f="01001B68">He's at the East Empire Company office, out on the docks.</line>
             </g>
             <g name="hall-of-the-dead">
                <conditions>
                   <parent-cell of="subject" is="WindhelmHalloftheDead" />
                </conditions>
-               <line form-id-f="01001B6A" form-id-m="01001B69">He's at the Hall of the Dead.</line>
-               <line form-id-f="01001B6C" form-id-m="01001B6B">I think he was headed to the Hall of the Dead earlier.</line>
-               <line form-id-f="01001B6E" form-id-m="01001B6D">He should be at the Hall of the Dead.</line>
+               <line form-id-m="01001B69" form-id-f="01001B6A">He's at the Hall of the Dead.</line>
+               <line form-id-m="01001B6B" form-id-f="01001B6C">I think he was headed to the Hall of the Dead earlier.</line>
+               <line form-id-m="01001B6D" form-id-f="01001B6E">He should be at the Hall of the Dead.</line>
             </g>
             <g name="hjerim">
                <conditions>
                   <parent-cell of="subject" is="WindhelmHjerim" />
                </conditions>
-               <line emotion="sad:40" form-id-f="01001B70" form-id-m="01001B6F">He's at Hjerim. Friga Shatter-Shield lived there before...</line>
-               <line form-id-f="01001B72" form-id-m="01001B71">He's in one of the mansions in the northwest part of the city. The place is called Hjerim.</line>
+               <line emotion="sad:40" form-id-m="01001B6F" form-id-f="01001B70">He's at Hjerim. Friga Shatter-Shield lived there before...</line>
+               <line form-id-m="01001B71" form-id-f="01001B72">He's in one of the mansions in the northwest part of the city. The place is called Hjerim.</line>
             </g>
             <g name="house-aretino">
                <conditions>
@@ -740,12 +740,12 @@
                      <conditions>
                         <actor-base of="speaker" is="IdesaSadri" />
                      </conditions>
-                     <line form-id-f="01001B74" form-id-m="01001B73">He was sent to an orphanage, but he has since returned to his old house. According to rumor, he's busy performing the Black Sacrament inside.</line>
+                     <line form-id-m="01001B73" form-id-f="01001B74">He was sent to an orphanage, but he has since returned to his old house. According to rumor, he's busy performing the Black Sacrament inside.</line>
                   </g>
-                  <line form-id-f="01001B76" form-id-m="01001B75">He's at his family's old house. I guess he must've run away from the orphanage in Riften.</line>
-                  <line form-id-f="01001B78" form-id-m="01001B77">He's supposed to be at the orphanage in Riften, but he's been seen by his old house here. Maybe he ran away?</line>
+                  <line form-id-m="01001B75" form-id-f="01001B76">He's at his family's old house. I guess he must've run away from the orphanage in Riften.</line>
+                  <line form-id-m="01001B77" form-id-f="01001B78">He's supposed to be at the orphanage in Riften, but he's been seen by his old house here. Maybe he ran away?</line>
                </g>
-               <line form-id-f="01001B7A" form-id-m="01001B79">I saw him walk into the Aretino residence not too long ago.</line>
+               <line form-id-m="01001B79" form-id-f="01001B7A">I saw him walk into the Aretino residence not too long ago.</line>
             </g>
             <g name="house-atheron">
                <conditions>
@@ -781,15 +781,15 @@
                   </conditions>
                   <shared-info form-ids="01001B8D,01001B8E,01001B8F,01001B90,01001B91" id="shared-at-my-home" />
                </g>
-               <line form-id-f="01001B93" form-id-m="01001B92">He's at the Atherons' house.</line>
-               <line form-id-f="01001B95" form-id-m="01001B94">I think he stopped by the Atheron family's home.</line>
+               <line form-id-m="01001B92" form-id-f="01001B93">He's at the Atherons' house.</line>
+               <line form-id-m="01001B94" form-id-f="01001B95">I think he stopped by the Atheron family's home.</line>
             </g>
             <g name="house-belyn">
                <conditions>
                   <parent-cell of="subject" is="WindhelmBelynHlaalusHouse" />
                </conditions>
                <!--<invoke name="mixin-house-one-resident-int">
-                  <parameter name="OWNER" value="Belyn Hlaalu" />
+                  <parameter value="Belyn Hlaalu" name="OWNER" />
                </invoke>-->
             <g>
                <conditions>
@@ -804,9 +804,9 @@
                <shared-info form-ids="01001BA2,01001BA3,01001BA4,01001BA5,01001BA6" id="shared-at-my-home" />
             </g>
             
-            <line form-id-f="01001BA8" form-id-m="01001BA7">He's at Belyn Hlaalu's house.</line>
-            <line form-id-f="01001BAA" form-id-m="01001BA9">I think he's visiting Belyn Hlaalu right now.</line>
-            <line form-id-f="01001BAC" form-id-m="01001BAB">I think I saw him on his way to Belyn Hlaalu's house.</line>
+            <line form-id-m="01001BA7" form-id-f="01001BA8">He's at Belyn Hlaalu's house.</line>
+            <line form-id-m="01001BA9" form-id-f="01001BAA">I think he's visiting Belyn Hlaalu right now.</line>
+            <line form-id-m="01001BAB" form-id-f="01001BAC">I think I saw him on his way to Belyn Hlaalu's house.</line>
          <!-- macro substitution end -->
             </g>
             <g name="house-cruel-sea">
@@ -827,8 +827,8 @@
                   <conditions>
                      <actor-base of="subject" is="IdesaSadri" />
                   </conditions>
-                  <line form-id-f="01001BB4" form-id-m="01001BB3">He's at the Cruel-Sea family's house. He works for them, helping care for their boy, Grimvar.</line>
-                  <line form-id-f="01001BB6" form-id-m="01001BB5">He works as a caregiver for Clan Cruel-Sea's little one. You'll find him at their house.</line>
+                  <line form-id-m="01001BB3" form-id-f="01001BB4">He's at the Cruel-Sea family's house. He works for them, helping care for their boy, Grimvar.</line>
+                  <line form-id-m="01001BB5" form-id-f="01001BB6">He works as a caregiver for Clan Cruel-Sea's little one. You'll find him at their house.</line>
                </g>
                <g name="asking-about-family-member">
                   <conditions>
@@ -840,15 +840,15 @@
                   </conditions>
                   <shared-info form-ids="01001BB7,01001BB8,01001BB9,01001BBA,01001BBB,01001BBC,01001BBD,01001BBE,01001BBF,01001BC0,01001BC1,01001BC2" id="shared-at-own-home" />
                </g>
-               <line form-id-f="01001BC4" form-id-m="01001BC3">He's at the Cruel-Sea family's house.</line>
-               <line form-id-f="01001BC6" form-id-m="01001BC5">He's at the Cruel-Seas' manor.</line>
+               <line form-id-m="01001BC3" form-id-f="01001BC4">He's at the Cruel-Sea family's house.</line>
+               <line form-id-m="01001BC5" form-id-f="01001BC6">He's at the Cruel-Seas' manor.</line>
             </g>
             <g name="house-free-winter">
                <conditions>
                   <parent-cell of="subject" is="WindhelmBrunwulfFreeWintersHouse" />
                </conditions>
                <!--<invoke name="mixin-house-one-resident-int">
-                  <parameter name="OWNER" value="Brunwulf Free-Winter" />
+                  <parameter value="Brunwulf Free-Winter" name="OWNER" />
                </invoke>-->
             <g>
                <conditions>
@@ -863,9 +863,9 @@
                <shared-info form-ids="01001BD3,01001BD4,01001BD5,01001BD6,01001BD7" id="shared-at-my-home" />
             </g>
             
-            <line form-id-f="01001BD9" form-id-m="01001BD8">He's at Brunwulf Free-Winter's house.</line>
-            <line form-id-f="01001BDB" form-id-m="01001BDA">I think he's visiting Brunwulf Free-Winter right now.</line>
-            <line form-id-f="01001BDD" form-id-m="01001BDC">I think I saw him on his way to Brunwulf Free-Winter's house.</line>
+            <line form-id-m="01001BD8" form-id-f="01001BD9">He's at Brunwulf Free-Winter's house.</line>
+            <line form-id-m="01001BDA" form-id-f="01001BDB">I think he's visiting Brunwulf Free-Winter right now.</line>
+            <line form-id-m="01001BDC" form-id-f="01001BDD">I think I saw him on his way to Brunwulf Free-Winter's house.</line>
          <!-- macro substitution end -->
             </g>
             <g name="house-niranye">
@@ -891,7 +891,7 @@
                      </or>
                   </conditions>
                   <!--<invoke name="mixin-house-one-resident-int">
-                     <parameter name="OWNER" value="Niranye" />
+                     <parameter value="Niranye" name="OWNER" />
                   </invoke>-->
             <g>
                <conditions>
@@ -906,9 +906,9 @@
                <shared-info form-ids="01001BF2,01001BF3,01001BF4,01001BF5,01001BF6" id="shared-at-my-home" />
             </g>
             
-            <line form-id-f="01001BF8" form-id-m="01001BF7">He's at Niranye's house.</line>
-            <line form-id-f="01001BFA" form-id-m="01001BF9">I think he's visiting Niranye right now.</line>
-            <line form-id-f="01001BFC" form-id-m="01001BFB">I think I saw him on his way to Niranye's house.</line>
+            <line form-id-m="01001BF7" form-id-f="01001BF8">He's at Niranye's house.</line>
+            <line form-id-m="01001BF9" form-id-f="01001BFA">I think he's visiting Niranye right now.</line>
+            <line form-id-m="01001BFB" form-id-f="01001BFC">I think I saw him on his way to Niranye's house.</line>
          <!-- macro substitution end -->
                </g>
             </g>
@@ -936,15 +936,15 @@
                   </g>
                   <shared-info form-ids="01001C03,01001C04,01001C05,01001C06,01001C07,01001C08,01001C09,01001C0A,01001C0B,01001C0C,01001C0D,01001C0E" id="shared-at-own-home" />
                </g>
-               <line form-id-f="01001C10" form-id-m="01001C0F">He's at the Shatter-Shield family's house.</line>
-               <line form-id-f="01001C12" form-id-m="01001C11">He's visiting the Shatter-Shield mansion.</line>
+               <line form-id-m="01001C0F" form-id-f="01001C10">He's at the Shatter-Shield family's house.</line>
+               <line form-id-m="01001C11" form-id-f="01001C12">He's visiting the Shatter-Shield mansion.</line>
             </g>
             <g name="house-viola">
                <conditions>
                   <parent-cell of="subject" is="WindhelmViolaGiordanosHouse" />
                </conditions>
                <!--<invoke name="mixin-house-one-resident-int">
-                  <parameter name="OWNER" value="Viola Giordano" />
+                  <parameter value="Viola Giordano" name="OWNER" />
                </invoke>-->
             <g>
                <conditions>
@@ -959,16 +959,16 @@
                <shared-info form-ids="01001C1F,01001C20,01001C21,01001C22,01001C23" id="shared-at-my-home" />
             </g>
             
-            <line form-id-f="01001C25" form-id-m="01001C24">He's at Viola Giordano's house.</line>
-            <line form-id-f="01001C27" form-id-m="01001C26">I think he's visiting Viola Giordano right now.</line>
-            <line form-id-f="01001C29" form-id-m="01001C28">I think I saw him on his way to Viola Giordano's house.</line>
+            <line form-id-m="01001C24" form-id-f="01001C25">He's at Viola Giordano's house.</line>
+            <line form-id-m="01001C26" form-id-f="01001C27">I think he's visiting Viola Giordano right now.</line>
+            <line form-id-m="01001C28" form-id-f="01001C29">I think I saw him on his way to Viola Giordano's house.</line>
          <!-- macro substitution end -->
             </g>
             <g name="new-gnisis-cornerclub">
                <conditions>
                   <parent-cell of="subject" is="WindhelmNewGnisisCornerclub" />
                </conditions>
-               <line form-id-f="01001C2B" form-id-m="01001C2A">He's at the New Gnisis Cornerclub.</line>
+               <line form-id-m="01001C2A" form-id-f="01001C2B">He's at the New Gnisis Cornerclub.</line>
             </g>
             <g name="palace-of-the-kings">
                <g name="asking-someone-outside">
@@ -982,8 +982,8 @@
                      <parent-cell of="speaker" is-not="WindhelmPalaceUpstairs01" />
                      <parent-cell of="speaker" is-not="WindhelmPalaceUpstairs02" />
                   </conditions>
-                  <line form-id-f="01001C2D" form-id-m="01001C2C">He's at the Palace of the Kings.</line>
-                  <line form-id-f="01001C2F" form-id-m="01001C2E">He's somewhere in the Palace of the Kings.</line>
+                  <line form-id-m="01001C2C" form-id-f="01001C2D">He's at the Palace of the Kings.</line>
+                  <line form-id-m="01001C2E" form-id-f="01001C2F">He's somewhere in the Palace of the Kings.</line>
                </g>
                <g name="asking-someone-inside">
                   <conditions>
@@ -997,20 +997,20 @@
                      <conditions>
                         <parent-cell of="subject" is="WindhelmPalaceoftheKings" />
                      </conditions>
-                     <line form-id-f="01001C31" form-id-m="01001C30">He's in the palace's main hall.</line>
+                     <line form-id-m="01001C30" form-id-f="01001C31">He's in the palace's main hall.</line>
                      <line form-id-u="01001C32">Head out to the main hall.</line>
                   </g>
                   <g name="upstairs-south">
                      <conditions>
                         <parent-cell of="subject" is="WindhelmPalaceUpstairs01" />
                      </conditions>
-                     <line form-id-f="01001C34" form-id-m="01001C33">He's in the palace's southern wing. When you first walk into the palace, the door is on your left.</line>
+                     <line form-id-m="01001C33" form-id-f="01001C34">He's in the palace's southern wing. When you first walk into the palace, the door is on your left.</line>
                   </g>
                   <g name="upstairs-north">
                      <conditions>
                         <parent-cell of="subject" is="WindhelmPalaceUpstairs02" />
                      </conditions>
-                     <line form-id-f="01001C36" form-id-m="01001C35">He's in the palace's northern wing. The door is through the war room by the main hall.</line>
+                     <line form-id-m="01001C35" form-id-f="01001C36">He's in the palace's northern wing. The door is through the war room by the main hall.</line>
                   </g>
                </g>
             </g>
@@ -1026,10 +1026,10 @@
                      <conditions>
                         <offers-services of="subject" />
                      </conditions>
-                     <line form-id-f="01001C38" form-id-m="01001C37">He runs Sadri's Used Wares. He should be working there now.</line>
-                     <line form-id-f="01001C3A" form-id-m="01001C39">Check his store. Sadri's Used Wares.</line>
+                     <line form-id-m="01001C37" form-id-f="01001C38">He runs Sadri's Used Wares. He should be working there now.</line>
+                     <line form-id-m="01001C39" form-id-f="01001C3A">Check his store. Sadri's Used Wares.</line>
                   </g>
-                  <line form-id-f="01001C3C" form-id-m="01001C3B">He's at home right now. He lives behind his shop, Sadri's Used Wares.</line>
+                  <line form-id-m="01001C3B" form-id-f="01001C3C">He's at home right now. He lives behind his shop, Sadri's Used Wares.</line>
                </g>
                <g name="asking-about-staff-backup">
                   <!--
@@ -1044,19 +1044,19 @@
                   <line form-id-u="01001C3D">She's at Sadri's Used Wares. She took over running the shop after her brother died.</line>
                   <line form-id-u="01001C3E">She's at Sadri's Used Wares. The place used to belong to her brother, but she runs it now.</line>
                </g>
-               <line form-id-f="01001C40" form-id-m="01001C3F">He's at Sadri's Used Wares.</line>
+               <line form-id-m="01001C3F" form-id-f="01001C40">He's at Sadri's Used Wares.</line>
             </g>
             <g name="shatter-shield-office">
                <conditions>
                   <parent-cell of="subject" is="WindhelmClanShatterShieldOffice" />
                </conditions>
-               <line form-id-f="01001C42" form-id-m="01001C41">He's at the Clan Shatter-Shield office, out on the docks.</line>
+               <line form-id-m="01001C41" form-id-f="01001C42">He's at the Clan Shatter-Shield office, out on the docks.</line>
             </g>
             <g name="talos-temple">
                <conditions>
                   <parent-cell of="subject" is="WindhelmTempleofTalos" />
                </conditions>
-               <g name="asking-priest-about-priest" non-exclusive="true">
+               <g non-exclusive="true" name="asking-priest-about-priest">
                   <conditions>
                      <or>
                         <actor-base of="subject" is="Jora" />
@@ -1067,31 +1067,31 @@
                         <actor-base of="speaker" is="Lortheim" />
                      </or>
                   </conditions>
-                  <line emotion="happy:60" form-id-f="01001C44" form-id-m="01001C43">He's a fellow priest of Talos. He's at the Temple right now.</line>
+                  <line emotion="happy:60" form-id-m="01001C43" form-id-f="01001C44">He's a fellow priest of Talos. He's at the Temple right now.</line>
                </g>
-               <g name="asking-about-priest" non-exclusive="true">
+               <g non-exclusive="true" name="asking-about-priest">
                   <conditions>
                      <or>
                         <actor-base of="subject" is="Jora" />
                         <actor-base of="subject" is="Lortheim" />
                      </or>
                   </conditions>
-                  <g name="asking-about-priest" non-exclusive="true">
+                  <g non-exclusive="true" name="asking-about-priest">
                      <conditions>
                         <actor-base of="speaker" is-not="Jora" />
                         <actor-base of="speaker" is-not="Lortheim" />
                      </conditions>
-                     <line form-id-f="01001C46" form-id-m="01001C45">One of the priests of Talos. You'll find him at the Temple of Talos.</line>
+                     <line form-id-m="01001C45" form-id-f="01001C46">One of the priests of Talos. You'll find him at the Temple of Talos.</line>
                   </g>
-                  <line form-id-f="01001C48" form-id-m="01001C47">Right now, he's tending to the Temple of Talos.</line>
+                  <line form-id-m="01001C47" form-id-f="01001C48">Right now, he's tending to the Temple of Talos.</line>
                </g>
-               <line form-id-f="01001C4A" form-id-m="01001C49">He's at the Temple of Talos.</line>
+               <line form-id-m="01001C49" form-id-f="01001C4A">He's at the Temple of Talos.</line>
             </g>
             <g name="warehouse">
                <conditions>
                   <parent-cell of="subject" is="WindhelmWarehouse" />
                </conditions>
-               <line form-id-f="01001C4C" form-id-m="01001C4B">He's at the warehouse out on the docks.</line>
+               <line form-id-m="01001C4B" form-id-f="01001C4C">He's at the warehouse out on the docks.</line>
             </g>
             <g name="white-phial">
                <conditions>
@@ -1109,24 +1109,24 @@
                            <actor-base of="subject" is="QuintusNavale" />
                         </or>
                      </conditions>
-                     <line form-id-f="01001C4E" form-id-m="01001C4D">He's probably manning his shop right now. The White Phial, on the west side of the city.</line>
+                     <line form-id-m="01001C4D" form-id-f="01001C4E">He's probably manning his shop right now. The White Phial, on the west side of the city.</line>
                   </g>
                   <g non-exclusive="true">
                      <conditions>
                         <actor-base of="subject" is="Nurelion" />
                      </conditions>
-                     <line form-id-f="01001C50" form-id-m="01001C4F">He owns the White Phial, and he lives upstairs above the shop. Try checking there.</line>
+                     <line form-id-m="01001C4F" form-id-f="01001C50">He owns the White Phial, and he lives upstairs above the shop. Try checking there.</line>
                   </g>
                   <g non-exclusive="true">
                      <conditions>
                         <actor-base of="subject" is="QuintusNavale" />
                      </conditions>
-                     <line form-id-f="01001C52" form-id-m="01001C51">He owns the White Phial. He took the place over after Nurelion passed. You'll find him there.</line>
-                     <line form-id-f="01001C54" form-id-m="01001C53">Check the White Phial. It's his shop and his home.</line>
+                     <line form-id-m="01001C51" form-id-f="01001C52">He owns the White Phial. He took the place over after Nurelion passed. You'll find him there.</line>
+                     <line form-id-m="01001C53" form-id-f="01001C54">Check the White Phial. It's his shop and his home.</line>
                   </g>
                </g>
-               <line form-id-f="01001C56" form-id-m="01001C55">He's at the White Phial.</line>
-               <line form-id-f="01001C58" form-id-m="01001C57">I saw him walk into the White Phial earlier.</line>
+               <line form-id-m="01001C55" form-id-f="01001C56">He's at the White Phial.</line>
+               <line form-id-m="01001C57" form-id-f="01001C58">I saw him walk into the White Phial earlier.</line>
             </g>
          </g>
          
@@ -1328,7 +1328,7 @@
                   <y of="subject" gte="40128" />
                   <y of="subject" lte="41488" />
                </conditions>
-               <line form-id-f="01001C68" form-id-m="01001C67">I saw him traveling between the Palace of Kings and the residential district to the west.</line>
+               <line form-id-m="01001C67" form-id-f="01001C68">I saw him traveling between the Palace of Kings and the residential district to the west.</line>
             </g>
             <g name="walkway-to-stone-quarter">
                <conditions>
@@ -1348,7 +1348,7 @@
                   <y of="subject" gte="40032" />
                   <y of="subject" lte="43600" />
                </conditions>
-               <line form-id-f="01001C6B" form-id-m="01001C6A">He's out in front of the Palace of Kings.</line>
+               <line form-id-m="01001C6A" form-id-f="01001C6B">He's out in front of the Palace of Kings.</line>
             </g>
             
             <g name="residential">
@@ -1359,7 +1359,7 @@
                      <y of="subject" gte="40576" />
                      <y of="subject" lte="42560" />
                   </conditions>
-                  <line form-id-f="01001C6D" form-id-m="01001C6C">He's over by the Cruel-Sea family mansion.</line>
+                  <line form-id-m="01001C6C" form-id-f="01001C6D">He's over by the Cruel-Sea family mansion.</line>
                </g>
                <g name="house-shatter-shield">
                   <conditions>
@@ -1368,7 +1368,7 @@
                      <y of="subject" gte="38528" />
                      <y of="subject" lte="40528" />
                   </conditions>
-                  <line form-id-f="01001C6F" form-id-m="01001C6E">He's over by Clan Shatter-Shield's mansion.</line>
+                  <line form-id-m="01001C6E" form-id-f="01001C6F">He's over by Clan Shatter-Shield's mansion.</line>
                </g>
                <g name="house-viola">
                   <conditions>
@@ -1377,7 +1377,7 @@
                      <y of="subject" gte="38992" />
                      <y of="subject" lte="40128" />
                   </conditions>
-                  <line form-id-f="01001C71" form-id-m="01001C70">He's over by Viola Giordano's house.</line>
+                  <line form-id-m="01001C70" form-id-f="01001C71">He's over by Viola Giordano's house.</line>
                </g>
                <g name="hjerim">
                   <conditions>
@@ -1386,7 +1386,7 @@
                      <y of="subject" gte="40528" />
                      <y of="subject" lte="42560" />
                   </conditions>
-                  <line form-id-f="01001C73" form-id-m="01001C72">He's over by Hjerim.</line>
+                  <line form-id-m="01001C72" form-id-f="01001C73">He's over by Hjerim.</line>
                </g>
             </g>
          </g>
@@ -1399,8 +1399,8 @@
                      <y of="subject" gte="35920" />
                      <y of="subject" lte="37104" />
                   </conditions>
-                  <line form-id-f="01001C75" form-id-m="01001C74">I saw him duck into the alleyway between the market to the west, and the city center.</line>
-                  <line form-id-f="01001C77" form-id-m="01001C76">He's in the alley connected to the city graveyard.</line>
+                  <line form-id-m="01001C74" form-id-f="01001C75">I saw him duck into the alleyway between the market to the west, and the city center.</line>
+                  <line form-id-m="01001C76" form-id-f="01001C77">He's in the alley connected to the city graveyard.</line>
                </g>
                <g name="graveyard">
                   <conditions>
@@ -1409,7 +1409,7 @@
                      <y of="subject" gte="37104" />
                      <y of="subject" lte="40528" />
                   </conditions>
-                  <line form-id-f="01001C79" form-id-m="01001C78">He's at the graveyard.</line>
+                  <line form-id-m="01001C78" form-id-f="01001C79">He's at the graveyard.</line>
                </g>
                <g name="market">
                   <conditions>
@@ -1427,7 +1427,7 @@
                      <y of="subject" gte="35376" />
                      <y of="subject" lte="35920" />
                   </conditions>
-                  <line form-id-f="01001C81" form-id-m="01001C80">He's on the street that connects the west market to the city entrance.</line>
+                  <line form-id-m="01001C80" form-id-f="01001C81">He's on the street that connects the west market to the city entrance.</line>
                </g>
             </g>
             <g name="east">
@@ -1439,7 +1439,7 @@
                      <y of="subject" lte="38896" />
                      <z of="subject" gte="-12176" />
                   </conditions>
-                  <line form-id-f="01001C83" form-id-m="01001C82">He's over by the Aretino residence.</line>
+                  <line form-id-m="01001C82" form-id-f="01001C83">He's over by the Aretino residence.</line>
                </g>
                <g name="house-brunwulf">
                   <conditions>
@@ -1449,7 +1449,7 @@
                      <y of="subject" lte="37408" />
                      <z of="subject" gte="-12272" />
                   </conditions>
-                  <line form-id-f="01001C85" form-id-m="01001C84">He's over by Brunwulf Free-Winter's house.</line>
+                  <line form-id-m="01001C84" form-id-f="01001C85">He's over by Brunwulf Free-Winter's house.</line>
                </g>
                <g name="house-niranye">
                   <conditions>
@@ -1458,7 +1458,7 @@
                      <y of="subject" gte="34576" />
                      <y of="subject" lte="35664" />
                   </conditions>
-                  <line form-id-f="01001C87" form-id-m="01001C86">He's over by Niranye house.</line>
+                  <line form-id-m="01001C86" form-id-f="01001C87">He's over by Niranye house.</line>
                </g>
                <g name="house-calixto">
                   <conditions>
@@ -1467,7 +1467,7 @@
                      <y of="subject" gte="35664" />
                      <y of="subject" lte="36304" />
                   </conditions>
-                  <line form-id-f="01001C89" form-id-m="01001C88">He's over by Calixto's House of Curiosities.</line>
+                  <line form-id-m="01001C88" form-id-f="01001C89">He's over by Calixto's House of Curiosities.</line>
                </g>
                <g name="walkway-to-castle">
                   <conditions>
@@ -1477,7 +1477,7 @@
                      <y of="subject" lte="40544" />
                      <z of="subject" gte="-12064" />
                   </conditions>
-                  <line form-id-f="01001C8B" form-id-m="01001C8A">I saw him up on that walkway connecting the Stone Quarter to the castle.</line>
+                  <line form-id-m="01001C8A" form-id-f="01001C8B">I saw him up on that walkway connecting the Stone Quarter to the castle.</line>
                </g>
             </g>
             <g name="central">
@@ -1488,7 +1488,7 @@
                      <y of="subject" gte="34656" />
                      <y of="subject" lte="36752" />
                   </conditions>
-                  <line form-id-f="01001C8D" form-id-m="01001C8C">He's near the city's entrance, and the front doors to Candlehearth Hall.</line>
+                  <line form-id-m="01001C8C" form-id-f="01001C8D">He's near the city's entrance, and the front doors to Candlehearth Hall.</line>
                </g>
                <g name="east-alley">
                   <conditions>
@@ -1497,7 +1497,7 @@
                      <y of="subject" gte="35744" />
                      <y of="subject" lte="38656" />
                   </conditions>
-                  <line form-id-f="01001C8F" form-id-m="01001C8E">He's in the alley on the east side of Candlehearth Hall.</line>
+                  <line form-id-m="01001C8E" form-id-f="01001C8F">He's in the alley on the east side of Candlehearth Hall.</line>
                </g>
                <g name="temple-of-talos">
                   <conditions>
@@ -1506,7 +1506,7 @@
                      <y of="subject" gte="38336" />
                      <y of="subject" lte="39088" />
                   </conditions>
-                  <line form-id-f="01001C91" form-id-m="01001C90">He's by the entrance to the Temple of Talos.</line>
+                  <line form-id-m="01001C90" form-id-f="01001C91">He's by the entrance to the Temple of Talos.</line>
                </g>
                
                <g name="candlehearth-east">
@@ -1516,7 +1516,7 @@
                      <y of="subject" gte="36784" />
                      <y of="subject" lte="38080" />
                   </conditions>
-                  <line form-id-f="01001C93" form-id-m="01001C92">He's on the east side of Candlehearth Hall.</line>
+                  <line form-id-m="01001C92" form-id-f="01001C93">He's on the east side of Candlehearth Hall.</line>
                </g>
                <g name="candlehearth-west">
                   <conditions>
@@ -1525,7 +1525,7 @@
                      <y of="subject" gte="36784" />
                      <y of="subject" lte="38080" />
                   </conditions>
-                  <line form-id-f="01001C95" form-id-m="01001C94">He's on the west side of Candlehearth Hall.</line>
+                  <line form-id-m="01001C94" form-id-f="01001C95">He's on the west side of Candlehearth Hall.</line>
                </g>
                <g name="candlehearth-roof">
                   <conditions>
@@ -1534,7 +1534,7 @@
                      <y of="subject" gte="36784" />
                      <y of="subject" lte="38080" />
                   </conditions>
-                  <line form-id-f="01001C97" form-id-m="01001C96">He's on the roof of Candlehearth Hall.</line>
+                  <line form-id-m="01001C96" form-id-f="01001C97">He's on the roof of Candlehearth Hall.</line>
                </g>
                
                <g name="north-steps">
@@ -1544,7 +1544,7 @@
                      <y of="subject" gte="38080" />
                      <y of="subject" lte="40032" />
                   </conditions>
-                  <line form-id-f="01001C99" form-id-m="01001C98">He's at the northern part of the city center, in front of the Palace of Kings.</line>
+                  <line form-id-m="01001C98" form-id-f="01001C99">He's at the northern part of the city center, in front of the Palace of Kings.</line>
                </g>
             </g>
          </g>
@@ -1556,7 +1556,7 @@
                   <y of="subject" gte="38944" />
                   <y of="subject" lte="40112" />
                </conditions>
-               <line form-id-f="01001C9B" form-id-m="01001C9A">He's over by Belyn Hlaalu's house.</line>
+               <line form-id-m="01001C9A" form-id-f="01001C9B">He's over by Belyn Hlaalu's house.</line>
             </g>
             <g name="new-gnisis-cornerclub">
                <conditions>
@@ -1565,7 +1565,7 @@
                   <y of="subject" gte="38944" />
                   <y of="subject" lte="40112" />
                </conditions>
-               <line form-id-f="01001C9D" form-id-m="01001C9C">He's over by the New Gnisis Cornerclub.</line>
+               <line form-id-m="01001C9C" form-id-f="01001C9D">He's over by the New Gnisis Cornerclub.</line>
             </g>
             <g name="sadri-store">
                <conditions>
@@ -1574,7 +1574,7 @@
                   <y of="subject" gte="38000" />
                   <y of="subject" lte="38944" />
                </conditions>
-               <line form-id-f="01001C9F" form-id-m="01001C9E">He's over by Sadri's Used Wares.</line>
+               <line form-id-m="01001C9E" form-id-f="01001C9F">He's over by Sadri's Used Wares.</line>
             </g>
          </g>
          
@@ -1587,7 +1587,7 @@
                   <y of="subject" lte="36064" />
                   <z of="subject" gte="-13856" />
                </conditions>
-               <line form-id-f="01001CA1" form-id-m="01001CA0">He's out on the docks, by the door to the Argonians' living quarters.</line>
+               <line form-id-m="01001CA0" form-id-f="01001CA1">He's out on the docks, by the door to the Argonians' living quarters.</line>
             </g>
             
             <g name="across-river">
@@ -1658,7 +1658,7 @@
                   <y of="subject" gte="33696" />
                   <y of="subject" lte="37392" />
                </conditions>
-               <line form-id-f="01001CB3" form-id-m="01001CB2">He's on the east side of the docks.</line>
+               <line form-id-m="01001CB2" form-id-f="01001CB3">He's on the east side of the docks.</line>
             </g>
             <g name="docks-west">
                <conditions>
@@ -1667,7 +1667,7 @@
                   <y of="subject" gte="32592" />
                   <y of="subject" lte="35536" />
                </conditions>
-               <line form-id-f="01001CB5" form-id-m="01001CB4">He's on the west side of the docks.</line>
+               <line form-id-m="01001CB4" form-id-f="01001CB5">He's on the west side of the docks.</line>
             </g>
             
             <g name="docks-river">
@@ -1677,7 +1677,7 @@
                   <y of="subject" gte="32768" />
                   <y of="subject" lte="33696" />
                </conditions>
-               <line form-id-f="01001CB7" form-id-m="01001CB6">He's in the river by the docks.</line>
+               <line form-id-m="01001CB6" form-id-f="01001CB7">He's in the river by the docks.</line>
             </g>
          </g>
          
@@ -1689,7 +1689,7 @@
                   <y of="subject" gte="38080" />
                   <y of="subject" lte="40112" />
                </conditions>
-               <line form-id-f="01001CB9" form-id-m="01001CB8">He's somewhere in the Gray Quarter.</line>
+               <line form-id-m="01001CB8" form-id-f="01001CB9">He's somewhere in the Gray Quarter.</line>
             </g>
             <g name="stone-quarter-path-to-gray-quarter">
                <conditions>
@@ -1699,7 +1699,7 @@
                   <y of="subject" lte="38080" />
                   <z of="subject" lt="-12272" />
                </conditions>
-               <line form-id-f="01001CBB" form-id-m="01001CBA">I saw him passing through the Stone Quarter. Maybe he was headed to the Gray Quarter, or the docks?</line>
+               <line form-id-m="01001CBA" form-id-f="01001CBB">I saw him passing through the Stone Quarter. Maybe he was headed to the Gray Quarter, or the docks?</line>
             </g>
             <g name="stone-quarter-path-to-docks">
                <conditions>
@@ -1708,7 +1708,7 @@
                   <y of="subject" gte="37024" />
                   <y of="subject" lte="37888" />
                </conditions>
-               <line form-id-f="01001CBD" form-id-m="01001CBC">He's outside the city walls, in the alleyway that leads to the docks.</line>
+               <line form-id-m="01001CBC" form-id-f="01001CBD">He's outside the city walls, in the alleyway that leads to the docks.</line>
             </g>
             <g name="stone-quarter-west">
                <conditions>
@@ -1717,7 +1717,7 @@
                   <y of="subject" gte="34656" />
                   <y of="subject" lte="40528" />
                </conditions>
-               <line form-id-f="01001CBF" form-id-m="01001CBE">He's somewhere on the west side of the city.</line>
+               <line form-id-m="01001CBE" form-id-f="01001CBF">He's somewhere on the west side of the city.</line>
             </g>
             <g name="valunstrad-residential">
                <conditions>
@@ -1726,7 +1726,7 @@
                   <y of="subject" gte="38528" />
                   <y of="subject" lte="42640" />
                </conditions>
-               <line form-id-f="01001CC1" form-id-m="01001CC0">He's somewhere in Valunstrad, the upperclass district to the northwest.</line>
+               <line form-id-m="01001CC0" form-id-f="01001CC1">He's somewhere in Valunstrad, the upperclass district to the northwest.</line>
             </g>
          </g>
          
@@ -1738,7 +1738,7 @@
                <y of="subject" lte="34704" />
                <z of="subject" gte="-12736" />
             </conditions>
-            <line form-id-f="01001CC3" form-id-m="01001CC2">He's on the bridge leading into the city.</line>
+            <line form-id-m="01001CC2" form-id-f="01001CC3">He's on the bridge leading into the city.</line>
          </g>
          <g name="stables">
             <conditions>
@@ -1747,7 +1747,7 @@
                <y of="subject" gte="24128" />
                <y of="subject" lte="26976" />
             </conditions>
-            <line form-id-f="01001CC5" form-id-m="01001CC4">He's hanging around the city stables.</line>
+            <line form-id-m="01001CC4" form-id-f="01001CC5">He's hanging around the city stables.</line>
          </g>
          
          <!--<invoke name="common-exterior-fallbacks" />-->

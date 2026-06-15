@@ -444,7 +444,7 @@ do -- xml.element
          end
          return copy, src_to_dst_map
       end
-      function instance_members:serialize(builder)
+      function instance_members:serialize(builder, filter)
          builder:append('<')
          builder:append(self.node_name)
          self:for_each_attribute(function(k, v)
@@ -464,7 +464,7 @@ do -- xml.element
                if i then
                   local prev = 1
                   while i do
-                     builder:append(v:sub(prev, i))
+                     builder:append(v:sub(prev, i - 1))
                      local c = v:sub(i, i + 1)
                      if c == '<' then
                         builder:append("&lt;")
@@ -493,7 +493,12 @@ do -- xml.element
          end
          builder:append(">")
          for i = 1, #self.children do
-            self.children[i]:serialize(builder)
+            local child = self.children[i]
+            if filter and not filter(child) then
+               goto continue
+            end
+            child:serialize(builder, filter)
+            ::continue::
          end
          builder:append("</")
          builder:append(self.node_name)
@@ -581,7 +586,7 @@ do
       while self:_consume_misc() do
       end
       if self.pos < self.length then
-         error("Unexpected content at the end of the file.")
+         self:raise_parse_error("Unexpected content at the end of the file.")
       end
    end
    
@@ -593,6 +598,18 @@ do
    end
    function instance_getters:_remaining()
       return self.length - self.pos + 1
+   end
+   
+   function instance_members:raise_parse_error(message, pos)
+      pos = pos or self.pos
+      local line, line_pos = self:_line_at(pos)
+      local col = pos - line_pos
+      error(string.format("%s\n   (line %d, col %d)", message, line, col))
+   end
+   function instance_members:_stringify_source_location(pos)
+      local line, line_pos = self:_line_at(pos)
+      local col = pos - line_pos
+      return string.format("line %d, col %d", line, col)
    end
    
    -- "Checkpoint" system. If a function needs to parse an optional 
@@ -631,7 +648,6 @@ do
       return checkpoint
    end
    
-   --
    function instance_members:_set_node_source_location(node, start_pos)
       local line, line_pos = self:_update_last_line_break(start_pos)
       local col = start_pos - line_pos
@@ -662,25 +678,25 @@ do
    end
    
    -- Consumes the desired text if it's immediately ahead of `pos`. 
-   -- Returns nil if nothing is consumed. If the pattern has any 
-   -- captures, then returns a list of the captured text; otherwise, 
-   -- returns the whole captured text.
+   -- Returns nil if nothing is consumed. If the pattern has multiple 
+   -- captures, then returns a list of all of them; if the pattern has 
+   -- just one capture, returns it; otherwise, returns the captured 
+   -- content.
    function instance_members:_consume_pattern(desired)
-      local m = { self.text:match(desired, self.pos) }
-      local s = #m
-      if s == 0 or m[1] == nil then
+      local from        = self.pos
+      local first, last = self.text:find(desired, from)
+      if (not first) or first > from then
          return nil
       end
-      --
-      -- The Lua manual doesn't document this, but the last match 
-      -- is always the full matched text.
-      --
-      local whole = m[s]
-      self.pos = self.pos + #whole
-      if s == 1 then
-         return whole
+      self.pos = last + 1
+      
+      local m = { self.text:match(desired, from) }
+      local c = #m
+      if c == 1 then
+         return m[1]
+      elseif c == 0 then
+         return self.text:sub(from, self.pos)
       end
-      m[s] = nil
       return m
    end
    
@@ -770,11 +786,17 @@ do
       end
       local n = self.text:find("--", self.pos, true)
       if not n then
-         error("Unterminated comment.")
+         self:raise_parse_error("Unterminated comment.", checkpoint.pos)
       end
       local c = self.text:sub(n + 2, n + 2)
       if c ~= ">" then
-         error("Unexpected `--` in a comment.")
+         self:raise_parse_error(
+            string.format(
+               "Unexpected `--` in a comment beginning at %s.",
+               self:_stringify_source_location(checkpoint.pos)
+            ),
+            n
+         )
       end
       if self.retain_comments then
          local text = self.text:sub(self.pos, n - 1)
@@ -803,17 +825,17 @@ do
          local standalone = nil
          do -- VersionInfo
             if not self:_consume_whitespace() then
-               error("Invalid XML declaration.")
+               self:raise_parse_error("Invalid XML declaration.")
             end
             if not self:_consume("version") then
-               error("Invalid XML declaration.")
+               self:raise_parse_error("Invalid XML declaration.")
             end
             if not self:_consume_eq() then
-               error("Invalid XML declaration.")
+               self:raise_parse_error("Invalid XML declaration.")
             end
             local value = self:_consume_quoted_string("^(1%.%d+)")
             if not value then
-               error("Invalid XML declaration.")
+               self:raise_parse_error("Invalid XML declaration.")
             end
             version = tonumber(value)
          end
@@ -851,7 +873,7 @@ do
          end)(self)
          self:_consume_whitespace()
          if not self:_consume("?>") then
-            error("Unterminated XML declaration.")
+            self:raise_parse_error("Unterminated XML declaration.")
          end
          --
          if version or encoding or standalone then
@@ -875,7 +897,7 @@ do
          self.text:find("&", self.pos, true) or self.length + 1
       )
       if i and i < j then
-         error("Unexpected CDATA section terminator (`]]>`) in text content.")
+         self:raise_parse_error("Unexpected CDATA section terminator (`]]>`) in text content.")
       end
       if j > self.pos then
          local text = self.text:sub(self.pos, j - 1)
@@ -899,16 +921,18 @@ do
    
    function instance_members:_consume_entity_reference()
       if self:_consume("&#") then
-         local cc = self:_consume_pattern("x(%x+);")
+         local pos = self.pos - 2
+         local cc  = self:_consume_pattern("x(%x+);")
          if cc then
-            cc = tonumber("0x" .. cc[1])
+            cc = tonumber("0x" .. cc)
          else
             cc = self:_consume_pattern("(%d+);")
             if cc then
-               cc = tonumber(cc[1])
-            else
-               error("Malformed XML character-code entity.")
+               cc = tonumber(cc)
             end
+         end
+         if not cc then
+            self:raise_parse_error("Malformed XML character-code entity.", pos)
          end
          return string.char(cc)
       end
@@ -918,15 +942,16 @@ do
       if not self:_consume("&") then
          return false
       end
+      local pos  = self.pos - 1
       local name = self:_consume_name()
       if self:_consume_char() ~= ";" then
-         error("Malformed XML entity `" .. name .. "`.")
+         self:raise_parse_error("Malformed XML entity `" .. name .. "`.", pos)
       end
       local data = xml.builtin_entities[name]
       if not data then
          data = self.entities[name]
          if not data then
-            error("Unrecognized XML entity `" .. name .. "`.")
+            self:raise_parse_error("Unrecognized XML entity `" .. name .. "`.", pos)
          end
       end
       return data
@@ -954,7 +979,7 @@ do
          local j = self.text:find("&",   self.pos, true)
          local k = self.text:find("<",   self.pos, true)
          if k and k < i and k < j then
-            error("Unexpected `<`.")
+            self:raise_parse_error("Unexpected `<`.", k)
          end
          if j and j < i then
             if j > self.pos then
@@ -997,7 +1022,7 @@ do
          self.state.target:append_child(elem)
       else
          if self.root then
-            error("Multiple top-level elements?")
+            self:raise_parse_error("Multiple top-level elements?", checkpoint.pos)
          else
             self.root = elem
          end
@@ -1014,14 +1039,14 @@ do
             break
          end
          if not self:_consume_eq() then
-            error("Malformed attribute `" .. name .. "` on element `" .. node_name .. "`.")
+            self:raise_parse_error("Malformed attribute `" .. name .. "` on element `" .. node_name .. "`.", checkpoint.pos)
          end
          local value = self:_consume_attribute_value()
          if not value then
-            error("Malformed attribute `" .. name .. "` on element `" .. node_name .. "`.")
+            self:raise_parse_error("Malformed attribute `" .. name .. "` on element `" .. node_name .. "`.", checkpoint.pos)
          end
          if elem.attributes[name] then
-            error("Attribute `" .. name .. "` appears more than once on element `" .. node_name .. "`.")
+            self:raise_parse_error("Attribute `" .. name .. "` appears more than once on element `" .. node_name .. "`.", checkpoint.pos)
          end
          elem.attributes[name] = value
          checkpoint:commit()
@@ -1036,7 +1061,7 @@ do
       elseif self:_consume_char() == ">" then
          elem.self_closed = false
       else
-         error("Malformed start tag for `" .. node_name .. "`.")
+         self:raise_parse_error("Malformed start tag for `" .. node_name .. "`.", checkpoint.pos)
       end
       --
       -- Parse child content.
@@ -1062,15 +1087,16 @@ do
       -- Parse closing tag.
       --
       if not self:_consume("</") then
-         error("Expected closing tag for `" .. node_name .. "`.")
+         self:raise_parse_error("Expected closing tag for `" .. node_name .. "`.", checkpoint.pos)
       end
+      local pos_before_closing = self.pos - 2
       local close_name = self:_consume_name()
       if close_name ~= node_name then
-         error("Expected closing tag for `" .. node_name .. "`; saw closing tag for `" .. close_name .. "`.")
+         self:raise_parse_error("Expected closing tag for `" .. node_name .. "`; saw closing tag for `" .. close_name .. "`.", pos_before_closing)
       end
       self:_consume_whitespace()
       if self:_consume_char() ~= ">" then
-         error("Malformed closing tag for `" .. node_name .. "`.")
+         self:raise_parse_error("Malformed closing tag for `" .. node_name .. "`.", pos_before_closing)
       end
       
       self.state.target = elem.parent

@@ -1628,7 +1628,7 @@
                   <conditions>
                      <actor-base of="speaker" is="Svana" />
                   </conditions>
-                  <line script-notes="Stress "&#22;says;"&#22; you doubt he's being truthful, and you're worried that he feels he isn't welcome at the Bunkhouse due to the racist behavior of tenants such as Grelka." emotion="sad:80" form-id-f="010010FE" form-id-m="010010FD">He sleeps in Beggar's Row. He says he prefers it down there, but...</line>
+                  <line script-notes="Stress &#22;says;&#22; you doubt he's being truthful, and you're worried that he feels he isn't welcome at the Bunkhouse due to the racist behavior of tenants such as Grelka." emotion="sad:80" form-id-f="010010FE" form-id-m="010010FD">He sleeps in Beggar's Row. He says he prefers it down there, but...</line>
                   <line script-notes="You doubt that he is being truthful, and are worried about him." emotion="sad:70" form-id-f="01001100" form-id-m="010010FF">Probably at Beggar's Row, in the canal. Supposedly he likes sleeping someplace cold and damp.</line>
                </g>
             </g>
@@ -2143,16 +2143,16 @@
                      <actor-base of="speaker" is="Ingun" />
                   </conditions>
                   <line script-notes="apathetic/disinterested" form-id-f="01001214" form-id-m="01001213">He's in jail for now. There was some sort of conflict involving his ex-fiance.</line>
-                  <line script-notes=""&#22;Relationships,"&#22; plural, is not a typo; bro has been pursuing multiple women at once, and I'm writing Ingun as aware of this but largely apathetic to it." form-id-f="01001216" form-id-m="01001215">He's been arrested. Something went wrong with his relationships, I suppose.</line>
+                  <line script-notes="&#22;Relationships,&#22; plural, is not a typo; bro has been pursuing multiple women at once, and I'm writing Ingun as aware of this but largely apathetic to it." form-id-f="01001216" form-id-m="01001215">He's been arrested. Something went wrong with his relationships, I suppose.</line>
                   <line script-notes="apathetic/disinterested" form-id-f="01001218" form-id-m="01001217">He's being held in jail while Mother and the guards sort out... some sort of misunderstanding, I guess.</line>
                </g>
                <g name="svana-on-sibbi">
                   <conditions>
                      <actor-base of="speaker" is="Svana" />
                   </conditions>
-                  <line script-notes="Slight emphasis on "&#22;allegedly."&#22; You find it hard to believe this about the man who's gradually tricking you into becoming his side piece." emotion="puzzled:70" form-id-f="0100121A" form-id-m="01001219">He's in jail right now, allegedly for murder.</line>
-                  <line script-notes="Emphasis on "&#22;say."&#22; You find it hard to believe this about the man who's gradually tricking you into becoming his side piece." emotion="puzzled:80" form-id-f="0100121C" form-id-m="0100121B">He's being held in jail. They say he murdered someone.</line>
-                  <line script-notes="Emphasis on "&#22;supposedly."&#22; You find it hard to believe this about the man who's gradually tricking you into becoming his side piece." emotion="puzzled:60" form-id-f="0100121E" form-id-m="0100121D">He's been arrested. Supposedly, he killed someone. I have my doubts.</line>
+                  <line script-notes="Slight emphasis on &#22;allegedly.&#22; You find it hard to believe this about the man who's gradually tricking you into becoming his side piece." emotion="puzzled:70" form-id-f="0100121A" form-id-m="01001219">He's in jail right now, allegedly for murder.</line>
+                  <line script-notes="Emphasis on &#22;say.&#22; You find it hard to believe this about the man who's gradually tricking you into becoming his side piece." emotion="puzzled:80" form-id-f="0100121C" form-id-m="0100121B">He's being held in jail. They say he murdered someone.</line>
+                  <line script-notes="Emphasis on &#22;supposedly.&#22; You find it hard to believe this about the man who's gradually tricking you into becoming his side piece." emotion="puzzled:60" form-id-f="0100121E" form-id-m="0100121D">He's been arrested. Supposedly, he killed someone. I have my doubts.</line>
                   <line script-notes="Sibbi is trying to groom you into a relationship and has been successful so far, and you are therefore in denial that your activities led his fiance to attack him, and him to murder her brother." emotion="sad:80" form-id-f="01001220" form-id-m="0100121F">He was arrested after some kind of conflict with his fiance and her brother. He'll be in jail until that gets sorted out.</line>
                </g>
             </g>

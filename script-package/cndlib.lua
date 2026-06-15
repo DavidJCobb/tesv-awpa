@@ -495,6 +495,8 @@ function cndlib.or_groups_to_list(or_groups, dst_list, overwrite_even_if_size_un
          local item = group[j]
          if j < size then
             item.is_or_linked = true
+         else
+            item.is_or_linked = false
          end
          re_flattened[#re_flattened + 1] = item
       end

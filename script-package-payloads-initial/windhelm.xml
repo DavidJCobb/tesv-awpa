@@ -289,7 +289,11 @@
                <shared-info id="shared-me-outside-walls-they-inside-walls" />
             </g>
             <g name="speaker-exterior">
-               <conditions>   
+               <conditions>
+                  <or>
+                     <parent-world of="speaker" is="WindhelmWorld" />
+                     <parent-world of="speaker" is="Tamriel" />
+                  </or>
                   <invoke name="condition-entity-outside-city-walls-ext">
                      <parameter name="OF" value="speaker" />
                   </invoke>
@@ -312,7 +316,11 @@
                <shared-info id="shared-me-inside-walls-they-outside-walls" />
             </g>
             <g name="speaker-exterior">
-               <conditions>   
+               <conditions>
+                  <or>
+                     <parent-world of="speaker" is="WindhelmWorld" />
+                     <parent-world of="speaker" is="Tamriel" />
+                  </or>
                   <invoke name="condition-entity-inside-city-walls-ext">
                      <parameter name="OF" value="speaker" />
                   </invoke>
@@ -857,7 +865,11 @@
                <shared-info id="shared-me-outside-walls-they-inside-walls" />
             </g>
             <g name="speaker-exterior">
-               <conditions>   
+               <conditions>
+                  <or>
+                     <parent-world of="speaker" is="WindhelmWorld" />
+                     <parent-world of="speaker" is="Tamriel" />
+                  </or>
                   <invoke name="condition-entity-outside-city-walls-ext">
                      <parameter name="OF" value="speaker" />
                   </invoke>
@@ -884,7 +896,11 @@
                <shared-info id="shared-me-inside-walls-they-outside-walls" />
             </g>
             <g name="speaker-exterior">
-               <conditions>   
+               <conditions>
+                  <or>
+                     <parent-world of="speaker" is="WindhelmWorld" />
+                     <parent-world of="speaker" is="Tamriel" />
+                  </or>
                   <invoke name="condition-entity-inside-city-walls-ext">
                      <parameter name="OF" value="speaker" />
                   </invoke>

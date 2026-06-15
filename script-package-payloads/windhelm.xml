@@ -458,7 +458,11 @@
                <shared-info form-ids="01001B1F,01001B20,01001B21" id="shared-me-outside-walls-they-inside-walls" />
             </g>
             <g name="speaker-exterior">
-               <conditions>   
+               <conditions>
+                  <or>
+                     <parent-world of="speaker" is="WindhelmWorld" />
+                     <parent-world of="speaker" is="Tamriel" />
+                  </or>
                   
             <or><!-- bounding box -->
                <x of="speaker" lt="129056" />
@@ -518,7 +522,11 @@
                <shared-info form-ids="01001B25,01001B26,01001B27" id="shared-me-inside-walls-they-outside-walls" />
             </g>
             <g name="speaker-exterior">
-               <conditions>   
+               <conditions>
+                  <or>
+                     <parent-world of="speaker" is="WindhelmWorld" />
+                     <parent-world of="speaker" is="Tamriel" />
+                  </or>
                   
             <!-- bounding box -->
             <x of="speaker" gte="129056" />
@@ -635,7 +643,7 @@
                         </or>
                      </conditions>
                      <line emotion="disgust:100" form-id-f="01001B42" form-id-m="01001B41">I heard he walked into the Butcher's old house earlier.</line>
-                     <line script-notes="slight venom on "&#22;guards;"&#22; resentment that they didn't solve the murders" emotion="disgust:100" form-id-f="01001B44" form-id-m="01001B43">For some reason, he's at the Butcher's old museum. Maybe he's looking for more clues the guards missed.</line>
+                     <line script-notes="slight venom on &#22;guards;&#22; resentment that they didn't solve the murders" emotion="disgust:100" form-id-f="01001B44" form-id-m="01001B43">For some reason, he's at the Butcher's old museum. Maybe he's looking for more clues the guards missed.</line>
                      <line emotion="disgust:100" form-id-f="01001B46" form-id-m="01001B45">He's stopping by that wretch Calixto's house.</line>
                   </g>
                   <g name="fancy" non-exclusive="true">
@@ -1177,7 +1185,11 @@
                <shared-info form-ids="01001C5B,01001C5C,01001C5D" id="shared-me-outside-walls-they-inside-walls" />
             </g>
             <g name="speaker-exterior">
-               <conditions>   
+               <conditions>
+                  <or>
+                     <parent-world of="speaker" is="WindhelmWorld" />
+                     <parent-world of="speaker" is="Tamriel" />
+                  </or>
                   
             <or><!-- bounding box -->
                <x of="speaker" lt="129056" />
@@ -1261,7 +1273,11 @@
                <shared-info form-ids="01001C61,01001C62,01001C63" id="shared-me-inside-walls-they-outside-walls" />
             </g>
             <g name="speaker-exterior">
-               <conditions>   
+               <conditions>
+                  <or>
+                     <parent-world of="speaker" is="WindhelmWorld" />
+                     <parent-world of="speaker" is="Tamriel" />
+                  </or>
                   
             <!-- bounding box -->
             <x of="speaker" gte="129056" />

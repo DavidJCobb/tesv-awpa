@@ -31,6 +31,17 @@ do
             utils.fail_load("attribute `editor-id-slug` is required", element)
          end
          
+         -- require unique editor ID slugs
+         for _, v in pairs(awpa.env.shared_infos) do
+            if v == self then
+               goto continue
+            end
+            if v.slug == self.slug then
+               utils.fail_load("this shared-info definition has the same slug as a previously-loaded definition", element)
+            end
+            ::continue::
+         end
+         
          element:for_each_child_element(function(node)
             if node.node_name == "line" then
                local text = node:get_text_content()

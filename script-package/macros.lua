@@ -121,7 +121,12 @@ do
          if is_permanent then
             do
                local builder = string_builder()
-               invocation:serialize(builder)
+               invocation:serialize(builder, function(node)
+                  --
+                  -- comments can't be nested
+                  --
+                  return not xml.comment.is(node)
+               end)
                xml.comment(builder:to_string()):place_before(invocation)
             end
             xml.comment(" macro substitution end "):place_after(invocation)

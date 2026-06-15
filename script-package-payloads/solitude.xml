@@ -634,7 +634,7 @@
                   <death-count for="AngelineMorrard" gt="0" />
                </conditions>
                <line emotion="sad:20" form-id-f="0100151E" form-id-m="0100151D">He's at my store, Angeline's Aromatics. I run the place now that my aunt has passed.</line>
-               <line script-notes="slight emphasis on "&#22;my"&#22; shop. your aunt used to run the shop, but she died, so you run it now; you're still getting used to that" emotion="sad:40" form-id-f="01001520" form-id-m="0100151F">He's at my aunt's... sorry, my alchemy shop. Angeline's Aromatics.</line>
+               <line script-notes="slight emphasis on &#22;my&#22; shop. your aunt used to run the shop, but she died, so you run it now; you're still getting used to that" emotion="sad:40" form-id-f="01001520" form-id-m="0100151F">He's at my aunt's... sorry, my alchemy shop. Angeline's Aromatics.</line>
             </g>
             <line form-id-f="01001522" form-id-m="01001521">I saw him stop by Angeline's Aromatics earlier.</line>
             <line form-id-f="01001524" form-id-m="01001523">I'm pretty sure he's at Angeline's Aromatics.</line>
@@ -881,10 +881,6 @@
             <!--<invoke name="mixin-house-one-resident-int">
                <parameter name="OWNER" value="Bryling" />
                <parameter name="EXTRA">
-                  <!--
-                     This will be inserted after the "he's at my house" line, so 
-                     we don't need a variant for asking Bryling about Irnskar.
-                  -->
                   <g name="asking-about-housecarl">
                      <conditions>
                         <actor-base of="subject" is="IrnskarIronhand" />

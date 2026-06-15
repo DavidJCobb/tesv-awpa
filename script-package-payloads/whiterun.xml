@@ -31,7 +31,13 @@
          <actor editor-id="Arcadia" />
          <actor editor-id="Athis" />
          <actor editor-id="AvulsteinGrayMane" name="Avulstein Gray-Mane" />
-         <actor editor-id="BalgruuftheGreater" name="Balgruuf the Greater" />
+         <actor editor-id="BalgruuftheGreater" name="Balgruuf the Greater">
+            <begin-asking-to>
+               <topic>
+                  <shared-info id="shared-refer-to-steward-neutral" />
+               </topic>
+            </begin-asking-to>
+         </actor>
          <actor editor-id="Belethor" />
          <actor editor-id="BergritteBattleBorn" name="Bergritte Battle-Born" />
          <actor editor-id="Braith" />
@@ -68,7 +74,28 @@
             </begin-asking-about>
          </actor>
          <actor editor-id="Hulda" />
-         <actor editor-id="Hrongar" />
+         <actor editor-id="Hrongar">
+            <begin-asking-to>
+               <topic>
+                  <!--
+                     Cut content from "The Whispering Door" would've allowed 
+                     Hrongar to become Jarl if Balgruuf is murdered by his 
+                     children. Though the murder itself was cut, it seems 
+                     that Hrongar has all of the dialogue needed to function 
+                     as a replacement for Balgruuf, so it's not inconceivable 
+                     that a mod might restore that content.
+                     
+                     Said cut content includes lines said about Hrongar which 
+                     suggest that he is very vindictive, so let's give him 
+                     the less soft lines.
+                  -->
+                  <conditions>
+                     <faction-membership of="speaker" includes="JobJarlFaction" />
+                  </conditions>
+                  <shared-info id="shared-refer-to-steward-haughty" />
+               </topic>
+            </begin-asking-to>
+         </actor>
          <actor editor-id="Irileth" />
          <actor editor-id="IdolafBattleBorn" name="Idolaf Battle-Born" />
          <actor editor-id="Jervar" />
@@ -109,7 +136,16 @@
          <actor editor-id="Torvar" />
          <actor editor-id="Ulfberth" name="Ulfberth War-Bear" />
          <actor editor-id="Uthgerd" name="Uthgerd the Unbroken" />
-         <actor editor-id="VignarGrayMane" name="Vignar Gray-Mane" />
+         <actor editor-id="VignarGrayMane" name="Vignar Gray-Mane">
+            <begin-asking-to>
+               <topic>
+                  <conditions>
+                     <faction-membership of="speaker" includes="JobJarlFaction" />
+                  </conditions>
+                  <shared-info id="shared-refer-to-steward-neutral" />
+               </topic>
+            </begin-asking-to>
+         </actor>
          <actor editor-id="Vilkas" />
          <actor editor-id="Ysolda" />
       </actors>

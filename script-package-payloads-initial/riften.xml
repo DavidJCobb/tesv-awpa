@@ -537,6 +537,11 @@
          </actor>
          <actor editor-id="Laila" name="Laila Law-Giver">
             <invoke name="actor-exiled-by-imperials" />
+            <begin-asking-to>
+               <topic>
+                  <shared-info id="shared-refer-to-steward-neutral" />
+               </topic>
+            </begin-asking-to>
          </actor>
          <actor editor-id="LouisLetrush" name="Louis Letrush">
             <begin-asking-about>

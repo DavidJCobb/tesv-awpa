@@ -92,7 +92,13 @@
          </actor>
          <actor editor-id="Dervenin" />
          <actor editor-id="Elenwen" />
-         <actor editor-id="ElisifTheFair" name="Elisif the Fair" />
+         <actor editor-id="ElisifTheFair" name="Elisif the Fair">
+            <begin-asking-to>
+               <topic>
+                  <shared-info id="shared-refer-to-steward-neutral" />
+               </topic>
+            </begin-asking-to>
+         </actor>
          <actor editor-id="Endarie" />
          <actor editor-id="Erdi" />
          <actor editor-id="Erikur" />
@@ -102,7 +108,14 @@
          <actor editor-id="Freir" />
          <actor editor-id="Fridrika" />
          <actor editor-id="Gadnor" />
-         <actor editor-id="GeneralTullius" name="General Tullius" />
+         <actor editor-id="GeneralTullius" name="General Tullius">
+            <begin-asking-to>
+               <topic>
+                  <line script-notes="blunt">I'm a general, not a steward.</line>
+                  <line emotion="puzzled:15" script-notes="somewhat annoyed; it makes no sense to bother you about this">You might try asking someone local to Solitude?</line>
+               </topic>
+            </begin-asking-to>
+         </actor>
          <actor editor-id="GiraudGemane" name="Giraud Gemane" />
          <actor editor-id="Gisli" />
          <actor editor-id="Greta" />
@@ -137,7 +150,13 @@
          <actor editor-id="OctieveSan" name="Octieve San" />
          <actor editor-id="Odar" />
          <actor editor-id="PanteaAteia" name="Pantea Ateia" />
-         <actor editor-id="Rikke" />
+         <actor editor-id="Rikke">
+            <begin-asking-to>
+               <topic>
+                  <line emotion="puzzled:30">I'm the wrong person to ask. The Jarl's steward might be able to help.</line>
+               </topic>
+            </begin-asking-to>
+         </actor>
          <actor editor-id="Roggvir" />
          <actor editor-id="Rorlund" />
          <actor editor-id="SabineNytte" name="Sabine Nytte">

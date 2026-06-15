@@ -57,8 +57,35 @@
          <actor editor-id="Faralda" />
          <actor editor-id="Haran" />
          <actor editor-id="Jzargo" name="J'zargo" />
-         <actor editor-id="Korir" />
-         <actor editor-id="Kraldar" />
+         <actor editor-id="Korir">
+            <begin-asking-to>
+               <topic>
+                  <!--
+                     While serving as Jarl, he won't know people's comings and goings 
+                     except when he goes out to eat at the inn with his son.
+                  -->
+                  <conditions>
+                     <parent-cell of="speaker" is="WinterholdJarlsLonghouse" />
+                  </conditions>
+                  <shared-info id="shared-refer-to-steward-neutral" />
+               </topic>
+            </begin-asking-to>
+         </actor>
+         <actor editor-id="Kraldar">
+            <begin-asking-to>
+               <topic>
+                  <!--
+                     While serving as Jarl, he won't know people's comings and goings 
+                     except when he goes out to eat at the inn.
+                  -->
+                  <conditions>
+                     <faction-membership of="speaker" includes="JobJarlFaction" />
+                     <parent-cell of="speaker" is="WinterholdJarlsLonghouse" />
+                  </conditions>
+                  <shared-info id="shared-refer-to-steward-neutral" />
+               </topic>
+            </begin-asking-to>
+         </actor>
          <actor editor-id="MalurSeloth" name="Malur Seloth" />
          <actor editor-id="MirabelleErvine" name="Mirabelle Ervine" />
          <actor editor-id="Nelacar" />

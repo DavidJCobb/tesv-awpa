@@ -40,6 +40,17 @@
          <line emotion="sad:30">Sorry, but there isn't much I'll be able to do from in here...</line>
       </shared-info>
       
+      <shared-info id="shared-refer-to-steward-neutral" editor-id-slug="TalkToMyStewardNeutral">
+         <line>My steward can help you with those sorts of questions.</line>
+         <line>I can't keep track of every citizen in my hold, but I'm sure my steward will be happy to help if you ask.</line>
+         <line>My steward can probably help you find them faster than I can.</line>
+      </shared-info>
+      <shared-info id="shared-refer-to-steward-haughty" editor-id-slug="TalkToMyStewardHaughty">
+         <line>Talk to my steward.</line>
+         <line>Ask my steward. I have other matters to attend to.</line>
+         <line>No. That's the kind of question you should ask my steward.</line>
+      </shared-info>
+      
       <shared-info id="shared-at-my-home" editor-id-slug="AtMyHome">
          <line>He's at my place right now.</line>
          <line>I saw him around my house not too long ago.</line>

@@ -28,7 +28,16 @@
          <actor editor-id="Beitild" />
          <actor editor-id="Bodil" />
          <actor editor-id="Borgny" />
-         <actor editor-id="BrinaMerilis" name="Brina Merilis" />
+         <actor editor-id="BrinaMerilis" name="Brina Merilis">
+            <begin-asking-to>
+               <topic>
+                  <conditions>
+                     <faction-membership of="speaker" includes="JobJarlFaction" />
+                  </conditions>
+                  <shared-info id="shared-refer-to-steward-neutral" />
+               </topic>
+            </begin-asking-to>
+         </actor>
          <actor editor-id="Bulfrek" />
          <actor editor-id="Edith" />
          <actor editor-id="Erandur">
@@ -53,7 +62,18 @@
          <actor editor-id="Rustleif" />
          <actor editor-id="Seren" />
          <actor editor-id="SilusVesuius" name="Silus Vesuius" />
-         <actor editor-id="SkaldtheElder" name="Skald the Elder" />
+         <actor editor-id="SkaldtheElder" name="Skald the Elder">
+            <begin-asking-to>
+               <topic>
+                  <!--
+                     One of his goodbyes is "Don't bother me again unless 
+                     it's important." Giving him blunt/haughty redirects 
+                     fits.
+                  -->
+                  <shared-info id="shared-refer-to-steward-haughty" />
+               </topic>
+            </begin-asking-to>
+         </actor>
          <actor editor-id="Thoring" />
       </actors>
       

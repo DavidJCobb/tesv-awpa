@@ -48,7 +48,13 @@
          <actor editor-id="HousecarlMarkarth" name="Argis the Bulwark" />
          <actor editor-id="Hreinn" />
          <actor editor-id="Hroki" />
-         <actor editor-id="Igmund" />
+         <actor editor-id="Igmund">
+            <begin-asking-to>
+               <topic>
+                  <shared-info id="shared-refer-to-steward-neutral" />
+               </topic>
+            </begin-asking-to>
+         </actor>
          <actor editor-id="Ildene" name="Nana Ildene" />
          <actor editor-id="Imedhnain" />
          <actor editor-id="Kerah" />
@@ -71,7 +77,16 @@
          <actor editor-id="Senna" />
          <actor editor-id="TacitusSallustius" name="Tacitus Sallustius" />
          <actor editor-id="Thonar" name="Thonar Silver-Blood" />
-         <actor editor-id="Thongvor" name="Thongvor Silver-Blood" />
+         <actor editor-id="Thongvor" name="Thongvor Silver-Blood">
+            <begin-asking-to>
+               <topic>
+                  <conditions>
+                     <faction-membership of="speaker" includes="JobJarlFaction" />
+                  </conditions>
+                  <shared-info id="shared-refer-to-steward-haughty" />
+               </topic>
+            </begin-asking-to>
+         </actor>
          <actor editor-id="Tynan" />
          <actor editor-id="Tyranus" name="Vigilant Tyranus" />
          <actor editor-id="Uaile" />

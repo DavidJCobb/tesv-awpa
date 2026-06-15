@@ -1,11 +1,29 @@
 <payload>
    <quest locations="MorthalLocation" id="AWPAMorthal">
       <dialogue-conditions>
-         <faction-membership of="speaker" includes="TownMorthalFaction" />
+         <or>
+            <faction-membership of="speaker" includes="TownMorthalFaction" />
+            <actor-base of="speaker" is="Pactur" />
+            <actor-base of="speaker" is="Sorli" />
+         </or>
          <faction-membership of="speaker" excludes="GuardFactionHaafingar" />
          
          <location of="speaker" is="MorthalLocation" />
       </dialogue-conditions>
+      
+      <condition-set name="sorli-is-jarl">
+         <faction-membership of="Sorli" includes="JobJarlFaction" />
+      </condition-set>
+      <macro name="sorli-court-member">
+         <data>
+            <begin-asking-about>
+               <filter-conditions>
+                  <condition-set name="sorli-is-jarl" />
+               </filter-conditions>
+            </begin-asking-about>
+         </data>
+      </macro>
+      
       <actors>
          <actor editor-id="Agni" />
          <actor editor-id="Alva">
@@ -24,12 +42,36 @@
          <actor editor-id="Falion" />
          <actor editor-id="Gorm" />
          <actor editor-id="Hroggar" />
-         <actor editor-id="IdgrodRavencrone" name="Idgrod Ravencrone" />
+         <actor editor-id="IdgrodRavencrone" name="Idgrod Ravencrone">
+            <!--
+               I have most Jarls respond to "Can you help me find someone?" by 
+               telling the player to ask the steward instead. I am notably *not* 
+               having Idgrod Ravencrone do that. Morthal has small-town vibes, 
+               and Idgrod is written to imply that she knows more than she lets 
+               on. Allowing her to respond to the player's inquiries plays to 
+               both ideas, suggesting that she keeps closer track of people than 
+               one would expect.
+            -->
+         </actor>
          <actor editor-id="IdgrodTheYounger" name="Idgrod the Younger" />
          <actor editor-id="Jonna" />
          <actor editor-id="Jorgen" />
          <actor editor-id="Joric" />
          <actor editor-id="Lami" />
+         <actor editor-id="Pactur">
+            <invoke name="sorli-court-member" />
+         </actor>
+         <actor editor-id="Sorli" name="Sorli the Builder">
+            <invoke name="sorli-court-member" />
+            <begin-asking-to>
+               <topic>
+                  <conditions>
+                     <faction-membership of="speaker" includes="JobJarlFaction" />
+                  </conditions>
+                  <shared-info id="shared-refer-to-steward-neutral" />
+               </topic>
+            </begin-asking-to>
+         </actor>
          <actor editor-id="Thonnir" />
          <actor editor-id="Virkmund" />
       </actors>

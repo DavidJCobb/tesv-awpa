@@ -552,6 +552,11 @@
                    <condition-set name="under-stormcloak-control" />
                </filter-conditions>
             </begin-asking-about>
+            <begin-asking-to>
+               <topic>
+                  <shared-info id="shared-refer-to-steward-neutral" />
+               </topic>
+            </begin-asking-to>
          
          </actor>
          <actor editor-id="LouisLetrush" name="Louis Letrush">

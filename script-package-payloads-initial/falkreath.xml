@@ -21,7 +21,16 @@
       <actors>
          <actor editor-id="Bolund" />
          <actor editor-id="Delacourt" />
-         <actor editor-id="Dengeir" name="Dengeir of Stuhn" />
+         <actor editor-id="Dengeir" name="Dengeir of Stuhn">
+            <begin-asking-to>
+               <topic>
+                  <conditions>
+                     <faction-membership of="speaker" includes="JobJarlFaction" />
+                  </conditions>
+                  <shared-info id="shared-refer-to-steward-neutral" />
+               </topic>
+            </begin-asking-to>
+         </actor>
          <actor editor-id="Helvard" />
          <actor editor-id="IndaraCaerellia" name="Indara Caerellia" />
          <actor editor-id="Kust" />
@@ -37,7 +46,13 @@
             </begin-asking-about>
          </actor>
          <actor editor-id="Runil" />
-         <actor editor-id="Siddgeir" />
+         <actor editor-id="Siddgeir">
+            <begin-asking-to>
+               <topic>
+                  <shared-info id="shared-refer-to-steward-haughty" />
+               </topic>
+            </begin-asking-to>
+         </actor>
          <actor editor-id="Solaf" />
          <actor editor-id="Tekla">
             <begin-asking-about>

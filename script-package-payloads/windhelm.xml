@@ -42,12 +42,28 @@
          <actor editor-id="AvalAtheron" name="Aval Atheron" />
          <actor editor-id="AventusAretino" name="Aventus Aretino" />
          <actor editor-id="BelynHlaalu" name="Belyn Hlaalu" />
-         <actor editor-id="Brunwulf" name="Brunwulf Free-Winter" />
+         <actor editor-id="Brunwulf" name="Brunwulf Free-Winter">
+            <begin-asking-to>
+               <topic>
+                  <conditions>
+                     <faction-membership of="speaker" includes="JobJarlFaction" />
+                  </conditions>
+                  <shared-info id="shared-refer-to-steward-neutral" />
+               </topic>
+            </begin-asking-to>
+         </actor>
          <actor editor-id="Calixto" name="Calixto Corrium" />
          <actor editor-id="CaptainLonelyGale" name="Captain Lonely-Gale" />
          <actor editor-id="Elda" name="Elda Early-Dawn" />
          <actor editor-id="FarylAtheron" name="Faryl Atheron" />
-         <actor editor-id="Galmar" name="Galmar Stone-Fist" />
+         <actor editor-id="Galmar" name="Galmar Stone-Fist">
+            <begin-asking-to>
+               <topic>
+                  <line>That seems like a question you should ask the steward.</line>
+                  <line>My focus is on fighting for all of Skyrim. The steward tends to our city.</line>
+               </topic>
+            </begin-asking-to>
+         </actor>
          <actor editor-id="GemmaUriel" name="Gemma Uriel" />
          <actor editor-id="Grimvar" />
          <actor editor-id="Helgird" />
@@ -84,7 +100,18 @@
          <actor editor-id="Torbjorn" name="Torbjorn Shatter-Shield" />
          <actor editor-id="Torsten" name="Torsten Cruel-Sea" />
          <actor editor-id="Tova" name="Tova Shatter-Shield" />
-         <actor editor-id="Ulfric" name="Ulfric Stormcloak" />
+         <actor editor-id="Ulfric" name="Ulfric Stormcloak">
+            <begin-asking-to>
+               <topic>
+                  <!--
+                     If you haven't joined the Stormcloaks, Ulfric has lines 
+                     wherein he threatens you with arrest if you continue to 
+                     pester him. He uses an arrogant tone. Best to match it.
+                  -->
+                  <shared-info id="shared-refer-to-steward-haughty" />
+               </topic>
+            </begin-asking-to>
+         </actor>
          <actor editor-id="Ulundil" />
          <actor editor-id="ViolaGiordano" name="Viola Giordano" />
          <actor editor-id="VoldseaGiryon" name="Voldsea Giryon" />
